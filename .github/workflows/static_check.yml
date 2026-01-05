@@ -1,0 +1,66 @@
+name: Static Check
+
+on:
+    push:
+    pull_request:
+
+env:
+  CPPCHECK_PATH: ${{ github.workspace }}/cppcheck/build/bin/cppcheck
+
+jobs:
+    check:
+      runs-on: ubuntu-22.04
+      name: Run static check on patch series (PR)
+      steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+
+      - name: Install Python dependencies
+        run: |
+          pip install GitPython
+          pip show GitPython
+
+      - name: Get Changed Files
+        id: changed-files
+        uses: tj-actions/changed-files@v44
+
+      - name: Download Astyle
+        uses: carlosperate/download-file-action@v2
+        with:
+          file-url: 'https://sourceforge.net/projects/astyle/files/astyle/astyle%203.0/astyle_3.0_linux.tar.gz'
+
+      - name: Build Astyle
+        run: |
+          tar -zxvf astyle_3.0_linux.tar.gz
+          cd astyle/build/gcc
+          sudo make
+          sudo make install
+          astyle --version
+
+      - name: Build Cppcheck
+        run: |
+          git clone https://github.com/danmar/cppcheck.git
+          cd cppcheck
+          git checkout 2.9
+          mkdir build
+          cd build
+          cmake ..
+          cmake --build .
+          ./bin/cppcheck --version
+
+      - name: Run Static Check
+        env:
+          ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          export REPO_BASE=$PWD
+          echo "${ALL_CHANGED_FILES}"
+          python3 -u script/ci/static_check.py
