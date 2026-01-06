@@ -16,7 +16,6 @@
  *============================================================================*/
 #include "rtl_spi.h"
 #include "rtl_rcc.h"
-#include "app_section.h"
 
 /*============================================================================*
  *                        Public Functions
@@ -169,8 +168,6 @@ void SPI_ConfigAPHBridge(SPI_TypeDef *SPIx)
     }
 }
 
-
-RAM_FUNCTION
 void SPI_DLPSEnter(void *PeriReg, void *StoreBuf)
 {
     SPI_TypeDef *SPIx = (SPI_TypeDef *)PeriReg;
@@ -203,8 +200,6 @@ void SPI_DLPSEnter(void *PeriReg, void *StoreBuf)
     store_buf->spi_reg[11] = SPIx->SPI_M_RSDR;          /*!< 0xF0 */
 }
 
-
-RAM_FUNCTION
 void SPI_DLPSExit(void *PeriReg, void *StoreBuf)
 {
     SPI_TypeDef *SPIx = (SPI_TypeDef *)PeriReg;

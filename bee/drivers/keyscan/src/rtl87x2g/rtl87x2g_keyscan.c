@@ -16,18 +16,7 @@
  *============================================================================*/
 #include "rtl_keyscan.h"
 #include "rtl_rcc.h"
-#include "app_section.h"
 
-/*============================================================================*
- *                           Public Functions
- *============================================================================*/
-/**
-  * \brief  Store KEYSCAN register values when system enter DLPS.
-  * \param  PeriReg: Specifies to select the KEYSCAN peripheral.
-  * \param  StoreBuf: Store buffer to store KEYSCAN register data.
-  * \return None.
-  */
-RAM_FUNCTION
 void KEYSCAN_DLPSEnter(void *PeriReg, void *StoreBuf)
 {
     KEYSCAN_TypeDef *KSCANx = (KEYSCAN_TypeDef *)PeriReg;
@@ -45,14 +34,6 @@ void KEYSCAN_DLPSEnter(void *PeriReg, void *StoreBuf)
     return;
 }
 
-/**
-  * \brief  Restore KEYSCAN register values when system enter DLPS.
-  * \param  PeriReg: Specifies to select the KEYSCAN peripheral.
-  * \param  StoreBuf: Restore buffer to restore KEYSCAN register data.
-  * \return None
-  */
-RAM_FUNCTION
-void KEYSCAN_DLPSExit(void *PeriReg, void *StoreBuf)
 void KEYSCAN_DLPSExit(void *PeriReg, void *StoreBuf, uint32_t scanmode, uint32_t manual_sel)
 {
     KEYSCAN_TypeDef *KSCANx = (KEYSCAN_TypeDef *)PeriReg;
