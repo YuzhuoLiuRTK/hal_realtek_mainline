@@ -1,0 +1,14 @@
+# Copyright (c) 2026 Realtek Semiconductor Corp.
+# SPDX-License-Identifier: Apache-2.0
+
+config REALTEK_BEE_GPIO
+	bool "Realtek Bee MCU gpio driver"
+	default y
+	depends on USE_HAL_REALTEK_BEE_GPIO
+
+	select USE_HAL_REALTEK_BEE_RCC
+	select USE_HAL_REALTEK_BEE_PINMUX
+	select USE_HAL_REALTEK_BEE_NVIC
+
+	help
+	  This option enables the gpio driver for Realtek Bee MCU.

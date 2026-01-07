@@ -1,0 +1,15 @@
+# Copyright (c) 2026 Realtek Semiconductor Corp.
+# SPDX-License-Identifier: Apache-2.0
+
+config REALTEK_BEE_SDHC
+	bool "Realtek Bee MCU sdhc driver"
+	default y
+	depends on USE_HAL_REALTEK_BEE_SDHC
+
+	select USE_HAL_REALTEK_BEE_RCC
+	select USE_HAL_REALTEK_BEE_PINMUX
+	select USE_HAL_REALTEK_BEE_NVIC
+
+	help
+	  This option enables the sdhc driver for Realtek Bee MCU.
+

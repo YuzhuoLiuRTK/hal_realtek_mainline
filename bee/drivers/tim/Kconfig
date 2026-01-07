@@ -1,0 +1,26 @@
+# Copyright (c) 2026 Realtek Semiconductor Corp.
+# SPDX-License-Identifier: Apache-2.0
+
+config REALTEK_BEE_TIM
+	bool "Realtek Bee MCU tim driver"
+	default y
+	depends on USE_HAL_REALTEK_BEE_TIM
+
+	select USE_HAL_REALTEK_BEE_RCC
+	select USE_HAL_REALTEK_BEE_PINMUX
+	select USE_HAL_REALTEK_BEE_NVIC
+
+	help
+	  This option enables the tim driver for Realtek Bee MCU.
+
+config REALTEK_BEE_ENHTIM
+	bool "Realtek Bee MCU enhtim driver"
+	default y
+	depends on USE_HAL_REALTEK_BEE_ENHTIM
+
+	select USE_HAL_REALTEK_BEE_RCC
+	select USE_HAL_REALTEK_BEE_PINMUX
+	select USE_HAL_REALTEK_BEE_NVIC
+
+	help
+	  This option enables the enhtim driver for Realtek Bee MCU.

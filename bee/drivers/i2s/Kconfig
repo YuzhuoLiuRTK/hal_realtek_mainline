@@ -1,0 +1,14 @@
+# Copyright (c) 2026 Realtek Semiconductor Corp.
+# SPDX-License-Identifier: Apache-2.0
+
+config REALTEK_BEE_I2S
+	bool "Realtek Bee MCU i2s driver"
+	default y
+	depends on USE_HAL_REALTEK_BEE_I2S
+
+	select USE_HAL_REALTEK_BEE_RCC
+	select USE_HAL_REALTEK_BEE_PINMUX
+	select USE_HAL_REALTEK_BEE_NVIC
+
+	help
+	  This option enables the i2s driver for Realtek Bee MCU.

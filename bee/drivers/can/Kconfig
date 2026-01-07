@@ -1,0 +1,14 @@
+# Copyright (c) 2026 Realtek Semiconductor Corp.
+# SPDX-License-Identifier: Apache-2.0
+
+config REALTEK_BEE_CAN
+	bool "Realtek Bee MCU CAN driver"
+	default y
+	depends on USE_HAL_REALTEK_BEE_CAN
+
+	select USE_HAL_REALTEK_BEE_RCC
+	select USE_HAL_REALTEK_BEE_PINMUX
+	select USE_HAL_REALTEK_BEE_NVIC
+
+	help
+	  This option enables the CAN driver for Realtek Bee MCU.
