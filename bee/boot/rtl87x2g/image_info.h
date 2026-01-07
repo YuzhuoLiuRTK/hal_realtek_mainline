@@ -4,31 +4,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#ifndef _PATCH_HEADER_CHECK_NSC_H_
-#define _PATCH_HEADER_CHECK_NSC_H_
+#ifndef _IMAGE_INFO_H_
+#define _IMAGE_INFO_H_
 #include <stdbool.h>
 #include <stdint.h>
 
-/** @addtogroup  FLASH_DEVICE    Flash Device
-    * @{
-    */
 /*============================================================================*
   *                                   Constants
   *============================================================================*/
-/** @defgroup FLASH_DEVICE_Exported_Constants Flash Device Exported Constants
-  * @brief
-  * @{
-  */
-
-/** @defgroup FLASH_IMAGE_SIGNATURE Flash Image Signature
-  * @brief patch signature definition for each image
-  * @{
-  */
-
-
-/** End of FLASH_IMAGE_SIGNATURE
-  * @}
-  */
 #define OTA_HEADER_SIZE                     0x1000
 #define UUID_SIZE                           16
 #define DEFAULT_HEADER_SIZE                 (0x400 + 256)
@@ -84,16 +67,6 @@
 
 #define IMG_VER_TO_LITTLE_ENDIAN(git_ver)       (((git_ver & 0xf) << 28 ) + (((git_ver & 0xff0) >> 4) << 20) + (((git_ver & 0x07fff000) >> 12) << 5) + ((git_ver & 0xf8000000) >> 27))
 
-/** End of FLASH_DEVICE_Exported_Constants
-  * @}
-  */
-/*============================================================================*
-  *                                   Types
-  *============================================================================*/
-/** @defgroup FLASH_DEVICE_Exported_Types Flash Device Exported Types
-  * @brief
-  * @{
-  */
 
 typedef enum
 {
@@ -137,7 +110,6 @@ typedef enum
     IMG_USER_DATA1       = 0xFFFE,    /*!< the image data only support unsafe single bank ota */
     IMG_USER_DATA_MAX    = 0xFFFF,    /*!< the image data only support unsafe single bank ota */
 } IMG_ID;
-
 
 typedef enum _ENC_KEY_SELECT
 {
@@ -335,44 +307,9 @@ typedef union _IMG_HEADER_FORMAT
     };
 } T_IMG_HEADER_FORMAT;
 
-typedef struct _ROM_HEADER_FORMAT
-{
-    uint8_t uuid[UUID_SIZE];
-    void *init_ptr;
-    void *entry_ptr;
-} T_ROM_HEADER_FORMAT;
-
-typedef enum
-{
-    IMG_CHECK_PASS,
-    IMG_CHECK_ERR_HEADER_ADDR,
-    IMG_CHECK_ERR_NOT_READY,
-    IMG_CHECK_ERR_ROM_UUID,
-    IMG_CHECK_ERR_MAGIC_PATTERN,
-    IMG_CHECK_ERR_SIZE,
-    IMG_CHECK_ERR_ID,
-    IMG_CHECK_ERR_ENTRY_RETURN,
-    IMG_CHECK_ERR_VERIFY,
-    IMG_CHECK_ERR_EXE_BASE,
-    IMG_CHECK_ERR_IC_TYPE,
-    IMG_CHECK_ERR_MAX,
-} IMG_CHECK_ERR_TYPE;
-
-/** End of FLASH_DEVICE_Exported_Types
-  * @}
-  */
-/*************************************************************************************************
-*                          Constants
-*************************************************************************************************/
-
-
 /*************************************************************************************************
 *                          functions
 *************************************************************************************************/
-/** @defgroup FLASH_DEVICE_Exported_Functions Flash Device Exported Functions
-    * @brief
-    * @{
-    */
 
 bool is_ota_support_bank_switch(void);
 
@@ -399,13 +336,5 @@ bool get_ota_bank_image_version(bool is_active_bank, IMG_ID image_id,
 
 bool get_ota_header_item(bool is_active_bank, uint32_t offset, uint32_t *data);
 
-IMG_CHECK_ERR_TYPE image_entry(uint16_t image_id, uint32_t image_addr);
 
-IMG_CHECK_ERR_TYPE image_entry_check(T_ROM_HEADER_FORMAT *rom_header,
-                                     T_ROM_HEADER_FORMAT *patch_header);
-
-
-/** @} */ /* End of group FLASH_DEVICE_Exported_Functions */
-/** @} */ /* End of group FLASH_DEVICE */
-
-#endif // _PATCH_HEADER_CHECK_H_
+#endif // _IMAGE_INFO_H_
