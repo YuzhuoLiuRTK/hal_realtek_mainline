@@ -1,8 +1,9 @@
 /*
- * Copyright(c) 2020, Realtek Semiconductor Corporation.
+ * Copyright (c) 2026 Realtek Semiconductor Corp.
  *
  * SPDX-License-Identifier: Apache-2.0
  */
+
 #ifndef _RTK_BT_HCI_H_
 #define _RTK_BT_HCI_H_
 

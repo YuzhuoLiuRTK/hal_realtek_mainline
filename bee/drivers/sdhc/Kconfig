@@ -12,4 +12,3 @@ config REALTEK_BEE_SDHC
 
 	help
 	  This option enables the sdhc driver for Realtek Bee MCU.
-

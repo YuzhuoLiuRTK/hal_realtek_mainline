@@ -1,6 +1,10 @@
+/*
+ * Copyright (c) 2026 Realtek Semiconductor Corp.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 /**
-*********************************************************************************************************
-*               Copyright(c) 2020, Realtek Semiconductor Corporation. All rights reserved.
 **********************************************************************************************************
 * @file     rtl876x_codec.c
 * @brief    This file provides all the CODEC firmware functions.

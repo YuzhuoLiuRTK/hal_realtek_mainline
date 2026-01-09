@@ -12,4 +12,3 @@ config REALTEK_BEE_ADC
 
 	help
 	  This option enables the adc driver for Realtek Bee MCU.
-

@@ -30,4 +30,3 @@ config REALTEK_BEE_USING_RTL876X_DRIVER
 	bool
 	default y
 	depends on SOC_SERIES_RTL8752H
-
