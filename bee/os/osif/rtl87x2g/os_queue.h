@@ -377,6 +377,8 @@ extern bool (*os_queue_delete)(T_OS_QUEUE *p_queue, void *p_elem);
   * @}
   */
 
+extern void os_queue_func_init(void);
+
 /** End of OS_QUEUE
   * @}
   */
