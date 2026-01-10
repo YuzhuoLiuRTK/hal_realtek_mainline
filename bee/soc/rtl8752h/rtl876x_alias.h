@@ -1,15 +1,8 @@
-/**
-*********************************************************************************************************
-*               Copyright(c) 2024, Realtek Semiconductor Corporation. All rights reserved.
-*********************************************************************************************************
-* \file     rtl876x_alias.h
-* \brief    The header file of all peripherals internal alias.
-* \details  To be compatible with the previous driver,create an alias file for the previous driver.
-* \author   yuan
-* \date     2020-06-19
-* \version  v2.1.0
-* *********************************************************************************************************
-*/
+/*
+ * Copyright (c) 2026 Realtek Semiconductor Corp.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
 #ifndef _RTL876X_ALIAS_H_
 #define _RTL876X_ALIAS_H_
@@ -18,6 +11,9 @@
 extern "C" {
 #endif
 
+/*============================================================================*
+ *                         Macros
+ *============================================================================*/
 /**
  * \cond        private
  * \brief       To be compatible with the previous driver.
@@ -132,5 +128,3 @@ extern "C" {
 #endif
 
 #endif /* _RTL876X_ALIAS_H_ */
-
-/******************* (C) COPYRIGHT 2020 Realtek Semiconductor *****END OF FILE****/

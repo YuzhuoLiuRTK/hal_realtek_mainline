@@ -1,14 +1,9 @@
-/* Copyright (c) 2024 Realtek Semiconductor. All Rights Reserved.
+/*
+ * Copyright (c) 2026 Realtek Semiconductor Corp.
  *
- *  The information contained herein is property of Realtek Semiconductor.
- *  Terms and conditions of usage are described in detail in Realtek
- *  SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- *   Licensees are granted free, non-transferable use of the information. NO
- *   WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- *   the file.
- *
+ * SPDX-License-Identifier: Apache-2.0
  */
+
 #ifndef __RTL876X_BITS_H
 #define __RTL876X_BITS_H
 
@@ -16,12 +11,9 @@
 extern "C" {
 #endif
 
-//#include <core_cm4.h>
-
-/* Peripheral: KEYSCAN */
-/* Description: Key Scan. */
-
-
+/*============================================================================*
+ *                         Macros
+ *============================================================================*/
 /* Register: RTL_KEYSCAN_CR0 */
 /* Description: Control register 0. */
 
@@ -507,13 +499,6 @@ extern "C" {
 /* Bit 0 : BIT_SOC_ACTCK_BTBUS_EN. 1: BTBUS clock enable in CPU run mode */
 #define SYSBLK_ACTCK_BTBUS_EN_Pos (0UL) /*!< Position of  */
 #define SYSBLK_ACTCK_BTBUS_EN_Msk (0x1UL << SYSBLK_ACTCK_BTBUS_EN_Pos) /*!< Bit mask of  */
-
-
-/****************************************************************************************************************/
-/* Peripheral: Quad Decoder */
-/* Description: Quad Decoder */
-
-
 
 #ifdef __cplusplus
 }

@@ -100,6 +100,7 @@ extern void (*si_flow_data_init)(void);
 extern void (*ft_paras_apply)(void);
 extern void hal_setup_hardware(void);
 extern void hal_setup_cpu(void);
+extern void share_cache_ram(void);
 
 /** @} */ /* End of group SYSTEM_RTL876X_Exported_Functions */
 

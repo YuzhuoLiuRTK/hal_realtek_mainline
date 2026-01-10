@@ -11,16 +11,14 @@
 #ifndef _TRACE_H_
 #define _TRACE_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 /*============================================================================*
  *                        Header Files
  *============================================================================*/
 #include <stdint.h>
 #include <stdbool.h>
-#include <platform_autoconf.h>
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 
 /**
  * \defgroup    TRACE       Trace

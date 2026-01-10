@@ -11,9 +11,16 @@
 extern "C" {
 #endif
 
+/*============================================================================*
+ *                      Headers
+ *============================================================================*/
 #include "stdint.h"
 #include "stdbool.h"
 
+
+/*============================================================================*
+ *                      Types
+ *============================================================================*/
 typedef void (*IRQ_Fun)(void);       /**< ISR Handler Prototype */
 
 extern uint32_t vector_table_level_two;
@@ -85,6 +92,9 @@ typedef enum
     WDT_VECTORn,
 } VECTORn_Type;
 
+/*============================================================================*
+ *                      Functions
+ *============================================================================*/
 /**
  * @brief  Initialize RAM vector table to a given RAM address.
  * @param  ram_vector_addr: RAM Vector Address.
@@ -199,4 +209,4 @@ extern void GPIO31_Handler(void);
 }
 #endif
 
-#endif // VECTOR_TABLE_H
+#endif /* VECTOR_TABLE_H */
