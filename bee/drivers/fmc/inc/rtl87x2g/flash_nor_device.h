@@ -275,6 +275,19 @@ FLASH_NOR_RET_TYPE flash_nor_set_addr_mode(FLASH_NOR_IDX_TYPE idx, bool is_4_byt
  * @return          return flash ID
  */
 uint32_t flash_nor_get_id(FLASH_NOR_IDX_TYPE idx);
+
+/**
+ * @brief      init cmd list in rom non-secure
+ * @return     true if success
+ */
+bool flash_nor_cmd_list_init_nsc(void);
+
+/**
+ * @brief     init bp level in rom non-secure
+ * @return    void
+ */
+void flash_nor_init_bp_lv_nsc(void);
+
 /** End of Nor_Flash_Exported_Functions
   * @}
   */
