@@ -1,3 +1,0 @@
-GDMA0_Channel2_Handler = 0x0004ab87 ;
-GDMA0_Channel1_Handler = 0x0004ab9b ;
-BTMAC_Handler = 0x00050359 ;
