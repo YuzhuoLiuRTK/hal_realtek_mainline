@@ -40,6 +40,7 @@ extern "C" {
 
 /**
  * \defgroup TIM_Defines TIM Defines
+ * \brief The following macro represents whether TIM supports this feature.
  * \{
  * \ingroup  TIM_Exported_Constants
  */
@@ -81,6 +82,16 @@ typedef struct
 /*============================================================================*
  *                         TIMER Declaration
  *============================================================================*/
+
+#define TIMER_0_REG_BASE          (TIMER_REG_BASE + 0x0000)
+#define TIMER_1_REG_BASE          (TIMER_REG_BASE + 0x0014)
+#define TIMER_2_REG_BASE          (TIMER_REG_BASE + 0x0028)
+#define TIMER_3_REG_BASE          (TIMER_REG_BASE + 0x003c)
+#define TIMER_4_REG_BASE          (TIMER_REG_BASE + 0x0050)
+#define TIMER_5_REG_BASE          (TIMER_REG_BASE + 0x0064)
+#define TIMER_6_REG_BASE          (TIMER_REG_BASE + 0x0078)
+#define TIMER_7_REG_BASE          (TIMER_REG_BASE + 0x008c)
+
 /** \defgroup TIM         TIM
   * \brief
   * \{
@@ -95,23 +106,14 @@ typedef struct
   * \{
   * \ingroup  TIM_Exported_Constants
   */
-#define TIMER_0_REG_BASE          (TIMER_REG_BASE + 0x0000)
-#define TIMER_1_REG_BASE          (TIMER_REG_BASE + 0x0014)
-#define TIMER_2_REG_BASE          (TIMER_REG_BASE + 0x0028)
-#define TIMER_3_REG_BASE          (TIMER_REG_BASE + 0x003c)
-#define TIMER_4_REG_BASE          (TIMER_REG_BASE + 0x0050)
-#define TIMER_5_REG_BASE          (TIMER_REG_BASE + 0x0064)
-#define TIMER_6_REG_BASE          (TIMER_REG_BASE + 0x0078)
-#define TIMER_7_REG_BASE          (TIMER_REG_BASE + 0x008c)
-
-#define TIM0                      ((TIM_TypeDef *) TIMER_0_REG_BASE)
-#define TIM1                      ((TIM_TypeDef *) TIMER_1_REG_BASE)
-#define TIM2                      ((TIM_TypeDef *) TIMER_2_REG_BASE)
-#define TIM3                      ((TIM_TypeDef *) TIMER_3_REG_BASE)
-#define TIM4                      ((TIM_TypeDef *) TIMER_4_REG_BASE)
-#define TIM5                      ((TIM_TypeDef *) TIMER_5_REG_BASE)
-#define TIM6                      ((TIM_TypeDef *) TIMER_6_REG_BASE)
-#define TIM7                      ((TIM_TypeDef *) TIMER_7_REG_BASE)
+#define TIM0        ((TIM_TypeDef *) TIMER_0_REG_BASE)   //!< TIM0 base address.
+#define TIM1        ((TIM_TypeDef *) TIMER_1_REG_BASE)   //!< TIM1 base address.
+#define TIM2        ((TIM_TypeDef *) TIMER_2_REG_BASE)   //!< TIM2 base address.
+#define TIM3        ((TIM_TypeDef *) TIMER_3_REG_BASE)   //!< TIM3 base address.
+#define TIM4        ((TIM_TypeDef *) TIMER_4_REG_BASE)   //!< TIM4 base address.
+#define TIM5        ((TIM_TypeDef *) TIMER_5_REG_BASE)   //!< TIM5 base address.
+#define TIM6        ((TIM_TypeDef *) TIMER_6_REG_BASE)   //!< TIM6 base address.
+#define TIM7        ((TIM_TypeDef *) TIMER_7_REG_BASE)   //!< TIM7 base address.
 
 #define IS_TIM_PERIPH(PERIPH)     (((PERIPH) == TIM0) || \
                                    ((PERIPH) == TIM1) || \
@@ -120,8 +122,8 @@ typedef struct
                                    ((PERIPH) == TIM4) || \
                                    ((PERIPH) == TIM5) || \
                                    ((PERIPH) == TIM6) || \
-                                   ((PERIPH) == TIM7))
-#define IS_TIM_ALL_PERIPH(PERIPH) (IS_TIM_PERIPH(PERIPH))
+                                   ((PERIPH) == TIM7))    //!< Check if the input parameter is valid.
+#define IS_TIM_ALL_PERIPH(PERIPH) (IS_TIM_PERIPH(PERIPH)) //!< Check if the input parameter is valid.
 
 /** End of TIM_Declaration
   * \}
@@ -140,11 +142,11 @@ typedef struct
   * \ingroup  TIM_Exported_Constants
   */
 
-#define PWM2                      ((PWM_TypeDef *) 1)
-#define PWM3                      ((PWM_TypeDef *) 0)
+#define PWM2                      ((PWM_TypeDef *) 1)   //!< PWM2 base address.
+#define PWM3                      ((PWM_TypeDef *) 0)   //!< PWM3 base address.
 
 #define IS_PWM_ALL_PERIPH(PERIPH) (((PERIPH) == PWM2)  || \
-                                   ((PERIPH) == PWM3))
+                                   ((PERIPH) == PWM3)) //!< Check if the input parameter is valid.
 
 /** End of PWM_Declaration
   * \}
@@ -212,134 +214,134 @@ typedef union
     struct
     {
         const uint32_t TimerNCurrentValue: 32;
-        } b;
-    } TIMER_CURRENTVALUE_TypeDef;
+    } b;
+} TIMER_CURRENTVALUE_TypeDef;
 
 
 
-    /* 0x08
-       0       R/W    TimerEnable                         0x0
-       1       R/W    TimerMode                           0x0
-       2       R/W    TimerInterruptMask                  0x0
-       3       R/W    TIMER_PWM                           0x0
-       31:4    R      Reserved                            0x0
-    */
-    typedef union
-        {
-            uint32_t d32;
-            uint8_t d8[4];
-            struct
-            {
-                uint32_t TimerEnable: 1;
-                uint32_t TimerMode: 1;
-                uint32_t TimerInterruptMask: 1;
-                uint32_t TIMER_PWM: 1;
-                const uint32_t reserved_0: 28;
-            } b;
-        } TIMER_CONTROLREG_TypeDef;
+/* 0x08
+   0       R/W    TimerEnable                         0x0
+   1       R/W    TimerMode                           0x0
+   2       R/W    TimerInterruptMask                  0x0
+   3       R/W    TIMER_PWM                           0x0
+   31:4    R      Reserved                            0x0
+*/
+typedef union
+{
+    uint32_t d32;
+    uint8_t d8[4];
+    struct
+    {
+        uint32_t TimerEnable: 1;
+        uint32_t TimerMode: 1;
+        uint32_t TimerInterruptMask: 1;
+        uint32_t TIMER_PWM: 1;
+        const uint32_t reserved_0: 28;
+    } b;
+} TIMER_CONTROLREG_TypeDef;
 
 
 
-    /* 0x0C
-       0       R      TimerNEndofInterrupt                0x0
-       31:1    R      Reserved                            0x0
-    */
-    typedef union
-        {
-            uint32_t d32;
-            uint8_t d8[4];
-            struct
-            {
-                const uint32_t TimerNEndofInterrupt: 1;
-                const uint32_t reserved_0: 31;
-            } b;
-        } TIMER_EOI_TypeDef;
+/* 0x0C
+   0       R      TimerNEndofInterrupt                0x0
+   31:1    R      Reserved                            0x0
+*/
+typedef union
+{
+    uint32_t d32;
+    uint8_t d8[4];
+    struct
+    {
+        const uint32_t TimerNEndofInterrupt: 1;
+        const uint32_t reserved_0: 31;
+    } b;
+} TIMER_EOI_TypeDef;
 
 
 
-    /* 0x10
-       0       R      TimerNInterruptStatus               0x0
-       31:1    R      Reserved                            0x0
-    */
-    typedef union
-        {
-            uint32_t d32;
-            uint8_t d8[4];
-            struct
-            {
-                const uint32_t TimerNInterruptStatus: 1;
-                const uint32_t reserved_0: 31;
-            } b;
-        } TIMER_INTSTATUS_TypeDef;
+/* 0x10
+   0       R      TimerNInterruptStatus               0x0
+   31:1    R      Reserved                            0x0
+*/
+typedef union
+{
+    uint32_t d32;
+    uint8_t d8[4];
+    struct
+    {
+        const uint32_t TimerNInterruptStatus: 1;
+        const uint32_t reserved_0: 31;
+    } b;
+} TIMER_INTSTATUS_TypeDef;
 
 
 
-    /* 0x33C
-       7:0     R/W    timer_pwm_2_dead_zone_size        8'h0
-       8       R/W    timer_pwm_2_emg_stop              1'h0
-       9       R/W    timer_pwm_2_stop_state[0]         1'h0
-       10      R/W    timer_pwm_2_stop_state[1]         1'h0
-       11      R/W    timer_pwm_2_dummy_b11             1'h0
-       12      R/W    timer_pwm_2_dead_zone_en          1'h0
-       13      R/W    timer_pwm_2_pwm_pn_invserse_sel   1'h0
-       14      R/W    timer_pwm_2_dummy_b14             1'h0
-       15      R/W    timer_pwm_2_dummy_b15             1'h0
-       23:16   R/W    timer_pwm_3_dead_zone_size        8'h0
-       24      R/W    timer_pwm_3_emg_stop              1'h0
-       25      R/W    timer_pwm_3_stop_state[0]         1'h0
-       26      R/W    timer_pwm_3_stop_state[1]         1'h0
-       27      R/W    timer_pwm_3_dummy_b11             1'h0
-       28      R/W    timer_pwm_3_dead_zone_en          1'h0
-       29      R/W    timer_pwm_3_pwm_pn_invserse_sel   1'h0
-       30      R/W    timer_pwm_3_dummy_b14             1'h0
-       31      R/W    timer_pwm_3_dummy_b15             1'h0
-    */
-    typedef union
-        {
-            uint32_t d32;
-            uint8_t d8[4];
-            struct
-            {
-                uint32_t timer_pwm_2_dead_zone_size: 8;
-                uint32_t timer_pwm_2_emg_stop: 1;
-                uint32_t timer_pwm_2_stop_state_0: 1;
-                uint32_t timer_pwm_2_stop_state_1: 1;
-                uint32_t timer_pwm_2_dummy_b11: 1;
-                uint32_t timer_pwm_2_dead_zone_en: 1;
-                uint32_t timer_pwm_2_pwm_pn_invserse_sel: 1;
-                uint32_t timer_pwm_2_dummy_b14: 1;
-                uint32_t timer_pwm_2_dummy_b15: 1;
-                uint32_t timer_pwm_3_dead_zone_size: 8;
-                uint32_t timer_pwm_3_emg_stop: 1;
-                uint32_t timer_pwm_3_stop_state_0: 1;
-                uint32_t timer_pwm_3_stop_state_1: 1;
-                uint32_t timer_pwm_3_dummy_b11: 1;
-                uint32_t timer_pwm_3_dead_zone_en: 1;
-                uint32_t timer_pwm_3_pwm_pn_invserse_sel: 1;
-                uint32_t timer_pwm_3_dummy_b14: 1;
-                uint32_t timer_pwm_3_dummy_b15: 1;
-            } b;
-        } TIMER_PWM_WRAP_CFG_TypeDef;
+/* 0x33C
+   7:0     R/W    timer_pwm_2_dead_zone_size        8'h0
+   8       R/W    timer_pwm_2_emg_stop              1'h0
+   9       R/W    timer_pwm_2_stop_state[0]         1'h0
+   10      R/W    timer_pwm_2_stop_state[1]         1'h0
+   11      R/W    timer_pwm_2_dummy_b11             1'h0
+   12      R/W    timer_pwm_2_dead_zone_en          1'h0
+   13      R/W    timer_pwm_2_pwm_pn_invserse_sel   1'h0
+   14      R/W    timer_pwm_2_dummy_b14             1'h0
+   15      R/W    timer_pwm_2_dummy_b15             1'h0
+   23:16   R/W    timer_pwm_3_dead_zone_size        8'h0
+   24      R/W    timer_pwm_3_emg_stop              1'h0
+   25      R/W    timer_pwm_3_stop_state[0]         1'h0
+   26      R/W    timer_pwm_3_stop_state[1]         1'h0
+   27      R/W    timer_pwm_3_dummy_b11             1'h0
+   28      R/W    timer_pwm_3_dead_zone_en          1'h0
+   29      R/W    timer_pwm_3_pwm_pn_invserse_sel   1'h0
+   30      R/W    timer_pwm_3_dummy_b14             1'h0
+   31      R/W    timer_pwm_3_dummy_b15             1'h0
+*/
+typedef union
+{
+    uint32_t d32;
+    uint8_t d8[4];
+    struct
+    {
+        uint32_t timer_pwm_2_dead_zone_size: 8;
+        uint32_t timer_pwm_2_emg_stop: 1;
+        uint32_t timer_pwm_2_stop_state_0: 1;
+        uint32_t timer_pwm_2_stop_state_1: 1;
+        uint32_t timer_pwm_2_dummy_b11: 1;
+        uint32_t timer_pwm_2_dead_zone_en: 1;
+        uint32_t timer_pwm_2_pwm_pn_invserse_sel: 1;
+        uint32_t timer_pwm_2_dummy_b14: 1;
+        uint32_t timer_pwm_2_dummy_b15: 1;
+        uint32_t timer_pwm_3_dead_zone_size: 8;
+        uint32_t timer_pwm_3_emg_stop: 1;
+        uint32_t timer_pwm_3_stop_state_0: 1;
+        uint32_t timer_pwm_3_stop_state_1: 1;
+        uint32_t timer_pwm_3_dummy_b11: 1;
+        uint32_t timer_pwm_3_dead_zone_en: 1;
+        uint32_t timer_pwm_3_pwm_pn_invserse_sel: 1;
+        uint32_t timer_pwm_3_dummy_b14: 1;
+        uint32_t timer_pwm_3_dummy_b15: 1;
+    } b;
+} TIMER_PWM_WRAP_CFG_TypeDef;
 
-    /* ================================================================================ */
-    /* ================                   TIMER  Constants             ================ */
-    /* ================================================================================ */
-    /** \defgroup TIM         TIM
-      * \brief
-      * \{
-      */
+/* ================================================================================ */
+/* ================                   TIMER  Constants             ================ */
+/* ================================================================================ */
+/** \defgroup TIM         TIM
+  * \brief
+  * \{
+  */
 
-    /** \defgroup TIM_Exported_Constants TIM Exported Constants
-      * \brief
-      * \{
-      */
+/** \defgroup TIM_Exported_Constants TIM Exported Constants
+  * \brief
+  * \{
+  */
 
-    /**
-     * \defgroup    TIM_Clock_Source TIM Clock Source
-     * \{
-     * \ingroup     TIM_Exported_Constants
-     */
-    typedef enum
+/**
+ * \defgroup    TIM_Clock_Source TIM Clock Source
+ * \{
+ * \ingroup     TIM_Exported_Constants
+ */
+typedef enum
 {
     TIM_CLOCK_SRC_40M = 0x0,    //!< The TIM clock source is 40MHz.
     TIM_CLOCK_SRC_32K = 0x1,    //!< The TIM clock source is 32KHz.
@@ -350,7 +352,7 @@ typedef union
 #define IS_TIM_CLK_SOURCE(PERIPH)     (((PERIPH) == TIM_CLOCK_SRC_40M ) || \
                                        ((PERIPH) == TIM_CLOCK_SRC_32K ) || \
                                        ((PERIPH) == TIM_CLOCK_SRC_PLL1) || \
-                                       ((PERIPH) == TIM_CLOCK_SRC_PLL2))
+                                       ((PERIPH) == TIM_CLOCK_SRC_PLL2)) //!< Check if the input parameter is valid.
 
 /** End of TIM_Clock_Source
   * \}
@@ -380,7 +382,7 @@ typedef enum
                              ((DIV) == TIM_CLOCK_DIVIDER_16) || \
                              ((DIV) == TIM_CLOCK_DIVIDER_32) || \
                              ((DIV) == TIM_CLOCK_DIVIDER_40) || \
-                             ((DIV) == TIM_CLOCK_DIVIDER_64))
+                             ((DIV) == TIM_CLOCK_DIVIDER_64)) //!< Check if the input parameter is valid.
 
 /** End of TIM_Clock_Divider
   * \}

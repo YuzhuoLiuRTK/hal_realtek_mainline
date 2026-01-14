@@ -216,7 +216,6 @@ void AON_QDEC_INTMask(AON_QDEC_TypeDef *AON_QDECx, uint32_t AON_QDEC_AXIS,
   * \param  NewState: This parameter can be one of the following values:
   *         \arg ENABLE: Pause.
   *         \arg DISABLE: Resume.
-  * \return The count of the axis.
   */
 void AON_QDEC_Cmd(AON_QDEC_TypeDef *AON_QDECx, uint32_t AON_QDEC_AXIS,
                   FunctionalState NewState)

@@ -67,8 +67,8 @@ extern "C" {
  */
 typedef enum
 {
-    PAD_NOT_PWRON,
-    PAD_IS_PWRON = 1
+    PAD_NOT_PWRON,     //!< Disable pad power mode.
+    PAD_IS_PWRON = 1   //!< Enable pad power mode.
 } PADPowerMode_TypeDef;
 
 /** End of PAD_Power_Mode
@@ -82,8 +82,8 @@ typedef enum
  */
 typedef enum
 {
-    PAD_OUT_DISABLE,
-    PAD_OUT_ENABLE
+    PAD_OUT_DISABLE,   //!< Disable pad output.
+    PAD_OUT_ENABLE     //!< Enable pad output.
 } PADOutputMode_TypeDef;
 
 /** End of PAD_Output_Config
@@ -97,8 +97,8 @@ typedef enum
  */
 typedef enum
 {
-    PAD_OUT_LOW,
-    PAD_OUT_HIGH
+    PAD_OUT_LOW,     //!< The pad outputs a low level.
+    PAD_OUT_HIGH     //!< The pad outputs a high level.
 } PADOutputValue_TypeDef;
 
 /** End of PAD_Output_Value
@@ -112,9 +112,9 @@ typedef enum
  */
 typedef enum
 {
-    PAD_PULL_DOWN,
-    PAD_PULL_UP,
-    PAD_PULL_NONE,
+    PAD_PULL_DOWN,     //!< Enable the pull-down resistor function for the pad.
+    PAD_PULL_UP,       //!< Enable the pull-up resistor function for the pad.
+    PAD_PULL_NONE,     //!< Pad is in a floating state.
 } PADPullMode_TypeDef;
 
 /** End of PAD_Pull_Mode
@@ -128,8 +128,8 @@ typedef enum
  */
 typedef enum
 {
-    PAD_PULL_WEAK,
-    PAD_PULL_STRONG,
+    PAD_PULL_WEAK,       //!< PAD pull mode is weak pull mode.
+    PAD_PULL_STRONG,     //!< PAD pull mode is srtong pull mode.
 } PADPullStrengthMode_TypeDef;
 
 /** End of PAD_Pull_Strength_Mode
@@ -140,14 +140,15 @@ typedef enum
  * \defgroup    PAD_Driving_Current_Value PAD Driving Current Value
  * \{
  * \ingroup     PINMUX_Exported_Constants
+ * \brief       Detailed  level and current relationship refers to \ref PAD_Constant_Wrapper.
  */
 typedef enum
 {
-    LEVEL0,
-    LEVEL2,
+    LEVEL0,   //!< The PAD driving current is set to level 0.
+    LEVEL2,   //!< The PAD driving current is set to level 2.
 #if (PAD_DRIVING_CURRENT_LEVEL == 4)
-    LEVEL1,
-    LEVEL3,
+    LEVEL1,   //!< The PAD driving current is set to level 1.
+    LEVEL3,   //!< The PAD driving current is set to level 3.
 #endif
 } PADDrivingCurrent_TypeDef;
 
@@ -162,8 +163,8 @@ typedef enum
  */
 typedef enum
 {
-    PAD_WAKEUP_DEB_DISABLE,
-    PAD_WAKEUP_DEB_ENABLE
+    PAD_WAKEUP_DEB_DISABLE,   //!< Disable pad wakeup debounce function.
+    PAD_WAKEUP_DEB_ENABLE     //!< Enable pad wakeup debounce function.
 } PADWakeupDebCmd_TypeDef;
 
 /** End of PAD_WakeUp_Debounce
@@ -177,8 +178,8 @@ typedef enum
  */
 typedef enum
 {
-    PAD_WAKEUP_DISABLE,
-    PAD_WAKEUP_ENABLE
+    PAD_WAKEUP_DISABLE,    //!< Disable PAD wakeup function.
+    PAD_WAKEUP_ENABLE      //!< Enable PAD wakeup function.
 } PADWakeupCmd_TypeDef;
 
 /** End of PAD_WakeUp
@@ -192,8 +193,8 @@ typedef enum
  */
 typedef enum
 {
-    PAD_SHORT_PULSE_WAKEUP_DISABLE,
-    PAD_SHORT_PULSE_WAKEUP_ENABLE
+    PAD_SHORT_PULSE_WAKEUP_DISABLE,    //!< Disable PAD short pulse wakeup function.
+    PAD_SHORT_PULSE_WAKEUP_ENABLE      //!< Enable PAD short pulse wakeup function.
 } PADSPWakeupCmd_TypeDef;
 
 /** End of PAD_Short_Pulse_WakeUp
@@ -207,9 +208,9 @@ typedef enum
  */
 typedef enum
 {
-    PAD_WAKEUP_POL_HIGH,
-    PAD_WAKEUP_POL_LOW,
-    PAD_WAKEUP_NONE
+    PAD_WAKEUP_POL_HIGH,    //!< PAD wakeup polarity is high.
+    PAD_WAKEUP_POL_LOW,     //!< PAD wakeup polarity is low.
+    PAD_WAKEUP_NONE         //!< PAD wakeup polarity is none.
 } PADWakeupPolarity_TypeDef;
 
 /** End of PAD_WakeUp_Polarity
@@ -223,13 +224,13 @@ typedef enum
  */
 typedef enum
 {
-    PAD_DEB_FREQ_32KHz,
-    PAD_DEB_FREQ_16KHz,
-    PAD_DEB_FREQ_8KHz = 3,
-    PAD_DEB_FREQ_4KHz = 7,
-    PAD_DEB_FREQ_2KHz = 15,
-    PAD_DEB_FREQ_1KHz = 31,
-    PAD_DEB_FREQ_500Hz = 63,
+    PAD_DEB_FREQ_32KHz,         //!< The frequency of PAD debounce is 32kHz.
+    PAD_DEB_FREQ_16KHz,         //!< The frequency of PAD debounce is 16kHz.
+    PAD_DEB_FREQ_8KHz = 3,      //!< The frequency of PAD debounce is 8kHz.
+    PAD_DEB_FREQ_4KHz = 7,      //!< The frequency of PAD debounce is 4kHz.
+    PAD_DEB_FREQ_2KHz = 15,     //!< The frequency of PAD debounce is 2kHz.
+    PAD_DEB_FREQ_1KHz = 31,     //!< The frequency of PAD debounce is 1kHz.
+    PAD_DEB_FREQ_500Hz = 63,    //!< The frequency of PAD debounce is 500Hz.
 } PADWakeupDebFreq_TypeDef;
 
 /** End of PAD_Debounce_Frequency
@@ -243,17 +244,17 @@ typedef enum
  */
 typedef enum
 {
-    PAD_SW_MODE,
+    PAD_SW_MODE,            //!< PAD pin is configured in software mode.
 #if PAD_SUPPORT_MULTI_CORE
-    PAD_V1_PINMUX_MODE,     //Vcore1
-    PAD_V2_V4_PINMUX_MODE,  //Vcore2&4
-    PAD_V3_PINMUX_MODE,     //Vcore3
-    PAD_PINMUX_MODE = PAD_V2_V4_PINMUX_MODE,
+    PAD_V1_PINMUX_MODE,     //!< PAD pin is configured in vcore1 pinmux mode.
+    PAD_V2_V4_PINMUX_MODE,  //!< PAD pin is configured in Vcore2&4 pinmux mode.
+    PAD_V3_PINMUX_MODE,     //!< PAD pin is configured in Vcore3 pinmux mode.
+    PAD_PINMUX_MODE = PAD_V2_V4_PINMUX_MODE, //!< PAD pins are configured in pinmux mode.
 #elif PAD_SUPPORT_PON_DOMAIN
-    PAD_PON_MODE,
-    PAD_PINMUX_MODE,
+    PAD_PON_MODE,          //!< PAD pin is configured in pon domain mode.
+    PAD_PINMUX_MODE,       //!< PAD pin is configured in pinmux mode.
 #else
-    PAD_PINMUX_MODE,
+    PAD_PINMUX_MODE,       //!< PAD pin is configured in pinmux mode.
 #endif
 } PADMode_TypeDef;
 
@@ -318,14 +319,14 @@ typedef enum _PAD_FUNCTION_CONFIG_VALUE
  */
 typedef enum _PIN_POWER_GROUP
 {
-    INVALID_PIN_GROUP  = 0,
-    VDDIO1             = 1,
-    VDDIO2             = 2,
-    VDDIO3             = 3,
-    VDDIO4             = 4,
-    VDDIO5             = 5,
-    VCODEC             = 6,
-    GROUP_ADC          = 7,
+    INVALID_PIN_GROUP  = 0,      //!< Invalid pad power group.
+    VDDIO1             = 1,      //!< Pad power group of VDDIO1 pin.
+    VDDIO2             = 2,      //!< Pad power group of VDDIO2 pin.
+    VDDIO3             = 3,      //!< Pad power group of VDDIO3 pin.
+    VDDIO4             = 4,      //!< Pad power group of VDDIO4 pin.
+    VDDIO5             = 5,      //!< Pad power group of VDDIO5 pin.
+    VCODEC             = 6,      //!< Pad power group of VCODEC pin.
+    GROUP_ADC          = 7,      //!< Pad power group of ADC pin.
 } T_PIN_POWER_GROUP;
 
 /** End of PAD_Power_Group
@@ -341,8 +342,8 @@ typedef enum _PIN_POWER_GROUP
  */
 typedef enum _ANA_MODE
 {
-    PAD_ANALOG_MODE,
-    PAD_DIGITAL_MODE,
+    PAD_ANALOG_MODE,      //!< Config Hybrid pad analog function.
+    PAD_DIGITAL_MODE,     //!< Config Hybrid pad digital function.
 } ANA_MODE;
 
 /** End of Pad_ANA_Mode
@@ -359,9 +360,9 @@ typedef enum _ANA_MODE
  */
 typedef enum _WAKEUP_EN_MODE
 {
-    ADP_MODE,
-    BAT_MODE,
-    MFB_MODE
+    ADP_MODE,    //!< Wake up by adapter.
+    BAT_MODE,    //!< Wake up by battery.
+    MFB_MODE     //!< Wake up by MFB.
 } WAKEUP_EN_MODE;
 
 /** End of WakeUp_EN_Mode
@@ -375,8 +376,8 @@ typedef enum _WAKEUP_EN_MODE
  */
 typedef enum _WAKEUP_POL
 {
-    POL_HIGH,
-    POL_LOW,
+    POL_HIGH,    //!< PAD high-level trigger wakeup.
+    POL_LOW,     //!< PAD low-level trigger wakeup.
 } WAKEUP_POL;
 
 /** End of WakeUp_Polarity
@@ -392,11 +393,11 @@ typedef enum _WAKEUP_POL
  */
 typedef enum _PAD_AON_Status
 {
-    PAD_AON_OUTPUT_LOW,
-    PAD_AON_OUTPUT_HIGH,
-    PAD_AON_OUTPUT_DISABLE,
-    PAD_AON_PINMUX_ON,
-    PAD_AON_PIN_ERR
+    PAD_AON_OUTPUT_LOW,        //!< Pad AON output low level.
+    PAD_AON_OUTPUT_HIGH,       //!< Pad AON output high level.
+    PAD_AON_OUTPUT_DISABLE,    //!< Pad AON output disable.
+    PAD_AON_PINMUX_ON,         //!< Pad AON pinmux on.
+    PAD_AON_PIN_ERR            //!< Pad AON pin error.
 } PAD_AON_Status;
 
 /** End of PAD_AON_Status
@@ -422,10 +423,6 @@ typedef enum _PAD_AON_Status
 /**
  * \brief   Configure or reset all pins to idle mode.
  *
- * \param[in] None.
- *
- * \return  None.
- *
  * <b>Example usage</b>
  * \code{.c}
  *
@@ -440,9 +437,7 @@ void Pinmux_Reset(void);
 /**
  * \brief     Configure the specified pin to idle mode.
  *
- * \param[in] Pin_Num: Pin number to be configured. \ref Pin_Number.
- *
- * \return    None.
+ * \param[in] Pin_Num  Pin number to be configured. Refer to \ref Pin_Number.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -459,9 +454,7 @@ void Pinmux_Deinit(uint8_t Pin_Num);
 /**
  * \brief  Deinit the VCORE1 IO function of one pin.
  *
- * \param[in] Pin_Num: Pin number to be configured. \ref Pin_Number.
- *
- * \return None
+ * \param[in] Pin_Num  Pin number to be configured. Refer to \ref Pin_Number.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -477,9 +470,7 @@ void Pinmux_V1_Deinit(uint8_t Pin_Num);
 /**
  * \brief  Deinit the VCORE3 IO function of one pin.
  *
- * \param[in] Pin_Num: Pin number to be configured. \ref Pin_Number.
- *
- * \return None
+ * \param[in] Pin_Num  Pin number to be configured. Refer to \ref Pin_Number.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -496,12 +487,8 @@ void Pinmux_CODEC_Deinit(uint8_t Pin_Num);
 /**
  * \brief     Configure the specified pin to its corresponding IO function.
  *
- * \param[in] Pin_Num: Pin number to be configured. \ref Pin_Number.
- *
- * \param[in] Pin_Func: IO function, please refer to rtl876x_pinmux.h "Pin_Function_Number" part.
- *            This parameter This parameter refers to \ref Pin_Function_Number
- *
- * \return    None.
+ * \param[in] Pin_Num   Pin number to be configured. Refer to \ref Pin_Number.
+ * \param[in] Pin_Func  IO function of pin. Refer to \ref PIN_Function.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -524,12 +511,8 @@ void Pinmux_Config(uint8_t Pin_Num, uint8_t Pin_Func);
 /**
  * \brief     Config the usage function of the selected pin.
  *
- * \param[in] Pin_Num: Pin number to be configured. \ref Pin_Number.
- *
- * \param[in] Pin_Func: Use VCORE3 function of pin.
- *            This parameter This parameter refers to \ref Pin_Function_Number
- *
- * \return    None.
+ * \param[in] Pin_Num   Pin number to be configured. Refer to \ref Pin_Number.
+ * \param[in] Pin_Func  IO function of pin. Refer to \ref PIN_Function.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -551,11 +534,8 @@ void Pinmux_CODEC_Config(uint8_t Pin_Num, uint8_t Pin_Func);
 /**
  * \brief  Config pin to VCORE1 domain dedicated mux.
  *
- * \param[in] Pin_Num: Pin number to be configured. \ref Pin_Number.
- *
- * \param[in] Pin_Func: mean one IO function, please refer to rtl_pinmux.h "Pin_Function_Number" part.
- *
- * \return None.
+ * \param[in] Pin_Num   Pin number to be configured. Refer to \ref Pin_Number.
+ * \param[in] Pin_Func  IO function of pin. Refer to \ref PIN_Function.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -580,9 +560,7 @@ void Pinmux_V1_Config(uint8_t Pin_Num, uint8_t Pin_Func);
 /**
  * \brief  Configure the specified pin to its corresponding pin AON function
  *
- * \param[in] Pin_Func: Pin AON function. \ref PINMUX_AON_Function.
- *
- * \return None
+ * \param[in] Pin_Func  AON function of pin. Refer to \ref PINMUX_AON_Function.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -601,9 +579,7 @@ void Pinmux_AON_Config(uint16_t Pin_Func);
 /**
  * \brief  Configure the specified pin to its corresponding pin high speed function.
  *
- * \param[in] Pin_Func: High Speed function. \ref PINMUX_HS_Function.
- *
- * \return None
+ * \param[in] Pin_Func  High Speed function. Refer to \ref PINMUX_HS_Function.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -621,35 +597,28 @@ void Pinmux_HS_Config(uint32_t Pin_Func);
  * \brief     Configure the relevant operation mode,
  *            peripheral circuit and output level value in software mode of the specified pin
  *
- * \param[in] Pin_Num: Pin number to be configured. \ref Pin_Number.
- *
- * \param[in] AON_PAD_Mode: Use software mode or pinmux mode.
- *            This parameter can be one of the following values:
- *            \arg PAD_SW_MODE: Use software mode.
- *            \arg PAD_PINMUX_MODE: Use pinmux mode.
- *
- * \param[in] AON_PAD_PwrOn: Config power of pad.
- *            This parameter can be one of the following values:
- *            \arg PAD_NOT_PWRON: Shutdown power of pad.
- *            \arg PAD_IS_PWRON: Enable power of pad.
- *
- * \param[in] AON_PAD_Pull: config pad pull mode.
- *            This parameter can be one of the following values:
- *            \arg PAD_PULL_NONE: No pull.
- *            \arg PAD_PULL_UP: Pull this pin up.
- *            \arg PAD_PULL_DOWN: Pull this pin down.
- *
- * \param[in] AON_PAD_E: Config pad out put function.
- *            This parameter can be one of the following values:
- *            \arg PAD_OUT_DISABLE: Disable pin output.
- *            \arg PAD_OUT_ENABLE: Enable pad output.
- *
- * \param[in] AON_PAD_O: Config pin output level.
- *            This parameter can be one of the following values:
- *            \arg PAD_OUT_LOW: Pad output low.
- *            \arg PAD_OUT_HIGH: Pad output high.
- *
- * \return    None.
+ * \param[in] Pin_Num        Pin number to be configured. Refer to \ref Pin_Number.
+ * \param[in] AON_PAD_Mode   Use software mode or pinmux mode.
+ *                           This parameter can be one of the following values:
+ *                           \arg PAD_SW_MODE: pad pin is configured software mode.
+ *                           \arg PAD_PINMUX_MODE: pad pin is configured pinmux mode.
+ * \param[in] AON_PAD_PwrOn  Config power of pad.
+ *                           This parameter can be one of the following values:
+ *                           \arg PAD_NOT_PWRON: pad is not power.
+ *                           \arg PAD_IS_PWRON: pad is power on.
+ * \param[in] AON_PAD_Pull   Config pad pull mode.
+ *                           This parameter can be one of the following values:
+ *                           \arg PAD_PULL_NONE: Pull None.
+ *                           \arg PAD_PULL_UP: Pull up.
+ *                           \arg PAD_PULL_DOWN: Pull down.
+ * \param[in] AON_PAD_E      Config pad out put function.
+ *                           This parameter can be one of the following values:
+ *                           \arg PAD_OUT_DISABLE: Disable pin output.
+ *                           \arg PAD_OUT_ENABLE: Enable pad output.
+ * \param[in] AON_PAD_O      Config pin output level.
+ *                           This parameter can be one of the following values:
+ *                           - PAD_OUT_LOW: Pad output low level.
+ *                           - PAD_OUT_HIGH: Pad output high level.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -670,45 +639,35 @@ void Pad_Config(uint8_t                 Pin_Num,
 
 #if PAD_SUPPORT_CONFIG_EXT
 /**
- * rtl876x_pinmux.h
- *
  * \brief     Configure the relevant operation mode, peripheral circuit, pull resistor value and
  *            output level value in software mode of the specified pin.
  *
- * \param[in] Pin_Num: Pin number to be configured. \ref Pin_Number.
- *
- * \param[in] AON_PAD_Mode: Use software mode or pinmux mode.
- *            This parameter can be one of the following values:
- *            \arg PAD_SW_MODE: Use software mode.
- *            \arg PAD_PINMUX_MODE: Use pinmux mode.
- *
- * \param[in] AON_PAD_PwrOn: Config power of pad.
- *            This parameter can be one of the following values:
- *            \arg PAD_SHUTDOWN: Shutdown power of pad.
- *            \arg PAD_IS_PWRON: Enable power of pad.
- *
- * \param[in] AON_PAD_Pull: config pad pull mode.
- *            This parameter can be one of the following values:
- *            \arg PAD_PULL_NONE: No pull.
- *            \arg PAD_PULL_UP: Pull this pin up.
- *            \arg PAD_PULL_DOWN: Pull this pin down.
- *
- * \param[in] AON_PAD_E: Config pad output function, which only valid when PAD_SW_MODE.
- *            This parameter can be one of the following values:
- *            \arg PAD_OUT_DISABLE: Disable pin output.
- *            \arg PAD_OUT_ENABLE: Enable pad output.
- *
- * \param[in] AON_PAD_O: Config pin output level, which only valid when PAD_SW_MODE and output mode.
- *            This parameter can be one of the following values:
- *            \arg PAD_OUT_LOW: Pad output low.
- *            \arg PAD_OUT_HIGH: Pad output high.
- *
- * \param[in] AON_PAD_P: Config resistor value.
- *            This parameter can be one of the following values:
- *            \arg PAD_150K_PULL: pad pull 150k resistance.
- *            \arg PAD_15K_PULL: pad pull 15k resistance.
- *
- * \return    None.
+ * \param[in] Pin_Num        Pin number to be configured. Refer to \ref Pin_Number.
+ * \param[in] AON_PAD_Mode   Use software mode or pinmux mode.
+ *                           This parameter can be one of the following values:
+ *                           \arg PAD_SW_MODE: Use software mode.
+ *                           \arg PAD_PINMUX_MODE: Use pinmux mode.
+ * \param[in] AON_PAD_PwrOn  Config power of pad.
+ *                           This parameter can be one of the following values:
+ *                           \arg PAD_SHUTDOWN: Shutdown power of pad.
+ *                           \arg PAD_IS_PWRON: Enable power of pad.
+ * \param[in] AON_PAD_Pull   Config pad pull mode.
+ *                           This parameter can be one of the following values:
+ *                           \arg PAD_PULL_NONE: No pull.
+ *                           \arg PAD_PULL_UP: Pull this pin up.
+ *                           \arg PAD_PULL_DOWN: Pull this pin down.
+ * \param[in] AON_PAD_E      Config pad output function, which only valid when PAD_SW_MODE.
+ *                           This parameter can be one of the following values:
+ *                           \arg PAD_OUT_DISABLE: Disable pin output.
+ *                           \arg PAD_OUT_ENABLE: Enable pad output.
+ * \param[in] AON_PAD_O      Config pin output level, which only valid when PAD_SW_MODE and output mode.
+ *                           This parameter can be one of the following values:
+ *                           \arg PAD_OUT_LOW: Pad output low.
+ *                           \arg PAD_OUT_HIGH: Pad output high.
+ * \param[in] AON_PAD_P      Config resistor value.
+ *                           This parameter can be one of the following values:
+ *                           - PAD_150K_PULL: pad pull 150k resistance.
+ *                           - PAD_15K_PULL: pad pull 15k resistance.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -732,12 +691,11 @@ extern void Pad_ConfigExt(uint8_t Pin_Num,
 /**
  * \brief     Config the corresponding pad dedicated function.
  *
- * \param[in] Pin_Num: Pin number to be configured.
- *            This parameter is specific to certain PINs that support dedicated IO.
- *
- * \param[in] Status: Select from AON_MUX_SEL or dedicated IO.
- *
- * \return    None.
+ * \param[in] Pin_Num  Pin number to be configured.
+ *                     This parameter is specific to certain Pins that support dedicated IO.
+ * \param[in] Status   Enable or disable the pad dedicate dedicated function.
+ *                     - ENABLE: Enable the pad dedicated function.
+ *                     - DISABLE: Disable the pad dedicated function.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -753,16 +711,11 @@ void Pad_Dedicated_Config(uint8_t Pin_Num, FunctionalState Status);
 
 #if PAD_SUPPORT_CONFIG_DEFAULT
 /**
- * rtl876x_pinmux.h
- *
  * \brief   Set all pins to the default state.
- *
- * \param[in] None.
- *
- * \return None.
  *
  * <b>Example usage</b>
  * \code{.c}
+ *
  * void board_xxx_init(void)
  * {
  *     Pad_AllConfigDefault();
@@ -780,21 +733,18 @@ bool System_WakeUpDebounceMultiGroupDisable(uint8_t Pin_Num);
 /**
  * \brief     Enable the function of the wake-up system of the specified pin.
  *
- * \param[in] Pin_Num: Pin number to be configured. \ref Pin_Number.
- *
- * \param[in] Polarity: Polarity of wake-up system.
- *            This parameter can be the following:
- *            \arg PAD_WAKEUP_POL_HIGH: Use high level wakeup.
- *            \arg PAD_WAKEUP_POL_LOW: Use low level wakeup.
- *
- * \param[in] DebounceEn: Enable delay function.
- *            \arg PAD_WK_DEBOUNCE_DISABLE: Disable delay function.
- *            \arg PAD_WK_DEBOUNCE_ENABLE: Enable delay function.
- *
- * \return    None.
+ * \param[in] Pin_Num     Pin number to be configured. Refer to \ref Pin_Number.
+ * \param[in] Polarity    Polarity of wake-up system.
+ *                        This parameter can be the following:
+ *                        \arg PAD_WAKEUP_POL_HIGH: Use high level wake-up polarity.
+ *                        \arg PAD_WAKEUP_POL_LOW: Use low level wake-up polarity.
+ * \param[in] DebounceEn  Enable delay function.
+ *                        - PAD_WK_DEBOUNCE_DISABLE: Disable wake-up debounce function.
+ *                        - PAD_WK_DEBOUNCE_ENABLE: Enable wake-up debounce function.
  *
  * <b>Example usage</b>
  * \code{.c}
+ *
  * //IO enter dlps call back function.
  * void io_uart_dlps_enter(void)
  * {
@@ -811,15 +761,14 @@ void System_WakeUpPinEnable(uint8_t Pin_Num, uint8_t Polarity, uint8_t DebounceE
 /**
  * \brief     Disable the function of the wake-up system of the specified pin.
  *
- * \param[in] Pin_Num: Pin number to be configured. \ref Pin_Number.
- *
- * \return    None.
+ * \param[in] Pin_Num  Pin number to be configured. Refer to \ref Pin_Number.
  *
  * <b>Example usage</b>
  * \code{.c}
+ *
  * #define UART_RX_PIN                P4_1
  *
- * //System interrupt handler function, for wakeup pin.
+ * //System interrupt handler function, for wake-up pin.
  * void System_Handler(void)
  * {
  *     if (System_WakeUpInterruptValue(UART_RX_PIN) == SET)
@@ -836,14 +785,15 @@ void System_WakeUpPinDisable(uint8_t Pin_Num);
 /**
  * \brief   Get pin interrupt status.
  *
- * \param[in] Pin_Num: Pin number to be configured. \ref Pin_Number.
+ * \param[in] Pin_Num  Pin number to be configured. Refer to \ref Pin_Number.
  *
  * \return Interrupt status.
- *         \retval 1: Pin wake up system.
- *         \retval 0: The pin does not wake up the system.
+ *         - 1: Pin wake up interrupt status is true.
+ *         - 0: Pin wake up interrupt status is false.
  *
  * <b>Example usage</b>
  * \code{.c}
+ *
  * #define UART_RX_PIN                P4_1
  *
  * //System interrupt handler function, for wakeup pin.
@@ -863,15 +813,11 @@ uint8_t System_WakeUpInterruptValue(uint8_t Pin_Num);
 /**
  * \brief  Enable or disable wake-up debounce function.
  *
- * \param[in]  Pin_Num: Pin number to be configured. \ref Pin_Number.
- * \note  Pin_Num is invalid parameter for rtl87x2g series
- *                so that any pin can be filled in.
- *
- * \param  PADWakeupCmd_TypeDef: wake-up system enable or disable
- *         \arg PAD_WAKEUP_DISABLE: Disable wakeup.
- *         \arg PAD_WAKEUP_DISABLE: Enable wakeup.
- *
- * \return None.
+ * \param[in] Pin_Num               Pin number to be configured. Refer to \ref Pin_Number.
+ * \note                            Pin_Num is invalid parameter for rtl87x2g series so that any pin can be filled in.
+ * \param[in] PADWakeupCmd_TypeDef  Wake-up system enable or disable
+ *                                  - PAD_WAKEUP_DISABLE: Disable wake-up function.
+ *                                  - PAD_WAKEUP_DISABLE: Enable wake-up function.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -898,13 +844,9 @@ void System_WakeUpDebounceCmd(uint8_t Pin_Num, PADWakeupCmd_TypeDef Status);
 /**
  * \brief   Config wake up system debounce time.
  *
- * \param[in]  Pin_Num: Pin number to be configured. \ref Pin_Number.
- * \note  Pin_Num is invalid parameter for rtl87x2g series
- *        so that any pin can be filled in.
- *
- * \param[in] time: Debounce time.
- *
- * \return None.
+ * \param[in] Pin_Num  Pin number to be configured. Refer to \ref Pin_Number.
+ * \note               Pin_Num is invalid parameter for rtl87x2g series so that any pin can be filled in.
+ * \param[in] time_ms  Debounce time. Unit: ms.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -920,13 +862,9 @@ void System_WakeUpDebounceTime(uint8_t Pin_Num, uint8_t time_ms);
 /**
  * \brief   Config wake up system debounce time.
  *
- * \param[in]  Pin_Num: Pin number to be configured. \ref Pin_Number.
- * \note  Pin_Num is invalid parameter for rtl87x2g series
- *        so that any pin can be filled in.
- *
- * \param[in] time: Debounce time.
- *
- * \return None.
+ * \param[in] Pin_Num  Pin number to be configured. Refer to \ref Pin_Number.
+ * \note               Pin_Num is invalid parameter for rtl87x2g series so that any pin can be filled in.
+ * \param[in] time_us  Debounce time. Unit: us.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -942,12 +880,12 @@ void System_WakeUpDebounceTimeUs(uint8_t Pin_Num, uint8_t time_us);
 /**
  * \brief  Get debounce wake up status.
  *
- * \param[in]  Pin_Num: Pin number to be configured. \ref Pin_Number.
- * \note  Pin_Num is invalid parameter for rtl87x2g series
- *                    so that any pin can be filled in.
+ * \param[in] Pin_Num  Pin number to be configured. Refer to \ref Pin_Number.
+ * \note               Pin_Num is invalid parameter for rtl87x2g series so that any pin can be filled in.
  *
- * \return Debounce wakeup status
- *
+ * \return Debounce wakeup status.
+ *         - 1: Pin debounce wakeup status is true.
+ *         - 0: Pin debounce wakeup status is false.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -964,11 +902,8 @@ uint8_t System_WakeupDebounceStatus(uint8_t Pin_Num);
 /**
  * \brief  Clear debounce wake up status. Call this API will clear the debunce wakeup status bit.
  *
- * \param[in]  Pin number to be configured. \ref Pin_Number.
- * \note  Pin_Num is invalid parameter for rtl87x2g series
- *        so that any pin can be filled in.
- *
- * \return None
+ * \param[in] Pin_Num  Pin number to be configured. Refer to \ref Pin_Number.
+ * \note               Pin_Num is invalid parameter for rtl87x2g series so that any pin can be filled in.
  *
  *
  * <b>Example usage</b>
@@ -985,14 +920,9 @@ void System_WakeupDebounceClear(uint8_t Pin_Num);
 /**
  * \brief     Configure the driving current.
  *
- * \param[in] Pin_Num: Pin number to be configured. \ref Pin_Number.
- *
- * \param[in] PAD_Driving_Current: This parameter sets the driving current.
- *            This parameter can be the following:
- *            \arg PAD_DRIVING_CURRENT_4mA.
- *            \arg PAD_DRIVING_CURRENT_8mA.
- *
- * \return    None.
+ * \param[in] Pin_Num              Pin number to be configured. Refer to \ref Pin_Number.
+ * \param[in] PAD_Driving_Current  This parameter sets the driving current.
+ *                                 Refer to \ref PADDrivingCurrent_TypeDef.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -1008,14 +938,11 @@ void Pad_SetDrivingCurrent(uint8_t Pin_Num, PADDrivingCurrent_TypeDef PAD_Drivin
 /**
  * \brief     Set pin control mode.
  *
- * \param[in] Pin_Num: Pin number to be configured. \ref Pin_Number.
- *
- * \param[in] value: This parameter sets the pin mode.
- *            This parameter can be the following:
- *            \arg PAD_SW_MODE: Software mode.
- *            \arg PAD_PINMUX_MODE: Default pinmux mode.
- *
- * \return    None.
+ * \param[in] Pin_Num  Pin number to be configured. Refer to \ref Pin_Number.
+ * \param[in] value    This parameter sets the pin mode.
+ *                     This parameter can be the following:
+ *                     - PAD_SW_MODE: Software mode.
+ *                     - PAD_PINMUX_MODE: Pinmux mode.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -1031,14 +958,11 @@ void Pad_SetControlMode(uint8_t Pin_Num, PADMode_TypeDef PAD_Mode);
 /**
  * \brief     Enable or disable pad output mode.
  *
- * \param[in] Pin_Num: Pin number to be configured. \ref Pin_Number.
- *
- * \param[in] value: This parameter sets whether the pin outputs the level in software mode.
- *            This parameter can be enumerated PAD_OUTPUT_ENABLE_Mod of the values:
- *            \arg PAD_OUT_DISABLE: Disable output.
- *            \arg PAD_OUT_ENABLE: Enable output.
- *
- * \return    None.
+ * \param[in] Pin_Num  Pin number to be configured. Refer to \ref Pin_Number.
+ * \param[in] value    This parameter sets whether the pin outputs the level in software mode.
+ *                     This parameter can be enumerated \ref PAD_Output_Config of the values:
+ *                     - PAD_OUT_DISABLE: Disable output.
+ *                     - PAD_OUT_ENABLE: Enable output.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -1054,14 +978,11 @@ void Pad_OutputCmd(uint8_t Pin_Num, PADOutputMode_TypeDef Status);
 /**
  * \brief     Configure pad output level.
  *
- * \param[in] Pin_Num: Pin number to be configured. \ref Pin_Number.
- *
- * \param[in] value: Config pin output level.
- *            This parameter can be one of the following values:
- *            \arg PAD_OUT_LOW: Pad output low.
- *            \arg PAD_OUT_HIGH: Pad output high.
- *
- * \return    None.
+ * \param[in] Pin_Num  Pin number to be configured. Refer to \ref Pin_Number.
+ * \param[in] value    Config pin output level.
+ *                     This parameter can be one of the following values:
+ *                     - PAD_OUT_LOW: Pad output low.
+ *                     - PAD_OUT_HIGH: Pad output high.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -1075,16 +996,13 @@ void Pad_OutputCmd(uint8_t Pin_Num, PADOutputMode_TypeDef Status);
 void Pad_SetOutputLevel(uint8_t Pin_Num, uint8_t value);
 
 /**
- * \brief     Enable or disable pad pull-up / pull-down resistance function.
+ * \brief     Enable or disable pad pull resistance.
  *
- * \param[in] Pin_Num: Pin number to be configured. \ref Pin_Number.
- *
- * \param[in] value: This parameter enable or disable the the pad pin pull-up/pull-down function.
- *            This parameter can be the following:
- *            \arg DISABLE: Disable pad pull-up / pull-down function.
- *            \arg ENABLE: Enable  pad pull-up / pull-down function.
- *
- * \return    None.
+ * \param[in] Pin_Num  Pin number to be configured. Refer to \ref Pin_Number.
+ * \param[in] value    This parameter enable or disable the the pad pin pull resistance.
+ *                     This parameter can be the following value:
+ *                     - DISABLE: Disable pad pull function.
+ *                     - ENABLE: Enable  pad pull function.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -1100,14 +1018,12 @@ void Pad_PullCmd(uint8_t Pin_Num, FunctionalState Status);
 /**
  * \brief     Pad pull-up/pull-down resistance function selection.
  *
- * \param[in] Pin_Num: Pin number to be configured. \ref Pin_Number.
- *
- * \param[in] value: This parameter sets whether the pin pull-up or pull-down.
- *            This parameter can be the following:
- *            \arg 0: Config pad pull-up function.
- *            \arg 1: Config  pad pull-down function.
- *
- * \return    None.
+ * \param[in] Pin_Num        Pin number to be configured. Refer to \ref Pin_Number.
+ * \param[in] PAD_Pull_Mode  Config pad pull mode.
+ *                           This parameter can be the following values, refer to \ref PAD_Pull_Mode.
+ *                           - PAD_PULL_NONE: No pull.
+ *                           - PAD_PULL_UP: Pull this pin up
+ *                           - PAD_PULL_DOWN: Pull this pin down.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -1123,21 +1039,18 @@ void Pad_SetPullMode(uint8_t Pin_Num, PADPullMode_TypeDef PAD_Pull_Mode);
 /**
  * \brief     Configure the strength of pull-up/pull-down resistance.
  *
- * \param[in] Pin_Num: Pin number to be configured. \ref Pin_Number.
- *
- * \param[in] value: This parameter sets the strength of pull-up/pull-down resistance.
- *            This parameter can be the following:
- *            \arg PAD_WEAK_PULL: Resistance weak pull.
- *            \arg PAD_STRONG_PULL: Resistance strong pull.
- *
- * \return    None.
+ * \param[in] Pin_Num                 Pin number to be configured. Refer to \ref Pin_Number.
+ * \param[in] PAD_Pull_Strength_Mode  This parameter sets the strength of pull-up/pull-down resistance.
+ *                                    This parameter can be the following values, refer to \ref PAD_Pull_Strength_Mode.
+ *                                    - PAD_PULL_WEAK: Resistance weak pull.
+ *                                    - PAD_PULL_STRONG: Resistance strong pull.
  *
  * <b>Example usage</b>
  * \code{.c}
  *
  * void board_xxx_init(void)
  * {
- *     Pad_PullConfigValue(P2_0, PAD_STRONG_PULL);
+ *     Pad_PullConfigValue(P2_0, PAD_PULL_STRONG);
  * }
  * \endcode
  */
@@ -1146,14 +1059,11 @@ void Pad_SetPullStrength(uint8_t Pin_Num, PADPullStrengthMode_TypeDef PAD_Pull_S
 /**
  * \brief     Set pin power mode.
  *
- * \param[in] Pin_Num: Pin number to be configured. \ref Pin_Number.
- *
- * \param[in] value: This parameter sets the power supply mode of the pin,
- *            and the value is enumeration PADPowerMode_TypeDef One of the values.
- *            \arg PAD_NOT_PWRON: Power off.
- *            \arg PAD_IS_PWRON: Power on.
- *
- * \return    None.
+ * \param[in] Pin_Num   Pin number to be configured. Refer to \ref Pin_Number.
+ * \param[in] PWR_Mode  Config power of pad.
+ *                      This parameter can be the following values, refer to \ref PAD_Power_Mode.
+ *                      - PAD_NOT_PWRON: Power off.
+ *                      - PAD_IS_PWRON: Power on.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -1167,11 +1077,9 @@ void Pad_SetPullStrength(uint8_t Pin_Num, PADPullStrengthMode_TypeDef PAD_Pull_S
 void Pad_PowerCmd(uint8_t Pin_Num, PADPowerMode_TypeDef PWR_Mode);
 
 /**
- * \brief     Clear the interrupt pending bit of the specified pin
+ * \brief     Clear the interrupt pending bit of the specified pin.
  *
- * \param[in] Pin_Num: Pin number to be configured. \ref Pin_Number.
- *
- * \return    None.
+ * \param[in] Pin_Num  Pin number to be configured. Refer to \ref Pin_Number.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -1187,9 +1095,7 @@ void Pad_ClearWakeupINTPendingBit(uint8_t Pin_Num);
 /**
  * \brief     Clear all wake up pin interrupt pending bit.
  *
- * \param[in] Pin_Num: Pin number to be configured. \ref Pin_Number.
- *
- * \return    None.
+ * \param[in] Pin_Num  Pin number to be configured. Refer to \ref Pin_Number.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -1205,10 +1111,8 @@ void Pad_ClearAllWakeupINT(void);
 /**
  * \brief  Short pulse wakeup function.
  *
- * \param[in] Status: PAD_SHORT_PULSE_WAKEUP_DISABLE or PAD_SHORT_PULSE_WAKEUP_ENABLE.
- *            This parameter refer to PAD_SHORT_PULSE_WAKEUP_EN.
- *
- * \return  None.
+ * \param[in] Status  PAD_SHORT_PULSE_WAKEUP_DISABLE or PAD_SHORT_PULSE_WAKEUP_ENABLE.
+ *                    This parameter refer to \ref PAD_SHORT_PULSE_WAKEUP_EN.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -1226,18 +1130,16 @@ void Pad_ShortPulseWakeUpCmd(PADSPWakeupCmd_TypeDef Status);
 /**
  * \brief  Get aon wake up int.
  *
- * \param[in] None.
- *
  * \return  Wakeup intterupt.
- * \retval  bit0: aon pad wake up int
- * \retval  bit1: aon lpc0 wake up int
- * \retval  bit2: aon lpc1 wake up int
- * \retval  bit3: aon qdec wake up int
- * \retval  bit4: aon vadbuf wake up int
- * \retval  bit5: aon vad wake up int
- * \retval  bit6: aon usb wake up int
- * \retval  bit7: aon rtc wake up int
- * \retval  bit8: aon pf rtc wake up int
+ *          - bit0: aon pad wake up int
+ *          - bit1: aon lpc0 wake up int
+ *          - bit2: aon lpc1 wake up int
+ *          - bit3: aon qdec wake up int
+ *          - bit4: aon vadbuf wake up int
+ *          - bit5: aon vad wake up int
+ *          - bit6: aon usb wake up int
+ *          - bit7: aon rtc wake up int
+ *          - bit8: aon pf rtc wake up int
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -1254,10 +1156,6 @@ uint32_t get_aon_wakeup_int(void);
 /**
  * \brief  Clear aon wake up int.
  *
- * \param[in] None.
- *
- * \return  None.
- *
  * <b>Example usage</b>
  * \code{.c}
  *
@@ -1272,21 +1170,20 @@ void clear_aon_wakeup_int(void);
 
 #if PAD_SUPPORT_GET_OUTPUT_CTRL
 /**
- * rtl876x_pinmux.h
- *
  * \brief   Get pad current output/input setting.
  *
- * \param[in] Pin_Num: Pin number to be configured. \ref Pin_Number.
+ * \param[in] Pin_Num  Pin number to be configured. Refer to \ref Pin_Number.
  *
- * \return   reference PAD_AON_Status.
- *           \retval PAD_AON_OUTPUT_LOW: Pad AON output low level.
- *           \retval PAD_AON_OUTPUT_HIGH: Pad AON output high level.
- *           \retval PAD_AON_OUTPUT_DISABLE: Pad AON output disable.
- *           \retval PAD_AON_PINMUX_ON: Pad AON pinmux on.
- *           \retval PAD_AON_PIN_ERR: Pad AON pin error.
+ * \return   Refer to \ref PAD_AON_Status.
+ *           - PAD_AON_OUTPUT_LOW: Pad AON output low level.
+ *           - PAD_AON_OUTPUT_HIGH: Pad AON output high level.
+ *           - PAD_AON_OUTPUT_DISABLE: Pad AON output disable.
+ *           - PAD_AON_PINMUX_ON: Pad AON pinmux on.
+ *           - PAD_AON_PIN_ERR: Pad AON pin error.
  *
  * <b>Example usage</b>
  * \code{.c}
+ *
  * void pad_demo(void)
  * {
  *     if (Pad_GetOutputCtrl(P2_1) == PAD_AON_OUTPUT_LOW)
@@ -1301,16 +1198,15 @@ uint8_t Pad_GetOutputCtrl(uint8_t Pin_Num);
 
 #if PAD_SUPPORT_GET_POWER_GROUP
 /**
- * rtl876x_pinmux.h
- *
  * \brief   Get the pin power group.
  *
- * \param[in] pin: pin of set only VDDIO pin.
+ * \param[in] pin  pin of set only VDDIO pin.
  *
- * \return   get the power group of the pin. Please refer to T_PIN_POWER_GROUP.
+ * \return   get the power group of the pin. Please refer to \ref PAD_Power_Group.
  *
  * <b>Example usage</b>
  * \code{.c}
+ *
  * void pad_demo(void)
  * {
  *     Pad_GetPowerGroup(P2_1);
@@ -1322,15 +1218,13 @@ T_PIN_POWER_GROUP  Pad_GetPowerGroup(uint8_t pin);
 
 #if PAD_SUPPORT_GET_PIN_NAME
 /**
- * rtl876x_pinmux.h
- *
  * \brief   Get the pin name in string.
  *
- * \param[in] pin_num: Pin number to be configured. \ref Pin_Number.
+ * \param[in] pin_num  Pin number to be configured. Refer to \ref Pin_Number.
  *
  * \return   pin name or null.
- *           \retval pin name
- *           \retval null due to invalid pin index.
+ *           - pin name
+ *           - null due to invalid pin index.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -1345,16 +1239,11 @@ const char *Pad_GetPinName(uint8_t pin_num);
 
 #if PAD_SUPPORT_ANALOG_MODE
 /**
- * rtl876x_pinmux.h
- *
  * \brief   Config Hybrid pad analog/digital functions.
  *
- * \param[in] pin: Pin number to be configured. \ref Pin_Number.
- *
- * \param[in] mode: Please refer to ANA_MODE.
- *            \arg This parameter can be: PAD_ANALOG_MODE/PAD_DIGITAL_MODE.
- *
- * \return   None.
+ * \param[in] pin   Pin number to be configured. Refer to \ref Pin_Number.
+ * \param[in] mode  Please refer to \ref Pad_ANA_Mode.
+ *                  This parameter can be: PAD_ANALOG_MODE/PAD_DIGITAL_MODE.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -1369,28 +1258,26 @@ void Pad_AnalogMode(uint8_t pin, ANA_MODE mode);
 
 #if (PAD_SUPPORT_ADPATER_WAKEUP | PAD_SUPPORT_MFB_WAKEUP)
 /**
- * rtl876x_pinmux.h
- *
  * \brief   Config the system wakeup mode.
  *
- * \param[in] mode: mode of set, this parameter can reference WAKEUP_EN_MODE.
- *            This parameter can be one of the following values:
- *            \arg ADP_MODE: Wake up by adapter.
- *            \arg BAT_MODE: Wake up by battery.
- *            \arg MFB_MODE: Wake up by MFB.
- *            \arg USB_MODE: Wake up by USB.
- * \param[in] pol: polarity to wake up.
- *            This parameter can be the following:
- *            \arg POL_HIGH: Use high level wakeup.
- *            \arg POL_LOW: Use low level wakeup.
- * \param[in] NewState: Enable or disable wake up.
- *            This parameter can be one of the following values:
- *            \arg ENABLE: Enable the system wake up at specified polarity.
- *            \arg DISABLE: Disable the system wake up at specified polarity.
+ * \param[in] mode      Mode of set, this parameter can refer to \ref WakeUp_EN_Mode.
+ *                      This parameter can be one of the following values:
+ *                      \arg ADP_MODE: Wake up by adapter.
+ *                      \arg BAT_MODE: Wake up by battery.
+ *                      \arg MFB_MODE: Wake up by MFB.
+ *                      \arg USB_MODE: Wake up by USB.
+ * \param[in] pol       Polarity to wake up.
+ *                      This parameter can be one of the following values:
+ *                      \arg POL_HIGH: Use high level wakeup.
+ *                      \arg POL_LOW: Use low level wakeup.
+ * \param[in] NewState  Enable or disable wake up.
+ *                      This parameter can be one of the following values:
+ *                      \arg ENABLE: Enable the system wake up at specified polarity.
+ *                      \arg DISABLE: Disable the system wake up at specified polarity.
  *
  * \return     Config the system wakeup mode fail or success.
- * \retval 0   Config success.
- * \retval 1   Config fail due to wrong mode.
+ *             - 0: Config success.
+ *             - 1: Config fail due to wrong mode.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -1406,20 +1293,16 @@ uint8_t  Pad_WakeUpCmd(WAKEUP_EN_MODE mode, WAKEUP_POL pol, FunctionalState NewS
 
 #if PAD_SUPPORT_ADPATER_WAKEUP
 /**
- * rtl876x_pinmux.h
- *
  * \brief   Configure the adpater wake-up system functions in power off(shipping) mode.
  *
- * \param[in] NewState: Enable or disable adpater wake up.
- *            This parameter can be one of the following values:
- *            \arg ENABLE: Enable adpater wake up system at specified polarity.
- *            \arg DISABLE: Disable adpater wake up system.
- * \param[in] pol: Polarity to wake up.
- *            This parameter can be the following:
- *            \arg POL_HIGH: Use high level wakeup.
- *            \arg POL_LOW: Use low level wakeup.
- *
- * \return None.
+ * \param[in] NewState  Enable or disable adpater wake up.
+ *                      This parameter can be one of the following values:
+ *                      \arg ENABLE: Enable adpater wake up system at specified polarity.
+ *                      \arg DISABLE: Disable adpater wake up system.
+ * \param[in] pol       Polarity to wake up.
+ *                      This parameter can be one of the following values:
+ *                      - POL_HIGH: Use high level wakeup.
+ *                      - POL_LOW: Use low level wakeup.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -1435,16 +1318,12 @@ void System_SetAdpWakeUpFunction(FunctionalState NewState, WAKEUP_POL pol);
 
 #if PAD_SUPPORT_MFB_WAKEUP
 /**
- * rtl876x_pinmux.h
- *
  * \brief   Configure the MFB wake-up system functions in power off(shipping) mode.
  *
- * \param[in] NewState: Enable or disable MFB wake up.
- *            This parameter can be one of the following values:
- *            \arg ENABLE: Enable MFB wake up system.
- *            \arg DISABLE: Disable MFB wake up system.
- *
- * \return None.
+ * \param[in] NewState  Enable or disable MFB wake up.
+ *                      This parameter can be one of the following values:
+ *                      - ENABLE: Enable MFB wake up system.
+ *                      - DISABLE: Disable MFB wake up system.
  *
  * <b>Example usage</b>
  * \code{.c}

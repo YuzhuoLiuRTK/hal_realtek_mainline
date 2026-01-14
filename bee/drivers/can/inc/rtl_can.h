@@ -207,99 +207,98 @@ typedef union
     struct
     {
         const uint32_t can_time_stamp: 16;  //!< The time stamp of CAN.
-            uint32_t can_time_stamp_div: 8;     //!< The div of time stamp.
-            uint32_t RESERVED_0:  7;            //!< Reserved.
-            uint32_t can_time_stamp_en: 1;      //!< The enable bit of time stamp.
-        } b;
-    } CAN_TIME_STAMP_TYPE_TypeDef;
+        uint32_t can_time_stamp_div: 8;     //!< The div of time stamp.
+        uint32_t RESERVED_0:  7;            //!< Reserved.
+        uint32_t can_time_stamp_en: 1;      //!< The enable bit of time stamp.
+    } b;
+} CAN_TIME_STAMP_TYPE_TypeDef;
 
-    typedef union
-        {
-            uint32_t d32;                   //!< The word member in the union.
-            uint8_t d8[4];                  //!< The four byte array members in the union.
-            struct
-            {
-                uint32_t can_ram_id: 29;    //!< The ID of CAN.
-                uint32_t can_ram_ide: 1;    //!< The IDE of CAN.
-                uint32_t can_ram_rtr: 1;    //!< The RTR of CAN.
-            } b;
-        } CAN_RAM_ARB_TYPE_TypeDef;
+typedef union
+{
+    uint32_t d32;                   //!< The word member in the union.
+    uint8_t d8[4];                  //!< The four byte array members in the union.
+    struct
+    {
+        uint32_t can_ram_id: 29;    //!< The ID of CAN.
+        uint32_t can_ram_ide: 1;    //!< The IDE of CAN.
+        uint32_t can_ram_rtr: 1;    //!< The RTR of CAN.
+    } b;
+} CAN_RAM_ARB_TYPE_TypeDef;
 
-    typedef union
-        {
-            uint32_t d32;                   //!< The word member in the union.
-            uint8_t d8[4];                  //!< The four byte array members in the union.
-            struct
-            {
-                uint32_t can_ram_id_mask: 29;   //!< The mask of CAN ID.
-                uint32_t can_ram_ide_mask: 1;   //!< The mask of CAN IDE.
-                uint32_t can_ram_rtr_mask: 1;   //!< The mask of CAN RTR.
-            } b;
-        } CAN_RAM_MASK_TYPE_TypeDef;
+typedef union
+{
+    uint32_t d32;                   //!< The word member in the union.
+    uint8_t d8[4];                  //!< The four byte array members in the union.
+    struct
+    {
+        uint32_t can_ram_id_mask: 29;   //!< The mask of CAN ID.
+        uint32_t can_ram_ide_mask: 1;   //!< The mask of CAN IDE.
+        uint32_t can_ram_rtr_mask: 1;   //!< The mask of CAN RTR.
+    } b;
+} CAN_RAM_MASK_TYPE_TypeDef;
 
-    typedef union
-        {
-            uint32_t d32;                   //!< The word member in the union.
-            uint8_t d8[4];                  //!< The four byte array members in the union.
-            struct
-            {
-                uint32_t can_ram_dlc: 4;        //!< The data length.
-                uint32_t can_ram_lost:
-                1;       //!< Value 1 indicates that data have lost in the read buffer, means more than one frame have beed received since last read.
-                uint32_t can_ram_rxtx: 1;       //!< Can frame RX or TX, 0 is for RX, 1 is for TX.
-                uint32_t can_ram_autoreply: 1;  //!< Set the message buffer with remote frame auto reply function.
-                uint32_t RESERVED_1:  1;        //!< Reserved.
-                uint32_t reset: 1;              //!< Reserved.
-                uint32_t RESERVED_2: 1;         //!< Reserved.
-                uint32_t can_ram_esi: 1;        //!< The ESI of CAN.
-                uint32_t RESERVED_0:  5;        //!< Reserved.
-                uint32_t can_ram_timestamp: 16; //!< The received message time stamp.
-            } b;
-        } CAN_RAM_CS_TYPE_TypeDef;
+typedef union
+{
+    uint32_t d32;                   //!< The word member in the union.
+    uint8_t d8[4];                  //!< The four byte array members in the union.
+    struct
+    {
+        uint32_t can_ram_dlc: 4;        //!< The data length.
+        uint32_t can_ram_lost: 1;       //!< Value 1 indicates that data have lost in the read buffer, means more than one frame have beed received since last read.
+        uint32_t can_ram_rxtx: 1;       //!< Can frame RX or TX, 0 is for RX, 1 is for TX.
+        uint32_t can_ram_autoreply: 1;  //!< Set the message buffer with remote frame auto reply function.
+        uint32_t RESERVED_1:  1;        //!< Reserved.
+        uint32_t reset: 1;              //!< Reserved.
+        uint32_t RESERVED_2: 1;         //!< Reserved.
+        uint32_t can_ram_esi: 1;        //!< The ESI of CAN.
+        uint32_t RESERVED_0:  5;        //!< Reserved.
+        uint32_t can_ram_timestamp: 16; //!< The received message time stamp.
+    } b;
+} CAN_RAM_CS_TYPE_TypeDef;
 
-    typedef union
-        {
-            uint32_t d32;                       //!< The word member in the union.
-            uint8_t d8[4];                      //!< The four byte array members in the union.
-            struct
-            {
-                uint32_t can_ram_acc_num: 8;    //!< Access message buffer number.
-                uint32_t can_ram_acc_mask:
-                1;   //!< Access CAN_RAM_MASK field, the field will exchange with RAM spaces.
-                uint32_t can_ram_acc_cs:
-                1;     //!< Access CAN_RAM_CS field, the field will exchange with RAM space.
-                uint32_t can_ram_acc_arb:
-                1;    //!< Access CAN_RAM_ARB field, the field will exchange with RAM space.
-                uint32_t can_ram_acc_data:
-                16;  //!< Access CAN_RAM_DATA field, the field will exchange with RAM space.
-                uint32_t RESERVED_0:  2;        //!< Reserved.
-                uint32_t can_ram_buffer_en: 1;  //!< Enable the can_ram_acc_num specified message buffer for rx/tx.
-                uint32_t can_ram_dir:
-                1;        //!< 0 is for read from RAM to CAN_RAM_* registers, 1 is for write from CAN_RAM_* to RAM.
-                uint32_t can_ram_start:
-                1;      //!< start to exchange data with RAM, the bit will clear automatically after the data change is finshed.
-            } b;
-        } CAN_RAM_CMD_TYPE_TypeDef;
+typedef union
+{
+    uint32_t d32;                       //!< The word member in the union.
+    uint8_t d8[4];                      //!< The four byte array members in the union.
+    struct
+    {
+        uint32_t can_ram_acc_num: 8;    //!< Access message buffer number.
+uint32_t can_ram_acc_mask:
+        1;   //!< Access CAN_RAM_MASK field, the field will exchange with RAM spaces.
+uint32_t can_ram_acc_cs:
+        1;     //!< Access CAN_RAM_CS field, the field will exchange with RAM space.
+uint32_t can_ram_acc_arb:
+        1;    //!< Access CAN_RAM_ARB field, the field will exchange with RAM space.
+uint32_t can_ram_acc_data:
+        16;  //!< Access CAN_RAM_DATA field, the field will exchange with RAM space.
+        uint32_t RESERVED_0:  2;        //!< Reserved.
+        uint32_t can_ram_buffer_en: 1;  //!< Enable the can_ram_acc_num specified message buffer for rx/tx.
+uint32_t can_ram_dir:
+        1;        //!< 0 is for read from RAM to CAN_RAM_* registers, 1 is for write from CAN_RAM_* to RAM.
+uint32_t can_ram_start:
+        1;      //!< start to exchange data with RAM, the bit will clear automatically after the data change is finshed.
+    } b;
+} CAN_RAM_CMD_TYPE_TypeDef;
 
-    typedef union
-        {
-            uint32_t d32;                        //!< The word member in the union.
-            uint8_t d8[4];                       //!< The four byte array members in the union.
-            struct
-            {
-                uint32_t can_ram_data0: 8;       //!< The data0 of CAN.
-                uint32_t can_ram_data1: 8;       //!< The data1 of CAN.
-                uint32_t can_ram_data2: 8;       //!< The data2 of CAN.
-                uint32_t can_ram_data3: 8;       //!< The data3 of CAN.
-            } b;
-        } CAN_RAM_DATA_TYPE_TypeDef;
+typedef union
+{
+    uint32_t d32;                        //!< The word member in the union.
+    uint8_t d8[4];                       //!< The four byte array members in the union.
+    struct
+    {
+        uint32_t can_ram_data0: 8;       //!< The data0 of CAN.
+        uint32_t can_ram_data1: 8;       //!< The data1 of CAN.
+        uint32_t can_ram_data2: 8;       //!< The data2 of CAN.
+        uint32_t can_ram_data3: 8;       //!< The data3 of CAN.
+    } b;
+} CAN_RAM_DATA_TYPE_TypeDef;
 
-    /**
-     * \brief       CAN init structure definition.
-     *
-     * \ingroup     CAN_Exported_Types
-     */
-    typedef struct
+/**
+ * \brief       CAN init structure definition.
+ *
+ * \ingroup     CAN_Exported_Types
+ */
+typedef struct
 {
     uint8_t CAN_AutoReTxEn;                         /*!< Specify Whether the auto re-transmission function is enable.
                                                          This parameter can be a value of ENABLE or DISABLE. */

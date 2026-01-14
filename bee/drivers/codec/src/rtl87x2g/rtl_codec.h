@@ -713,7 +713,7 @@ void CODEC_MICBIASCmd(CODEC_TypeDef *CODECx, FunctionalState NewState);
  * }
  * \endcode
  */
-static inline void CODEC_Reset(CODEC_TypeDef *CODECx)
+__STATIC_INLINE void CODEC_Reset(CODEC_TypeDef *CODECx)
 {
     /* Check the parameters */
     assert_param(IS_CODEC_PERIPH(CODECx));
@@ -750,7 +750,7 @@ static inline void CODEC_Reset(CODEC_TypeDef *CODECx)
  * }
  * \endcode
  */
-static inline void CODEC_SetMICBIAS(CODEC_TypeDef *CODECx,  uint16_t data)
+__STATIC_INLINE void CODEC_SetMICBIAS(CODEC_TypeDef *CODECx,  uint16_t data)
 
 {
     /* Check the parameters */

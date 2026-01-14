@@ -19,7 +19,11 @@
  *                        Header Files
  *============================================================================*/
 #include "rtl_enh_tim.h"
-#include "rtl_rcc.h"
+
+/*============================================================================*
+ *                          Private Defines
+ *============================================================================*/
+#define  ENHTIM_DMAC_FLOW_CONTROL  0x00
 
 /*============================================================================*
  *                          Private Functions
@@ -527,6 +531,10 @@ uint32_t ENHTIM_GetCurrentCount(ENHTIM_TypeDef *ENHTIMx)
   * \brief  Set Max Count value.
   * \param  ENHTIMx: Select the ENHTIM peripheral. \ref ENHTIM_Declaration
   * \param  count: Max counter value for user-define PWM mode (leagel value: 0 ~ 2^32-2).
+  * \note   If it needs a dynamic change of MAX_CNT value, MAX_CNT has a minimum value limit.
+  *         Ex. cpu_clk = 40MHz, ETIMER_CLK = 40MHz, then MAX_CNT should larger than 10.
+  *         Ex. cpu_clk = 40MHz, ETIMER_CLK = 32kHz, then MAX_CNT should larger than 4.
+  *         If in the state where ENHTIM is disabled, there is no such limitation.
   * \return None
   */
 void ENHTIM_SetMaxCount(ENHTIM_TypeDef *ENHTIMx, uint32_t count)
@@ -534,14 +542,22 @@ void ENHTIM_SetMaxCount(ENHTIM_TypeDef *ENHTIMx, uint32_t count)
     /* Check the parameters */
     assert_param(IS_ENHTIM_ALL_PERIPH(ENHTIMx));
 
-    ENHTIMx->ENHTIM_MAX_CNT = count & 0xFFFFFFFE;
+    if (count > 0xFFFFFFFE)
+    {
+        count = 0xFFFFFFFE;
+    }
+    ENHTIMx->ENHTIM_MAX_CNT = count;
 }
 
 /**
   * \brief  Set ENHTIMx capture/compare value for user-define PWM manual mode.
   * \param  ENHTIMx: Select the ENHTIM peripheral. \ref ENHTIM_Declaration
   * \param  value: User-defined EnhtimerN capture/compare value for PWM manual mode,
-  *            ranging from 0 to 2^31.
+  *         ranging from 0 to 2^31.
+  * \note   If it needs a dynamic change of CCR value, CCR value has a minimum value limit.
+  *         Ex. cpu_clk = 40MHz, ETIMER_CLK = 40MHz, then CCR value should larger than 10.
+  *         Ex. cpu_clk = 40MHz, ETIMER_CLK = 32kHz, then CCR value should larger than 4.
+  *         If in the state where ENHTIM is disabled, there is no such limitation.
   * \return None
   */
 void ENHTIM_SetCCValue(ENHTIM_TypeDef *ENHTIMx, uint32_t value)

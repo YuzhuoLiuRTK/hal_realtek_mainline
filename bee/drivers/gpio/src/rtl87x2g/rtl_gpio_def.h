@@ -43,10 +43,10 @@ extern "C" {
  * \{
  * \ingroup  GPIO_Exported_Constants
  */
-#define GPIO_SUPPORT_SET_CONTROL_MODE                  (0)
-#define GPIO_SUPPORT_SWAP_DEB_PINBIT                   (1)
-#define GPIO_SUPPORT_LS_SYNC                           (1)
-#define GPIO_SUPPORT_INT_BOTHEDGE                      (0)
+#define GPIO_SUPPORT_SET_CONTROL_MODE                  (0) //!< The function is not supported.
+#define GPIO_SUPPORT_SWAP_DEB_PINBIT                   (1) //!< The function must be enabled when using GPIO debounce.
+#define GPIO_SUPPORT_LS_SYNC                           (1) //!< The function must be enabled when level-triggered interrupts occur.
+#define GPIO_SUPPORT_INT_BOTHEDGE                      (0) //!< The function is not supported.
 
 /** End of GPIO_Defines
   * \}
@@ -103,16 +103,17 @@ typedef struct
   * \{
   */
 
-/** \defgroup GPIO_Declaration GPIO Declaration
-  * \brief
-  * \{
-  */
+/**
+ * \defgroup GPIO_Declaration GPIO Declaration
+ * \{
+ * \ingroup  GPIO_Exported_Constants
+ */
 
-#define GPIO               ((GPIO_TypeDef          *) GPIOA_REG_BASE)
-#define GPIOA              ((GPIO_TypeDef          *) GPIOA_REG_BASE)
-#define GPIOB              ((GPIO_TypeDef          *) GPIOB_REG_BASE)
-#define GPIOA_DEB          ((GPIO_Debounce_TypeDef *) GPIOA_DEB_REG_BASE)
-#define GPIOB_DEB          ((GPIO_Debounce_TypeDef *) GPIOB_DEB_REG_BASE)
+#define GPIO               ((GPIO_TypeDef          *) GPIOA_REG_BASE)     //!< GPIO base address.
+#define GPIOA              ((GPIO_TypeDef          *) GPIOA_REG_BASE)     //!< GPIOA base address.
+#define GPIOB              ((GPIO_TypeDef          *) GPIOB_REG_BASE)     //!< GPIOB base address.
+#define GPIOA_DEB          ((GPIO_Debounce_TypeDef *) GPIOA_DEB_REG_BASE) //!< GPIOA_DEB base address.
+#define GPIOB_DEB          ((GPIO_Debounce_TypeDef *) GPIOB_DEB_REG_BASE) //!< GPIOB_DEB base address.
 
 /** End of GPIO_Declaration
   * \}
@@ -221,192 +222,192 @@ typedef union
     struct
     {
         const uint32_t gpio_intstatus: 32;
-        } b;
-    } GPIO_INT_STS_TypeDef;
+    } b;
+} GPIO_INT_STS_TypeDef;
 
 
-    /* 0x44
-       31:0    R      gpio_raw_intstatus      32'h0
-    */
-    typedef union
-        {
-            uint32_t d32;
-            uint8_t d8[4];
-            struct
-            {
-                const uint32_t gpio_raw_intstatus: 32;
-            } b;
-        } GPIO_INT_RAW_STS_TypeDef;
-
-
-    /* 0x4C
-       31:0    W      gpio_porta_eoi          32'h0
-    */
-    typedef union
-        {
-            uint32_t d32;
-            uint8_t d8[4];
-            struct
-            {
-                uint32_t gpio_porta_eoi: 32;
-            } b;
-        } GPIO_INT_CLR_TypeDef;
-
-
-
-    /* 0x60
-       0       R/W    gpio_ls_sync            1'h0
-       31:1    R/W    reserved                31'h0
-    */
-    typedef union
-        {
-            uint32_t d32;
-            uint8_t d8[4];
-            struct
-            {
-                uint32_t gpio_ls_sync: 1;
-                uint32_t reserved: 31;
-            } b;
-        } GPIO_LS_SYNC_TypeDef;
-
-
-
-    /* 0x100
-       31:0    R/W    gpio_output_mode        32'h0
-    */
-    typedef union
-        {
-            uint32_t d32;
-            uint8_t d8[4];
-            struct
-            {
-                uint32_t gpio_output_mode: 32;
-            } b;
-        } GPIO_OUT_MODE_TypeDef;
-
-
-    /* 0x104
-       31:0    R      gpio_pad_state          32'h0
-       31:0    R/W    gpio_external_porta     32'h0
-    */
-    typedef union
-        {
-            uint32_t d32;
-            uint8_t d8[4];
-            struct
-            {
-                const uint32_t gpio_pad_state: 32;
-            } b;
-        } GPIO_PAD_STATE_TypeDef;
-
-
-    /* 0x108
-       31:0    R/W    gpio_polarity           32'h0
-    */
-    typedef union
-        {
-            uint32_t d32;
-            uint8_t d8[4];
-            struct
-            {
-                uint32_t gpio_polarity: 32;
-            } b;
-        } GPIO_EXT_DEB_POL_CTL_TypeDef;
-
-    /* 0x00 ~ 0x0C
-       7:0     R/W    GPIO_G_L_CNT_LIMIT      8'h1
-       8       R/W    GPIO_G_L_DEB_CLK_SEL    1'h0
-       11:9    R/W    GPIO_G_L_DEB_CLK_DIV    3'h0
-       12      R/W    GPIO_G_L_DEB_CNT_EN     1'b0
-       15:13   R/W    DUMMY                  3'h0
-       23:16   R/W    GPIO_G_H_CNT_LIMIT      8'h1
-       24      R/W    GPIO_G_H_DEB_CLK_SEL    1'h0
-       27:25   R/W    GPIO_G_H_DEB_CLK_DIV    3'h0
-       28      R/W    GPIO_G_H_DEB_CNT_EN     1'b0
-       31:29   R/W    DUMMY                  2'h0
-    */
-    typedef union
-        {
-            uint32_t d32;
-            uint8_t d8[4];
-            struct
-            {
-                uint32_t GPIO_G_L_CNT_LIMIT: 8;
-                uint32_t GPIO_G_L_DEB_CLK_SEL: 1;
-                uint32_t GPIO_G_L_DEB_CLK_DIV: 3;
-                uint32_t GPIO_G_L_DEB_CNT_EN: 1;
-                uint32_t reserved_1: 3;
-                uint32_t GPIO_G_H_CNT_LIMIT: 8;
-                uint32_t GPIO_G_H_DEB_CLK_SEL: 1;
-                uint32_t GPIO_G_H_DEB_CLK_DIV: 3;
-                uint32_t GPIO_G_H_DEB_CNT_EN: 1;
-                uint32_t reserved_0: 3;
-            } b;
-        } GPIO_DEB_CLK_CTL_TypeDef;
-
-
-
-    /* 0x10
-       31:0    R/W    GPIO_x_DEB_FUNC_EN     32'h0
-    */
-    typedef union
-        {
-            uint32_t d32;
-            uint8_t d8[4];
-            struct
-            {
-                uint32_t GPIO_x_DEB_FUNC_EN: 32;
-            } b;
-        } GPIO_DEB_FUN_CTL_TypeDef;
-
-
-    /*============================================================================*
-     *                          GPIO Constants
-     *============================================================================*/
-    /** \defgroup GPIO        GPIO
-      * \brief
-      * \{
-      */
-
-    /** \defgroup GPIO_Exported_Constants GPIO Exported Constants
-      * \brief
-      * \{
-      */
-
-
-    /**
-     * \defgroup    GPIO_Debounce_Source GPIO Debounce Dource
-     * \{
-     * \ingroup     GPIO_Exported_Constants
-     */
-    typedef enum
+/* 0x44
+   31:0    R      gpio_raw_intstatus      32'h0
+*/
+typedef union
 {
-    GPIO_DEBOUNCE_32K = 0x0, /**< 32KHz. */
-    GPIO_DEBOUNCE_S11 = 0x1, /**< S11_clk. */
-} GPIODebounceSrc_TypeDef;
+    uint32_t d32;
+    uint8_t d8[4];
+    struct
+    {
+        const uint32_t gpio_raw_intstatus: 32;
+    } b;
+} GPIO_INT_RAW_STS_TypeDef;
 
-#define IS_GPIO_DEBOUNCE_SRC_TYPE(TYPE) (((TYPE) == GPIO_DEBOUNCE_32K) || \
-                                         ((TYPE) == GPIO_DEBOUNCE_S11))
 
-/** End of GPIO_Debounce_Source
-  * \}
+/* 0x4C
+   31:0    W      gpio_porta_eoi          32'h0
+*/
+typedef union
+{
+    uint32_t d32;
+    uint8_t d8[4];
+    struct
+    {
+        uint32_t gpio_porta_eoi: 32;
+    } b;
+} GPIO_INT_CLR_TypeDef;
+
+
+
+/* 0x60
+   0       R/W    gpio_ls_sync            1'h0
+   31:1    R/W    reserved                31'h0
+*/
+typedef union
+{
+    uint32_t d32;
+    uint8_t d8[4];
+    struct
+    {
+        uint32_t gpio_ls_sync: 1;
+        uint32_t reserved: 31;
+    } b;
+} GPIO_LS_SYNC_TypeDef;
+
+
+
+/* 0x100
+   31:0    R/W    gpio_output_mode        32'h0
+*/
+typedef union
+{
+    uint32_t d32;
+    uint8_t d8[4];
+    struct
+    {
+        uint32_t gpio_output_mode: 32;
+    } b;
+} GPIO_OUT_MODE_TypeDef;
+
+
+/* 0x104
+   31:0    R      gpio_pad_state          32'h0
+   31:0    R/W    gpio_external_porta     32'h0
+*/
+typedef union
+{
+    uint32_t d32;
+    uint8_t d8[4];
+    struct
+    {
+        const uint32_t gpio_pad_state: 32;
+    } b;
+} GPIO_PAD_STATE_TypeDef;
+
+
+/* 0x108
+   31:0    R/W    gpio_polarity           32'h0
+*/
+typedef union
+{
+    uint32_t d32;
+    uint8_t d8[4];
+    struct
+    {
+        uint32_t gpio_polarity: 32;
+    } b;
+} GPIO_EXT_DEB_POL_CTL_TypeDef;
+
+/* 0x00 ~ 0x0C
+   7:0     R/W    GPIO_G_L_CNT_LIMIT      8'h1
+   8       R/W    GPIO_G_L_DEB_CLK_SEL    1'h0
+   11:9    R/W    GPIO_G_L_DEB_CLK_DIV    3'h0
+   12      R/W    GPIO_G_L_DEB_CNT_EN     1'b0
+   15:13   R/W    DUMMY                  3'h0
+   23:16   R/W    GPIO_G_H_CNT_LIMIT      8'h1
+   24      R/W    GPIO_G_H_DEB_CLK_SEL    1'h0
+   27:25   R/W    GPIO_G_H_DEB_CLK_DIV    3'h0
+   28      R/W    GPIO_G_H_DEB_CNT_EN     1'b0
+   31:29   R/W    DUMMY                  2'h0
+*/
+typedef union
+{
+    uint32_t d32;
+    uint8_t d8[4];
+    struct
+    {
+        uint32_t GPIO_G_L_CNT_LIMIT: 8;
+        uint32_t GPIO_G_L_DEB_CLK_SEL: 1;
+        uint32_t GPIO_G_L_DEB_CLK_DIV: 3;
+        uint32_t GPIO_G_L_DEB_CNT_EN: 1;
+        uint32_t reserved_1: 3;
+        uint32_t GPIO_G_H_CNT_LIMIT: 8;
+        uint32_t GPIO_G_H_DEB_CLK_SEL: 1;
+        uint32_t GPIO_G_H_DEB_CLK_DIV: 3;
+        uint32_t GPIO_G_H_DEB_CNT_EN: 1;
+        uint32_t reserved_0: 3;
+    } b;
+} GPIO_DEB_CLK_CTL_TypeDef;
+
+
+
+/* 0x10
+   31:0    R/W    GPIO_x_DEB_FUNC_EN     32'h0
+*/
+typedef union
+{
+    uint32_t d32;
+    uint8_t d8[4];
+    struct
+    {
+        uint32_t GPIO_x_DEB_FUNC_EN: 32;
+    } b;
+} GPIO_DEB_FUN_CTL_TypeDef;
+
+
+/*============================================================================*
+ *                          GPIO Constants
+ *============================================================================*/
+/** \defgroup GPIO        GPIO
+  * \brief
+  * \{
   */
 
+/** \defgroup GPIO_Exported_Constants GPIO Exported Constants
+  * \brief
+  * \{
+  */
+
+
 /**
- * \defgroup    GPIO_Debounce_Divide GPIO Debounce Divide
+ * \defgroup    GPIO_Debounce_Clock_Source GPIO Debounce Clock Source
  * \{
  * \ingroup     GPIO_Exported_Constants
  */
 typedef enum
 {
-    GPIO_DEBOUNCE_DIVIDER_1  = 0x0, /**< debounce divide 1. */
-    GPIO_DEBOUNCE_DIVIDER_2  = 0x1, /**< debounce divide 2. */
-    GPIO_DEBOUNCE_DIVIDER_4  = 0x2, /**< debounce divide 4. */
-    GPIO_DEBOUNCE_DIVIDER_8  = 0x3, /**< debounce divide 8. */
-    GPIO_DEBOUNCE_DIVIDER_16 = 0x4, /**< debounce divide 16. */
-    GPIO_DEBOUNCE_DIVIDER_32 = 0x5, /**< debounce divide 32. */
-    GPIO_DEBOUNCE_DIVIDER_40 = 0x6, /**< debounce divide 40. */
-    GPIO_DEBOUNCE_DIVIDER_64 = 0x7, /**< debounce divide 64. */
+    GPIO_DEBOUNCE_32K = 0x0, //!< GPIO debounce clock source is 32KHz.
+    GPIO_DEBOUNCE_S11 = 0x1, //!< GPIO debounce clock source is S11_clk.
+} GPIODebounceSrc_TypeDef;
+
+#define IS_GPIO_DEBOUNCE_SRC_TYPE(TYPE) (((TYPE) == GPIO_DEBOUNCE_32K) || \
+                                         ((TYPE) == GPIO_DEBOUNCE_S11)) //!< Check if the input parameter is valid.
+
+/** End of GPIO_Debounce_Clock_Source
+  * \}
+  */
+
+/**
+ * \defgroup    GPIO_Debounce_Divider GPIO Debounce Divider
+ * \{
+ * \ingroup     GPIO_Exported_Constants
+ */
+typedef enum
+{
+    GPIO_DEBOUNCE_DIVIDER_1  = 0x0, //!< The debounce divider is 1.
+    GPIO_DEBOUNCE_DIVIDER_2  = 0x1, //!< The debounce divider is 2.
+    GPIO_DEBOUNCE_DIVIDER_4  = 0x2, //!< The debounce divider is 4.
+    GPIO_DEBOUNCE_DIVIDER_8  = 0x3, //!< The debounce divider is 8.
+    GPIO_DEBOUNCE_DIVIDER_16 = 0x4, //!< The debounce divider is 16.
+    GPIO_DEBOUNCE_DIVIDER_32 = 0x5, //!< The debounce divider is 32.
+    GPIO_DEBOUNCE_DIVIDER_40 = 0x6, //!< The debounce divider is 40.
+    GPIO_DEBOUNCE_DIVIDER_64 = 0x7, //!< The debounce divider is 64.
 } GPIODebounceDiv_TypeDef;
 
 #define IS_GPIO_DEBOUNCE_DIV_TYPE(TYPE) (((TYPE) == GPIO_DEBOUNCE_DIVIDER_1) || \
@@ -416,9 +417,9 @@ typedef enum
                                          ((TYPE) == GPIO_DEBOUNCE_DIVIDER_16) || \
                                          ((TYPE) == GPIO_DEBOUNCE_DIVIDER_32) || \
                                          ((TYPE) == GPIO_DEBOUNCE_DIVIDER_40) || \
-                                         ((TYPE) == GPIO_DEBOUNCE_DIVIDER_64) || \)
+                                         ((TYPE) == GPIO_DEBOUNCE_DIVIDER_64)) //!< Check if the input parameter is valid.
 
-/** End of GPIO_Debounce_Divide
+/** End of GPIO_Debounce_Divider
   * \}
   */
 
@@ -427,13 +428,13 @@ typedef enum
  * \{
  * \ingroup  GPIO_Exported_Constants
  */
-#define GPIO_Mode               GPIO_Dir
-#define GPIO_Mode_IN            GPIO_DIR_IN
-#define GPIO_Mode_OUT           GPIO_DIR_OUT
-#define GPIO_MODE_IN            GPIO_DIR_IN
-#define GPIO_MODE_OUT           GPIO_DIR_OUT
-#define GPIO_INT_Trigger_LEVEL  GPIO_INT_TRIGGER_LEVEL
-#define GPIO_INT_Trigger_EDGE   GPIO_INT_TRIGGER_EDGE
+#define GPIO_Mode               GPIO_Dir               //!< The macro is a wrapper for GPIO_Dir.
+#define GPIO_Mode_IN            GPIO_DIR_IN            //!< The macro is a wrapper for GPIO_DIR_IN.
+#define GPIO_Mode_OUT           GPIO_DIR_OUT           //!< The macro is a wrapper for GPIO_DIR_OUT.
+#define GPIO_MODE_IN            GPIO_DIR_IN            //!< The macro is a wrapper for GPIO_DIR_IN.
+#define GPIO_MODE_OUT           GPIO_DIR_OUT           //!< The macro is a wrapper for GPIO_DIR_OUT.
+#define GPIO_INT_Trigger_LEVEL  GPIO_INT_TRIGGER_LEVEL //!< The macro is a wrapper for GPIO_INT_TRIGGER_LEVEL.
+#define GPIO_INT_Trigger_EDGE   GPIO_INT_TRIGGER_EDGE  //!< The macro is a wrapper for GPIO_INT_TRIGGER_EDGE.
 
 /** End of GPIO_Constant_Wrapper
   * \}
@@ -444,10 +445,10 @@ typedef enum
  * \{
  * \ingroup  GPIO_Exported_Constants
  */
-#define GPIO_GetPin             GPIO_GetPinBit
-#define GPIO_DBClkCmd           GPIO_ExtDebCmd
-#define GPIO_SetDebounceTime    GPIO_ExtDebUpdate
-#define GPIO_SetITPolarity      GPIO_SetPolarity
+#define GPIO_GetPin             GPIO_GetPinBit         //!< The macro is a wrapper for GPIO_GetPinBit.
+#define GPIO_DBClkCmd           GPIO_ExtDebCmd         //!< The macro is a wrapper for GPIO_ExtDebCmd.
+#define GPIO_SetDebounceTime    GPIO_ExtDebUpdate      //!< The macro is a wrapper for GPIO_ExtDebUpdate.
+#define GPIO_SetITPolarity      GPIO_SetPolarity       //!< The macro is a wrapper for GPIO_SetPolarity.
 
 /** End of GPIO_API_Wrapper
   * \}

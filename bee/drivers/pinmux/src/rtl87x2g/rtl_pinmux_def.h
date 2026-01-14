@@ -44,22 +44,22 @@ extern "C" {
  * \{
  * \ingroup  PINMUX_Exported_Constants
  */
-#define PINMUX_SUPPORT_AON_CONFIG                      (1)
-#define PINMUX_SUPPORT_HS_CONFIG                       (1)
-#define PAD_DRIVING_CURRENT_LEVEL                      (4)
-#define PAD_SUPPORT_DEDICATE_CONFIG                    (1)
-#define PAD_SUPPORT_MULTI_CORE                         (0)
-#define PAD_SUPPORT_AON_WAKEUP                         (0)
-#define PAD_SUPPORT_CONFIG_EXT                         (0)
-#define PAD_SUPPORT_CONFIG_DEFAULT                     (0)
-#define PAD_SUPPORT_SLEEP_LED                          (0)
-#define PAD_SUPPORT_FUNCTION_CONFIG                    (0)
-#define PAD_SUPPORT_GET_POWER_GROUP                    (0)
-#define PAD_SUPPORT_GET_PIN_NAME                       (0)
-#define PAD_SUPPORT_GET_OUTPUT_CTRL                    (0)
-#define PAD_SUPPORT_ANALOG_MODE                        (0)
-#define PAD_SUPPORT_ADPATER_WAKEUP                     (0)
-#define PAD_SUPPORT_MFB_WAKEUP                         (0)
+#define PINMUX_SUPPORT_AON_CONFIG                      (1)   //!< The definition supports AON configuration.
+#define PINMUX_SUPPORT_HS_CONFIG                       (1)   //!< The definition supports HS configuration.
+#define PAD_DRIVING_CURRENT_LEVEL                      (4)   //!< The definition supports pad driving current level.
+#define PAD_SUPPORT_DEDICATE_CONFIG                    (1)   //!< The definition supports dedicate config.
+#define PAD_SUPPORT_MULTI_CORE                         (0)   //!< The function is not supported.
+#define PAD_SUPPORT_AON_WAKEUP                         (0)   //!< The function is not supported.
+#define PAD_SUPPORT_CONFIG_EXT                         (0)   //!< The function is not supported.
+#define PAD_SUPPORT_CONFIG_DEFAULT                     (0)   //!< The function is not supported.
+#define PAD_SUPPORT_SLEEP_LED                          (0)   //!< The function is not supported.
+#define PAD_SUPPORT_FUNCTION_CONFIG                    (0)   //!< The function is not supported.
+#define PAD_SUPPORT_GET_POWER_GROUP                    (0)   //!< The function is not supported.
+#define PAD_SUPPORT_GET_PIN_NAME                       (0)   //!< The function is not supported.
+#define PAD_SUPPORT_GET_OUTPUT_CTRL                    (0)   //!< The function is not supported.
+#define PAD_SUPPORT_ANALOG_MODE                        (0)   //!< The function is not supported.
+#define PAD_SUPPORT_ADPATER_WAKEUP                     (0)   //!< The function is not supported.
+#define PAD_SUPPORT_MFB_WAKEUP                         (0)   //!< The function is not supported.
 
 /** End of PINMUX_Defines
   * \}
@@ -103,7 +103,7 @@ typedef struct                      /*!< Pinmux Structure */
  * \{
  * \ingroup  PINMUX_Exported_Constants
  */
-#define PINMUX                  ((PINMUX_TypeDef *) PINMUX_REG_BASE)
+#define PINMUX          ((PINMUX_TypeDef *) PINMUX_REG_BASE)   //!< PINMUX base address.
 
 /** End of PINMUX_Declaration
   * \}
@@ -385,10 +385,10 @@ typedef struct
  * \{
  * \ingroup  PINMUX_Exported_Constants
  */
-#define PAD_DRIVING_CURRENT_4mA         LEVEL0
-#define PAD_DRIVING_CURRENT_8mA         LEVEL1
-#define PAD_DRIVING_CURRENT_12mA        LEVEL2
-#define PAD_DRIVING_CURRENT_16mA        LEVEL3
+#define PAD_DRIVING_CURRENT_4mA         LEVEL0  //!< The macro is a wrapper for LEVEL0
+#define PAD_DRIVING_CURRENT_8mA         LEVEL1  //!< The macro is a wrapper for LEVEL1
+#define PAD_DRIVING_CURRENT_12mA        LEVEL2  //!< The macro is a wrapper for LEVEL2
+#define PAD_DRIVING_CURRENT_16mA        LEVEL3  //!< The macro is a wrapper for LEVEL3
 
 /** End of PAD_Constant_Wrapper
   * \}
@@ -399,29 +399,29 @@ typedef struct
  * \{
  * \ingroup  PINMUX_Exported_Constants
  */
-#define Pad_ControlSelectValue          Pad_SetControlMode
-#define Pad_OutputEnableValue           Pad_Output_Cmd
-#define Pad_OutputControlValue          Pad_SetOutputValue
-#define Pad_PullEnableValue             Pad_Pull_Cmd
-#define Pad_PullUpOrDownValue           Pad_SetPullMode
-#define Pad_PullConfigValue             Pad_SetPullStrengthMode
-#define Pad_PowerOrShutDownValue        Pad_Power_Cmd
-#define Pad_DrivingCurrentControl       Pad_SetDrivingCurrent
-#define Pad_WakeupEnableValue           Pad_Wakeup_Cmd
-#define Pad_WakeupPolarityValue         Pad_SetWakeupPolarity
-#define Pad_WKDebounceConfig            Pad_WakeupDebounce_Cmd
-#define Pad_WakeupInterruptValue        Pad_GetWakeupINTStatus
+#define Pad_ControlSelectValue          Pad_SetControlMode            //!< The macro is a wrapper for Pad_SetControlMode
+#define Pad_OutputEnableValue           Pad_Output_Cmd                //!< The macro is a wrapper for Pad_Output_Cmd         
+#define Pad_OutputControlValue          Pad_SetOutputValue            //!< The macro is a wrapper for Pad_SetOutputValue     
+#define Pad_PullEnableValue             Pad_Pull_Cmd                  //!< The macro is a wrapper for Pad_Pull_Cmd           
+#define Pad_PullUpOrDownValue           Pad_SetPullMode               //!< The macro is a wrapper for Pad_SetPullMode        
+#define Pad_PullConfigValue             Pad_SetPullStrengthMode       //!< The macro is a wrapper for Pad_SetPullStrengthMode
+#define Pad_PowerOrShutDownValue        Pad_Power_Cmd                 //!< The macro is a wrapper for Pad_Power_Cmd          
+#define Pad_DrivingCurrentControl       Pad_SetDrivingCurrent         //!< The macro is a wrapper for Pad_SetDrivingCurrent  
+#define Pad_WakeupEnableValue           Pad_Wakeup_Cmd                //!< The macro is a wrapper for Pad_Wakeup_Cmd         
+#define Pad_WakeupPolarityValue         Pad_SetWakeupPolarity         //!< The macro is a wrapper for Pad_SetWakeupPolarity  
+#define Pad_WKDebounceConfig            Pad_WakeupDebounce_Cmd        //!< The macro is a wrapper for Pad_WakeupDebounce_Cmd 
+#define Pad_WakeupInterruptValue        Pad_GetWakeupINTStatus        //!< The macro is a wrapper for Pad_GetWakeupINTStatus 
 
-#define System_DebounceWakeupStatus     System_WakeupDebounceStatus
-#define System_Pad_WakeUp_Cmd           System_WakeUpDebounceCmd
+#define System_DebounceWakeupStatus     System_WakeupDebounceStatus   //!< The macro is a wrapper for System_WakeupDebounceStatus
+#define System_Pad_WakeUp_Cmd           System_WakeUpDebounceCmd      //!< The macro is a wrapper for System_WakeUpDebounceCmd
 
-#define Pad_Output_Cmd                  Pad_OutputCmd
-#define Pad_SetOutputValue              Pad_SetOutputLevel
-#define Pad_Pull_Cmd                    Pad_PullCmd
-#define Pad_SetPullStrengthMode         Pad_SetPullStrength
-#define Pad_Power_Cmd                   Pad_PowerCmd
-#define Pad_Wakeup_Cmd                  Pad_WakeupConfig
-#define Pad_WakeupDebounce_Cmd          Pad_WakeupDebounceCmd
+#define Pad_Output_Cmd                  Pad_OutputCmd                 //!< The macro is a wrapper for Pad_OutputCmd        
+#define Pad_SetOutputValue              Pad_SetOutputLevel            //!< The macro is a wrapper for Pad_SetOutputLevel   
+#define Pad_Pull_Cmd                    Pad_PullCmd                   //!< The macro is a wrapper for Pad_PullCmd          
+#define Pad_SetPullStrengthMode         Pad_SetPullStrength           //!< The macro is a wrapper for Pad_SetPullStrength  
+#define Pad_Power_Cmd                   Pad_PowerCmd                  //!< The macro is a wrapper for Pad_PowerCmd         
+#define Pad_Wakeup_Cmd                  Pad_WakeupConfig              //!< The macro is a wrapper for Pad_WakeupConfig     
+#define Pad_WakeupDebounce_Cmd          Pad_WakeupDebounceCmd         //!< The macro is a wrapper for Pad_WakeupDebounceCmd
 
 /** End of PAD_API_Wrapper
   * \}

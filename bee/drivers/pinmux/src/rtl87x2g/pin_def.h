@@ -143,8 +143,8 @@ extern "C" {
 #define ADC_6       P2_6    /*!< GPIO22   */
 #define ADC_7       P2_7    /*!< GPIO23   */
 
-#define TOTAL_PIN_NUM         (83)
-#define IS_PIN_NUMBER(NUMBER) ((NUMBER) < TOTAL_PIN_NUM)
+#define TOTAL_PIN_NUM         (83)                       //!< Specify the maximum pin number.
+#define IS_PIN_NUMBER(NUMBER) ((NUMBER) < TOTAL_PIN_NUM) //!< Check if the input parameter is valid.
 
 /** End of Pin_Number
   * \}

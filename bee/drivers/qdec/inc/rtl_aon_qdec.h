@@ -7,8 +7,8 @@
 /**
 *********************************************************************************************************
 * \file     rtl_aon_qdec.h
-* \brief    The header file of the peripheral AON_QDECODER driver.
-* \details  This file provides all AON_QDECODER firmware functions.
+* \brief    The header file of the peripheral AON_AON_QDEC driver.
+* \details  This file provides all AON_AON_QDEC firmware functions.
 * \author   Grace_yan
 * \date     2023-10-17
 * \version  v1.0
@@ -53,11 +53,11 @@ extern "C" {
  */
 typedef enum
 {
-    CounterScale_1_Phase = 0x00,
-    CounterScale_2_Phase = 0x01,
+    CounterScale_1_Phase = 0x00,     //!< AON_QDEC update counter when 1 phase change.
+    CounterScale_2_Phase = 0x01,     //!< AON_QDEC update counter when 2 phases change.
 } AONQDECAxisCntScale_TypeDef;
 
-#define IS_CNT_SCALE_PHASE_TYPE(TYPE) ((TYPE) <= 0x01)
+#define IS_CNT_SCALE_PHASE_TYPE(TYPE) ((TYPE) <= 0x01) //!< Check if the input parameter is valid.
 
 /** End of AON_QDEC_Counter_Scale
   * \}
@@ -70,13 +70,13 @@ typedef enum
  */
 typedef enum
 {
-    phaseMode0 = 0x00,                              //phase 00
-    phaseMode1 = 0x01,                              //phase 01
-    phaseMode2 = 0x02,                              //phase 10
-    phaseMode3 = 0x03,                              //phase 11
+    phaseMode0 = 0x00,     //!< AON_QDEC initial phase 00.
+    phaseMode1 = 0x01,     //!< AON_QDEC initial phase 01.
+    phaseMode2 = 0x02,     //!< AON_QDEC initial phase 10.
+    phaseMode3 = 0x03,     //!< AON_QDEC initial phase 11.
 } AONQDECInitPhase_TypeDef;
 
-#define IS_PHSAE_MODE_TYPE(TYPE) ((TYPE) <= 0x03)
+#define IS_PHSAE_MODE_TYPE(TYPE) ((TYPE) <= 0x03) //!< Check if the input parameter is valid.
 
 /** End of AON_QDEC_Init_Phase
   * \}
@@ -89,11 +89,11 @@ typedef enum
  */
 typedef enum
 {
-    AON_QDEC_AXIS_DIR_DOWN = 0x00,
-    AON_QDEC_AXIS_DIR_UP = 0x01,
+    AON_QDEC_AXIS_DIR_DOWN = 0x00,     //!< The direction for x-axis is decreasing.
+    AON_QDEC_AXIS_DIR_UP = 0x01,       //!< The direction for x-axis is increasing.
 } AONQDECAxisDir_TypeDef;
 
-#define IS_AON_QDEC_AXIS_DIR_TYPE(TYPE) ((TYPE) <= 0x01)
+#define IS_AON_QDEC_AXIS_DIR_TYPE(TYPE) ((TYPE) <= 0x01) //!< Check if the input parameter is valid.
 
 /** End of AON_QDEC_Axis_Direction
   * \}
@@ -104,10 +104,10 @@ typedef enum
  * \{
  * \ingroup     AON_QDEC_Exported_Constants
  */
-#define AON_QDEC_X_INT_NEW_DATA                     BIT0//get New data and state change
-#define AON_QDEC_X_INT_ILLEAGE                      BIT1//illeage
+#define AON_QDEC_X_INT_NEW_DATA                     BIT0     //!< The counter interrupt triggered by new data on x-axis.
+#define AON_QDEC_X_INT_ILLEAGE                      BIT1     //!< The illegal interrupt on x-axis.
 
-#define IS_AON_QDEC_INT_CONFIG(CONFIG) (((CONFIG) == AON_QDEC_X_INT_NEW_DATA) || ((CONFIG) == AON_QDEC_X_INT_ILLEAGE))
+#define IS_AON_QDEC_INT_CONFIG(CONFIG) (((CONFIG) == AON_QDEC_X_INT_NEW_DATA) || ((CONFIG) == AON_QDEC_X_INT_ILLEAGE)) //!< Check if the input parameter is valid.
 
 /** End of AON_QDEC_Interrupts
   * \}
@@ -118,12 +118,12 @@ typedef enum
  * \{
  * \ingroup     AON_QDEC_Exported_Constants
  */
-#define AON_QDEC_X_INT_MASK                         BIT24
-#define AON_QDEC_X_WAKE_AON_MASK                    BIT23
-#define AON_QDEC_X_CT_INT_MASK                      BIT8//get New data and state change
-#define AON_QDEC_X_ILLEAGE_INT_MASK                 BIT7//illeage
+#define AON_QDEC_X_INT_MASK                         BIT24     //!< AON_QDEC interrupt mask.
+#define AON_QDEC_X_WAKE_AON_MASK                    BIT23     //!< AON_QDEC wakeup interrupt mask.
+#define AON_QDEC_X_CT_INT_MASK                      BIT8      //!< AON_QDEC counter interrupt mask triggered by new data.
+#define AON_QDEC_X_ILLEAGE_INT_MASK                 BIT7      //!< AON_QDEC illegal interrupt mask.
 
-#define IS_AON_QDEC_INT_MASK_CONFIG(CONFIG) (((CONFIG) == AON_QDEC_X_CT_INT_MASK) || ((CONFIG) == AON_QDEC_X_ILLEAGE_INT_MASK))
+#define IS_AON_QDEC_INT_MASK_CONFIG(CONFIG) (((CONFIG) == AON_QDEC_X_CT_INT_MASK) || ((CONFIG) == AON_QDEC_X_ILLEAGE_INT_MASK)) //!< Check if the input parameter is valid.
 
 /** End of AON_QDEC_Interrupts_Mask
   * \}
@@ -134,16 +134,16 @@ typedef enum
  * \{
  * \ingroup     AON_QDEC_Exported_Constants
  */
-#define AON_QDEC_CLR_ILLEGAL_CT_X                   BIT5
-#define AON_QDEC_CLR_ILLEGAL_INT_X                  BIT4
-#define AON_QDEC_CLR_UNDERFLOW_X                    BIT3
-#define AON_QDEC_CLR_OVERFLOW_X                     BIT2
-#define AON_QDEC_CLR_NEW_CT_X                       BIT1
-#define AON_QDEC_CLR_ACC_CT_X                       BIT0
+#define AON_QDEC_CLR_ILLEGAL_CT_X                   BIT5    //!< Clear the counter of illegal interrupts.
+#define AON_QDEC_CLR_ILLEGAL_INT_X                  BIT4    //!< Clear the illegal interrupt flag.
+#define AON_QDEC_CLR_UNDERFLOW_X                    BIT3    //!< Clear the underflow flag.
+#define AON_QDEC_CLR_OVERFLOW_X                     BIT2    //!< Clear the overflow flag.
+#define AON_QDEC_CLR_NEW_CT_X                       BIT1    //!< Clear the new data flag.
+#define AON_QDEC_CLR_ACC_CT_X                       BIT0    //!< Clear the ACC counter flag.
 
 #define IS_AON_QDEC_INT_CLR_CONFIG(CONFIG) (((CONFIG) == AON_QDEC_CLR_ACC_CT_X) ||  ((CONFIG) == AON_QDEC_CLR_ILLEGAL_INT_X)\
                                             || ((CONFIG) == AON_QDEC_CLR_UNDERFLOW_X) ||((CONFIG) == AON_QDEC_CLR_OVERFLOW_X)\
-                                            || ((CONFIG) == AON_QDEC_CLR_NEW_CT_X))
+                                            || ((CONFIG) == AON_QDEC_CLR_NEW_CT_X)) //!< Check if the input parameter is valid.
 
 /** End of AON_QDEC_Clr_Flag
   * \}
@@ -154,14 +154,14 @@ typedef enum
  * \{
  * \ingroup     AON_QDEC_Exported_Constants
  */
-#define AON_QDEC_FLAG_NEW_CT_STATUS_X               BIT0
-#define AON_QDEC_FLAG_OVERFLOW_X                    BIT1
-#define AON_QDEC_FLAG_UNDERFLOW_X                   BIT2
-#define AON_QDEC_FLAG_ILLEGAL_STATUS_X              BIT4
+#define AON_QDEC_FLAG_NEW_CT_STATUS_X               BIT0    //!< The new data flag.
+#define AON_QDEC_FLAG_OVERFLOW_X                    BIT1    //!< The overflow flag.
+#define AON_QDEC_FLAG_UNDERFLOW_X                   BIT2    //!< The underflow flag.
+#define AON_QDEC_FLAG_ILLEGAL_STATUS_X              BIT4    //!< The illegal counting flag.
 
 #define IS_AON_QDEC_CLR_INT_STATUS(INT) (((INT) == AON_QDEC_FLAG_ILLEGAL_STATUS_X) || ((INT) == AON_QDEC_FLAG_NEW_CT_STATUS_X)\
                                          || ((INT) == AON_QDEC_FLAG_OVERFLOW_X) || ((INT) == AON_QDEC_FLAG_UNDERFLOW_X)\
-                                         || ((INT) == AON_QDEC_FLAG_AUTO_STATUS_X))
+                                         || ((INT) == AON_QDEC_FLAG_AUTO_STATUS_X)) //!< Check if the input parameter is valid.
 
 /** End of AON_QDEC_Flag
   * \}
@@ -172,7 +172,7 @@ typedef enum
  * \{
  * \ingroup     AON_QDEC_Exported_Constants
  */
-#define AON_QDEC_AXIS_X                             BIT0
+#define AON_QDEC_AXIS_X                             BIT0    //!< The AON_QDEC X axis.
 
 /** End of AON_QDEC_Axis
   * \}
@@ -183,8 +183,8 @@ typedef enum
  * \{
  * \ingroup     AON_QDEC_Exported_Constants
  */
-#define AON_QDEC_0X04_CNT_DIR           BIT20
-#define AON_QDEC_0X00_AXIS_EN           BIT31
+#define AON_QDEC_0X04_CNT_DIR           BIT20    //!< The AON_QDEC x-axis direction.
+#define AON_QDEC_0X00_AXIS_EN           BIT31    //!< The AON_QDEC x-axis enable bit.
 
 /** End of AON_QDEC_Immediate_Number
   * \}
@@ -203,21 +203,29 @@ typedef enum
   */
 
 /**
- * \brief       Qdecoder init structure definition.
+ * \brief       AON_QDEC init structure definition.
  *
  * \ingroup     AON_QDEC_Exported_Types
  */
 typedef struct
 {
-    FunctionalState axisConfigX;          /*!< Specifies the axis X function.
-                                                   This parameter can be a value of ENABLE or DISABLE. */
-    FunctionalState manualLoadInitPhase;  /*!< Specifies manual-load Initphase function.
-                                                   This parameter can be a value of ENABLE or DISABLE. */
-    AONQDECAxisCntScale_TypeDef counterScaleX; /*!< Specifies the axis X conter scale. */
-    FunctionalState debounceEnableX;      /*!< Specifies the axis X debounce.
-                                                   This parameter can be a value of ENABLE or DISABLE. */
-    uint16_t debounceTimeX;               /*!< Specifies the axis X debounce time. */
-    AONQDECInitPhase_TypeDef initPhaseX;  /*!< Specifies the axis X function. */
+    FunctionalState axisConfigX;               /*!< Specify the x-axis function.
+                                                    This parameter can be a value of ENABLE or DISABLE. */
+
+    FunctionalState manualLoadInitPhase;       /*!< Specify manual-load initial phase function.
+                                                    This parameter can be a value of ENABLE or DISABLE. */
+
+    AONQDECAxisCntScale_TypeDef counterScaleX; /*!< Specify the x-axis counter scale.
+                                                    This parameter can be a value of \ref AON_QDEC_Counter_Scale */
+
+    FunctionalState debounceEnableX;           /*!< Specify the x-axis debounce function.
+                                                    This parameter can be a value of ENABLE or DISABLE. */
+
+    uint16_t debounceTimeX;                    /*!< Specify the x-axis debounce time.
+                                                    This parameter can be a value of 0 - 8191 */
+
+    AONQDECInitPhase_TypeDef initPhaseX;       /*!< Specify the x-axis initial phase.
+                                                    This parameter can be a value of \ref AON_QDEC_Init_Phase */
 } AON_QDEC_InitTypeDef;
 
 /** End of AON_QDEC_Exported_Types
@@ -233,14 +241,11 @@ typedef struct
   */
 
 /**
- * \brief   Initializes the AON Qdecoder peripheral according to the specified
+ * \brief   Initialize the AON_QDEC peripheral according to the specified
  *          parameters in the AON_QDEC_InitStruct
  *
- * \param[in]  AON_QDECx: Selected AON Qdecoder peripheral.
- * \param[in]  AON_QDEC_InitStruct: Pointer to a AON_QDEC_InitStruct structure that
- *             contains the configuration information for the specified AON Qdecoder peripheral
- *
- * \return None.
+ * \param[in]  AON_QDECx            Selected AON_QDEC peripheral. Refer to \ref AON_QDEC_Declaration.
+ * \param[in]  AON_QDEC_InitStruct  Pointer to a AON_QDEC_InitStruct structure which will be initialized.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -261,11 +266,18 @@ typedef struct
 void AON_QDEC_Init(AON_QDEC_TypeDef *AON_QDECx, AON_QDEC_InitTypeDef *AON_QDEC_InitStruct);
 
 /**
- * \brief  Fills each AON_QDEC_InitStruct member with its default value.
+ * \brief  Fill each AON_QDEC_InitStruct member with its default value.
  *
- * \param[in]  AON_QDEC_InitStruct: Pointer to an AON_QDEC_InitStruct structure which will be initialized.
+ * \note The default settings for the AON_QDEC_InitStruct member are shown in the following table:
+ *       | AON_QDEC_InitStruct member   | Default value                        |
+ *       |:----------------------------:|:------------------------------------:|
+ *       | debounceTimeX                | 32 * 5                               |
+ *       | counterScaleX                | \ref CounterScale_1_Phase            |
+ *       | debounceEnableX              | DISABLE                              |
+ *       | manualLoadInitPhase          | DISABLE                              |
+ *       | initPhaseX                   | \ref phaseMode0                      |
  *
- * \return None.
+ * \param[in]  AON_QDEC_InitStruct  Pointer to an AON_QDEC_InitStruct structure which will be initialized.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -286,17 +298,17 @@ void AON_QDEC_Init(AON_QDEC_TypeDef *AON_QDECx, AON_QDEC_InitTypeDef *AON_QDEC_I
 void AON_QDEC_StructInit(AON_QDEC_InitTypeDef *AON_QDEC_InitStruct);
 
 /**
- * \brief  Enable or disable the specified AON Qdecoder interrupt source.
+ * \brief  Enable or disable the specified AON_QDEC interrupt source.
  *
- * \param[in] AON_QDECx: Selected AON Qdecoder peripheral.
- * \param[in] AON_QDEC_IT: Specifies the AON QDECODER interrupts sources to be enabled or disabled.
- *            This parameter parameter can be one of the following values:
- *            \arg AON_QDEC_X_INT_NEW_DATA: The counter interrupt for X axis.
- *            \arg AON_QDEC_X_INT_ILLEAGE: The illegal interrupt for X axis.
- * \param[in] NewState: New state of the specified QDECODER interrupt.
- *            This parameter parameter can be: ENABLE or DISABLE.
- *
- * \return None.
+ * \param[in] AON_QDECx    Selected AON_QDEC peripheral. Refer to \ref AON_QDEC_Declaration.
+ * \param[in] AON_QDEC_IT  Specify the AON_QDEC interrupts sources to be enabled or disabled.
+ *                         This parameter can be one of the following values:
+ *                         \arg AON_QDEC_X_INT_NEW_DATA: The counter interrupt for X axis.
+ *                         \arg AON_QDEC_X_INT_ILLEAGE: The illegal interrupt for X axis.
+ * \param[in] NewState     New state of the specified AON_QDEC interrupt.
+ *                         This parameter can be one of the following values:
+ *                         - ENABLE: Enable the interrupt of AON_QDEC.
+ *                         - DISABLE: Disable the interrupt of AON_QDEC.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -311,17 +323,19 @@ void AON_QDEC_INTConfig(AON_QDEC_TypeDef *AON_QDECx, uint32_t AON_QDEC_IT,
                         FunctionalState NewState);
 
 /**
- * \brief  Check whether the specified AON Qdecoder flag is set.
+ * \brief  Get the specified AON_QDEC flag status.
  *
- * \param[in] AON_QDECx: Selected AON Qdecoder peripheral.
- * \param[in] AON_QDEC_FLAG: Specifies the flag to check.
- *            This parameter can be one of the following values:
- *            \arg AON_QDEC_FLAG_NEW_CT_STATUS_X: Status of the counter interrupt for X axis.
- *            \arg AON_QDEC_FLAG_ILLEGAL_STATUS_X: Status of the illegal interrupt for X axis.
- *            \arg AON_QDEC_FLAG_OVERFLOW_X: The overflow flag for x-axis accumulation counter.
- *            \arg AON_QDEC_FLAG_UNDERFLOW_X: The underflow flag for x-axis accumulation counter.
+ * \param[in] AON_QDECx      Selected AON_QDEC peripheral. Refer to \ref AON_QDEC_Declaration.
+ * \param[in] AON_QDEC_FLAG  Specify the flag to check.
+ *                           This parameter can be one of the following values:
+ *                           \arg AON_QDEC_FLAG_NEW_CT_STATUS_X: Status of the counter interrupt for X axis.
+ *                           \arg AON_QDEC_FLAG_ILLEGAL_STATUS_X: Status of the illegal interrupt for X axis.
+ *                           \arg AON_QDEC_FLAG_OVERFLOW_X: The overflow flag for x-axis accumulation counter.
+ *                           \arg AON_QDEC_FLAG_UNDERFLOW_X: The underflow flag for x-axis accumulation counter.
  *
- * \return The new state of AON_QDEC_FLAG (SET or RESET).
+ * \return  The new state of AON_QDEC_FLAG.
+ *          - SET: The AON_QDEC flag has been set.
+ *          - RESET: The AON_QDEC flag has been reset.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -335,17 +349,17 @@ void AON_QDEC_INTConfig(AON_QDEC_TypeDef *AON_QDECx, uint32_t AON_QDEC_IT,
 FlagStatus AON_QDEC_GetFlagState(AON_QDEC_TypeDef *AON_QDECx, uint32_t AON_QDEC_FLAG);
 
 /**
- * \brief  Enable or disable mask the specified AON Qdecoder axis interrupts.
+ * \brief  Mask or unmask the specified AON_QDEC axis interrupts.
  *
- * \param[in] AON_QDECx: Selected AON Qdecoder peripheral.
- * \param[in] AON_QDEC_AXIS: Specifies the AON Qdecoder axis.
- *            This parameter can be one or logical OR of the following values:
- *            \arg AON_QDEC_X_CT_INT_MASK: The x-axis counter interrupt mask.
- *            \arg AON_QDEC_X_ILLEAGE_INT_MASK: The x-axis illegal interrupt mask.
- * \param[in] NewState: New state of the specified AON Qdecoder interrupts mask.
- *            This parameter can be: ENABLE or DISABLE.
- *
- * \return None.
+ * \param[in] AON_QDECx      Selected AON_QDEC peripheral. Refer to \ref AON_QDEC_Declaration.
+ * \param[in] AON_QDEC_AXIS  Specify the AON_QDEC interrupt mask.
+ *                           This parameter can be one or logical OR of the following values:
+ *                           \arg AON_QDEC_X_CT_INT_MASK: The x-axis counter interrupt mask.
+ *                           \arg AON_QDEC_X_ILLEAGE_INT_MASK: The x-axis illegal interrupt mask.
+ * \param[in] NewState       New state of the specified AON_QDEC interrupts mask.
+ *                           This parameter can be one of the following values:
+ *                           - ENABLE: Enable the interrupt mask of AON_QDEC.
+ *                           - DISABLE: Disable the interrupt mask of AON_QDEC.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -362,16 +376,16 @@ void AON_QDEC_INTMask(AON_QDEC_TypeDef *AON_QDECx, uint32_t AON_QDEC_AXIS,
                       FunctionalState NewState);
 
 /**
- * \brief  Enable or disable the selected AON Qdecoder axis x.
+ * \brief  Enable or disable the selected AON_QDEC axis x.
  *
- * \param[in] AON_QDECx: Selected AON Qdecoder peripheral.
- * \param[in] AON_QDEC_AXIS: Specifies the AON Qdecoder axis.
- *            This parameter can be one of the following values:
- *            \arg AON_QDEC_AXIS_X: The AON qdecoder X axis.
- * \param[in] NewState: New state of the selected AON Qdecoder axis.
- *            This parameter can be : ENABLE or DISABLE.
- *
- * \return The count of the axis.
+ * \param[in] AON_QDECx      Selected AON_QDEC peripheral. Refer to \ref AON_QDEC_Declaration.
+ * \param[in] AON_QDEC_AXIS  Specify the AON_QDEC axis.
+ *                           This parameter can be one of the following values:
+ *                           \arg AON_QDEC_AXIS_X: The AON_QDEC X axis.
+ * \param[in] NewState       New state of the selected AON_QDEC axis.
+ *                           This parameter can be one of the following values:
+ *                           - ENABLE: Count value changes upon detecting a phase change.
+ *                           - DISABLE: AON_QDEC stops working.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -386,17 +400,16 @@ void AON_QDEC_Cmd(AON_QDEC_TypeDef *AON_QDECx, uint32_t AON_QDEC_AXIS,
                   FunctionalState NewState);
 
 /**
- * \brief   Clear AON Qdecoder interrupt pending bit.
+ * \brief   Clear AON_QDEC interrupt pending bit.
  *
- * \param[in] AON_QDECx: Selected AON Qdecoder peripheral.
- * \param[in] AON_QDEC_FLAG: Specifies the flag to clear.
- *            This parameter parameter can be one of the following values:
- *            \arg AON_QDEC_CLR_OVERFLOW_X: The overflow flag for x-axis accumulation counter.
- *            \arg AON_QDEC_CLR_ILLEGAL_INT_X: The illegal interrupt for X axis.
- *            \arg AON_QDEC_CLR_UNDERFLOW_X: The underflow flag for x-axis accumulation counter.
- *            \arg AON_QDEC_CLR_NEW_CT_X: The counter interrupt for X axis.
- *
- * \return  None.
+ * \param[in] AON_QDECx      Selected AON_QDEC peripheral. Refer to \ref AON_QDEC_Declaration.
+ * \param[in] AON_QDEC_FLAG  Specify the flag to clear.
+ *                           This parameter can be one of the following values.
+ *                           Refer to \ref AON_QDEC_Clr_Flag.
+ *                           - AON_QDEC_CLR_OVERFLOW_X: The overflow flag for x-axis accumulation counter.
+ *                           - AON_QDEC_CLR_ILLEGAL_INT_X: The illegal interrupt for X axis.
+ *                           - AON_QDEC_CLR_UNDERFLOW_X: The underflow flag for x-axis accumulation counter.
+ *                           - AON_QDEC_CLR_NEW_CT_X: The counter interrupt for X axis.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -410,16 +423,16 @@ void AON_QDEC_Cmd(AON_QDEC_TypeDef *AON_QDECx, uint32_t AON_QDEC_AXIS,
 
 void AON_QDEC_ClearINTPendingBit(AON_QDEC_TypeDef *AON_QDECx, uint32_t AON_QDEC_CLR_INT);
 /**
- * \brief  Get AON Qdecoder Axis(x/y/z) direction.
+ * \brief  Get AON_QDEC Axis direction.
  *
- * \param[in] AON_QDECx: Selected AON Qdecoder peripheral.
- * \param[in] AON_QDEC_AXIS: Specifies the AON Qdecoder axis.
- *            This parameter parameter can be one of the following values:
- *            \arg  AON_QDEC_AXIS_X: The AON qdecoder X axis.
+ * \param[in] AON_QDECx      Selected AON_QDEC peripheral. Refer to \ref AON_QDEC_Declaration.
+ * \param[in] AON_QDEC_AXIS  Specify the AON_QDEC axis.
+ *                            This parameter can be one of the following values:
+ *                            \arg  AON_QDEC_AXIS_X: The AON_QDEC X axis.
  *
  * \return The direction of the axis.
- * \retval AON_QDEC_AXIS_DIR_UP: The axis is rolling up.
- * \retval AON_QDEC_AXIS_DIR_DOWN: The axis is rolling down.
+ *         - AON_QDEC_AXIS_DIR_UP: The axis is rolling up.
+ *         - AON_QDEC_AXIS_DIR_DOWN: The axis is rolling down.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -433,12 +446,12 @@ void AON_QDEC_ClearINTPendingBit(AON_QDEC_TypeDef *AON_QDECx, uint32_t AON_QDEC_
 uint16_t AON_QDEC_GetAxisDirection(AON_QDEC_TypeDef *AON_QDECx, uint32_t AON_QDEC_AXIS);
 
 /**
- * \brief  Get AON Qdecoder Axis(x/y/z) count.
+ * \brief  Get AON_QDEC Axis(x) count.
  *
- * \param[in] AON_QDECx: Selected AON Qdecoder peripheral.
- * \param[in] AON_QDEC_AXIS: Specifies the AON Qdecoder axis.
- *            This parameter parameter can be one of the following values:
- *            \arg AON_QDEC_AXIS_X: The AON qdecoder X axis.
+ * \param[in] AON_QDECx      Selected AON_QDEC peripheral. Refer to \ref AON_QDEC_Declaration.
+ * \param[in] AON_QDEC_AXIS  Specify the AON_QDEC axis.
+ *                           This parameter can be one of the following values:
+ *                           - AON_QDEC_AXIS_X: The AON_QDEC X axis.
  *
  * \return The count of the axis.
  *
@@ -454,18 +467,16 @@ uint16_t AON_QDEC_GetAxisDirection(AON_QDEC_TypeDef *AON_QDECx, uint32_t AON_QDE
 uint16_t AON_QDEC_GetAxisCount(AON_QDEC_TypeDef *AON_QDECx, uint32_t AON_QDEC_AXIS);
 
 /**
- * \brief  Pause or resume AON Qdecoder Axis x.
+ * \brief  Pause or resume AON_QDEC Axis x counter.
  *
- * \param[in] AON_QDECx: Selected AON Qdecoder peripheral.
- * \param[in] AON_QDEC_AXIS: Specifies the AON Qdecoder axis.
- *            This parameter parameter can be one of the following values:
- *            \arg AON_QDEC_AXIS_X: The AON qdecoder X axis.
- * \param[in] NewState: New state of the specified AON Qdecoder Axis.
- *            This parameter parameter can be one of the following values:
- *            \arg ENABLE: Pause.
- *            \arg DISABLE: Resume.
- *
- * \return None.
+ * \param[in] AON_QDECx      Selected AON_QDEC peripheral. Refer to \ref AON_QDEC_Declaration.
+ * \param[in] AON_QDEC_AXIS  Specify the AON_QDEC axis.
+ *                           This parameter can be one of the following values:
+ *                           \arg AON_QDEC_AXIS_X: The AON_QDEC X axis.
+ * \param[in] NewState       New state of the specified AON_QDEC Axis.
+ *                           This parameter can be one of the following values:
+ *                           - ENABLE: Pause the X-axis of the AON_QDEC counter.
+ *                           - DISABLE: Resume the X-axis of the AON_QDEC counter.
  *
  * <b>Example usage</b>
  * \code{.c}

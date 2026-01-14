@@ -848,7 +848,6 @@ void I2C_SendCmd(I2C_TypeDef *I2Cx, I2CSendCommend_TypeDef command, uint8_t data
     /* Check the parameters */
     assert_param(IS_I2C_ALL_PERIPH(I2Cx));
     assert_param(IS_I2C_CMD(command));
-    assert_param(IS_I2C_STOP(StopState));
 
     IC_DATA_CMD_TypeDef i2c_0x10 = {.d32 = 0};
     i2c_0x10.d32 = 0;

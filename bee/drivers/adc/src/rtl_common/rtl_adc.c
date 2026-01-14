@@ -436,7 +436,7 @@ void ADC_BitMapConfig(ADC_TypeDef *ADCx, uint16_t BitMap, FunctionalState NewSta
 }
 
 /**
-  * \brief  Enbale or disable stop fifo from writing data.
+  * \brief  Enbale or disable write data to FIFO.
   * \param  ADCx: selected ADC peripheral.
   * \param  NewState: new state of the ADC fifo write.
   *     This parameter can be: ENABLE or DISABLE.
@@ -565,7 +565,7 @@ void ADC_StopwriteFifoStatusClear(ADC_TypeDef *ADCx)
 /**
   * \brief  Get the index state of ADC controller.
   * \param  ADCx: Specify ADC peripheral.
-  * \return BIT15:0 stores the data in the fifo, BIT31:28 stores the index of the data.
+  * \return BIT[15:0] stores the data in the fifo, BIT[31:28] stores the index of the data.
   */
 uint32_t ADC_ReadScheduleIndexandFifoData(ADC_TypeDef *ADCx)
 {

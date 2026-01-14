@@ -21,7 +21,6 @@
 #include "utils/rtl_utils.h"
 #include "address_map.h"
 #include "aon_reg.h"
-#include "armv81mml_setting.h"
 
 #ifdef  __cplusplus
 extern "C" {
@@ -46,9 +45,9 @@ extern "C" {
  * \{
  * \ingroup  RTC_Exported_Constants
  */
-#define RTC_SUPPORT_CLK_INPUT_FROM_PAD_SEL             (1)
-#define RTC_SUPPORT_PRE_COMP_OVF_TICK_WAKE_UP          (1)
-#define RTC_SUPPORT_COMPARE_GUARDTIME                  (1)
+#define RTC_SUPPORT_CLK_INPUT_FROM_PAD_SEL      (1) //!< The definition supports gpio input of RTC.
+#define RTC_SUPPORT_PRE_COMP_OVF_TICK_WAKE_UP   (1) //!< The definition supports interrupt wakeup.
+#define RTC_SUPPORT_COMPARE_GUARDTIME           (1) //!< The definition supports comparator guardtime.
 
 /** End of RTC_Defines
   * \}
@@ -396,102 +395,102 @@ typedef union
     struct
     {
         const uint32_t rtc_cnt: 32;
-        } b;
-    } RTC_CNT0_TypeDef;
+    } b;
+} RTC_CNT0_TypeDef;
 
 
 
-    /* 0x34
-       11:0    R      rtc_prescale_cnt        12'b0
-       31:12   R/W    rtc_prescale_cnt_dummy  20'b0
-    */
-    typedef union
-        {
-            uint32_t d32;
-            uint8_t d8[4];
-            struct
-            {
-                const uint32_t rtc_prescale_cnt: 12;
-                uint32_t rtc_prescale_cnt_dummy: 20;
-            } b;
-        } RTC_PRESCALE_CNT0_TypeDef;
-
-
-
-    /* 0x38
-       11:0    R/W    rtc_prescale_cmp        12'b0
-       31:12   R/W    rtc_prescale_cmp_dummy  20'b0
-    */
-    typedef union
-        {
-            uint32_t d32;
-            uint8_t d8[4];
-            struct
-            {
-                uint32_t rtc_prescale_cmp: 12;
-                uint32_t rtc_prescale_cmp_dummy: 20;
-            } b;
-        } RTC_PRESCALE_CMP0_TypeDef;
-
-
-
-    /* 0x3C
-       31:0    R/W    rtc_backup              32'b0
-    */
-    typedef union
-        {
-            uint32_t d32;
-            uint8_t d8[4];
-            struct
-            {
-                uint32_t rtc_backup: 32;
-            } b;
-        } RTC_BACKUP_TypeDef;
-
-
-
-    /* 0x40
-       31:0    R      rtc_rtl_version         32'h2112180A
-    */
-    typedef union
-        {
-            uint32_t d32;
-            uint8_t d8[4];
-            struct
-            {
-                const uint32_t rtc_rtl_version: 32;
-            } b;
-        } RTC_RTL_VERSION0_TypeDef;
-
-
-    /*============================================================================*
-     *                          RTC Constants
-     *============================================================================*/
-    /** \defgroup RTC        RTC
-      * \brief
-      * \{
-      */
-
-    /** \defgroup RTC_Exported_Constants RTC Exported Constants
-      * \brief
-      * \{
-      */
-
-    /**
-     * \defgroup    RTC_IN_PAD_Select RTC IN PAD Select
-     * \{
-     * \ingroup     RTC_Exported_Constants
-     */
-    typedef enum
+/* 0x34
+   11:0    R      rtc_prescale_cnt        12'b0
+   31:12   R/W    rtc_prescale_cnt_dummy  20'b0
+*/
+typedef union
 {
-    PAD_RTC_IN_DISABLE,
-    PAD_32KXI_RTC_IN,
-    PAD_P2_4_RTC_IN,
-    RTC_IN_SEL_DEFAULT = PAD_RTC_IN_DISABLE,
+    uint32_t d32;
+    uint8_t d8[4];
+    struct
+    {
+        const uint32_t rtc_prescale_cnt: 12;
+        uint32_t rtc_prescale_cnt_dummy: 20;
+    } b;
+} RTC_PRESCALE_CNT0_TypeDef;
+
+
+
+/* 0x38
+   11:0    R/W    rtc_prescale_cmp        12'b0
+   31:12   R/W    rtc_prescale_cmp_dummy  20'b0
+*/
+typedef union
+{
+    uint32_t d32;
+    uint8_t d8[4];
+    struct
+    {
+        uint32_t rtc_prescale_cmp: 12;
+        uint32_t rtc_prescale_cmp_dummy: 20;
+    } b;
+} RTC_PRESCALE_CMP0_TypeDef;
+
+
+
+/* 0x3C
+   31:0    R/W    rtc_backup              32'b0
+*/
+typedef union
+{
+    uint32_t d32;
+    uint8_t d8[4];
+    struct
+    {
+        uint32_t rtc_backup: 32;
+    } b;
+} RTC_BACKUP_TypeDef;
+
+
+
+/* 0x40
+   31:0    R      rtc_rtl_version         32'h2112180A
+*/
+typedef union
+{
+    uint32_t d32;
+    uint8_t d8[4];
+    struct
+    {
+        const uint32_t rtc_rtl_version: 32;
+    } b;
+} RTC_RTL_VERSION0_TypeDef;
+
+
+/*============================================================================*
+ *                          RTC Constants
+ *============================================================================*/
+/** \defgroup RTC        RTC
+  * \brief
+  * \{
+  */
+
+/** \defgroup RTC_Exported_Constants RTC Exported Constants
+  * \brief
+  * \{
+  */
+
+/**
+ * \defgroup    RTC_IN_PAD_Select RTC IN PAD Select
+ * \{
+ * \ingroup     RTC_Exported_Constants
+ */
+typedef enum
+{
+    PAD_RTC_IN_DISABLE,  //!< Disable GPIO input of RTC.
+    PAD_32KXI_RTC_IN,    //!< Select PAD 32KXI.
+    PAD_P2_4_RTC_IN,     //!< Select PAD P2_4.
+    RTC_IN_SEL_DEFAULT = PAD_RTC_IN_DISABLE,    //!< Disable GPIO input of RTC.
 } RTCInSel_TypeDef;
 
 #define RTC_ALL_IN_SEL         (PAD_RTC_IN_DISABLE | PAD_32KXI_RTC_IN | \
-                                PAD_P2_4_RTC_IN | RTC_IN_SEL_DEFAULT)
+                                PAD_P2_4_RTC_IN | RTC_IN_SEL_DEFAULT) //!< Check if the input parameter is valid.
 
 /** End of RTC_IN_PAD_Select
   * \}

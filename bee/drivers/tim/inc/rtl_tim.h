@@ -10,7 +10,7 @@
 * \brief    The header file of the peripheral TIMER driver.
 * \details  This file provides all TIMER firmware functions.
 * \author   Grace_yan
-* \date     2023-10-17
+* \date     2025-03-18
 * \version  v1.0
 * *********************************************************************************************************
 */
@@ -63,7 +63,7 @@ typedef enum
 } PWMDZClockSrc_TypeDef;
 
 #define IS_TIM_PWM_DZ_SOURCE(PERIPH)     (((PERIPH) == PWM_CK_5M_TIMER) || \
-                                          ((PERIPH) == PWM_CK_32K_TIMER))
+                                          ((PERIPH) == PWM_CK_32K_TIMER)) //!< Check if the input parameter is valid.
 
 /** End of PWM_DeadZone_Clock_Source
   * \}
@@ -76,12 +76,12 @@ typedef enum
  */
 typedef enum
 {
-    TIM_Mode_FreeRun = 0x0,      //!< Select the TIM mode as Free-running mode.
-    TIM_Mode_UserDefine = 0x1,   //!< Select the TIM mode as User-defined mode.
+    TIM_Mode_FreeRun = 0x0,      //!< Select the TIM mode as Free-running mode. In free-running mode, the TIM counts down from 0xFFFFFFFF.
+    TIM_Mode_UserDefine = 0x1,   //!< Select the TIM mode as User-defined mode. In user-defined mode, the TIM counts down from the value set by TIM_Period in \ref TIM_TimeBaseInitTypeDef.
 } TIMMode_TypeDef;
 
 #define IS_TIM_MODE(mode) (((mode) == TIM_Mode_FreeRun) || \
-                           ((mode) == TIM_Mode_UserDefine))
+                           ((mode) == TIM_Mode_UserDefine)) //!< Check if the input parameter is valid.
 
 /** End of TIM_Mode
   * \}
@@ -99,7 +99,7 @@ typedef enum
 } PWMDZStopState_TypeDef;
 
 #define IS_PWM_STOP_STATE(STATE) (((STATE) == PWM_STOP_AT_LOW) || \
-                                  ((STATE) == PWM_STOP_AT_HIGH))
+                                  ((STATE) == PWM_STOP_AT_HIGH)) //!< Check if the input parameter is valid.
 
 /** End of PWM_DeadZone_Stop_State
   * \}
@@ -122,7 +122,7 @@ typedef enum
 #define IS_TIM_Event_DURATION(duration) (((duration) == TIM_EventDuration_32us) || \
                                          ((duration) == TIM_EventDuration_64us) || \
                                          ((duration) == TIM_EventDuration_128us) || \
-                                         ((duration) == TIM_EventDuration_256us))
+                                         ((duration) == TIM_EventDuration_256us)) //!< Check if the input parameter is valid.
 #endif
 
 /** End of TIM_Exported_Constants
@@ -145,12 +145,14 @@ typedef enum
 typedef struct
 {
     TIMClockSrc_TypeDef TIM_ClockSrc;          /*!< Specify the clock source.
-                                                    This parameter can be a value of \ref TIM_Clock_Source. */
+                                                    This parameter can be a value of \ref TIM_Clock_Source.
+                                                    The calculation formula for timer clock is as follows:
+                                                    TIM clock = TIM_ClockSrc / TIM_SOURCE_DIV. */
 
     TIMClockDiv_TypeDef TIM_SOURCE_DIV;        /*!< Specify the clock source div.
                                                     This parameter can be a value of \ref TIM_Clock_Divider. */
 
-    FunctionalState TIM_SOURCE_DIV_En;         /*!< Enable or disable timer source clock div.
+    FunctionalState TIM_SOURCE_DIV_En;         /*!< Enable or disable timer source clock divider.
                                                     This parameter can be a value of DISABLE or ENABLE. */
 
     TIMMode_TypeDef TIM_Mode;                  /*!< Specify the counter mode.
@@ -164,10 +166,12 @@ typedef struct
                                                     This parameter must range from 0x0 to 0xFFFFFFFF. */
 
     uint32_t TIM_PWM_High_Count;               /*!< Specify the PWM High Count.
-                                                    This parameter must range from 0x0 to 0xFFFFFFFF. */
+                                                    This parameter must range from 0x0 to 0xFFFFFFFF.
+                                                    PWM high period = (TIM_PWM_High_Count + 1) * TIM clock period.*/
 
     uint32_t TIM_PWM_Low_Count;                /*!< Specify the PWM Low Count.
-                                                    This parameter must range from 0x0 to 0xFFFFFFFF. */
+                                                    This parameter must range from 0x0 to 0xFFFFFFFF.
+                                                    PWM low period = (TIM_PWM_Low_Count + 1) * TIM clock period. */
 
 #if TIM_SUPPORT_EVENT_DURATION
     uint32_t TIM_EventMode;                    /*!< Specify the TIM event mode. */
@@ -183,19 +187,21 @@ typedef struct
                                                     This parameter can be a value of ENABLE or DISABLE. */
 #endif
 
-    PWMDZClockSrc_TypeDef PWM_Deazone_ClockSrc;/*!< Specify the pwm deadzone clock source.
+    PWMDZClockSrc_TypeDef PWM_Deazone_ClockSrc;/*!< Specify the PWM deadzone clock source.
+                                                    The calculation formula for PWM deadzone clock is as follows:
+                                                    PWM deadzone clock = PWM_Deazone_ClockSrc / PWM_Deadzone_DIV.
                                                     This parameter can be a value of \ref PWM_DeadZone_Clock_Source. */
 
-    TIMClockDiv_TypeDef PWM_Deadzone_DIV;      /*!< Specify the pwm deadzone clock divider.
+    TIMClockDiv_TypeDef PWM_Deadzone_DIV;      /*!< Specify the PWM deadzone clock divider.
                                                     This parameter can be a value of \ref TIM_Clock_Divider. */
 
-    uint32_t PWM_Deazone_Size;                 /*!< Specify the pwm deadzone size.
+    uint32_t PWM_Deazone_Size;                 /*!< Specify the PWM deadzone size.
                                                     This parameter must range from 0x1 to 0xff.
-                                                    If you want to determine the deadzone time, you can refer to the formula:
-                                                    deadzone time = (deadzone size) / deadzone clock */
+                                                    The calculation formula for deadzone time is as follows:
+                                                    deadzone time = (PWM_Deazone_Size) / deadzone clock. */
 
     FunctionalState
-    PWMDeadZone_En;            /*!< Enable or disable the PWM complementary output and dead zone,.
+    PWMDeadZone_En;                            /*!< Enable or disable the PWM complementary output and deadzone.
                                                     This parameter can be a value of ENABLE or DISABLE. */
 
     PWMDZStopState_TypeDef PWM_Stop_State_P;   /*!< Specify the PWM P stop state.
@@ -221,9 +227,7 @@ typedef struct
 /**
  * \brief   Deinitialize the specified TIMx registers to their default reset values.
  *
- * \param[in] TIMx: Select the TIM peripheral. \ref TIM_Declaration
- *
- * \return  None.
+ * \param[in] TIMx  Select the TIM peripheral. Refer to \ref TIM_Declaration.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -240,10 +244,8 @@ void TIM_DeInit(TIM_TypeDef *TIMx);
  * \brief   Initialize the specified TIMx according to the specified parameters
  *          in TIM_TimeBaseInitStruct.
  *
- * \param[in] TIMx: Select the TIM peripheral. \ref TIM_Declaration
- * \param[in] TIM_TimeBaseInitStruct: Pointer to a TIM_TimeBaseInitTypeDef structure which will be initialized.
- *
- * \return  None.
+ * \param[in] TIMx                    Select the TIM peripheral. Refer to \ref TIM_Declaration.
+ * \param[in] TIM_TimeBaseInitStruct  Pointer to a TIM_TimeBaseInitTypeDef structure which will be initialized.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -282,9 +284,7 @@ void TIM_TimeBaseInit(TIM_TypeDef *TIMx, TIM_TimeBaseInitTypeDef *TIM_TimeBaseIn
  *       | PWM_Deazone_ClockSrc         | \ref PWM_CK_32K_TIMER                |
  *       | PWM_Deazone_Size             | 10                                   |
  *
- * \param[in] TIM_TimeBaseInitStruct: Pointer to a TIM_TimeBaseInitTypeDef structure which will be initialized.
- *
- * \return  None.
+ * \param[in] TIM_TimeBaseInitStruct  Pointer to a TIM_TimeBaseInitTypeDef structure which will be initialized.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -307,11 +307,11 @@ void TIM_StructInit(TIM_TimeBaseInitTypeDef *TIM_TimeBaseInitStruct);
 /**
  * \brief   Enable or disable the specified TIMx peripheral.
  *
- * \param[in] TIMx: Select the TIM peripheral. \ref TIM_Declaration
- * \param[in] NewState: New state of the TIMx peripheral.
- *            This parameter can be: ENABLE or DISABLE.
- *
- * \return  None.
+ * \param[in] TIMx      Select the TIM peripheral. Refer to \ref TIM_Declaration.
+ * \param[in] NewState  New state of the TIMx peripheral.
+ *                      This parameter can be one of the following values:
+ *                      - ENABLE: Count start.
+ *                      - DISABLE: Count stop and clear count value.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -333,13 +333,13 @@ void TIM_StructInit(TIM_TimeBaseInitTypeDef *TIM_TimeBaseInitStruct);
 void TIM_Cmd(TIM_TypeDef *TIMx, FunctionalState NewState);
 
 /**
- * \brief       Enable or disable the specified TIMx interrupt.
+ * \brief     Enable or disable the specified TIMx interrupt.
  *
- * \param[in]   TIMx: Select the TIM peripheral. \ref TIM_Declaration
- * \param[in]   NewState: New state of the TIMx peripheral.
- *              This parameter can be: ENABLE or DISABLE.
- *
- * \return      None.
+ * \param[in] TIMx      Select the TIM peripheral. Refer to \ref TIM_Declaration.
+ * \param[in] NewState  New state of the TIMx interrupt.
+ *                      This parameter can be one of the following values:
+ *                      - ENABLE: Enable the timeout interrupt.
+ *                      - DISABLE: Disable the timeout interrupt.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -362,12 +362,10 @@ void TIM_Cmd(TIM_TypeDef *TIMx, FunctionalState NewState);
 void TIM_INTConfig(TIM_TypeDef *TIMx, FunctionalState NewState);
 
 /**
- * \brief       Change the specified TIMx period value.
+ * \brief     Change the specified TIMx period value.
  *
- * \param[in]   TIMx: Select the TIM peripheral. \ref TIM_Declaration
- * \param[in]   period: Period value to be changed.
- *
- * \return  None.
+ * \param[in] TIMx    Select the TIM peripheral. Refer to \ref TIM_Declaration.
+ * \param[in] period  Period value to be changed. This parameter must range from 0x0 to 0xFFFFFFFF.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -385,11 +383,9 @@ void TIM_ChangePeriod(TIM_TypeDef *TIMx, uint32_t period);
 /**
  * \brief   Change the PWM frequency and duty cycle of the specified TIMx according to high_count and low_count.
  *
- * \param[in]   TIMx: Select the TIM peripheral. \ref TIM_Declaration
- * \param[in]   high_count: This parameter can be 0x00~0xFFFFFFFF.
- * \param[in]  low_count: This parameter can be 0x00~0xFFFFFFFF.
- *
- * \return  None.
+ * \param[in] TIMx        Select the TIM peripheral. Refer to \ref TIM_Declaration.
+ * \param[in] high_count  This parameter must range from 0~0xFFFFFFFF.
+ * \param[in] low_count   This parameter must range from be 0~0xFFFFFFFF.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -410,9 +406,9 @@ void TIM_PWMChangeFreqAndDuty(TIM_TypeDef *TIMx, uint32_t high_count, uint32_t l
 /**
  * \brief   Get the specified TIMx current value when timer is running.
  *
- * \param[in] TIMx: Select the TIM peripheral. \ref TIM_Declaration
+ * \param[in] TIMx  Select the TIM peripheral. Refer to \ref TIM_Declaration.
  *
- * \return  The counter value.
+ * \return  The current counter value.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -428,11 +424,11 @@ uint32_t TIM_GetCurrentValue(TIM_TypeDef *TIMx);
 /**
  * \brief   Get the specified TIMx interrupt status.
  *
- * \param[in] TIMx: Select the TIM peripheral. \ref TIM_Declaration
+ * \param[in] TIMx  Select the TIM peripheral. Refer to \ref TIM_Declaration.
  *
  * \return  The NewState of the timer interrupt status.
- *          \arg SET: The TIM interrupt has occurred.
- *          \arg RESET: The TIM interrupt has not occurred.
+ *          - SET: The TIM interrupt has occurred.
+ *          - RESET: The TIM interrupt has not occurred.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -448,11 +444,11 @@ ITStatus TIM_GetINTStatus(TIM_TypeDef *TIMx);
 /**
  * \brief   Get the specified TIMx operation status.
  *
- * \param[in] TIMx: Select the TIM peripheral. \ref TIM_Declaration
+ * \param[in] TIMx  Select the TIM peripheral. Refer to \ref TIM_Declaration.
  *
  * \return  The NewState of the timer operation status.
- *          \arg SET: The timer is running.
- *          \arg RESET: The timer is not running.
+ *          - SET: The timer is running.
+ *          - RESET: The timer is not running.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -468,7 +464,7 @@ ITStatus TIM_GetOperationStatus(TIM_TypeDef *TIMx);
 /**
  * \brief Get the specified TIMx elapsed value when timer is running.
  *
- * \param[in] TIMx: Select the TIM peripheral. \ref TIM_Declaration
+ * \param[in] TIMx  Select the TIM peripheral. Refer to \ref TIM_Declaration.
  *
  * \return The elapsed counter value.
  *
@@ -484,11 +480,9 @@ ITStatus TIM_GetOperationStatus(TIM_TypeDef *TIMx);
 uint32_t TIM_GetElapsedValue(TIM_TypeDef *TIMx);
 
 /**
- * \brief   Clear the specified TIMx interrupts.
+ * \brief   Clear the specified TIMx interrupt.
  *
- * \param[in] TIMx: Select the TIM peripheral. \ref TIM_Declaration
- *
- * \return  None.
+ * \param[in] TIMx  Select the TIM peripheral. Refer to \ref TIM_Declaration.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -504,12 +498,11 @@ void TIM_ClearINT(TIM_TypeDef *TIMx);
 /**
  * \brief   Enable or disable the emergency stop for PWM complementary output function.
  *
- * \param[in] PWMx: Select the PWM peripheral. \ref PWM_Declaration
- * \param[in] NewState: NewState of complementary output.
- *            \arg ENABLE: Enable the emergency stop output function.
- *            \arg DISABLE: Disable the emergency stop output function.
+ * \param[in] PWMx      Select the PWM peripheral. Refer to \ref PWM_Declaration.
+ * \param[in] NewState  NewState of complementary output.
+ *                      \arg ENABLE: Enable the emergency stop output function.
+ *                      \arg DISABLE: Disable the emergency stop output function.
  *
- * \return  None.
  * \note    When using PWM functions, it is crucial to pay attention to the corresponding relationships:
  *          PWM2 corresponds to TIM2, and PWM3 corresponds to TIM3.
  *
@@ -520,7 +513,6 @@ void TIM_ClearINT(TIM_TypeDef *TIMx);
  * {
  *    board_pwm_init();
  *    driver_pwm_init();
- *    //Add delay.
  *    TIM_PWMComplOutputEMCmd(PWM2,ENABLE);
  * }
  * \endcode
@@ -529,14 +521,13 @@ void TIM_PWMComplOutputEMCmd(PWM_TypeDef *PWMx, FunctionalState NewState);
 
 /**
  * \brief   Enable or disable deadzone bypass for the PWM complementary output function.
- *          Once enabled, PWM_P will become the inverse of PWM_N.
+ *          If enabled, PWM_P will become the inverse of PWM_N.
  *
- * \param[in] PWMx: Select the PWM peripheral. \ref PWM_Declaration
- * \param[in] NewState: NewState of the PWMx peripheral.
- *            \arg ENABLE: Enable bypass deadzone function.
- *            \arg DISABLE: Disable bypass deadzone function.
+ * \param[in] PWMx      Select the PWM peripheral. Refer to \ref PWM_Declaration.
+ * \param[in] NewState  NewState of the PWMx peripheral.
+ *                      \arg ENABLE: Enable bypass deadzone function.
+ *                      \arg DISABLE: Disable bypass deadzone function.
  *
- * \return  None.
  * \note    When using PWM functions, it is crucial to pay attention to the corresponding relationships:
  *          PWM2 corresponds to TIM2, and PWM3 corresponds to TIM3.
  *
@@ -569,10 +560,9 @@ void TIM_PWMDZBypassCmd(PWM_TypeDef *PWMx, FunctionalState NewState);
 /**
  * \brief   Change the clock source for the PWM deadzone time.
  *
- * \param[in] PWMx: Select the PWM peripheral. \ref PWM_Declaration
- * \param[in] PWM_Deazone_ClockSrc: Specify the PWM deadzone clock source. \ref PWM_DeadZone_Clock_Source
+ * \param[in] PWMx                  Select the PWM peripheral. Refer to \ref PWM_Declaration.
+ * \param[in] PWM_Deazone_ClockSrc  Specify the PWM deadzone clock source. Refer to \ref PWM_DeadZone_Clock_Source.
  *
- * \return  None.
  * \note    When using PWM functions, it is crucial to pay attention to the corresponding relationships:
  *          PWM2 corresponds to TIM2, and PWM3 corresponds to TIM3.
  *
@@ -610,11 +600,9 @@ void TIM_PWMChangeDZClockSrc(PWM_TypeDef *PWMx, PWMDZClockSrc_TypeDef PWM_Deazon
 /**
  * \brief  Configure the specified TIMx clock.
  *
- * \param[in] TIMx: Select the TIM peripheral. \ref TIM_Declaration
- * \param[in] ClockSrc: Specify the TIM clock source. \ref TIM_Clock_Source.
- * \param[in] ClockDiv: Specify the TIM clock divider. \ref TIM_Clock_Divider.
- *
- * \return None
+ * \param[in] TIMx      Select the TIM peripheral. Refer to \ref TIM_Declaration.
+ * \param[in] ClockSrc  Specify the TIM clock source. Refer to \ref TIM_Clock_Source.
+ * \param[in] ClockDiv  Specify the TIM clock divider. Refer to \ref TIM_Clock_Divider.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -632,20 +620,24 @@ void TIM_ClkConfig(TIM_TypeDef *TIMx, TIMClockSrc_TypeDef ClockSrc,
 #define TIM_GetCurrentLoadCnt(TIMx)      (((TIM_TypeDef *)(TIMx))->TIMER_LOADCOUNT)
 
 /**
- * \brief  Get the specified TIMx clock config.
+ * \brief  Get the specified TIMx clock configuration.
  *
- * \param[in] TIMx: Select the TIM peripheral. \ref TIM_Declaration
- * \param[out] ClockSrc: Specify the TIM clock source. \ref TIM_Clock_Source.
- * \param[out] ClockDiv: Specify the TIM clock divider. \ref TIM_Clock_Divider.
+ * \param[in]  TIMx      Select the TIM peripheral. Refer to \ref TIM_Declaration.
+ * \param[out] ClockSrc  The TIM clock source. Refer to \ref TIM_Clock_Source.
+ * \param[out] ClockDiv  The TIM clock divider. Refer to \ref TIM_Clock_Divider.
  *
- * \return The status of get clock
+ * \return The status of get clock.
+ *         - true: TIM clock is set correctly.
+ *         - false: The TIM clock is set incorrectly.
  *
  * <b>Example usage</b>
  * \code{.c}
  *
  * void timer_demo(void)
  * {
- *     TIM_ClkGet(TIM6, TIM_CLOCK_SRC_40M, TIM_CLOCK_DIVIDER_1)
+ *     TIMClockSrc_TypeDef clock_src;
+ *     TIMClockDiv_TypeDef clock_div;
+ *     TIM_ClkGet(TIM6, &clock_src, &clock_div);
  * }
  * \endcode
  */
@@ -657,20 +649,18 @@ bool TIM_ClkGet(TIM_TypeDef *TIMx, TIMClockSrc_TypeDef *ClockSrc, TIMClockDiv_Ty
  *
  * \brief     Select the specified divider and source for the timer clock.
  *
- * \param[in] clocklevel: Timer clock divider.
- *            This parameter can be one of the following values:
- *            \arg TIM2TO7_CLOCK_DIV_x: TIM2TO7 clock divider, where x can be 1 ~ 4, 6, 8, 16.
- * \param[in] clocksource: Timer clock Source.
- *            This parameter can be one of the following values:
- *            \arg TIM_CLOCK_SOURCE_SYSTEM_CLOCK: Select timer clock source of system clock.
- *            \arg TIM_CLOCK_SOURCE_40MHZ: Select timer clock source of 40MHz.
- *            \arg TIM_CLOCK_SOURCE_PLL: Select timer clock source of PLL.
- * \param[in] NewState: New state of the specified RCC Clock Source.
- *            This parameter can be one of the following values:
- *            \arg ENABLE: Enable the specified RCC Clock Source.
- *            \arg DISABLE: Disable the specified RCC Clock Source.
- *
- * \return None.
+ * \param[in] clocklevel   Timer clock divider.
+ *                         This parameter can be one of the following values:
+ *                         \arg TIM2TO7_CLOCK_DIV_x: TIM2TO7 clock divider, where x can be 1 ~ 4, 6, 8, 16.
+ * \param[in] clocksource  Timer clock Source.
+ *                         This parameter can be one of the following values:
+ *                         \arg TIM_CLOCK_SOURCE_SYSTEM_CLOCK: Select timer clock source of system clock.
+ *                         \arg TIM_CLOCK_SOURCE_40MHZ: Select timer clock source of 40MHz.
+ *                         \arg TIM_CLOCK_SOURCE_PLL: Select timer clock source of PLL.
+ * \param[in] NewState     New state of the specified RCC Clock Source.
+ *                         This parameter can be one of the following values:
+ *                         - ENABLE: Enable the specified RCC Clock Source.
+ *                         - DISABLE: Disable the specified RCC Clock Source.
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -699,4 +689,4 @@ void TIM_SourceConfig(uint16_t clocklevel, uint16_t clocksource, FunctionalState
 #endif /*_RTL_TIM_H_*/
 
 
-/******************* (C) COPYRIGHT 2023 Realtek Semiconductor Corporation *****END OF FILE****/
+/******************* (C) COPYRIGHT 2025 Realtek Semiconductor Corporation *****END OF FILE****/
