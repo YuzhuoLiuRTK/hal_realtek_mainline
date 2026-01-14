@@ -1,19 +1,21 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
-*********************************************************************************************************
+*****************************************************************************************
+*     Copyright(c) 2025, Realtek Semiconductor Corporation. All rights reserved.
+*
+*     SPDX-License-Identifier: Apache-2.0
+*****************************************************************************************
 * \file     rtl876x_qdec.h
 * \brief    The header file of the peripheral QDECODER driver.
 * \details  This file provides all QDECODER firmware functions.
 * \author   howie wang
 * \date     2024-01-18
 * \version  v1.0
-* *********************************************************************************************************
+***************************************************************************************
+* @attention
+* <h2><center>&copy; COPYRIGHT 2025 Realtek Semiconductor Corporation</center></h2>
+***************************************************************************************
 */
+
 
 #ifndef _RTL876X_QDEC_H_
 #define _RTL876X_QDEC_H_
@@ -21,6 +23,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
 
 /**
  * \addtogroup  IO          Peripheral Drivers
@@ -58,42 +61,42 @@ typedef struct
  */
 typedef struct
 {
-    uint16_t scanClockDiv;       /*!< This parameter is used to set debounce time. */
-    uint16_t debounceClockDiv;   /*!< This parameter is used to set debounce time. */
-    uint8_t axisConfigX;         /*!< Specify the axis X function.
-                                      This parameter can be a value of ENABLE or DISABLE. */
-    uint8_t axisConfigY;         /*!< Specify the axis Y function.
-                                      This parameter can be a value of ENABLE or DISABLE. */
-    uint8_t axisConfigZ;         /*!< Specify the axis Z function.
-                                      This parameter can be a value of ENABLE or DISABLE. */
-    uint8_t manualLoadInitPhase; /*!< Specify manual-load Initphase function.
-                                      This parameter can be a value of ENABLE or DISABLE. */
-    uint16_t counterScaleX;      /*!< Specify the axis X counter scale.
-                                      This parameter can be a value of \ref QDEC_Axis_Counter_Scale. */
-    uint16_t debounceEnableX;    /*!< Specify the axis X debounce.
-                                      This parameter can be a value of \ref QDEC_Debounce. */
-    uint16_t debounceTimeX;      /*!< Specify the axis X debounce time. */
-    uint16_t initPhaseX;         /*!< Specify the axis X function.
-                                      This parameter can be a value of \ref QDEC_Init_Phase. */
-    uint16_t counterScaleY;      /*!< Specify the axis Y counter scale.
-                                      This parameter can be a value of \ref QDEC_Axis_Counter_Scale. */
-    uint16_t debounceEnableY;    /*!< Specify the axis Y debounce.
-                                      This parameter can be a value of \ref QDEC_Debounce. */
-    uint16_t debounceTimeY;      /*!< Specify the axis Y debounce time. */
-    uint16_t initPhaseY;         /*!< Specify the axis Y function.
-                                      This parameter can be a value of \ref QDEC_Init_Phase. */
-    uint16_t counterScaleZ;      /*!< Specify the axis Z counter scale.
-                                      This parameter can be a value of \ref QDEC_Axis_Counter_Scale. */
-    uint16_t debounceEnableZ;    /*!< Specify the axis Z debounce.
-                                      This parameter can be a value of \ref QDEC_Debounce. */
-    uint16_t debounceTimeZ;      /*!< Specify the axis Z debounce time. */
-    uint16_t initPhaseZ;         /*!< Specify the axis Z function.
-                                      This parameter can be a value of \ref QDEC_Init_Phase. */
+    uint16_t scanClockDiv;              /*!< This parameter is used to set debounce time. */
+    uint16_t debounceClockDiv;          /*!< This parameter is used to set debounce time. */
+    uint8_t axisConfigX;                /*!< Specify the axis X function.
+                                             This parameter can be a value of ENABLE or DISABLE. */
+    uint8_t axisConfigY;                /*!< Specify the axis Y function.
+                                             This parameter can be a value of ENABLE or DISABLE. */
+    uint8_t axisConfigZ;                /*!< Specify the axis Z function.
+                                             This parameter can be a value of ENABLE or DISABLE. */
+    uint8_t manualLoadInitPhase;        /*!< Specify manual-load Initphase function.
+                                             This parameter can be a value of ENABLE or DISABLE. */
+    uint16_t counterScaleX;             /*!< Specify the axis X counter scale.
+                                             This parameter can be a value of \ref QDEC_Axis_Counter_Scale. */
+    uint16_t debounceEnableX;           /*!< Specify the axis X debounce.
+                                             This parameter can be a value of \ref QDEC_Debounce. */
+    uint16_t debounceTimeX;             /*!< Specify the axis X debounce time. */
+    uint16_t initPhaseX;                /*!< Specify the axis X function.
+                                             This parameter can be a value of \ref QDEC_Init_Phase. */
+    uint16_t counterScaleY;             /*!< Specify the axis Y counter scale.
+                                             This parameter can be a value of \ref QDEC_Axis_Counter_Scale. */
+    uint16_t debounceEnableY;           /*!< Specify the axis Y debounce.
+                                             This parameter can be a value of \ref QDEC_Debounce. */
+    uint16_t debounceTimeY;             /*!< Specify the axis Y debounce time. */
+    uint16_t initPhaseY;                /*!< Specify the axis Y function.
+                                             This parameter can be a value of \ref QDEC_Init_Phase. */
+    uint16_t counterScaleZ;             /*!< Specify the axis Z counter scale.
+                                             This parameter can be a value of \ref QDEC_Axis_Counter_Scale. */
+    uint16_t debounceEnableZ;           /*!< Specify the axis Z debounce.
+                                             This parameter can be a value of \ref QDEC_Debounce. */
+    uint16_t debounceTimeZ;             /*!< Specify the axis Z debounce time. */
+    uint16_t initPhaseZ;                /*!< Specify the axis Z function.
+                                             This parameter can be a value of \ref QDEC_Init_Phase. */
 } QDEC_InitTypeDef;
 
 /** End of QDEC_Exported_Types
- * \}
- */
+  * \}
+  */
 
 /*============================================================================*
  *                         Constants
@@ -111,17 +114,16 @@ typedef struct
  * \{
  * \ingroup     QDEC_Exported_Constants
  */
-#define QDEC_X_INT_NEW_DATA BIT(0) // get new data and state change
-#define QDEC_X_INT_ILLEGAL BIT(1)  // illegal
-#define QDEC_Y_INT_NEW_DATA BIT(2) // get new data and state change
-#define QDEC_Y_INT_ILLEGAL BIT(3)  // illegal
-#define QDEC_Z_INT_NEW_DATA BIT(4) // get new data and state change
-#define QDEC_Z_INT_ILLEGAL BIT(5)  // illegal
+#define QDEC_X_INT_NEW_DATA                                   BIT(0) //get new data and state change
+#define QDEC_X_INT_ILLEGAL                                    BIT(1) //illegal
+#define QDEC_Y_INT_NEW_DATA                                   BIT(2) //get new data and state change
+#define QDEC_Y_INT_ILLEGAL                                    BIT(3) //illegal
+#define QDEC_Z_INT_NEW_DATA                                   BIT(4) //get new data and state change
+#define QDEC_Z_INT_ILLEGAL                                    BIT(5) //illegal
 
-#define IS_QDEC_INT_CONFIG(CONFIG)                                                                 \
-    (((CONFIG) == QDEC_X_INT_NEW_DATA) || ((CONFIG) == QDEC_X_INT_ILLEGAL) ||                      \
-     ((CONFIG) == QDEC_Y_INT_NEW_DATA) || ((CONFIG) == QDEC_Y_INT_ILLEGAL) ||                      \
-     ((CONFIG) == QDEC_Z_INT_NEW_DATA) || ((CONFIG) == QDEC_Z_INT_ILLEGAL))
+#define IS_QDEC_INT_CONFIG(CONFIG) (((CONFIG) == QDEC_X_INT_NEW_DATA) || ((CONFIG) == QDEC_X_INT_ILLEGAL)\
+                                    || ((CONFIG) == QDEC_Y_INT_NEW_DATA) || ((CONFIG) == QDEC_Y_INT_ILLEGAL)\
+                                    || ((CONFIG) == QDEC_Z_INT_NEW_DATA) || ((CONFIG) == QDEC_Z_INT_ILLEGAL))
 /** \} */
 
 /**
@@ -129,17 +131,16 @@ typedef struct
  * \{
  * \ingroup     QDEC_Exported_Constants
  */
-#define QDEC_X_CT_INT_MASK BIT(0)      // get new data and state change
-#define QDEC_X_ILLEGAL_INT_MASK BIT(4) // illegal
-#define QDEC_Y_CT_INT_MASK BIT(1)      // get new data and state change
-#define QDEC_Y_ILLEGAL_INT_MASK BIT(5) // illegal
-#define QDEC_Z_CT_INT_MASK BIT(2)      // get new data and state change
-#define QDEC_Z_ILLEGAL_INT_MASK BIT(6) // illegal
+#define QDEC_X_CT_INT_MASK                                   BIT(0) //get new data and state change
+#define QDEC_X_ILLEGAL_INT_MASK                              BIT(4) //illegal
+#define QDEC_Y_CT_INT_MASK                                   BIT(1) //get new data and state change
+#define QDEC_Y_ILLEGAL_INT_MASK                              BIT(5) //illegal
+#define QDEC_Z_CT_INT_MASK                                   BIT(2) //get new data and state change
+#define QDEC_Z_ILLEGAL_INT_MASK                              BIT(6) //illegal
 
-#define IS_QDEC_INT_MASK_CONFIG(CONFIG)                                                            \
-    (((CONFIG) == QDEC_X_CT_INT_MASK) || ((CONFIG) == QDEC_X_ILLEGAL_INT_MASK) ||                  \
-     ((CONFIG) == QDEC_Y_CT_INT_MASK) || ((CONFIG) == QDEC_Y_ILLEGAL_INT_MASK) ||                  \
-     ((CONFIG) == QDEC_Z_CT_INT_MASK) || ((CONFIG) == QDEC_Z_ILLEGAL_INT_MASK))
+#define IS_QDEC_INT_MASK_CONFIG(CONFIG) (((CONFIG) == QDEC_X_CT_INT_MASK) || ((CONFIG) == QDEC_X_ILLEGAL_INT_MASK)\
+                                         || ((CONFIG) == QDEC_Y_CT_INT_MASK) || ((CONFIG) == QDEC_Y_ILLEGAL_INT_MASK)\
+                                         || ((CONFIG) == QDEC_Z_CT_INT_MASK) || ((CONFIG) == QDEC_Z_ILLEGAL_INT_MASK))
 /** \} */
 
 /**
@@ -147,8 +148,8 @@ typedef struct
  * \{
  * \ingroup     QDEC_Exported_Constants
  */
-#define CounterScale_2_Phase true
-#define CounterScale_1_Phase false
+#define CounterScale_2_Phase                      true
+#define CounterScale_1_Phase                      false
 /** \} */
 
 /**
@@ -156,8 +157,8 @@ typedef struct
  * \{
  * \ingroup     QDEC_Exported_Constants
  */
-#define Debounce_Enable true
-#define Debounce_Disable false
+#define Debounce_Enable                        true
+#define Debounce_Disable                       false
 /** \} */
 
 /**
@@ -166,8 +167,8 @@ typedef struct
  * \ingroup     QDEC_Exported_Constants
  */
 
-#define manualPhaseEnable true
-#define manualPhaseDisable false
+#define manualPhaseEnable                        true
+#define manualPhaseDisable                       false
 /** \} */
 
 /**
@@ -176,10 +177,10 @@ typedef struct
  * \ingroup     QDEC_Exported_Constants
  */
 
-#define phaseMode0 0 // phase 00
-#define phaseMode1 1 // phase 01
-#define phaseMode2 2 // phase 10
-#define phaseMode3 3 // phase 11
+#define phaseMode0                        0       //phase 00
+#define phaseMode1                        1       //phase 01
+#define phaseMode2                        2       //phase 10
+#define phaseMode3                        3       //phase 11
 /** \} */
 
 /**
@@ -187,38 +188,37 @@ typedef struct
  * \{
  * \ingroup     QDEC_Exported_Constants
  */
-#define QDEC_CLR_ILLEGAL_CT_X ((uint32_t)(1 << 20))
-#define QDEC_CLR_ILLEGAL_CT_Y ((uint32_t)(1 << 21))
-#define QDEC_CLR_ILLEGAL_CT_Z ((uint32_t)(1 << 22))
+#define QDEC_CLR_ILLEGAL_CT_X                            ((uint32_t)(1 << 20))
+#define QDEC_CLR_ILLEGAL_CT_Y                            ((uint32_t)(1 << 21))
+#define QDEC_CLR_ILLEGAL_CT_Z                            ((uint32_t)(1 << 22))
 
-#define QDEC_CLR_ACC_CT_X ((uint32_t)(1 << 16))
-#define QDEC_CLR_ACC_CT_Y ((uint32_t)(1 << 17))
-#define QDEC_CLR_ACC_CT_Z ((uint32_t)(1 << 18))
+#define QDEC_CLR_ACC_CT_X                                ((uint32_t)(1 << 16))
+#define QDEC_CLR_ACC_CT_Y                                ((uint32_t)(1 << 17))
+#define QDEC_CLR_ACC_CT_Z                                ((uint32_t)(1 << 18))
 
-#define QDEC_CLR_ILLEGAL_INT_X ((uint32_t)(1 << 12))
-#define QDEC_CLR_ILLEGAL_INT_Y ((uint32_t)(1 << 13))
-#define QDEC_CLR_ILLEGAL_INT_Z ((uint32_t)(1 << 14))
+#define QDEC_CLR_ILLEGAL_INT_X                           ((uint32_t)(1 << 12))
+#define QDEC_CLR_ILLEGAL_INT_Y                           ((uint32_t)(1 << 13))
+#define QDEC_CLR_ILLEGAL_INT_Z                           ((uint32_t)(1 << 14))
 
-#define QDEC_CLR_UNDERFLOW_X ((uint32_t)(1 << 8))
-#define QDEC_CLR_UNDERFLOW_Y ((uint32_t)(1 << 9))
-#define QDEC_CLR_UNDERFLOW_Z ((uint32_t)(1 << 10))
+#define QDEC_CLR_UNDERFLOW_X                             ((uint32_t)(1 << 8))
+#define QDEC_CLR_UNDERFLOW_Y                             ((uint32_t)(1 << 9))
+#define QDEC_CLR_UNDERFLOW_Z                             ((uint32_t)(1 << 10))
 
-#define QDEC_CLR_OVERFLOW_X ((uint32_t)(1 << 4))
-#define QDEC_CLR_OVERFLOW_Y ((uint32_t)(1 << 5))
-#define QDEC_CLR_OVERFLOW_Z ((uint32_t)(1 << 6))
+#define QDEC_CLR_OVERFLOW_X                              ((uint32_t)(1 << 4))
+#define QDEC_CLR_OVERFLOW_Y                              ((uint32_t)(1 << 5))
+#define QDEC_CLR_OVERFLOW_Z                              ((uint32_t)(1 << 6))
 
-#define QDEC_CLR_NEW_CT_X ((uint32_t)(1 << 0))
-#define QDEC_CLR_NEW_CT_Y ((uint32_t)(1 << 1))
-#define QDEC_CLR_NEW_CT_Z ((uint32_t)(1 << 2))
+#define QDEC_CLR_NEW_CT_X                                ((uint32_t)(1 << 0))
+#define QDEC_CLR_NEW_CT_Y                                ((uint32_t)(1 << 1))
+#define QDEC_CLR_NEW_CT_Z                                ((uint32_t)(1 << 2))
 
-#define IS_QDEC_INT_CLR_CONFIG(CONFIG)                                                             \
-    (((CONFIG) == QDEC_CLR_ACC_CT_X) || ((CONFIG) == QDEC_CLR_ACC_CT_Y) ||                         \
-     ((CONFIG) == QDEC_CLR_ACC_CT_Z) || ((CONFIG) == QDEC_CLR_ILLEGAL_INT_Y) ||                    \
-     ((CONFIG) == QDEC_CLR_ILLEGAL_INT_Z) || ((CONFIG) == QDEC_CLR_UNDERFLOW_X) ||                 \
-     ((CONFIG) == QDEC_CLR_UNDERFLOW_Y) || ((CONFIG) == QDEC_CLR_UNDERFLOW_Z) ||                   \
-     ((CONFIG) == QDEC_CLR_OVERFLOW_X) || ((CONFIG) == QDEC_CLR_OVERFLOW_Y) ||                     \
-     ((CONFIG) == QDEC_CLR_OVERFLOW_Z) || ((CONFIG) == QDEC_CLR_NEW_CT_X) ||                       \
-     ((CONFIG) == QDEC_CLR_NEW_CT_Y) || ((CONFIG) == QDEC_CLR_NEW_CT_Z))
+#define IS_QDEC_INT_CLR_CONFIG(CONFIG) (((CONFIG) == QDEC_CLR_ACC_CT_X) || ((CONFIG) == QDEC_CLR_ACC_CT_Y)\
+                                        || ((CONFIG) == QDEC_CLR_ACC_CT_Z) || ((CONFIG) == QDEC_CLR_ILLEGAL_INT_Y)\
+                                        || ((CONFIG) == QDEC_CLR_ILLEGAL_INT_Z) || ((CONFIG) == QDEC_CLR_UNDERFLOW_X)\
+                                        || ((CONFIG) == QDEC_CLR_UNDERFLOW_Y) || ((CONFIG) == QDEC_CLR_UNDERFLOW_Z)\
+                                        || ((CONFIG) == QDEC_CLR_OVERFLOW_X) || ((CONFIG) == QDEC_CLR_OVERFLOW_Y)\
+                                        || ((CONFIG) == QDEC_CLR_OVERFLOW_Z) || ((CONFIG) == QDEC_CLR_NEW_CT_X)\
+                                        || ((CONFIG) == QDEC_CLR_NEW_CT_Y) || ((CONFIG) == QDEC_CLR_NEW_CT_Z))
 /** \} */
 
 /**
@@ -227,31 +227,30 @@ typedef struct
  * \ingroup     QDEC_Exported_Constants
  */
 
-#define QDEC_FLAG_NEW_CT_STATUS_X ((uint32_t)(1 << 0))
-#define QDEC_FLAG_NEW_CT_STATUS_Y ((uint32_t)(1 << 1))
-#define QDEC_FLAG_NEW_CT_STATUS_Z ((uint32_t)(1 << 2))
-#define QDEC_FLAG_OVERFLOW_X ((uint32_t)(1 << 3))
-#define QDEC_FLAG_OVERFLOW_Y ((uint32_t)(1 << 4))
-#define QDEC_FLAG_OVERFLOW_Z ((uint32_t)(1 << 5))
-#define QDEC_FLAG_UNDERFLOW_X ((uint32_t)(1 << 6))
-#define QDEC_FLAG_UNDERFLOW_Y ((uint32_t)(1 << 7))
-#define QDEC_FLAG_UNDERFLOW_Z ((uint32_t)(1 << 8))
-#define QDEC_FLAG_AUTO_STATUS_X ((uint32_t)(1 << 9))
-#define QDEC_FLAG_AUTO_STATUS_Y ((uint32_t)(1 << 10))
-#define QDEC_FLAG_AUTO_STATUS_Z ((uint32_t)(1 << 11))
-#define QDEC_FLAG_ILLEGAL_STATUS_X ((uint32_t)(1 << 12))
-#define QDEC_FLAG_ILLEGAL_STATUS_Y ((uint32_t)(1 << 13))
-#define QDEC_FLAG_ILLEGAL_STATUS_Z ((uint32_t)(1 << 14))
+#define QDEC_FLAG_NEW_CT_STATUS_X                             ((uint32_t)(1 << 0))
+#define QDEC_FLAG_NEW_CT_STATUS_Y                             ((uint32_t)(1 << 1))
+#define QDEC_FLAG_NEW_CT_STATUS_Z                             ((uint32_t)(1 << 2))
+#define QDEC_FLAG_OVERFLOW_X                                  ((uint32_t)(1 << 3))
+#define QDEC_FLAG_OVERFLOW_Y                                  ((uint32_t)(1 << 4))
+#define QDEC_FLAG_OVERFLOW_Z                                  ((uint32_t)(1 << 5))
+#define QDEC_FLAG_UNDERFLOW_X                                 ((uint32_t)(1 << 6))
+#define QDEC_FLAG_UNDERFLOW_Y                                 ((uint32_t)(1 << 7))
+#define QDEC_FLAG_UNDERFLOW_Z                                 ((uint32_t)(1 << 8))
+#define QDEC_FLAG_AUTO_STATUS_X                               ((uint32_t)(1 << 9))
+#define QDEC_FLAG_AUTO_STATUS_Y                               ((uint32_t)(1 << 10))
+#define QDEC_FLAG_AUTO_STATUS_Z                               ((uint32_t)(1 << 11))
+#define QDEC_FLAG_ILLEGAL_STATUS_X                            ((uint32_t)(1 << 12))
+#define QDEC_FLAG_ILLEGAL_STATUS_Y                            ((uint32_t)(1 << 13))
+#define QDEC_FLAG_ILLEGAL_STATUS_Z                            ((uint32_t)(1 << 14))
 
-#define IS_QDEC_CLR_INT_STATUS(INT)                                                                \
-    (((INT) == QDEC_FLAG_ILLEGAL_STATUS_X) || ((INT) == QDEC_FLAG_ILLEGAL_STATUS_Y) ||             \
-     ((INT) == QDEC_FLAG_ILLEGAL_STATUS_Z) || ((INT) == QDEC_FLAG_NEW_CT_STATUS_X) ||              \
-     ((INT) == QDEC_FLAG_NEW_CT_STATUS_Y) || ((INT) == QDEC_FLAG_NEW_CT_STATUS_Z) ||               \
-     ((INT) == QDEC_FLAG_OVERFLOW_X) || ((INT) == QDEC_FLAG_OVERFLOW_Y) ||                         \
-     ((INT) == QDEC_FLAG_OVERFLOW_Z) || ((INT) == QDEC_FLAG_UNDERFLOW_X) ||                        \
-     ((INT) == QDEC_FLAG_UNDERFLOW_Y) || ((INT) == QDEC_FLAG_UNDERFLOW_Z) ||                       \
-     ((INT) == QDEC_FLAG_AUTO_STATUS_X) || ((INT) == QDEC_FLAG_AUTO_STATUS_Y) ||                   \
-     ((INT) == QDEC_FLAG_AUTO_STATUS_Z))
+#define IS_QDEC_CLR_INT_STATUS(INT) (((INT) == QDEC_FLAG_ILLEGAL_STATUS_X) || ((INT) == QDEC_FLAG_ILLEGAL_STATUS_Y)\
+                                     || ((INT) == QDEC_FLAG_ILLEGAL_STATUS_Z) || ((INT) == QDEC_FLAG_NEW_CT_STATUS_X)\
+                                     || ((INT) == QDEC_FLAG_NEW_CT_STATUS_Y) || ((INT) == QDEC_FLAG_NEW_CT_STATUS_Z)\
+                                     || ((INT) == QDEC_FLAG_OVERFLOW_X) || ((INT) == QDEC_FLAG_OVERFLOW_Y)\
+                                     || ((INT) == QDEC_FLAG_OVERFLOW_Z) || ((INT) == QDEC_FLAG_UNDERFLOW_X)\
+                                     || ((INT) == QDEC_FLAG_UNDERFLOW_Y) || ((INT) == QDEC_FLAG_UNDERFLOW_Z)\
+                                     || ((INT) == QDEC_FLAG_AUTO_STATUS_X) || ((INT) == QDEC_FLAG_AUTO_STATUS_Y)\
+                                     || ((INT) == QDEC_FLAG_AUTO_STATUS_Z))
 /** \} */
 
 /**
@@ -260,9 +259,9 @@ typedef struct
  * \ingroup     QDEC_Exported_Constants
  */
 
-#define QDEC_AXIS_X ((uint32_t)(1 << 0))
-#define QDEC_AXIS_Y ((uint32_t)(1 << 2))
-#define QDEC_AXIS_Z ((uint32_t)(1 << 3))
+#define QDEC_AXIS_X                                     ((uint32_t)(1 << 0))
+#define QDEC_AXIS_Y                                     ((uint32_t)(1 << 2))
+#define QDEC_AXIS_Z                                     ((uint32_t)(1 << 3))
 /** \} */
 
 /**
@@ -271,16 +270,15 @@ typedef struct
  * \ingroup    QDEC_Exported_Constants
  */
 
-#define QDEC_AXIS_DIR_UP ((uint16_t)0x01)
-#define QDEC_AXIS_DIR_DOWN ((uint16_t)0x00)
+#define QDEC_AXIS_DIR_UP                                 ((uint16_t)0x01)
+#define QDEC_AXIS_DIR_DOWN                               ((uint16_t)0x00)
 
-#define IS_QDEC_AXIS_DIR(QDEC_AXIS)                                                                \
-    ((QDEC_AXIS == QDEC_AXIS_DIR_UP) || (QDEC_AXIS == QDEC_AXIS_DIR_DOWN))
+#define IS_QDEC_AXIS_DIR(QDEC_AXIS)     ((QDEC_AXIS == QDEC_AXIS_DIR_UP) || (QDEC_AXIS == QDEC_AXIS_DIR_DOWN))
 /** \} */
 
 /** End of QDEC_Exported_Constants
- * \}
- */
+  * \}
+  */
 
 /*============================================================================*
  *                         Functions
@@ -292,8 +290,7 @@ typedef struct
  */
 
 /**
- * \brief   Deinitialize the QDEC peripheral registers to their default reset values (turn off QDEC
- * clock).
+ * \brief   Deinitialize the QDEC peripheral registers to their default reset values (turn off QDEC clock).
  * \param[in] QDECx: Selected QDEC peripheral.
  * \return  None.
  *
@@ -313,8 +310,7 @@ void QDEC_DeInit(QDEC_TypeDef *QDECx);
  *          parameters in the QDEC_InitStruct.
  * \param[in]  QDECx: Selected QDEC peripheral.
  * \param[in]  QDEC_InitStruct: Pointer to a QDEC_InitStruct structure that
- *                              contains the configuration information for the specified QDEC
- * peripheral.
+ *                              contains the configuration information for the specified QDEC peripheral.
  * \return None.
  *
  * <b>Example usage</b>
@@ -366,8 +362,7 @@ void QDEC_StructInit(QDEC_InitTypeDef *QDEC_InitStruct);
  * \brief  Enable or disable the specified QDEC interrupt source.
  * \param[in]  QDECx: Selected QDEC peripheral.
  * \param[in]  QDEC_IT: Specify the QDEC interrupt sources to be enabled or disabled.
- *      This parameter can be one of the following values, which refer to \ref
- * QDEC_Interrupts_Definition.
+ *      This parameter can be one of the following values, which refer to \ref QDEC_Interrupts_Definition.
  *      \arg  QDEC_X_INT_NEW_DATA: The counter interrupt for X axis.
  *      \arg  QDEC_X_INT_ILLEGAL: The illegal interrupt for X axis.
  *      \arg  QDEC_Y_INT_NEW_DATA: The counter interrupt for Y axis.
@@ -423,8 +418,7 @@ FlagStatus QDEC_GetFlagState(QDEC_TypeDef *QDECx, uint32_t QDEC_FLAG);
  * \brief  Enable or disable mask the specified QDEC axis interrupts.
  * \param[in]  QDECx: Selected QDEC peripheral.
  * \param[in]  QDEC_AXIS: Specify the QDEC axis.
- *      This parameter can be one or logical OR of the following values, which refer to \ref
- * QDEC_Interrupts_Mask.
+ *      This parameter can be one or logical OR of the following values, which refer to \ref QDEC_Interrupts_Mask.
  *      \arg  QDEC_X_CT_INT_MASK: The x-axis counter interrupt mask.
  *      \arg  QDEC_X_ILLEGAL_INT_MASK: The x-axis illegal interrupt mask.
  *      \arg  QDEC_Y_CT_INT_MASK: The y-axis counter interrupt mask.
@@ -469,7 +463,8 @@ void QDEC_INTMask(QDEC_TypeDef *QDECx, uint32_t QDEC_AXIS, FunctionalState newSt
  * }
  * \endcode
  */
-void QDEC_Cmd(QDEC_TypeDef *QDECx, uint32_t QDEC_AXIS, FunctionalState newState);
+void QDEC_Cmd(QDEC_TypeDef *QDECx, uint32_t QDEC_AXIS,
+              FunctionalState newState);
 
 /**
  * \brief   Clear QDEC interrupt pending bit.
@@ -610,12 +605,12 @@ __STATIC_INLINE void QDEC_CounterPauseCmd(QDEC_TypeDef *QDECx, uint32_t QDEC_AXI
 }
 
 /** End of QDEC_Exported_Functions
- * \}
- */
+  * \}
+  */
 
 /** End of QDEC
- * \}
- */
+  * \}
+  */
 
 #ifdef __cplusplus
 }
@@ -623,4 +618,8 @@ __STATIC_INLINE void QDEC_CounterPauseCmd(QDEC_TypeDef *QDECx, uint32_t QDEC_AXI
 
 #endif /* _RTL876X_QDEC_H_ */
 
+
 /******************* (C) COPYRIGHT 2024 Realtek Semiconductor *****END OF FILE****/
+
+
+

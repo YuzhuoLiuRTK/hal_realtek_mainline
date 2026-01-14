@@ -1,19 +1,21 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
-**********************************************************************************************************
+*****************************************************************************************
+*     Copyright(c) 2025, Realtek Semiconductor Corporation. All rights reserved.
+*
+*     SPDX-License-Identifier: Apache-2.0
+*****************************************************************************************
 * @file     rtl876x_rcc.c
 * @brief    This file provides all the IO clock firmware functions..
 * @details
 * @author   tifnan_ge
 * @date     2015-05-16
 * @version  v1.0
-*********************************************************************************************************
+***************************************************************************************
+* @attention
+* <h2><center>&copy; COPYRIGHT 2025 Realtek Semiconductor Corporation</center></h2>
+***************************************************************************************
 */
+
 #include "rtl876x.h"
 #include "rtl876x_bitfields.h"
 #include "rtl876x_rcc.h"

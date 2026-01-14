@@ -1,18 +1,19 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
-**********************************************************************************************************
+*****************************************************************************************
+*     Copyright(c) 2025, Realtek Semiconductor Corporation. All rights reserved.
+*
+*     SPDX-License-Identifier: Apache-2.0
+*****************************************************************************************
 * @file     rtl876x_i2c.c
 * @brief    This file provides all the I2C firmware functions.
 * @details
 * @author   elliot chen
 * @date     2015-04-29
 * @version  v0.1
-*********************************************************************************************************
+***************************************************************************************
+* @attention
+* <h2><center>&copy; COPYRIGHT 2025 Realtek Semiconductor Corporation</center></h2>
+***************************************************************************************
 */
 
 /* Includes ------------------------------------------------------------------*/
@@ -22,13 +23,13 @@
 uint32_t I2C_TimeOut = 0xFFFFF;
 
 /**
- * @brief  Initializes the I2Cx peripheral according to the specified
- *   parameters in the I2C_InitStruct.
- * @param  I2Cx: where x can be 0 or 1 to select the I2C peripheral.
- * @param  I2C_InitStruct: pointer to a I2C_InitTypeDef structure that
- *   contains the configuration information for the specified I2C peripheral.
- * @retval None
- */
+  * @brief  Initializes the I2Cx peripheral according to the specified
+  *   parameters in the I2C_InitStruct.
+  * @param  I2Cx: where x can be 0 or 1 to select the I2C peripheral.
+  * @param  I2C_InitStruct: pointer to a I2C_InitTypeDef structure that
+  *   contains the configuration information for the specified I2C peripheral.
+  * @retval None
+  */
 void I2C_Init(I2C_TypeDef *I2Cx, I2C_InitTypeDef *I2C_InitStruct)
 {
     /* Check the parameters */
@@ -45,12 +46,11 @@ void I2C_Init(I2C_TypeDef *I2Cx, I2C_InitTypeDef *I2C_InitStruct)
     if (I2C_DeviveMode_Master == I2C_InitStruct->I2C_DeviveMode)
     {
         /*configure I2C device mode which can be selected for master or slave*/
-        I2Cx->IC_CON =
-            I2C_InitStruct->I2C_DeviveMode | (I2C_InitStruct->I2C_AddressMode << 4) | BIT(5);
+        I2Cx->IC_CON = I2C_InitStruct->I2C_DeviveMode | (I2C_InitStruct->I2C_AddressMode << 4) | BIT(5);
 
         /*set target address*/
-        I2Cx->IC_TAR =
-            (I2C_InitStruct->I2C_SlaveAddress & 0x3ff) | (I2C_InitStruct->I2C_AddressMode << 12);
+        I2Cx->IC_TAR = (I2C_InitStruct->I2C_SlaveAddress & 0x3ff)
+                       | (I2C_InitStruct->I2C_AddressMode << 12);
         /*set SDA hold time in master mode*/
         I2Cx->IC_SDA_HOLD = 0x01;
 
@@ -65,8 +65,7 @@ void I2C_Init(I2C_TypeDef *I2Cx, I2C_InitTypeDef *I2C_InitStruct)
         I2Cx->IC_SAR = I2C_InitStruct->I2C_SlaveAddress;
         /* set SDA hold time in slave mode */
         I2Cx->IC_SDA_HOLD = 0x08;
-        /* set SDA setup time delay only in slave transmitter mode(greater than 2) ,delay
-         * time:[(IC_SDA_SETUP - 1) * (ic_clk_period)]*/
+        /* set SDA setup time delay only in slave transmitter mode(greater than 2) ,delay time:[(IC_SDA_SETUP - 1) * (ic_clk_period)]*/
         I2Cx->IC_SDA_SETUP = 0x02;
     }
 
@@ -96,25 +95,19 @@ void I2C_Init(I2C_TypeDef *I2Cx, I2C_InitTypeDef *I2C_InitStruct)
         if (I2C_InitStruct->I2C_ClockSpeed == 200000)
         {
             /*configure I2C speed*/
-            I2Cx->IC_FS_SCL_HCNT =
-                32 + (600 * (I2CSrcClk / 10000) * 4) / (I2C_InitStruct->I2C_ClockSpeed);
-            I2Cx->IC_FS_SCL_LCNT =
-                (1300 * (I2CSrcClk / 10000) * 4) / (I2C_InitStruct->I2C_ClockSpeed);
+            I2Cx->IC_FS_SCL_HCNT = 32 + (600 * (I2CSrcClk / 10000) * 4) / (I2C_InitStruct->I2C_ClockSpeed);
+            I2Cx->IC_FS_SCL_LCNT = (1300 * (I2CSrcClk / 10000) * 4) / (I2C_InitStruct->I2C_ClockSpeed);
         }
         else if (I2C_InitStruct->I2C_ClockSpeed == 400000)
         {
             /*configure I2C speed*/
-            I2Cx->IC_FS_SCL_HCNT =
-                8 + (600 * (I2CSrcClk / 10000) * 4) / (I2C_InitStruct->I2C_ClockSpeed);
-            I2Cx->IC_FS_SCL_LCNT =
-                1 + (1300 * (I2CSrcClk / 10000) * 4) / (I2C_InitStruct->I2C_ClockSpeed);
+            I2Cx->IC_FS_SCL_HCNT = 8 + (600 * (I2CSrcClk / 10000) * 4) / (I2C_InitStruct->I2C_ClockSpeed);
+            I2Cx->IC_FS_SCL_LCNT = 1 + (1300 * (I2CSrcClk / 10000) * 4) / (I2C_InitStruct->I2C_ClockSpeed);
         }
         else
         {
-            I2Cx->IC_FS_SCL_HCNT =
-                20 + (600 * (I2CSrcClk / 10000) * 4) / (I2C_InitStruct->I2C_ClockSpeed);
-            I2Cx->IC_FS_SCL_LCNT =
-                (1300 * (I2CSrcClk / 10000) * 4) / (I2C_InitStruct->I2C_ClockSpeed);
+            I2Cx->IC_FS_SCL_HCNT = 20 + (600 * (I2CSrcClk / 10000) * 4) / (I2C_InitStruct->I2C_ClockSpeed);
+            I2Cx->IC_FS_SCL_LCNT = (1300 * (I2CSrcClk / 10000) * 4) / (I2C_InitStruct->I2C_ClockSpeed);
         }
     }
     /*Configure I2C speed in high mode*/
@@ -127,14 +120,14 @@ void I2C_Init(I2C_TypeDef *I2Cx, I2C_InitTypeDef *I2C_InitStruct)
 
         I2Cx->IC_CON |= (0x3 << 1);
         /*configure I2C speed*/
-        I2Cx->IC_HS_SCL_HCNT =
-            8 + (60 * (I2CSrcClk / 10000) * 30) / (I2C_InitStruct->I2C_ClockSpeed);
-        I2Cx->IC_HS_SCL_LCNT =
-            1 + (120 * (I2CSrcClk / 10000) * 30) / (I2C_InitStruct->I2C_ClockSpeed);
+        I2Cx->IC_HS_SCL_HCNT = 8 + (60 * (I2CSrcClk / 10000) * 30) / (I2C_InitStruct->I2C_ClockSpeed);
+        I2Cx->IC_HS_SCL_LCNT = 1 + (120 * (I2CSrcClk / 10000) * 30) / (I2C_InitStruct->I2C_ClockSpeed);
+
     }
 
     /*Config I2C dma mode*/
-    I2Cx->IC_DMA_CR = ((I2C_InitStruct->I2C_RxDmaEn) | ((I2C_InitStruct->I2C_TxDmaEn) << 1));
+    I2Cx->IC_DMA_CR = ((I2C_InitStruct->I2C_RxDmaEn)\
+                       | ((I2C_InitStruct->I2C_TxDmaEn) << 1));
 
     /*Config I2C waterlevel*/
     I2Cx->IC_DMA_RDLR = I2C_InitStruct->I2C_RxWaterlevel;
@@ -144,10 +137,10 @@ void I2C_Init(I2C_TypeDef *I2Cx, I2C_InitTypeDef *I2C_InitStruct)
 }
 
 /**
- * @brief  Deinitializes the I2Cx peripheral registers to their default reset values.
- * @param  I2Cx: where x can be 0 or 1 to select the I2C peripheral.
- * @retval None
- */
+  * @brief  Deinitializes the I2Cx peripheral registers to their default reset values.
+  * @param  I2Cx: where x can be 0 or 1 to select the I2C peripheral.
+  * @retval None
+  */
 void I2C_DeInit(I2C_TypeDef *I2Cx)
 {
     /* Check the parameters */
@@ -165,34 +158,35 @@ void I2C_DeInit(I2C_TypeDef *I2Cx)
 }
 
 /**
- * @brief  Fills each I2C_InitStruct member with its default value.
- * @param  I2C_InitStruct : pointer to a I2C_InitTypeDef structure which will be initialized.
- * @retval None
- */
+  * @brief  Fills each I2C_InitStruct member with its default value.
+  * @param  I2C_InitStruct : pointer to a I2C_InitTypeDef structure which will be initialized.
+  * @retval None
+  */
 void I2C_StructInit(I2C_InitTypeDef *I2C_InitStruct)
 {
-    I2C_InitStruct->I2C_Clock = 40000000; /* depend on clock divider */
-    I2C_InitStruct->I2C_ClockSpeed = 400000;
-    I2C_InitStruct->I2C_DeviveMode = I2C_DeviveMode_Master; /* Master mode */
-    I2C_InitStruct->I2C_AddressMode = I2C_AddressMode_7BIT; /* 7-bit address mode */
-    I2C_InitStruct->I2C_SlaveAddress = 0;
-    I2C_InitStruct->I2C_Ack = I2C_Ack_Enable;
-    I2C_InitStruct->I2C_TxThresholdLevel = 0x00; /* tx fifo depth: 24 * 8bits */
-    I2C_InitStruct->I2C_RxThresholdLevel = 0x00; /* rx fifo depth: 16 * 8bits */
-    I2C_InitStruct->I2C_TxDmaEn = DISABLE;
-    I2C_InitStruct->I2C_RxDmaEn = DISABLE;
-    I2C_InitStruct->I2C_RxWaterlevel = 1;  /* Best to equal GDMA Source MSize */
-    I2C_InitStruct->I2C_TxWaterlevel = 15; /* Best to equal Tx fifo minus
-                                               GDMA Source MSize */
+    I2C_InitStruct->I2C_Clock             = 40000000;               /* depend on clock divider */
+    I2C_InitStruct->I2C_ClockSpeed        = 400000;
+    I2C_InitStruct->I2C_DeviveMode        = I2C_DeviveMode_Master;  /* Master mode */
+    I2C_InitStruct->I2C_AddressMode       = I2C_AddressMode_7BIT;   /* 7-bit address mode */
+    I2C_InitStruct->I2C_SlaveAddress      = 0;
+    I2C_InitStruct->I2C_Ack               = I2C_Ack_Enable;
+    I2C_InitStruct->I2C_TxThresholdLevel  = 0x00;                 /* tx fifo depth: 24 * 8bits */
+    I2C_InitStruct->I2C_RxThresholdLevel  = 0x00;                 /* rx fifo depth: 40 * 8bits */
+    I2C_InitStruct->I2C_TxDmaEn           = DISABLE;
+    I2C_InitStruct->I2C_RxDmaEn           = DISABLE;
+    I2C_InitStruct->I2C_RxWaterlevel      = 1;                    /* Best to equal GDMA Source MSize */
+    I2C_InitStruct->I2C_TxWaterlevel      = 15;                   /* Best to equal Tx fifo minus
+                                                                      GDMA Dest MSize */
 }
 
+
 /**
- * @brief  Enables or disables the specified I2C peripheral.
- * @param  I2Cx: where x can be 0 or 1 to select the I2C peripheral.
- * @param  NewState: new state of the I2Cx peripheral.
- *   This parameter can be: ENABLE or DISABLE.
- * @retval None
- */
+  * @brief  Enables or disables the specified I2C peripheral.
+  * @param  I2Cx: where x can be 0 or 1 to select the I2C peripheral.
+  * @param  NewState: new state of the I2Cx peripheral.
+  *   This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
 void I2C_Cmd(I2C_TypeDef *I2Cx, FunctionalState NewState)
 {
     /* Check the parameters */
@@ -211,11 +205,12 @@ void I2C_Cmd(I2C_TypeDef *I2Cx, FunctionalState NewState)
     }
 }
 
+
 /**
- * @brief  Checks whether the last I2Cx abort status.
- * @param  I2Cx: where x can be 1 or 2 to select the I2C peripheral.
- * @retval I2C_Status: the status of I2Cx.
- */
+  * @brief  Checks whether the last I2Cx abort status.
+  * @param  I2Cx: where x can be 0 or 1 to select the I2C peripheral.
+  * @retval the status of I2Cx.
+  */
 I2C_Status I2C_CheckAbortStatus(I2C_TypeDef *I2Cx)
 {
     uint32_t abort_status = 0;
@@ -266,16 +261,40 @@ I2C_Status I2C_CheckAbortStatus(I2C_TypeDef *I2Cx)
     return I2C_Success;
 }
 
+static I2C_Status I2C_PollingStatus(I2C_TypeDef *I2Cx, uint16_t I2C_FLAG)
+{
+    I2C_Status abort_status = I2C_Success;
+    uint32_t time_out = I2C_TimeOut;
+    /* wait for flag of I2C_FLAG_TFNF */
+    while (((I2Cx->IC_STATUS & (I2C_FLAG)) == 0) && (time_out != 0))
+    {
+        /* Check abort status */
+        abort_status = I2C_CheckAbortStatus(I2Cx);
+        if (abort_status != I2C_Success)
+        {
+            return abort_status;
+        }
+
+        time_out--;
+        if (time_out == 0)
+        {
+            return I2C_ERR_TIMEOUT;
+        }
+    }
+    return abort_status;
+}
+
+
 /**
- * @brief  Send data in master mode through the I2Cx peripheral.
- * @param  I2Cx: where x can be 0 or 1 to select the I2C peripheral.
- * @param  Data: Byte to be transmitted..
- * @retval None
- */
+  * @brief  Send data in master mode through the I2Cx peripheral.
+  * @param  I2Cx: where x can be 0 or 1 to select the I2C peripheral.
+  * @param  pBuf: bytes to be transmitted.
+  * @param  len: length of bytes to be tranamitted.
+  * @retval the status of I2Cx.
+  */
 I2C_Status I2C_MasterWrite(I2C_TypeDef *I2Cx, uint8_t *pBuf, uint16_t len)
 {
     uint16_t cnt = 0;
-    uint32_t time_out = I2C_TimeOut;
     I2C_Status abort_status = I2C_Success;
 
     /* Check the parameters */
@@ -294,24 +313,11 @@ I2C_Status I2C_MasterWrite(I2C_TypeDef *I2Cx, uint8_t *pBuf, uint16_t len)
             I2Cx->IC_DATA_CMD = *pBuf++;
         }
 
-        /* wait for flag of I2C_FLAG_TFNF */
-        time_out = I2C_TimeOut;
-        while (((I2Cx->IC_STATUS & (1 << 1)) == 0) && (time_out != 0))
+        abort_status = I2C_PollingStatus(I2Cx, I2C_FLAG_TFNF) ;
+        if (abort_status != I2C_Success)
         {
-            /* Check abort status */
-            abort_status = I2C_CheckAbortStatus(I2Cx);
-            if (abort_status != I2C_Success)
-            {
-                return abort_status;
-            }
-
-            time_out--;
-            if (time_out == 0)
-            {
-                return I2C_ERR_TIMEOUT;
-            }
+            return abort_status;
         }
-
         /* Check abort status */
         abort_status = I2C_CheckAbortStatus(I2Cx);
         if (abort_status != I2C_Success)
@@ -320,20 +326,38 @@ I2C_Status I2C_MasterWrite(I2C_TypeDef *I2Cx, uint8_t *pBuf, uint16_t len)
         }
     }
 
+    uint32_t time_out = I2C_TimeOut;
+    while ((((I2Cx->IC_STATUS & I2C_FLAG_ACTIVITY) != 0) || \
+            ((I2Cx->IC_STATUS & I2C_FLAG_TFE) == 0)) && (time_out != 0))
+    {
+        /* Check abort status */
+        abort_status = I2C_CheckAbortStatus(I2Cx);
+        if (abort_status != I2C_Success)
+        {
+            return abort_status;
+        }
+
+        time_out--;
+        if (time_out == 0)
+        {
+            return I2C_ERR_TIMEOUT;
+        }
+    }
+
     return abort_status;
 }
 
 /**
- * @brief  Read data in master mode through the I2Cx peripheral.
- * @param  I2Cx: where x can be 0 or 1 to select the I2C peripheral.
- * @param  Data: Byte to be transmitted..
- * @retval None
- */
+  * @brief  Read data in master mode through the I2Cx peripheral.
+  * @param  I2Cx: where x can be 0 or 1 to select the I2C peripheral.
+  * @param  pBuf: bytes to be received.
+  * @param  len: length of bytes to be receiveed.
+  * @retval the status of I2Cx.
+  */
 I2C_Status I2C_MasterRead(I2C_TypeDef *I2Cx, uint8_t *pBuf, uint16_t len)
 {
     uint16_t cnt = 0;
     uint32_t reg_value = 0;
-    uint32_t time_out = I2C_TimeOut;
     I2C_Status abort_status = I2C_Success;
 
     /* Check the parameters */
@@ -356,43 +380,20 @@ I2C_Status I2C_MasterRead(I2C_TypeDef *I2Cx, uint8_t *pBuf, uint16_t len)
         if (cnt > 0)
         {
             /* wait for I2C_FLAG_RFNE flag */
-            time_out = I2C_TimeOut;
-            while (((I2Cx->IC_STATUS & (1 << 3)) == 0) && (time_out != 0))
+            abort_status = I2C_PollingStatus(I2Cx, I2C_FLAG_RFNE) ;
+            if (abort_status != I2C_Success)
             {
-                /* Check abort status */
-                abort_status = I2C_CheckAbortStatus(I2Cx);
-                if (abort_status != I2C_Success)
-                {
-                    return abort_status;
-                }
-
-                time_out--;
-                if (time_out == 0)
-                {
-                    return I2C_ERR_TIMEOUT;
-                }
+                return abort_status;
             }
-
             *pBuf++ = (uint8_t)I2Cx->IC_DATA_CMD;
         }
     }
 
     /* wait for I2C_FLAG_RFNE flag */
-    time_out = I2C_TimeOut;
-    while (((I2Cx->IC_STATUS & (1 << 3)) == 0) && (time_out != 0))
+    abort_status = I2C_PollingStatus(I2Cx, I2C_FLAG_RFNE) ;
+    if (abort_status != I2C_Success)
     {
-        /* Check abort status */
-        abort_status = I2C_CheckAbortStatus(I2Cx);
-        if (abort_status != I2C_Success)
-        {
-            return abort_status;
-        }
-
-        time_out--;
-        if (time_out == 0)
-        {
-            return I2C_ERR_TIMEOUT;
-        }
+        return abort_status;
     }
 
     *pBuf = (uint8_t)I2Cx->IC_DATA_CMD;
@@ -401,18 +402,19 @@ I2C_Status I2C_MasterRead(I2C_TypeDef *I2Cx, uint8_t *pBuf, uint16_t len)
 }
 
 /**
- * @brief  Sends data and read data in master mode through the I2Cx peripheral.Attention:Read data
- * with time out mechanism.
- * @param  I2Cx: where x can be 0 or 1 to select the I2C peripheral.
- * @param  Data: Byte to be transmitted..
- * @retval Actual length of read data
- */
+  * @brief  Sends data and read data in master mode through the I2Cx peripheral.Attention:Read data with time out mechanism.
+  * @param  I2Cx: where x can be 0 or 1 to select the I2C peripheral.
+  * @param  pWriteBuf: byte to be transmitted.
+  * @param  Writelen: length of bytes to be tranamitted.
+  * @param  pReadBuf: byte to be received.
+  * @param  Readlen: length of bytes to be receiveed.
+  * @retval the status of I2Cx.
+  */
 I2C_Status I2C_RepeatRead(I2C_TypeDef *I2Cx, uint8_t *pWriteBuf, uint16_t Writelen,
                           uint8_t *pReadBuf, uint16_t Readlen)
 {
     uint16_t cnt = 0;
     uint32_t reg_value = 0;
-    uint32_t time_out = I2C_TimeOut;
     I2C_Status abort_status = I2C_Success;
 
     /* Check the parameters */
@@ -425,22 +427,12 @@ I2C_Status I2C_RepeatRead(I2C_TypeDef *I2Cx, uint8_t *pWriteBuf, uint16_t Writel
         I2Cx->IC_DATA_CMD = *pWriteBuf++;
 
         /*wait for I2C_FLAG_TFNF flag that Tx FIFO is not full*/
-        time_out = I2C_TimeOut;
-        while (((I2Cx->IC_STATUS & BIT(1)) == 0) && (time_out != 0))
+        abort_status = I2C_PollingStatus(I2Cx, I2C_FLAG_TFNF) ;
+        if (abort_status != I2C_Success)
         {
-            /* Check abort status */
-            abort_status = I2C_CheckAbortStatus(I2Cx);
-            if (abort_status != I2C_Success)
-            {
-                return abort_status;
-            }
-
-            time_out--;
-            if (time_out == 0)
-            {
-                return I2C_ERR_TIMEOUT;
-            }
+            return abort_status;
         }
+
 
         /* Check abort status */
         abort_status = I2C_CheckAbortStatus(I2Cx);
@@ -463,35 +455,12 @@ I2C_Status I2C_RepeatRead(I2C_TypeDef *I2Cx, uint8_t *pWriteBuf, uint16_t Writel
             I2Cx->IC_DATA_CMD = reg_value | BIT(8);
         }
 
-        /*read data */
-        if (cnt > 0)
+        /*wait for I2C_FLAG_TFNF flag that Tx FIFO is not full*/
+        abort_status = I2C_PollingStatus(I2Cx,  I2C_FLAG_TFNF) ;
+        if (abort_status != I2C_Success)
         {
-            /*wait for I2C_FLAG_RFNE flag*/
-            time_out = I2C_TimeOut;
-            while (((I2Cx->IC_STATUS & BIT(3)) == 0) && (time_out != 0))
-            {
-                /* Check abort status */
-                abort_status = I2C_CheckAbortStatus(I2Cx);
-                if (abort_status != I2C_Success)
-                {
-                    return abort_status;
-                }
-
-                time_out--;
-                if (time_out == 0)
-                {
-                    return I2C_ERR_TIMEOUT;
-                }
-            }
-
-            *pReadBuf++ = (uint8_t)I2Cx->IC_DATA_CMD;
+            return abort_status;
         }
-    }
-
-    /*read data*/
-    time_out = I2C_TimeOut;
-    while (((I2Cx->IC_STATUS & BIT(3)) == 0) && (time_out != 0))
-    {
         /* Check abort status */
         abort_status = I2C_CheckAbortStatus(I2Cx);
         if (abort_status != I2C_Success)
@@ -499,13 +468,25 @@ I2C_Status I2C_RepeatRead(I2C_TypeDef *I2Cx, uint8_t *pWriteBuf, uint16_t Writel
             return abort_status;
         }
 
-        time_out--;
-        if (time_out == 0)
+        /*read data */
+        if (cnt > 0)
         {
-            return I2C_ERR_TIMEOUT;
+            /*wait for I2C_FLAG_RFNE flag*/
+            abort_status = I2C_PollingStatus(I2Cx,  I2C_FLAG_RFNE) ;
+            if (abort_status != I2C_Success)
+            {
+                return abort_status;
+            }
+            *pReadBuf++ = (uint8_t)I2Cx->IC_DATA_CMD;
         }
     }
 
+    /*read data*/
+    abort_status = I2C_PollingStatus(I2Cx,  I2C_FLAG_RFNE) ;
+    if (abort_status != I2C_Success)
+    {
+        return abort_status;
+    }
     *pReadBuf = (uint8_t)I2Cx->IC_DATA_CMD;
 
     return abort_status;
@@ -513,8 +494,31 @@ I2C_Status I2C_RepeatRead(I2C_TypeDef *I2Cx, uint8_t *pWriteBuf, uint16_t Writel
 
 /**
   * @brief mask the specified I2C interrupt.
-  * @param  I2Cx: where x can be 0 or 1
+  * @param  I2Cx: where x can be 0 or 1 to select the I2C peripheral.
   * @param  I2C_INT
+  * This parameter can be one of the following values:
+  *     @arg I2C_INT_GEN_CALL: When a General Call address is received and it is acknowledged.
+  *     @arg I2C_INT_START_DET: When a START or RESTART condition has occurred on the I2C interface
+  *                            regardless of whether I2C is operating in slave or master mode.
+  *     @arg I2C_INT_STOP_DET: When a STOP condition has occurred on the I2C interface
+  *                            regardless of whether I2C is operating in slave or master mode.
+  *     @arg I2C_INT_ACTIVITY: When I2C is activity on the bus. Stays set until it is cleared.
+  *     @arg I2C_INT_RX_DONE: When the I2C is acting as a slave-transmitter and the master does
+  *                           not acknowledge a transmitted byte.
+  *                           This occurs on the last byte of the transmission,
+  *                           indicating that the transmission is done.
+  *     @arg I2C_INT_TX_ABRT: When an I2C transmitter is unable to complete the intended actions
+  *                           on the contents of the transmit FIFO.
+  *     @arg I2C_INT_RD_REQ:  When I2C is acting as a slave and another I2C master is attempting to read data from I2C.
+  *     @arg I2C_INT_TX_EMPTY: When the transmit buffer is at or below the threshold value set in the REG_IC_TXFLR register.
+  *     @arg I2C_INT_TX_OVER: When transmit buffer is filled to IC_TX_BUFFER_DEPTH and
+  *                           the processor attempts to issue another I2C command by writing to the REG_IC_DATA_CMD register.
+  *     @arg I2C_INT_RX_FULL: When the receive buffer reaches or goes above the RX_TL threshold in the REG_IC_RX_TL register.
+  *                           A value of 0 sets the threshold for 1 entry, and a value of 255 sets the threshold for 256 entries.
+  *     @arg I2C_INT_RX_OVER: When the receive buffer is completely filled to IC_RX_BUFFER_DEPTH and
+  *                           an additional byte is received from an external I2C device.
+  *     @arg I2C_INT_RX_UNDER: When the processor attempts to read the receive buffer
+  *                            when it is empty by reading from the REG_IC_DATA_CMD register.
   * @retval None.
   */
 void I2C_INTConfig(I2C_TypeDef *I2Cx, uint16_t I2C_INT, FunctionalState NewState)
@@ -537,10 +541,34 @@ void I2C_INTConfig(I2C_TypeDef *I2Cx, uint16_t I2C_INT, FunctionalState NewState
 }
 
 /**
- * @brief clear the specified I2C interrupt.
- * @param  I2Cx: where x can be 0 or 1
- * @retval None.
- */
+  * @brief Clear the specified I2C interrupt.
+  * @param  I2Cx: where x can be 0 or 1 to select the I2C peripheral.
+  * @param  I2C_INT
+  * This parameter can be one of the following values:
+  *     @arg I2C_INT_GEN_CALL: When a General Call address is received and it is acknowledged.
+  *     @arg I2C_INT_START_DET: When a START or RESTART condition has occurred on the I2C interface
+  *                            regardless of whether I2C is operating in slave or master mode.
+  *     @arg I2C_INT_STOP_DET: When a STOP condition has occurred on the I2C interface
+  *                            regardless of whether I2C is operating in slave or master mode.
+  *     @arg I2C_INT_ACTIVITY: When I2C is activity on the bus. Stays set until it is cleared.
+  *     @arg I2C_INT_RX_DONE: When the I2C is acting as a slave-transmitter and the master does
+  *                           not acknowledge a transmitted byte.
+  *                           This occurs on the last byte of the transmission,
+  *                           indicating that the transmission is done.
+  *     @arg I2C_INT_TX_ABRT: When an I2C transmitter is unable to complete the intended actions
+  *                           on the contents of the transmit FIFO.
+  *     @arg I2C_INT_RD_REQ:  When I2C is acting as a slave and another I2C master is attempting to read data from I2C.
+  *     @arg I2C_INT_TX_EMPTY: When the transmit buffer is at or below the threshold value set in the REG_IC_TXFLR register.
+  *     @arg I2C_INT_TX_OVER: When transmit buffer is filled to IC_TX_BUFFER_DEPTH and
+  *                           the processor attempts to issue another I2C command by writing to the REG_IC_DATA_CMD register.
+  *     @arg I2C_INT_RX_FULL: When the receive buffer reaches or goes above the RX_TL threshold in the REG_IC_RX_TL register.
+  *                           A value of 0 sets the threshold for 1 entry, and a value of 255 sets the threshold for 256 entries.
+  *     @arg I2C_INT_RX_OVER: When the receive buffer is completely filled to IC_RX_BUFFER_DEPTH and
+  *                           an additional byte is received from an external I2C device.
+  *     @arg I2C_INT_RX_UNDER: When the processor attempts to read the receive buffer
+  *                            when it is empty by reading from the REG_IC_DATA_CMD register.
+  * @retval None.
+  */
 void I2C_ClearINTPendingBit(I2C_TypeDef *I2Cx, uint16_t I2C_IT)
 {
     /* Check the parameters */
@@ -607,3 +635,4 @@ void I2C_ClearINTPendingBit(I2C_TypeDef *I2Cx, uint16_t I2C_IT)
 }
 
 /******************* (C) COPYRIGHT 2015 Realtek Semiconductor Corporation *****END OF FILE****/
+

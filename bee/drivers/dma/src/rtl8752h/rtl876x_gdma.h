@@ -1,18 +1,19 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
-*********************************************************************************************************
+*****************************************************************************************
+*     Copyright(c) 2025, Realtek Semiconductor Corporation. All rights reserved.
+*
+*     SPDX-License-Identifier: Apache-2.0
+*****************************************************************************************
 * \file     rtl876x_gdma.h
 * \brief    The header file of the peripheral GDMA driver.
 * \details  This file provides all GDMA firmware functions.
 * \author   Yuan
 * \date     2024-01-22
 * \version  v1.0.1
-* *********************************************************************************************************
+***************************************************************************************
+* @attention
+* <h2><center>&copy; COPYRIGHT 2025 Realtek Semiconductor Corporation</center></h2>
+***************************************************************************************
 */
 
 #ifndef _RTL876X_GDMA_H_
@@ -52,34 +53,34 @@ extern "C" {
  */
 typedef struct
 {
-    uint8_t GDMA_ChannelNum;            /*!< Specifies channel number for GDMA. */
-    uint8_t GDMA_DIR;                   /*!< Specifies if the peripheral is the source or destination.
+    uint8_t GDMA_ChannelNum;            /*!< Specify the channel number for GDMA, which can be 0 to 3. */
+    uint8_t GDMA_DIR;                   /*!< Specify if the peripheral is the source or destination.
                                             This parameter can be a value of \ref GDMA_Data_Transfer_Direction. */
-    uint32_t GDMA_BufferSize;           /*!< Specifies the buffer size(<=65535), in data unit, of the specified Channel.
+    uint32_t GDMA_BufferSize;           /*!< Specify the buffer size (<=65535), in data units, of the specified channel.
                                             The data unit is equal to the configuration set in DMA_PeripheralDataSize
-                                            or DMA_MemoryDataSize members depending in the transfer direction. */
-    uint8_t GDMA_SourceInc;             /*!< Specifies whether the source address register is incremented or not.
-                                            This parameter can be a value of \ref GDMA_Source_Incremented_Mode */
-    uint8_t GDMA_DestinationInc;        /*!< Specifies whether the destination address register is incremented or not.
+                                            or DMA_MemoryDataSize members depending on the transfer direction. */
+    uint8_t GDMA_SourceInc;             /*!< Specify whether the source address register is incremented or not.
+                                            This parameter can be a value of \ref GDMA_Source_Incremented_Mode. */
+    uint8_t GDMA_DestinationInc;        /*!< Specify whether the destination address register is incremented or not.
                                             This parameter can be a value of \ref GDMA_Destination_Incremented_Mode. */
-    uint32_t GDMA_SourceDataSize;       /*!< Specifies the source data width.
-                                            This parameter can be a value of \ref GDMA_Data_Size */
-    uint32_t GDMA_DestinationDataSize;  /*!< Specifies the Memory data width.
-                                            This parameter can be a value of \ref GDMA_Data_Size */
-    uint32_t GDMA_SourceMsize;          /*!< Specifies the number of data items to be transferred.
-                                            This parameter can be a value of \ref GDMA_Msize */
-    uint32_t GDMA_DestinationMsize;     /*!< Specifies  the number of data items to be transferred.
-                                            This parameter can be a value of \ref GDMA_Msize */
-    uint32_t GDMA_SourceAddr;           /*!< Specifies the source base address for GDMA Channelx. */
-    uint32_t GDMA_DestinationAddr;      /*!< Specifies the destination base address for GDMA Channelx. */
-    uint32_t GDMA_ChannelPriority;      /*!< Specifies the software priority for the GDMA Channelx. */
-    uint32_t GDMA_Multi_Block_Mode;     /*!< Specifies the multi block transfer mode.
+    uint32_t GDMA_SourceDataSize;       /*!< Specify the source data width.
+                                            This parameter can be a value of \ref GDMA_Data_Size. */
+    uint32_t GDMA_DestinationDataSize;  /*!< Specify the destination memory data width.
+                                            This parameter can be a value of \ref GDMA_Data_Size. */
+    uint32_t GDMA_SourceMsize;          /*!< Specify the number of data items to be transferred.
+                                            This parameter can be a value of \ref GDMA_Msize. */
+    uint32_t GDMA_DestinationMsize;     /*!< Specify the number of data items to be transferred.
+                                            This parameter can be a value of \ref GDMA_Msize. */
+    uint32_t GDMA_SourceAddr;           /*!< Specify the source base address for GDMA channel. */
+    uint32_t GDMA_DestinationAddr;      /*!< Specify the destination base address for GDMA channel. */
+    uint32_t GDMA_ChannelPriority;      /*!< Specify the software priority for the GDMA channel. */
+    uint32_t GDMA_Multi_Block_Mode;     /*!< Specify the multi-block transfer mode.
                                             This parameter can be a value of \ref GDMA_Multiblock_Mode. */
     uint32_t GDMA_Multi_Block_Struct;   /*!< Pointer to the first struct of LLI. */
     uint8_t  GDMA_Multi_Block_En;       /*!< Enable or disable multi-block function. */
-    uint8_t  GDMA_SourceHandshake;      /*!< Specifies the handshake index in source.
+    uint8_t  GDMA_SourceHandshake;      /*!< Specify the handshake index in source.
                                             This parameter can be a value of \ref GDMA_Handshake_Type. */
-    uint8_t  GDMA_DestHandshake;        /*!< Specifies the handshake index in Destination.
+    uint8_t  GDMA_DestHandshake;        /*!< Specify the handshake index in destination.
                                             This parameter can be a value of \ref GDMA_Handshake_Type. */
 } GDMA_InitTypeDef;
 
@@ -90,11 +91,11 @@ typedef struct
  */
 typedef struct
 {
-    __IO uint32_t SAR;
-    __IO uint32_t DAR;
-    __IO uint32_t LLP;
-    __IO uint32_t CTL_LOW;
-    __IO uint32_t CTL_HIGH;
+    __IO uint32_t SAR;                  /*!< Specify the source address of link list item. */
+    __IO uint32_t DAR;                  /*!< Specify the destination address of link list item. */
+    __IO uint32_t LLP;                  /*!< Specify the address of the next linked item. */
+    __IO uint32_t CTL_LOW;              /*!< Specify the low 32 bit of CTL register. */
+    __IO uint32_t CTL_HIGH;             /*!< Specify the high 32 bit of CTL register. */
 } GDMA_LLIDef;
 
 /** End of GDMA_Exported_Types
@@ -191,19 +192,19 @@ typedef struct
                                     ((Type) == GDMA_Handshake_UART2_TX) || \
                                     ((Type) == GDMA_Handshake_UART2_RX) || \
                                     ((Type) == GDMA_Handshake_SPIC0_TX) || \
-                                    ((Type) == GDMA_Handshake_SPIC0_RX) ||\
-                                    ((Type) == GDMA_Handshake_I8080_RX)||\
+                                    ((Type) == GDMA_Handshake_SPIC0_RX) || \
+                                    ((Type) == GDMA_Handshake_I8080_RX)|| \
                                     ((Type) == GDMA_Handshake_UART0_RX) || \
-                                    ((Type) == GDMA_Handshake_TIM0)||\
-                                    ((Type) == GDMA_Handshake_TIM1)||\
-                                    ((Type) == GDMA_Handshake_TIM2)||\
-                                    ((Type) == GDMA_Handshake_IR_TX) ||\
-                                    ((Type) == GDMA_Handshake_IR_RX) ||\
-                                    ((Type) == GDMA_Handshake_TIM3)||\
-                                    ((Type) == GDMA_Handshake_TIM4)||\
-                                    ((Type) == GDMA_Handshake_TIM5)||\
-                                    ((Type) == GDMA_Handshake_SPIC1_TX)||\
-                                    ((Type) == GDMA_Handshake_SPIC1_RX)||\
+                                    ((Type) == GDMA_Handshake_TIM0)|| \
+                                    ((Type) == GDMA_Handshake_TIM1)|| \
+                                    ((Type) == GDMA_Handshake_TIM2)|| \
+                                    ((Type) == GDMA_Handshake_IR_TX) || \
+                                    ((Type) == GDMA_Handshake_IR_RX) || \
+                                    ((Type) == GDMA_Handshake_TIM3)|| \
+                                    ((Type) == GDMA_Handshake_TIM4)|| \
+                                    ((Type) == GDMA_Handshake_TIM5)|| \
+                                    ((Type) == GDMA_Handshake_SPIC1_TX)|| \
+                                    ((Type) == GDMA_Handshake_SPIC1_RX)|| \
                                     ((Type) == GDMA_Handshake_SHA256_TX)))
 
 /**
@@ -234,6 +235,7 @@ typedef struct
 #define GDMA_Msize_128                      ((uint32_t)0x00000006)
 #define GDMA_Msize_256                      ((uint32_t)0x00000007)
 /** \} */
+
 #define IS_GDMA_MSIZE(SIZE) (((SIZE) == GDMA_Msize_1) || \
                              ((SIZE) == GDMA_Msize_4) || \
                              ((SIZE) == GDMA_Msize_8) || \
@@ -252,12 +254,12 @@ typedef struct
 #define GDMA_DIR_MemoryToPeripheral         ((uint32_t)0x00000001)
 #define GDMA_DIR_PeripheralToMemory         ((uint32_t)0x00000002)
 #define GDMA_DIR_PeripheralToPeripheral     ((uint32_t)0x00000003)
-/** \} */
 
 #define IS_GDMA_DIR(DIR) (((DIR) == GDMA_DIR_MemoryToMemory) || \
                           ((DIR) == GDMA_DIR_MemoryToPeripheral) || \
                           ((DIR) == GDMA_DIR_PeripheralToMemory) || \
                           ((DIR) == GDMA_DIR_PeripheralToPeripheral))
+/** \} */
 
 /**
  * \defgroup    GDMA_Source_Incremented_Mode GDMA Source Incremented Mode
@@ -267,11 +269,11 @@ typedef struct
 #define DMA_SourceInc_Inc                   ((uint32_t)0x00000000)
 #define DMA_SourceInc_Dec                   ((uint32_t)0x00000001)
 #define DMA_SourceInc_Fix                   ((uint32_t)0x00000002)
-/** \} */
 
 #define IS_GDMA_SourceInc(STATE) (((STATE) == DMA_SourceInc_Inc) || \
                                   ((STATE) == DMA_SourceInc_Dec) || \
                                   ((STATE) == DMA_SourceInc_Fix))
+/** \} */
 
 /**
  * \defgroup    GDMA_Destination_Incremented_Mode GDMA Destination Incremented Mode
@@ -281,14 +283,14 @@ typedef struct
 #define DMA_DestinationInc_Inc              ((uint32_t)0x00000000)
 #define DMA_DestinationInc_Dec              ((uint32_t)0x00000001)
 #define DMA_DestinationInc_Fix              ((uint32_t)0x00000002)
-/** \} */
 
 #define IS_GDMA_DestinationInc(STATE) (((STATE) == DMA_DestinationInc_Inc) || \
                                        ((STATE) == DMA_DestinationInc_Dec) || \
                                        ((STATE) == DMA_DestinationInc_Fix))
+/** \} */
 
 /**
- * \defgroup    DMA_Interrupts_Definition DMA Interrupts Definition
+ * \defgroup    GDMA_Interrupts_Definition GDMA Interrupts Definition
  * \{
  * \ingroup     GDMA_Exported_Constants
  */
@@ -297,44 +299,53 @@ typedef struct
 #define GDMA_INT_SrcTransfer                ((uint32_t)0x00000004)
 #define GDMA_INT_DstTransfer                ((uint32_t)0x00000008)
 #define GDMA_INT_Error                      ((uint32_t)0x00000010)
-/** \} */
 
 #define IS_GDMA_CONFIG_IT(IT) ((((IT) & 0xFFFFFE00) == 0x00) && ((IT) != 0x00))
+/** \} */
 
 /**
  * \defgroup    GDMA_Multiblock_Mode GDMA Multi-block Mode
  * \{
  * \ingroup     GDMA_Exported_Constants
  */
-#define AUTO_RELOAD_WITH_CONTIGUOUS_SAR     (BIT30)
-#define AUTO_RELOAD_WITH_CONTIGUOUS_DAR     (BIT31)
+#define AUTO_RELOAD_WITH_CONTIGUOUS_SAR     (BIT31)
+#define AUTO_RELOAD_WITH_CONTIGUOUS_DAR     (BIT30)
 #define AUTO_RELOAD_TRANSFER                (BIT30 | BIT31)
 #define LLI_WITH_CONTIGUOUS_SAR             (BIT27)
 #define LLI_WITH_AUTO_RELOAD_SAR            (BIT27 | BIT30)
 #define LLI_WITH_CONTIGUOUS_DAR             (BIT28)
 #define LLI_WITH_AUTO_RELOAD_DAR            (BIT28 | BIT31)
 #define LLI_TRANSFER                        (BIT27 | BIT28)
+
+#define IS_GDMA_MULTIBLOCKMODE(MODE) (((MODE) == AUTO_RELOAD_WITH_CONTIGUOUS_SAR) || \
+                                      ((MODE) == AUTO_RELOAD_WITH_CONTIGUOUS_DAR) || \
+                                      ((MODE) == AUTO_RELOAD_TRANSFER) || \
+                                      ((MODE) == LLI_WITH_CONTIGUOUS_SAR) || \
+                                      ((MODE) == LLI_WITH_AUTO_RELOAD_SAR) || \
+                                      ((MODE) == LLI_WITH_CONTIGUOUS_DAR) || \
+                                      ((MODE) == LLI_WITH_AUTO_RELOAD_DAR) || \
+                                      ((MODE) == LLI_TRANSFER))
 /** \} */
 
-#define IS_GDMA_MULTIBLOCKMODE(MODE) (((MODE) == AUTO_RELOAD_WITH_CONTIGUOUS_SAR) || ((MODE) == AUTO_RELOAD_WITH_CONTIGUOUS_DAR)\
-                                      ||((MODE) == AUTO_RELOAD_TRANSFER) || ((MODE) == LLI_WITH_CONTIGUOUS_SAR)\
-                                      ||((MODE) == LLI_WITH_AUTO_RELOAD_SAR) || ((MODE) == LLI_WITH_CONTIGUOUS_DAR)\
-                                      ||((MODE) == LLI_WITH_AUTO_RELOAD_DAR) || ((MODE) == LLI_TRANSFER))
-
 /**
- * \def GDMA_Multiblock_Select_Bit Multi-Block Select Bit
- *
+ * \defgroup    GDMA_Multiblock_Select_Bit GDMA Multiblock Select Bit
+ * \{
+ * \ingroup     GDMA_Exported_Constants
  */
 #define AUTO_RELOAD_SELECTED_BIT            (uint32_t)(0xC0000000)
 #define LLP_SELECTED_BIT                    (uint32_t)(0x18000000)
+/** \} */
 
 /**
- * \def DMA_Suspend_Flag_Definition DMA Suspend Flag Definition
+ * \defgroup    GDMA_Suspend_Flag_Definition GDMA Suspend Flag Definition
+ * \{
+ * \ingroup     GDMA_Exported_Constants
  */
-#define GDMA_FIFO_STATUS                    (BIT(9))
-#define GDMA_SUSPEND_TRANSMISSSION          (BIT(8))
-#define GDMA_SUSPEND_CMD_STATUS             (BIT(2) | BIT(1))
-#define GDMA_SUSPEND_CHANNEL_STATUS         (BIT(0))
+#define GDMA_FIFO_STATUS                    (BIT9)
+#define GDMA_SUSPEND_TRANSMISSSION          (BIT8)
+#define GDMA_SUSPEND_CMD_STATUS             (BIT2 | BIT1)
+#define GDMA_SUSPEND_CHANNEL_STATUS         (BIT0)
+/** \} */
 
 /** End of GDMA_Exported_Constants
   * \}
@@ -350,9 +361,7 @@ typedef struct
  */
 
 /**
- * \brief  Deinitializes the GDMA registers to their default reset
- *         values.
- * \param  None.
+ * \brief  Deinitialize the GDMA registers to their default reset values.
  * \return None.
  *
  * <b>Example usage</b>
@@ -367,11 +376,10 @@ typedef struct
 void GDMA_DeInit(void);
 
 /**
- * \brief       Initializes the GDMA Channelx according to the specified
- *              parameters in the GDMA_InitStruct.
- * \param[in]   GDMA_Channelx: Where x can be 0 to 3  to select the DMA Channel.
- * \param[in]   GDMA_InitStruct: Pointer to a GDMA_InitTypeDef structure that
- *              contains the configuration information for the specified DMA Channel.
+ * \brief       Initialize the GDMA Channelx according to the specified parameters in the GDMA_InitStruct.
+ * \param[in]   GDMA_Channelx: Where x can be 0 to 3 to select the DMA Channel.
+ * \param[in]   GDMA_InitStruct: Pointer to a GDMA_InitTypeDef structure that contains the configuration information
+ *                               for the specified DMA Channel.
  * \return None.
  *
  * <b>Example usage</b>
@@ -389,17 +397,17 @@ void GDMA_DeInit(void);
  *     GDMA_StructInit(&GDMA_InitStruct);
  *     GDMA_InitStruct.GDMA_ChannelNum      = 1;
  *     GDMA_InitStruct.GDMA_DIR             = GDMA_DIR_MemoryToPeripheral;
- *     GDMA_InitStruct.GDMA_BufferSize      = UART_TX_GDMA_BUFFER_SIZE;//determine total transfer size
+ *     GDMA_InitStruct.GDMA_BufferSize      = UART_TX_GDMA_BUFFER_SIZE; // determine total transfer size
  *     GDMA_InitStruct.GDMA_SourceInc       = DMA_SourceInc_Inc;
  *     GDMA_InitStruct.GDMA_DestinationInc  = DMA_DestinationInc_Fix;
  *     GDMA_InitStruct.GDMA_SourceDataSize  = GDMA_DataSize_Byte;
  *     GDMA_InitStruct.GDMA_DestinationDataSize = GDMA_DataSize_Byte;
- *     GDMA_InitStruct.GDMA_SourceMsize      = GDMA_Msize_1;
+ *     GDMA_InitStruct.GDMA_SourceMsize     = GDMA_Msize_1;
  *     GDMA_InitStruct.GDMA_DestinationMsize = GDMA_Msize_1;
  *     GDMA_InitStruct.GDMA_SourceAddr      = (uint32_t)GDMA_SendData_Buffer;
  *     GDMA_InitStruct.GDMA_DestinationAddr = (uint32_t)(&(UART0->RB_THR));
  *     GDMA_InitStruct.GDMA_DestHandshake   = GDMA_Handshake_UART0_TX;
- *     GDMA_InitStruct.GDMA_ChannelPriority = 2;//channel prority between 0 to 5
+ *     GDMA_InitStruct.GDMA_ChannelPriority = 2; // channel priority between 0 to 5
  *     GDMA_Init(UART_TX_GDMA_CHANNEL, &GDMA_InitStruct);
 
  *     GDMA_INTConfig(UART_TX_GDMA_CHANNEL_NUM, GDMA_INT_Transfer, ENABLE);
@@ -417,9 +425,8 @@ void GDMA_DeInit(void);
 void GDMA_Init(GDMA_ChannelTypeDef *GDMA_Channelx, GDMA_InitTypeDef *GDMA_InitStruct);
 
 /**
- * \brief  Fills each GDMA_InitStruct member with its default value.
- * \param[in]  GDMA_InitStruct : pointer to a GDMA_InitTypeDef structure which will
- *         be initialized.
+ * \brief  Fill each GDMA_InitStruct member with its default value.
+ * \param[in]  GDMA_InitStruct : Pointer to a GDMA_InitTypeDef structure which will be initialized.
  * \return None.
  *
  * <b>Example usage</b>
@@ -437,7 +444,7 @@ void GDMA_Init(GDMA_ChannelTypeDef *GDMA_Channelx, GDMA_InitTypeDef *GDMA_InitSt
  *     GDMA_StructInit(&GDMA_InitStruct);
  *     GDMA_InitStruct.GDMA_ChannelNum      = 1;
  *     GDMA_InitStruct.GDMA_DIR             = GDMA_DIR_MemoryToPeripheral;
- *     GDMA_InitStruct.GDMA_BufferSize      = UART_TX_GDMA_BUFFER_SIZE;//determine total transfer size
+ *     GDMA_InitStruct.GDMA_BufferSize      = UART_TX_GDMA_BUFFER_SIZE; // Determine total transfer size
  *     GDMA_InitStruct.GDMA_SourceInc       = DMA_SourceInc_Inc;
  *     GDMA_InitStruct.GDMA_DestinationInc  = DMA_DestinationInc_Fix;
  *     GDMA_InitStruct.GDMA_SourceDataSize  = GDMA_DataSize_Byte;
@@ -447,7 +454,7 @@ void GDMA_Init(GDMA_ChannelTypeDef *GDMA_Channelx, GDMA_InitTypeDef *GDMA_InitSt
  *     GDMA_InitStruct.GDMA_SourceAddr      = (uint32_t)GDMA_SendData_Buffer;
  *     GDMA_InitStruct.GDMA_DestinationAddr = (uint32_t)(&(UART0->RB_THR));
  *     GDMA_InitStruct.GDMA_DestHandshake   = GDMA_Handshake_UART0_TX;
- *     GDMA_InitStruct.GDMA_ChannelPriority = 2;//channel prority between 0 to 5
+ *     GDMA_InitStruct.GDMA_ChannelPriority = 2; // Channel priority between 0 to 5
  *     GDMA_Init(UART_TX_GDMA_CHANNEL, &GDMA_InitStruct);
  *
  * }
@@ -456,10 +463,10 @@ void GDMA_Init(GDMA_ChannelTypeDef *GDMA_Channelx, GDMA_InitTypeDef *GDMA_InitSt
 void GDMA_StructInit(GDMA_InitTypeDef *GDMA_InitStruct);
 
 /**
- * \brief       Enables or disables the selected GDMA channel.
- * \param[in]   GDMA_Channel_Num: GDMA channel number, can be 0~3.
+ * \brief       Enable or disable the specified GDMA channel.
+ * \param[in]   GDMA_Channel_Num: GDMA channel number, can be 0 to 3.
  * \param[in]   NewState: New state of the selected DMA channel.
- *              This parameter can be: ENABLE or DISABLE.
+ *                       This parameter can be: ENABLE or DISABLE.
  * \return      None.
  *
  * <b>Example usage</b>
@@ -477,7 +484,7 @@ void GDMA_StructInit(GDMA_InitTypeDef *GDMA_InitStruct);
  *     GDMA_StructInit(&GDMA_InitStruct);
  *     GDMA_InitStruct.GDMA_ChannelNum      = 1;
  *     GDMA_InitStruct.GDMA_DIR             = GDMA_DIR_MemoryToPeripheral;
- *     GDMA_InitStruct.GDMA_BufferSize      = UART_TX_GDMA_BUFFER_SIZE;//determine total transfer size
+ *     GDMA_InitStruct.GDMA_BufferSize      = UART_TX_GDMA_BUFFER_SIZE; // Determine total transfer size
  *     GDMA_InitStruct.GDMA_SourceInc       = DMA_SourceInc_Inc;
  *     GDMA_InitStruct.GDMA_DestinationInc  = DMA_DestinationInc_Fix;
  *     GDMA_InitStruct.GDMA_SourceDataSize  = GDMA_DataSize_Byte;
@@ -487,7 +494,7 @@ void GDMA_StructInit(GDMA_InitTypeDef *GDMA_InitStruct);
  *     GDMA_InitStruct.GDMA_SourceAddr      = (uint32_t)GDMA_SendData_Buffer;
  *     GDMA_InitStruct.GDMA_DestinationAddr = (uint32_t)(&(UART0->RB_THR));
  *     GDMA_InitStruct.GDMA_DestHandshake   = GDMA_Handshake_UART0_TX;
- *     GDMA_InitStruct.GDMA_ChannelPriority = 2;//channel prority between 0 to 5
+ *     GDMA_InitStruct.GDMA_ChannelPriority = 2; // Channel priority between 0 to 5
  *     GDMA_Init(UART_TX_GDMA_CHANNEL, &GDMA_InitStruct);
 
  *     GDMA_INTConfig(UART_TX_GDMA_CHANNEL_NUM, GDMA_INT_Transfer, ENABLE);
@@ -505,17 +512,17 @@ void GDMA_StructInit(GDMA_InitTypeDef *GDMA_InitStruct);
 void GDMA_Cmd(uint8_t GDMA_Channel_Num, FunctionalState NewState);
 
 /**
- * \brief       Enables or disables the specified DMA channelx interrupt source.
- * \param[in]   GDMA_Channel_Num: GDMA channel number, can be 0~3.
- * \param[in]   GDMA_IT: Specifies the GDMA interrupt source to be enabled or disabled.
- *              This parameter can be any combination of the following values:
- *              \arg GDMA_INT_Transfer: Transfer complete interrupt source.
- *              \arg GDMA_INT_Block: Block transfer interrupt source.
- *              \arg GDMA_INT_SrcTransfer: SourceTransfer interrupt source.
- *              \arg GDMA_INT_DstTransfer: Destination Transfer interruptsource.
- *              \arg GDMA_INT_Error: Transfer error interrupt source.
+ * \brief       Enable or disable the specified DMA channel interrupt source.
+ * \param[in]   GDMA_Channel_Num: GDMA channel number, can be 0 to 3.
+ * \param[in]   GDMA_IT: Specify the GDMA interrupt source to be enabled or disabled.
+ *                       This parameter can be any combination of the following values, which refer to \ref GDMA_Interrupts_Definition.
+ *                       \arg GDMA_INT_Transfer: Transfer complete interrupt source.
+ *                       \arg GDMA_INT_Block: Block transfer interrupt source.
+ *                       \arg GDMA_INT_SrcTransfer: Source Transfer interrupt source.
+ *                       \arg GDMA_INT_DstTransfer: Destination Transfer interrupt source.
+ *                       \arg GDMA_INT_Error: Transfer error interrupt source.
  * \param[in]   NewState: New state of the specified DMA interrupt source.
- *              This parameter can be: ENABLE or DISABLE.
+ *                       This parameter can be: ENABLE or DISABLE.
  * \return      None.
  *
  * <b>Example usage</b>
@@ -533,17 +540,17 @@ void GDMA_Cmd(uint8_t GDMA_Channel_Num, FunctionalState NewState);
  *     GDMA_StructInit(&GDMA_InitStruct);
  *     GDMA_InitStruct.GDMA_ChannelNum      = 1;
  *     GDMA_InitStruct.GDMA_DIR             = GDMA_DIR_MemoryToPeripheral;
- *     GDMA_InitStruct.GDMA_BufferSize      = UART_TX_GDMA_BUFFER_SIZE;//determine total transfer size
+ *     GDMA_InitStruct.GDMA_BufferSize      = UART_TX_GDMA_BUFFER_SIZE; // Determine total transfer size
  *     GDMA_InitStruct.GDMA_SourceInc       = DMA_SourceInc_Inc;
  *     GDMA_InitStruct.GDMA_DestinationInc  = DMA_DestinationInc_Fix;
  *     GDMA_InitStruct.GDMA_SourceDataSize  = GDMA_DataSize_Byte;
  *     GDMA_InitStruct.GDMA_DestinationDataSize = GDMA_DataSize_Byte;
- *     GDMA_InitStruct.GDMA_SourceMsize      = GDMA_Msize_1;
+ *     GDMA_InitStruct.GDMA_SourceMsize     = GDMA_Msize_1;
  *     GDMA_InitStruct.GDMA_DestinationMsize = GDMA_Msize_1;
  *     GDMA_InitStruct.GDMA_SourceAddr      = (uint32_t)GDMA_SendData_Buffer;
  *     GDMA_InitStruct.GDMA_DestinationAddr = (uint32_t)(&(UART0->RB_THR));
  *     GDMA_InitStruct.GDMA_DestHandshake   = GDMA_Handshake_UART0_TX;
- *     GDMA_InitStruct.GDMA_ChannelPriority = 2;//channel prority between 0 to 5
+ *     GDMA_InitStruct.GDMA_ChannelPriority = 2; // Channel priority between 0 to 5
  *     GDMA_Init(UART_TX_GDMA_CHANNEL, &GDMA_InitStruct);
 
  *     GDMA_INTConfig(UART_TX_GDMA_CHANNEL_NUM, GDMA_INT_Transfer, ENABLE);
@@ -561,15 +568,15 @@ void GDMA_Cmd(uint8_t GDMA_Channel_Num, FunctionalState NewState);
 void GDMA_INTConfig(uint8_t GDMA_Channel_Num, uint32_t GDMA_IT, FunctionalState NewState);
 
 /**
- * \brief       Clear the specified DMA channelx interrupt pending bit.
- * \param[in]   GDMA_Channel_Num: GDMA channel number, can be 0~3.
- * \param[in]   GDMA_IT: Specifies the GDMA interrupts sources to be enabled or disabled.
- *              This parameter can be any combination of the following values:
- *              \arg GDMA_INT_Transfer: Transfer complete interrupt source.
- *              \arg GDMA_INT_Block: Block transfer interrupt source.
- *              \arg GDMA_INT_SrcTransfer: SourceTransfer interrupt source.
- *              \arg GDMA_INT_DstTransfer: Destination Transfer interruptsource.
- *              \arg GDMA_INT_Error: Transfer error interrupt source.
+ * \brief       Clear the specified DMA channel interrupt pending bit.
+ * \param[in]   GDMA_Channel_Num: GDMA channel number, can be 0 to 3.
+ * \param[in]   GDMA_IT: Specify the GDMA interrupts sources to be enabled or disabled.
+ *                       This parameter can be any combination of the following values, which refer to \ref GDMA_Interrupts_Definition.
+ *                       \arg GDMA_INT_Transfer: Transfer complete interrupt source.
+ *                       \arg GDMA_INT_Block: Block transfer interrupt source.
+ *                       \arg GDMA_INT_SrcTransfer: Source Transfer interrupt source.
+ *                       \arg GDMA_INT_DstTransfer: Destination Transfer interrupt source.
+ *                       \arg GDMA_INT_Error: Transfer error interrupt source.
  * \return None.
  *
  * <b>Example usage</b>
@@ -583,18 +590,16 @@ void GDMA_INTConfig(uint8_t GDMA_Channel_Num, uint32_t GDMA_IT, FunctionalState 
  * void UART_TX_GDMA_Handler(void)
  * {
  *     GDMA_ClearINTPendingBit(1, GDMA_INT_Transfer);
- *     //Add user code here.
+ *     // Add user code here.
  * }
  * \endcode
  */
 void GDMA_ClearINTPendingBit(uint8_t GDMA_Channel_Num, uint32_t GDMA_IT);
 
 /**
- * \brief       Get selected GDMA channel status.
- * \param[in]   GDMA_Channel_Num: GDMA channel number, can be 0~3.
- * \return      GDMA channel status.
- * \retval      SET: Channel is be used
- * \retval      RESET: Channel is free.
+ * \brief       Get the specified DMA channel status.
+ * \param[in]   GDMA_Channel_Num: GDMA channel number, can be 0 to 3.
+ * \return      GDMA channel status (SET or RESET).
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -619,12 +624,12 @@ __STATIC_INLINE FlagStatus GDMA_GetChannelStatus(uint8_t GDMA_Channel_Num)
     }
 
     /* Return the selected channel status */
-    return  bit_status;
+    return bit_status;
 }
 
 /**
- * \brief       Check whether GDMA Channel transfer interrupt is set.
- * \param[in]   GDMA_Channel_Num: GDMA channel number, can be 0~3.
+ * \brief       Check whether the specified DMA channel transfer interrupt is set.
+ * \param[in]   GDMA_Channel_Num: GDMA channel number, can be 0 to 3.
  * \return      Transfer interrupt status, SET or RESET.
  *
  * <b>Example usage</b>
@@ -645,17 +650,16 @@ __STATIC_INLINE ITStatus GDMA_GetTransferINTStatus(uint8_t GDMA_Channel_Num)
 
     if ((GDMA_BASE->STATUS_TFR & BIT(GDMA_Channel_Num)) != (uint32_t)RESET)
     {
-
         bit_status = SET;
     }
 
     /* Return the transfer interrupt status */
-    return  bit_status;
+    return bit_status;
 }
 
 /**
- * \brief       Clear GDMA Channelx all interrupt.
- * \param[in]   GDMA_Channel_Num: GDMA channel number, can be 0~3.
+ * \brief       Clear the specified DMA channel all interrupts.
+ * \param[in]   GDMA_Channel_Num: GDMA channel number, can be 0 to 3.
  * \return      None.
  *
  * <b>Example usage</b>
@@ -681,7 +685,7 @@ __STATIC_INLINE void GDMA_ClearAllTypeINT(uint8_t GDMA_Channel_Num)
 
 /**
  * \brief       Set GDMA transmission source address.
- * \param[in]   GDMA_Channelx: where x can be 0 to 3 to select the DMA Channel.
+ * \param[in]   GDMA_Channelx: Where x can be 0 to 3 to select the DMA channel.
  * \param[in]   Address: Source address.
  * \return      None.
  *
@@ -691,7 +695,7 @@ __STATIC_INLINE void GDMA_ClearAllTypeINT(uint8_t GDMA_Channel_Num)
  * void gdma_demo(void)
  * {
  *     uint32_t data_buf[10] = {0};
- *     GDMA_SetSourceAddress(GDMA_Channel0,(uint32_t)data_buf);
+ *     GDMA_SetSourceAddress(GDMA_Channel0, (uint32_t)data_buf);
  * }
  * \endcode
  */
@@ -705,7 +709,7 @@ __STATIC_INLINE void GDMA_SetSourceAddress(GDMA_ChannelTypeDef *GDMA_Channelx, u
 
 /**
  * \brief       Set GDMA transmission destination address.
- * \param[in]   GDMA_Channelx: Where x can be 0 to 3  to select the GDMA Channel.
+ * \param[in]   GDMA_Channelx: Where x can be 0 to 3 to select the GDMA channel.
  * \param[in]   Address: Destination address.
  * \return      None.
  *
@@ -715,7 +719,7 @@ __STATIC_INLINE void GDMA_SetSourceAddress(GDMA_ChannelTypeDef *GDMA_Channelx, u
  * void gdma_demo(void)
  * {
  *     uint32_t data_buf[10] = {0};
- *     GDMA_SetDestinationAddress(GDMA_Channel0,(uint32_t)data_buf);
+ *     GDMA_SetDestinationAddress(GDMA_Channel0, (uint32_t)data_buf);
  * }
  * \endcode
  */
@@ -730,7 +734,7 @@ __STATIC_INLINE void GDMA_SetDestinationAddress(GDMA_ChannelTypeDef *GDMA_Channe
 
 /**
  * \brief       Set GDMA buffer size.
- * \param[in]   GDMA_Channelx: Where x can be 0 to 3 to select the GDMA Channel.
+ * \param[in]   GDMA_Channelx: Where x can be 0 to 3 to select the GDMA channel.
  * \param[in]   buffer_size: Set GDMA_BufferSize.
  * \return      None.
  *
@@ -739,8 +743,8 @@ __STATIC_INLINE void GDMA_SetDestinationAddress(GDMA_ChannelTypeDef *GDMA_Channe
  *
  * void gdma_demo(void)
  * {
- *     uint32_t data_buf_size = 65535;//max
- *     GDMA_SetBufferSize(GDMA_Channel0,data_buf_size);
+ *     uint32_t data_buf_size = 65535; // Max
+ *     GDMA_SetBufferSize(GDMA_Channel0, data_buf_size);
  * }
  * \endcode
  */
@@ -749,30 +753,29 @@ __STATIC_INLINE void GDMA_SetBufferSize(GDMA_ChannelTypeDef *GDMA_Channelx, uint
     /* Check the parameters */
     assert_param(IS_GDMA_ALL_PERIPH(GDMA_Channelx));
 
-    /* configure high 32 bit of CTL register */
+    /* Configure high 32 bits of CTL register */
     GDMA_Channelx->CTL_HIGH = buffer_size;
 }
 
 /**
  * \brief       Suspend GDMA transmission from the source.
- * \param[in]   GDMA_Channelx: Where x can be 0 to 3 to select the GDMA Channel.
- * \param[in]   NewState: New state of the DMA Channelx.
- *              This parameter can be: ENABLE or DISABLE.
+ * \param[in]   GDMA_Channelx: Where x can be 0 to 3 to select the GDMA channel.
+ * \param[in]   NewState: New state of the DMA channel.
+ *                       This parameter can be: ENABLE or DISABLE.
  * \return      None.
  * \note        To prevent data loss, it is necessary to check whether FIFO data transmission is completed
- *              after suspend, and judge by checking whether GDMA FIFO is empty.
+ *              after suspending, which can be determined by checking whether the GDMA FIFO is empty.
  *
  * <b>Example usage</b>
  * \code{.c}
  *
  * void gdma_demo(void)
  * {
- *     GDMA_SuspendCmd(GDMA_Channel0,ENABLE);
+ *     GDMA_SuspendCmd(GDMA_Channel0, ENABLE);
  * }
  * \endcode
  */
-__STATIC_INLINE void GDMA_SuspendCmd(GDMA_ChannelTypeDef *GDMA_Channelx,
-                                     FunctionalState NewState)
+__STATIC_INLINE void GDMA_SuspendCmd(GDMA_ChannelTypeDef *GDMA_Channelx, FunctionalState NewState)
 {
     /* Check the parameters */
     assert_param(IS_GDMA_ALL_PERIPH(GDMA_Channelx));
@@ -780,7 +783,7 @@ __STATIC_INLINE void GDMA_SuspendCmd(GDMA_ChannelTypeDef *GDMA_Channelx,
 
     if (NewState == DISABLE)
     {
-        /* Not suspend transmission*/
+        /* Do not suspend transmission*/
         GDMA_Channelx->CFG_LOW &= ~(GDMA_SUSPEND_TRANSMISSSION);
     }
     else
@@ -792,7 +795,7 @@ __STATIC_INLINE void GDMA_SuspendCmd(GDMA_ChannelTypeDef *GDMA_Channelx,
 
 /**
  * \brief       Get GDMA transfer data length.
- * \param[in]   GDMA_Channelx: Where x can be 0 to 3 to select the GDMA Channel.
+ * \param[in]   GDMA_Channelx: Where x can be 0 to 3 to select the GDMA channel.
  * \return      GDMA transfer data length.
  *
  * <b>Example usage</b>
@@ -809,13 +812,13 @@ __STATIC_INLINE uint16_t GDMA_GetTransferLen(GDMA_ChannelTypeDef *GDMA_Channelx)
     /* Check the parameters */
     assert_param(IS_GDMA_ALL_PERIPH(GDMA_Channelx));
 
-    return (uint16_t)(GDMA_Channelx->CTL_HIGH & 0xffff);
+    return (uint16_t)(GDMA_Channelx->CTL_HIGH & 0xFFFF);
 }
 
 /**
- * \brief       Set GDMA LLP stucture address.
- * \param[in]   GDMA_Channelx: Only for GDMA_Channel0~3.
- * \param[in]   Address: LLP stucture address.
+ * \brief       Set GDMA LLP structure address.
+ * \param[in]   GDMA_Channelx: Where x can be 0 to 3 to select the GDMA channel.
+ * \param[in]   Address: LLP structure address.
  * \return      None.
  *
  * <b>Example usage</b>
@@ -824,7 +827,7 @@ __STATIC_INLINE uint16_t GDMA_GetTransferLen(GDMA_ChannelTypeDef *GDMA_Channelx)
  * void gdma_demo(void)
  * {
  *     GDMA_LLIDef GDMA_LLIStruct[4000];
- *     GDMA_SetLLPAddress(GDMA_Channel0,(uint32_t)GDMA_LLIStruct);
+ *     GDMA_SetLLPAddress(GDMA_Channel0, (uint32_t)GDMA_LLIStruct);
  * }
  * \endcode
  */
@@ -842,10 +845,8 @@ __STATIC_INLINE void GDMA_SetLLPAddress(GDMA_ChannelTypeDef *GDMA_Channelx, uint
 
 /**
  * \brief       Check GDMA suspend channel status.
- * \param[in]   GDMA_Channelx: Where x can be 0 to 3 to select the GDMA Channel.
- * \return      GDMA suspend channel status.
- * \retval      SET: Inactive.
- * \retval      RESET: Active.
+ * \param[in]   GDMA_Channelx: Where x can be 0 to 3 to select the GDMA channel.
+ * \return      GDMA suspend channel status, SET(Inactive) or RESET(Active).
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -869,15 +870,13 @@ __STATIC_INLINE FlagStatus GDMA_GetSuspendChannelStatus(GDMA_ChannelTypeDef *GDM
     }
 
     /* Return the selected channel suspend status */
-    return  bit_status;
+    return bit_status;
 }
 
 /**
- * \brief  Check GDMA suspend command status.
- * \param  GDMA_Channelx: Where x can be 0 to 3 to select the GDMA Channel.
- * \return GDMA suspend command status.
- * \retval SET: Suspend.
- * \retval RESET: Not suspend.
+ * \brief  Check the status of GDMA suspend command.
+ * \param[in]  GDMA_Channelx: Where x can be 0 to 3 to select the GDMA Channel.
+ * \return GDMA suspend command status, SET(Suspended) or RESET(Not suspended).
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -901,15 +900,13 @@ __STATIC_INLINE FlagStatus GDMA_GetSuspendCmdStatus(GDMA_ChannelTypeDef *GDMA_Ch
     }
 
     /* Return the selected channel suspend status */
-    return  bit_status;
+    return bit_status;
 }
 
 /**
- * \brief       Check GDMA FIFO status.
+ * \brief       Check the status of GDMA FIFO.
  * \param[in]   GDMA_Channelx: Where x can be 0 to 3 to select the GDMA Channel.
- * \return      GDMA FIFO status.
- * \retval      SET: FIFO empty.
- * \retval      RESET: FIFO not empty.
+ * \return      GDMA FIFO status, SET (FIFO empty) or RESET (FIFO not empty).
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -929,17 +926,16 @@ __STATIC_INLINE FlagStatus GDMA_GetFIFOStatus(GDMA_ChannelTypeDef *GDMA_Channelx
 
     if ((GDMA_Channelx->CFG_LOW & GDMA_FIFO_STATUS) != (uint32_t)RESET)
     {
-
         bit_status = SET;
     }
 
-    /* Return the selected channel status */
-    return  bit_status;
+    /* Return the selected channel FIFO status */
+    return bit_status;
 }
 
 /**
  * \brief       Get GDMA source address.
- * \param[in]   GDMA_Channelx: Where x can be 0 to 3 to select the DMA Channel.
+ * \param[in]   GDMA_Channelx: Where x can be 0 to 3 to select the GDMA Channel.
  * \return      Source address.
  *
  * <b>Example usage</b>
@@ -956,14 +952,13 @@ __STATIC_INLINE uint32_t GDMA_GetSrcTransferAddress(GDMA_ChannelTypeDef *GDMA_Ch
     /* Check the parameters */
     assert_param(IS_GDMA_ALL_PERIPH(GDMA_Channelx));
 
-    uint32_t address = 0;
-    address = GDMA_Channelx->SAR;
+    uint32_t address = GDMA_Channelx->SAR;
     return address;
 }
 
 /**
  * \brief       Get GDMA destination address.
- * \param[in]   GDMA_Channelx: Where x can be 0 to 3 to select the DMA Channel.
+ * \param[in]   GDMA_Channelx: Where x can be 0 to 3 to select the GDMA Channel.
  * \return      Destination address.
  *
  * <b>Example usage</b>
@@ -980,8 +975,7 @@ __STATIC_INLINE uint32_t GDMA_GetDstTransferAddress(GDMA_ChannelTypeDef *GDMA_Ch
     /* Check the parameters */
     assert_param(IS_GDMA_ALL_PERIPH(GDMA_Channelx));
 
-    uint32_t address = 0;
-    address = GDMA_Channelx->DAR;
+    uint32_t address = GDMA_Channelx->DAR;
     return address;
 }
 
@@ -1049,8 +1043,6 @@ __STATIC_INLINE ITStatus GDMA_GetBlockINTStatus(uint8_t GDMA_Channel_Num)
 }
 #endif
 
-#endif /*_RTL8762X_GDMA_H_*/
-
+#endif /* _RTL8762X_GDMA_H_ */
 
 /******************* (C) COPYRIGHT 2020 Realtek Semiconductor Corporation *****END OF FILE****/
-

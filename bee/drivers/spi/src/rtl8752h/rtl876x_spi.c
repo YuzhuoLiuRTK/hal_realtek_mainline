@@ -1,18 +1,19 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
-**********************************************************************************************************
+*****************************************************************************************
+*     Copyright(c) 2025, Realtek Semiconductor Corporation. All rights reserved.
+*
+*     SPDX-License-Identifier: Apache-2.0
+*****************************************************************************************
 * @file     rtl876x_spi.c
 * @brief    This file provides all the Spi firmware functions.
 * @details
 * @author   elliot chen
 * @date     2015-05-06
 * @version  v0.1
-*********************************************************************************************************
+***************************************************************************************
+* @attention
+* <h2><center>&copy; COPYRIGHT 2025 Realtek Semiconductor Corporation</center></h2>
+***************************************************************************************
 */
 
 /* Includes ------------------------------------------------------------------*/
@@ -215,8 +216,9 @@ void SPI_Cmd(SPI_TypeDef *SPIx, FunctionalState NewState)
 
 /**
   * @brief  Transmits a number of bytes through the SPIx peripheral.
-  * @param  SPIx: where x can be 0 or 1
-  * @param  Data : bytes to be transmitted.
+  * @param  SPIx: where x can be 0 or 1 to select the SPI peripheral.
+  * @param  pBuf: Bytes to be transmitted.
+  * @param  len: Byte length to be transmitted.
   * @retval None
   */
 void SPI_SendBuffer(SPI_TypeDef *SPIx, uint8_t *pBuf, uint16_t len)
@@ -236,8 +238,9 @@ void SPI_SendBuffer(SPI_TypeDef *SPIx, uint8_t *pBuf, uint16_t len)
 
 /**
   * @brief  Transmits a number of words through the SPIx peripheral.
-  * @param  SPIx: where x can be 0 or 1
-  * @param  Data : words to be transmitted.
+  * @param  SPIx: where x can be 0 or 1 to select the SPI peripheral.
+  * @param  pBuf: Words to be transmitted.
+  * @param  len: Word length to be transmitted.
   * @retval None
   */
 void SPI_SendWord(SPI_TypeDef *SPIx, uint32_t *pBuf, uint16_t len)
@@ -257,8 +260,9 @@ void SPI_SendWord(SPI_TypeDef *SPIx, uint32_t *pBuf, uint16_t len)
 
 /**
   * @brief  Transmits a number of halfWords through the SPIx peripheral.
-  * @param  SPIx: where x can be 0 or 1
-  * @param  Data : Halfwords to be transmitted.
+  * @param  SPIx: where x can be 0 or 1 to select the SPI peripheral.
+  * @param  pBuf: Halfwords to be transmitted.
+  * @param  len: Halfwords length to be transmitted.
   * @retval None
   */
 void SPI_SendHalfWord(SPI_TypeDef *SPIx, uint16_t *pBuf, uint16_t len)
@@ -277,16 +281,16 @@ void SPI_SendHalfWord(SPI_TypeDef *SPIx, uint16_t *pBuf, uint16_t len)
 }
 
 /**
-  * @brief  Enables or disables the specified SPI/I2S interrupts.
-  * @param  SPIx: where x can be 0 or 1
-  * @param  SPI_IT: specifies the SPI/I2S interrupt source to be enabled or disabled.
+  * @brief  Enables or disables the specified SPI interrupts.
+  * @param  SPIx: where x can be 0 or 1 to select the SPI peripheral.
+  * @param  SPI_IT: specifies the SPI interrupt source to be enabled or disabled.
   *   This parameter can be one of the following values:
-  *     @arg SPI_INT_TXE: Tx buffer empty interrupt mask
-  *     @arg SPI_INT_TXO: Tx buffer overflow interrupt mask
-  *     @arg SPI_INT_RXU: receive FIFO Underflow Interrupt mask
-  *     @arg SPI_INT_RXO: receive FIFO Overflow Interrupt mask
-  *     @arg SPI_INT_RXF: receive FIFO Full Interrupt mask which equal RXNE Interrupt!!!
-  *     @arg SPI_INT_MST: multi-Master Contention Interrupt mask
+  *     @arg SPI_INT_TXE: The TX FIFO is equal to or below its threshold value and requires service to prevent an under-run.
+  *     @arg SPI_INT_TXO: An APB access attempts to write into the TX FIFO after it has been completely filled. When set, data written from the APB is discarded.
+  *     @arg SPI_INT_RXU: An APB access attempts to read from the RX FIFO when it is empty. When set, zeros are read back from the RX FIFO.
+  *     @arg SPI_INT_RXO: The receive logic attempts to place data into the RX FIFO after it has been completely filled. When set, newly received data are discarded.
+  *     @arg SPI_INT_RXF: RX FIFO is equal to or above its threshold value plus 1 and requires service to prevent an overflow.
+  *     @arg SPI_INT_MST: The interrupt is set when another serial master on the serial bus selects the SPI master as a serial-slave device and is actively transferring data
   * @param  NewState: new state of the specified SPI interrupt.
   *   This parameter can be: ENABLE or DISABLE.
   * @retval None
@@ -315,10 +319,12 @@ void SPI_INTConfig(SPI_TypeDef *SPIx, uint8_t SPI_IT, FunctionalState NewState)
   * @param  SPIx: where x can be 0 or 1
   * @param  SPI_IT: specifies the SPI interrupt to clear.
   *   This parameter can be one of the following values:
-  *     @arg SPI_INT_MST: Multi-Master Contention Interrupt.
-  *     @arg SPI_INT_RXO: Receive FIFO Overflow Interrupt.
-  *     @arg SPI_INT_RXU: Receive FIFO Underflow Interrupt.
-  *     @arg SPI_INT_TXO: Transmit FIFO Overflow Interrupt .
+  *     @arg SPI_INT_TXE: The TX FIFO is equal to or below its threshold value and requires service to prevent an under-run.
+  *     @arg SPI_INT_TXO: An APB access attempts to write into the TX FIFO after it has been completely filled. When set, data written from the APB is discarded.
+  *     @arg SPI_INT_RXU: An APB access attempts to read from the RX FIFO when it is empty. When set, zeros are read back from the RX FIFO.
+  *     @arg SPI_INT_RXO: The receive logic attempts to place data into the RX FIFO after it has been completely filled. When set, newly received data are discarded.
+  *     @arg SPI_INT_RXF: RX FIFO is equal to or above its threshold value plus 1 and requires service to prevent an overflow.
+  *     @arg SPI_INT_MST: The interrupt is set when another serial master on the serial bus selects the SPI master as a serial-slave device and is actively transferring data
   * @retval None.
   */
 void SPI_ClearINTPendingBit(SPI_TypeDef *SPIx, uint16_t SPI_IT)

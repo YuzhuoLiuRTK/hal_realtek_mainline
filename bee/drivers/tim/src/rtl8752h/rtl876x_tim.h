@@ -1,18 +1,19 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
-*********************************************************************************************************
+*****************************************************************************************
+*     Copyright(c) 2025, Realtek Semiconductor Corporation. All rights reserved.
+*
+*     SPDX-License-Identifier: Apache-2.0
+*****************************************************************************************
 * \file     rtl876x_tim.h
 * \brief    The header file of the peripheral TIMER driver.
 * \details  This file provides all TIMER firmware functions.
 * \author   Yuan
 * \date     2024-01-17
 * \version  v1.0.0
-* *********************************************************************************************************
+***************************************************************************************
+* @attention
+* <h2><center>&copy; COPYRIGHT 2025 Realtek Semiconductor Corporation</center></h2>
+***************************************************************************************
 */
 
 #ifndef _RTL876X_TIM_H_
@@ -58,31 +59,30 @@ typedef struct
 typedef struct
 {
     uint16_t TIM_ClockSrc;          /*!< <b>Deprecated</b> use RCC instead.*/
-    uint16_t TIM_DIV;               /*!< Clock fix at 40Mhz,add this parameter div the clock*/
-    uint16_t TIM_SOURCE_DIV;        /*!< Specifies the clock source div.
-                                            This parameter can be a value of \ref TIM_Clock_Divider*/
-    uint16_t TIM_SOURCE_DIV_En;     /*!< Timer source clock div enable. */
-    uint16_t TIM_Mode;              /*!< Specifies the counter mode.
-                                            This parameter can be a value of \ref TIM_Mode. */
-    uint16_t TIM_PWM_En;            /*!< Specifies the PWM mode.
-                                            This parameter can be a value of DISABLE or ENABLE */
-    uint32_t TIM_Period;            /*!< Specifies the period value to be loaded into the active
-                                            Auto-Reload Register at the next update event.
-                                            This parameter must range from 0x0000 to 0xFFFFFFFF. */
-    uint32_t TIM_PWM_High_Count;    /*!< Specifies the PWM High Count.
-                                            This parameter must range from 0x0000 to 0xFFFFFFFF. */
-    uint32_t TIM_PWM_Low_Count;     /*!< Specifies the PWM Low Count.
-                                            This parameter must range from 0x0000 to 0xFFFFFFFF. */
-    uint8_t  ClockDepend;           /*!< Specifies TIM Source depend.timer3 depend timer2 ,timer5 depend timer4.
-                                            This parameter can be a value of ENABLE or DISABLE */
-    uint32_t PWM_Deazone_Size;      /*!<Size of deadzone time, DeadzoneTime=deadzonesize/(32000 or 32768).
-                                            This parameter must range from 1 to 0xff. */
-    uint16_t PWMDeadZone_En;        /*!<PWM Deadzone enable, pwm0_pn: timer2
-                                        This parameter can be a value of ENABLE or DISABLE. */
-    uint16_t PWM_Stop_State_P;      /*!< Specifies the PWM P stop state.
-                                            This parameter can be a value of \ref PWMDeadZone_Stop_state. */
-    uint16_t PWM_Stop_State_N;      /*!< Specifies the PWM N stop state.
-                                            This parameter can be a value of \ref PWMDeadZone_Stop_state. */
+    uint16_t TIM_SOURCE_DIV;        /*!< Specify the clock source div.
+                                         This parameter can be a value of \ref TIM_Clock_Divider. */
+    uint16_t TIM_SOURCE_DIV_En;     /*!< Enable or disable timer source clock div. */
+    uint16_t TIM_Mode;              /*!< Specify the counter mode.
+                                         This parameter can be a value of \ref TIM_Mode. */
+    uint16_t TIM_PWM_En;            /*!< Specify the PWM mode.
+                                         This parameter can be a value of DISABLE or ENABLE */
+    uint32_t TIM_Period;            /*!< Specify the period value to be loaded into the active
+                                         Auto-Reload Register at the next update event.
+                                         This parameter must range from 0x0 to 0xFFFFFFFF. */
+    uint32_t TIM_PWM_High_Count;    /*!< Specify the PWM High Count.
+                                         This parameter must range from 0x0 to 0xFFFFFFFF. */
+    uint32_t TIM_PWM_Low_Count;     /*!< Specify the PWM Low Count.
+                                         This parameter must range from 0x0 to 0xFFFFFFFF. */
+    uint8_t  ClockDepend;           /*!< Specify TIM Source depend. timer3 depend timer2, timer5 depend timer4.
+                                         This parameter can be a value of ENABLE or DISABLE. */
+    uint32_t PWM_Deazone_Size;      /*!< Size of deadzone time, DeadzoneTime = deadzonesize / (32000 or 32768).
+                                         This parameter must range from 1 to 0xff. */
+    uint16_t PWMDeadZone_En;        /*!< PWM Deadzone enable.
+                                         This parameter can be a value of ENABLE or DISABLE. */
+    uint16_t PWM_Stop_State_P;      /*!< Specify the PWM P stop state.
+                                         This parameter can be a value of \ref PWMDeadZone_Stop_State. */
+    uint16_t PWM_Stop_State_N;      /*!< Specify the PWM N stop state.
+                                         This parameter can be a value of \ref PWMDeadZone_Stop_State. */
 } TIM_TimeBaseInitTypeDef;
 
 /** End of TIM_Exported_Types
@@ -109,6 +109,11 @@ typedef struct
  * \ingroup     TIM
  */
 
+/**
+ * \defgroup    TIM_Config TIM Config
+ * \{
+ * \ingroup     TIM_Exported_Constants
+ */
 #define IS_TIM_ALL_PERIPH(PERIPH) (((PERIPH) == TIM0) || \
                                    ((PERIPH) == TIM1) || \
                                    ((PERIPH) == TIM2) || \
@@ -116,14 +121,11 @@ typedef struct
                                    ((PERIPH) == TIM4) || \
                                    ((PERIPH) == TIM5))
 
-/**
- * \def     PWMDeadZone_Peripheral  PWMDeadZone
- */
-
 #define IS_PWM_ALL_PERIPH(PERIPH) ((PERIPH) == PWM2)
+/** \} */
 
 /**
- * \defgroup    TIM_Clock_Divider TIM Clock Divider
+ * \defgroup    TIM_CLK_Divider TIM CLK Divider
  * \{
  * \ingroup     TIM_Exported_Constants
  */
@@ -133,13 +135,14 @@ typedef struct
 #define TIM_CLOCK_DIVIDER_4                           ((uint16_t)0x5)
 #define TIM_CLOCK_DIVIDER_8                           ((uint16_t)0x6)
 #define TIM_CLOCK_DIVIDER_40                          ((uint16_t)0x7)
-/** \} */
+
 #define IS_TIM_SOURCE_DIVIDER(DIV)              (((DIV) == TIM_CLOCK_DIVIDER_1)  || \
                                                  ((DIV) == TIM_CLOCK_DIVIDER_125)|| \
                                                  ((DIV) == TIM_CLOCK_DIVIDER_2)  || \
                                                  ((DIV) == TIM_CLOCK_DIVIDER_4)  || \
                                                  ((DIV) == TIM_CLOCK_DIVIDER_8)  || \
                                                  ((DIV) == TIM_CLOCK_DIVIDER_40))
+/** \} */
 
 /**
  * \defgroup    TIM_Mode TIM Mode
@@ -148,9 +151,10 @@ typedef struct
  */
 #define TIM_Mode_FreeRun                    ((uint16_t)0x0000)
 #define TIM_Mode_UserDefine                 ((uint16_t)0x0001)
-/** \} */
+
 #define IS_TIM_MODE(mode) (((mode) == TIM_Mode_FreeRun) || \
                            ((mode) == TIM_Mode_UserDefine))
+/** \} */
 
 /**
  * \defgroup    TIM_PWM_En TIM PWM Mode Enable
@@ -159,9 +163,10 @@ typedef struct
  */
 #define PWM_ENABLE                        ((uint16_t)0x1)
 #define PWM_DISABLE                       ((uint16_t)0x0)
-/** \} */
+
 #define IS_TIM_PWM_En(mode) (((mode) == PWM_ENABLE) || \
                              ((mode) == PWM_DISABLE))
+/** \} */
 
 /**
  * \defgroup    TIM_Event_Duration TIM Event Duration
@@ -172,23 +177,24 @@ typedef struct
 #define TIM_EventDuration_64us                    ((uint16_t)0x0001)
 #define TIM_EventDuration_128us                   ((uint16_t)0x0002)
 #define TIM_EventDuration_256us                   ((uint16_t)0x0003)
-/** \} */
 
 #define IS_TIM_Event_DURATION(duration) (((duration) == TIM_EventDuration_32us) || \
                                          ((duration) == TIM_EventDuration_64us) || \
                                          ((duration) == TIM_EventDuration_128us) || \
                                          ((duration) == TIM_EventDuration_256us))
+/** \} */
 
 /**
- * \defgroup    PWMDeadZone_En PWM DeadZone enable
+ * \defgroup    PWMDeadZone_En PWM DeadZone Enable
  * \{
  * \ingroup     TIM_Exported_Constants
  */
 #define DEADZONE_ENABLE                        ((uint16_t)0x1)
 #define DEADZONE_DISABLE                       ((uint16_t)0x0)
-/** \} */
+
 #define IS_TIM_PWM_DeadZone_En(mode) (((mode) == DEADZONE_ENABLE) || \
                                       ((mode) == DEADZONE_DISABLE))
+/** \} */
 
 /**
  * \defgroup    PWMDeadZone_Stop_State PWM DeadZone Stop State
@@ -215,6 +221,15 @@ typedef struct
 /**
  * \brief   Deinitialize the TIMx peripheral registers to their default reset values.
  * \return  None.
+ *
+ * <b>Example usage</b>
+ * \code{.c}
+ *
+ * void driver_timer_init(void)
+ * {
+ *     TIM_DeInit();
+ * }
+ * \endcode
  */
 void TIM_DeInit(void);
 
@@ -246,7 +261,7 @@ void TIM_DeInit(void);
 void TIM_TimeBaseInit(TIM_TypeDef *TIMx, TIM_TimeBaseInitTypeDef *TIM_TimeBaseInitStruct);
 
 /**
- * \brief   Fills each TIM_InitStruct member with its default value.
+ * \brief   Fill each TIM_InitStruct member with its default value.
  * \param[in] TIM_TimeBaseInitStruct: Pointer to a TIM_TimeBaseInitTypeDef structure which will be initialized.
  * \return  None.
  *
@@ -270,7 +285,7 @@ void TIM_TimeBaseInit(TIM_TypeDef *TIMx, TIM_TimeBaseInitTypeDef *TIM_TimeBaseIn
 void TIM_StructInit(TIM_TimeBaseInitTypeDef *TIM_TimeBaseInitStruct);
 
 /**
- * \brief   Enables or disables the specified TIM peripheral.
+ * \brief   Enable or disable the specified TIM peripheral.
  * \param[in] TIMx: Where x can be 2 to 5 to select the TIMx peripheral.
  * \param[in] NewState: New state of the TIMx peripheral.
  *      This parameter can be: ENABLE or DISABLE.
@@ -297,7 +312,7 @@ void TIM_StructInit(TIM_TimeBaseInitTypeDef *TIM_TimeBaseInitStruct);
 void TIM_Cmd(TIM_TypeDef *TIMx, FunctionalState NewState);
 
 /**
- * \brief   Enables or disables the specified TIMx interrupt.
+ * \brief   Enable or disable the specified TIMx interrupt.
  * \param[in]   TIMx: Where x can be 2 to 5 to select the TIMx peripheral.
  * \param[in]   NewState: New state of the TIMx peripheral.
  *      This parameter can be: ENABLE or DISABLE.
@@ -319,6 +334,8 @@ void TIM_Cmd(TIM_TypeDef *TIMx, FunctionalState NewState);
  *     TIM_TimeBaseInit(TIM4, &TIM_InitStruct);
  *     TIM_ClearINT(TIM4);
  *     TIM_INTConfig(TIM4, ENABLE);
+ * }
+ * \endcode
  */
 void TIM_INTConfig(TIM_TypeDef *TIMx, FunctionalState NewState);
 
@@ -365,7 +382,7 @@ void TIM_PWMChangeFreqAndDuty(TIM_TypeDef *TIMx, uint32_t high_count, uint32_t l
 
 /**
  * \brief   Get TIMx current value when timer is running.
- * \param[in]   TIMx: where x can be 2 to 5 to select the TIMx peripheral.
+ * \param[in]   TIMx: Where x can be 2 to 5 to select the TIMx peripheral.
  * \return  The counter value.
  *
  * <b>Example usage</b>
@@ -574,9 +591,6 @@ void TIM_PWMDZBypassCmd(PWM_TypeDef *PWMx, FunctionalState NewState);
  * <b>Example usage</b>
  * \code{.c}
  *
- * <b>Example usage</b>
- * \code{.c}
- *
  * void driver_pwm_init(void)
  * {
  *     RCC_PeriphClockCmd(APBPeriph_TIMER, APBPeriph_TIMER_CLOCK, ENABLE);
@@ -621,7 +635,7 @@ __STATIC_INLINE void PWM_Deadzone_EMStop(PWM_TypeDef *PWMx)
 /**
   * @brief  Get PWM current output status.
   * @param  TIMx: where x can be 2 to 5 to select the TIMx peripheral.
-  * @retval The output state of the timer(SET: High or RESET: Low).
+  * @return The output state of the timer(SET: High or RESET: Low).
   */
 __STATIC_INLINE FlagStatus TIM_GetPWMOutputStatus(TIM_TypeDef *TIMx)
 {
@@ -661,4 +675,4 @@ __STATIC_INLINE FlagStatus TIM_GetPWMOutputStatus(TIM_TypeDef *TIMx)
 #endif /*_RTL876X_TIM_H_*/
 
 
-/******************* (C) COPYRIGHT 2015 Realtek Semiconductor Corporation *****END OF FILE****/
+/******************* (C) COPYRIGHT 2024 Realtek Semiconductor Corporation *****END OF FILE****/

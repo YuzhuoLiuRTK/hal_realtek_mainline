@@ -1,27 +1,28 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
-**********************************************************************************************************
+*****************************************************************************************
+*     Copyright(c) 2025, Realtek Semiconductor Corporation. All rights reserved.
+*
+*     SPDX-License-Identifier: Apache-2.0
+*****************************************************************************************
 * @file     rtl876x_adc.c
 * @brief    This file provides all the ADC firmware functions.
 * @details
 * @author   yuan
 * @date     2021-05-10
 * @version  v1.0.2
-*********************************************************************************************************
+***************************************************************************************
+* @attention
+* <h2><center>&copy; COPYRIGHT 2025 Realtek Semiconductor Corporation</center></h2>
+***************************************************************************************
 */
+
 #include "rtl876x_rcc.h"
 #include "rtl876x_adc.h"
 
 #define EFUSE_ON_RAM_BASE             0x00200f81UL
 #define EFUSE_FT_VER_OFFSET              0x1C8
 
-#define SYSTEM_CALL_PMU_REQUEST_LDO_AUDIO_REF   0x0A
-extern void SystemCall(uint32_t opcode, uint32_t parm);
+extern void pmu_request_ldo_audio_ref_call(bool isEnable);
 
 /**
   * @brief  Deinitializes the ADC peripheral registers to their default reset values(turn off ADC clock).
@@ -34,7 +35,7 @@ void ADC_DeInit(ADC_TypeDef *ADCx)
     assert_param(IS_ADC_PERIPH(ADCx));
 
     /* ADC PowerOff */
-    SystemCall(SYSTEM_CALL_PMU_REQUEST_LDO_AUDIO_REF, false);
+    pmu_request_ldo_audio_ref_call(false);
 
     RCC_PeriphClockCmd(APBPeriph_ADC, APBPeriph_ADC_CLOCK, DISABLE);
 
@@ -81,9 +82,9 @@ void ADC_Init(ADC_TypeDef *ADCx, ADC_InitTypeDef *ADC_InitStruct)
     /* Added to stabilize the power supply! */
     uint16_t reg_value = 0;
 
-    /* vref_sel = 0.85V */
+    /* ref=1.05V */
     reg_value = btaon_fast_read_safe(0x116);
-    btaon_fast_write(0x116, reg_value | BIT(4));
+    btaon_fast_write(0x116, reg_value | BIT(4) | BIT(5));
 
     /* enable cmp low noise for 3 bit */
     reg_value = btaon_fast_read_safe(0x116);
@@ -115,7 +116,7 @@ void ADC_Init(ADC_TypeDef *ADCx, ADC_InitTypeDef *ADC_InitStruct)
     }
 
     /* hw_pd of LDO, for low leakage purpose */
-    SystemCall(SYSTEM_CALL_PMU_REQUEST_LDO_AUDIO_REF, true);
+    pmu_request_ldo_audio_ref_call(true);
 
     /* Set power mode first */
     ADCx->PWRDLY |= (((ADC_InitStruct->ADC_DataLatchDly & 0x7) << 6)  |
@@ -226,7 +227,7 @@ void ADC_StructInit(ADC_InitTypeDef *ADC_InitStruct)
     ADC_InitStruct->ADC_DataAvgSel      = ADC_DATA_AVERAGE_OF_2;
     /* Reserved parameter, please do not change values*/
     ADC_InitStruct->ADC_PowerOnMode     = ADC_POWER_ON_AUTO;
-    ADC_InitStruct->ADC_PowerAlwaysOnEn = ADC_POWER_ALWAYS_ON_DISABLE;
+    ADC_InitStruct->ADC_PowerAlwaysOnEn = ADC_POWER_ALWAYS_ON_ENABLE;
     ADC_InitStruct->ADC_DataLatchDly    = 0x1;
     ADC_InitStruct->ADC_RG2X0Dly        = ADC_RG2X_0_DELAY_40_US;
     ADC_InitStruct->ADC_RG0X1Dly        = ADC_RG0X_1_DELAY_40_US;
@@ -342,7 +343,7 @@ uint16_t ADC_ReadRawData(ADC_TypeDef *ADCx, uint8_t index)
   * @brief  Read ADC average data from ADC schedule table0.
   * @param  ADCx: selected ADC peripheral.
   * @param[out]  OutBuf: buffer to save data read from ADC FIFO.
-  * @retval The 10-bit converted ADC data.
+  * @retval The The 10bits integer data + 2bits fractional ADC raw data.
   */
 uint16_t ADC_ReadAvgRawData(ADC_TypeDef *ADCx)
 {
@@ -356,7 +357,7 @@ uint16_t ADC_ReadAvgRawData(ADC_TypeDef *ADCx)
 }
 
 /**
-  * @brief  Get one data from ADC FIFO.
+  * @brief  Get raw data from ADC FIFO.
   * @param  ADCx: selected ADC peripheral.
   * @retval adc FIFO data.
   */

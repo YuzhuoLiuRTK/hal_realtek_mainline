@@ -1,19 +1,21 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
-**********************************************************************************************************
+*****************************************************************************************
+*     Copyright(c) 2025, Realtek Semiconductor Corporation. All rights reserved.
+*
+*     SPDX-License-Identifier: Apache-2.0
+*****************************************************************************************
 * @file     rtl876x_uart.c
 * @brief    This file provides all the UART firmware functions.
 * @details
 * @author   yuan
 * @date     2019-11-14
 * @version  v1.0
-*********************************************************************************************************
+***************************************************************************************
+* @attention
+* <h2><center>&copy; COPYRIGHT 2025 Realtek Semiconductor Corporation</center></h2>
+***************************************************************************************
 */
+
 #include "rtl876x_rcc.h"
 #include "rtl876x_uart.h"
 
@@ -415,24 +417,5 @@ FlagStatus UART_GetFlagStatus(UART_TypeDef *UARTx, uint32_t UART_FLAG)
 
     return bitstatus;
 }
-
-///**
-//  * @brief  Get interrupt identifier.
-//  * @param  UARTx: selected UART peripheral.
-//  * @retval The interrupt identifier value.
-//  *   This return value can be one of the following values:
-//  *     @arg UART_INT_ID_LINE_STATUS: interrupt identifier--line status interrupt.
-//  *     @arg UART_INT_ID_RX_LEVEL_REACH: interrupt identifier--rx trigger level reached interrupt.
-//  *     @arg UART_INT_ID_RX_TMEOUT: interrupt identifier--line status interrupt.
-//  *     @arg UART_INT_ID_TX_EMPTY: interrupt identifier--line status interrupt.
-//  *     @arg UART_INT_ID_MODEM_STATUS: interrupt identifier--line status interrupt.
-//  */
-//__STATIC_INLINE uint16_t UART_GetINTStatus(UART_TypeDef *UARTx)
-//{
-//    /* Check the parameters */
-//    assert_param(IS_UART_PERIPH(UARTx));
-
-//    return (uint16_t)(UARTx->INTID_FCR & (0x0000000E));
-//}
 
 /******************* (C) COPYRIGHT 2019 Realtek Semiconductor *****END OF FILE****/

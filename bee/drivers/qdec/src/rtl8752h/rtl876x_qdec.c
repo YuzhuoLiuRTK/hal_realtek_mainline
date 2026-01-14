@@ -1,19 +1,21 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
-**********************************************************************************************************
+*****************************************************************************************
+*     Copyright(c) 2025, Realtek Semiconductor Corporation. All rights reserved.
+*
+*     SPDX-License-Identifier: Apache-2.0
+*****************************************************************************************
 * @file     rtl876x_qdec.c
 * @brief    This file provides all the QDEC firmware functions.
 * @details
 * @author   howie_wang
 * @date     2016-05-10
 * @version  v0.1
-*********************************************************************************************************
+***************************************************************************************
+* @attention
+* <h2><center>&copy; COPYRIGHT 2025 Realtek Semiconductor Corporation</center></h2>
+***************************************************************************************
 */
+
 #include "rtl876x_rcc.h"
 #include "rtl876x_qdec.h"
 

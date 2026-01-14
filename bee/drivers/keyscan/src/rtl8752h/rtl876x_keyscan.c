@@ -1,18 +1,19 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
-**********************************************************************************************************
+*****************************************************************************************
+*     Copyright(c) 2025, Realtek Semiconductor Corporation. All rights reserved.
+*
+*     SPDX-License-Identifier: Apache-2.0
+*****************************************************************************************
 * @file     rtl876x_keyscan.c
 * @brief    This file provides all the KEYSCAN firmware functions.
 * @details
 * @author   tifnan_ge
 * @date     2015-04-30
 * @version  v0.1
-*********************************************************************************************************
+***************************************************************************************
+* @attention
+* <h2><center>&copy; COPYRIGHT 2025 Realtek Semiconductor Corporation</center></h2>
+***************************************************************************************
 */
 
 #include "rtl876x_rcc.h"
@@ -133,9 +134,13 @@ void KeyScan_StructInit(KEYSCAN_InitTypeDef *KeyScan_InitStruct)
   * @param  KeyScan: selected KeyScan peripheral.
   * @param  KeyScan_IT: specifies the KeyScan interrupts sources to be enabled or disabled.
   *   This parameter can be any combination of the following values:
-  *     @arg KEYSCAN_INT_TIMEOUT: KeyScan timeout interrupt mask
-  *     @arg KEYSCAN_INT_OVER_THRESHOLD: Kescan FIFO data over threshold interrupt mask
-  *     @arg KEYSCAN_INT_SCAN_END: KeyScan scan end interrupt mask
+  *     @arg KEYSCAN_INT_THRESHOLD: The interrupt is triggered when FIFO data size equal to threshold level.
+  *     @arg KEYSCAN_INT_OVER_READ: The interrupt is triggered when reading an empty FIFO to prevent over-reading.
+  *     @arg KEYSCAN_INT_SCAN_END: The interrupt is triggered after the Scan key matrix is completed.
+  *     @arg KEYSCAN_INT_FIFO_NOT_EMPTY: The interrupt is triggered when there is data in the FIFO,
+  *                                      and it can be cleared automatically after the FIFO reads empty.
+  *     @arg KEYSCAN_INT_ALL_RELEASE: The interrupt is triggered if no key is pressed
+  *                                   before the release time counter equal to the set value.
   * @param  NewState: new state of the specified KeyScan interrupts.
   *   This parameter can be: ENABLE or DISABLE.
   * @retval None
@@ -162,6 +167,15 @@ void KeyScan_INTConfig(KEYSCAN_TypeDef *KeyScan, uint32_t KeyScan_IT, Functional
 /**
   * @brief  Enables or disables the specified KeyScan interrupts mask.
   * @param  KeyScan: selected KeyScan peripheral.
+  * @param  KeyScan_IT: specifies the KeyScan interrupts sources to be enabled or disabled.
+  *   This parameter can be any combination of the following values:
+  *     @arg KEYSCAN_INT_THRESHOLD: The interrupt is triggered when FIFO data size equal to threshold level.
+  *     @arg KEYSCAN_INT_OVER_READ: The interrupt is triggered when reading an empty FIFO to prevent over-reading.
+  *     @arg KEYSCAN_INT_SCAN_END: The interrupt is triggered after the Scan key matrix is completed.
+  *     @arg KEYSCAN_INT_FIFO_NOT_EMPTY: The interrupt is triggered when there is data in the FIFO,
+  *                                      and it can be cleared automatically after the FIFO reads empty.
+  *     @arg KEYSCAN_INT_ALL_RELEASE: The interrupt is triggered if no key is pressed
+  *                                   before the release time counter equal to the set value.
   * @param  NewState: new state of the specified KeyScan interrupts mask.
   *   This parameter can be: ENABLE or DISABLE.
   * @retval None
@@ -244,6 +258,8 @@ void KeyScan_Cmd(KEYSCAN_TypeDef *KeyScan, FunctionalState NewState)
   * @param  KeyScan: selected KeyScan peripheral.
   * @param  data: config the data to be filtered.
   *   This parameter should not be more than 9 bits
+  * @param  NewState: new state of the data filter.
+  *   This parameter can be: ENABLE or DISABLE.
   * @retval none.
   */
 void KeyScan_FilterDataConfig(KEYSCAN_TypeDef *KeyScan, uint16_t data, FunctionalState NewState)

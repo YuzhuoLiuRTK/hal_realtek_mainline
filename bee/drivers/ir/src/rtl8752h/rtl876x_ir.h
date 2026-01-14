@@ -1,18 +1,19 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
-*********************************************************************************************************
+*****************************************************************************************
+*     Copyright(c) 2025, Realtek Semiconductor Corporation. All rights reserved.
+*
+*     SPDX-License-Identifier: Apache-2.0
+*****************************************************************************************
 * \file     rtl876x_ir.h
 * \brief    The header file of the peripheral IR driver.
 * \details  This file provides all IR firmware functions.
 * \author   yuan
 * \date     2024-01-22
 * \version  v2.1.2
-* *********************************************************************************************************
+***************************************************************************************
+* @attention
+* <h2><center>&copy; COPYRIGHT 2025 Realtek Semiconductor Corporation</center></h2>
+***************************************************************************************
 */
 
 /*============================================================================*
@@ -60,7 +61,7 @@ typedef struct
 typedef struct
 {
     uint32_t IR_Clock;              /*!< Specify the source clock frequency, the unit is Hz. */
-    uint32_t IR_Freq;               /*!< Specify the ir carrier frequency, the unit is Hz. */
+    uint32_t IR_Freq;               /*!< Specify the IR carrier frequency, the unit is Hz. */
     float    IR_DutyCycle;          /*!< Specify the IR duty cycle. */
     uint32_t IR_Mode;               /*!< Specify the IR mode.
                                               This parameter can be a value of \ref IR_Mode */
@@ -72,7 +73,7 @@ typedef struct
                                               This parameter can be a value of 0 ~ 31. */
     uint32_t IR_RxStartMode;        /*!< Specify Start mode in RX mode
                                               This parameter can be a value of \ref IR_Rx_Start_Mode. */
-    uint32_t IR_RxFIFOThrLevel;     /*!< Specify RX FIFO interrupt threshold in RX mode. when RX FIFO depth > threshold value, trigger interrupt.
+    uint32_t IR_RxFIFOThrLevel;     /*!< Specify RX FIFO interrupt threshold in RX mode. When RX FIFO depth > threshold value, trigger interrupt.
                                               This parameter can be a value of 0 ~ 31. */
     uint32_t IR_RxFIFOFullCtrl;     /*!< Specify data discard mode in RX mode when RX FIFO is full and receiving new data.
                                               This parameter can be a value of \ref IR_RX_FIFO_DISCARD_SETTING. */
@@ -83,13 +84,13 @@ typedef struct
     uint32_t IR_RxCntThrType;       /*!< Specify counter level type when trigger IR_INT_RX_CNT_THR interrupt in RX mode.
                                               This parameter can be a value of \ref IR_RX_COUNTER_THRESHOLD_TYPE. */
     uint32_t IR_RxCntThr;           /*!< Specify counter threshold value when trigger IR_INT_RX_CNT_THR interrupt in RX mode. */
-    uint8_t IR_TxDmaEn;             /*!< Specify the Tx dma mode.
+    uint8_t IR_TxDmaEn;             /*!< Specify the TX DMA mode.
                                               This parameter must be a value of DISABLE and ENABLE. */
-    uint8_t IR_TxWaterLevel;        /*!< Specify the DMA tx water level.
+    uint8_t IR_TxWaterLevel;        /*!< Specify the DMA TX water level.
                                               This parameter must range from 0 to 32.*/
-    uint8_t IR_RxDmaEn;             /*!< Specify the Rx dma mode.
+    uint8_t IR_RxDmaEn;             /*!< Specify the RX DMA mode.
                                               This parameter must be a value of DISABLE and ENABLE. */
-    uint8_t IR_RxWaterLevel;        /*!< Specify the DMA rx water level.
+    uint8_t IR_RxWaterLevel;        /*!< Specify the DMA RX water level.
                                               This parameter must range from 0 to 32.*/
 } IR_InitTypeDef;
 
@@ -446,17 +447,24 @@ typedef struct
  */
 
 /**
- * \defgroup    IR_FIFO_SIZE    IR FIFO SIZE
+ * \defgroup    IR_Config    IR Config
  * \{
  * \ingroup     IR_Exported_Constants
  */
 #define IS_IR_PERIPH(PERIPH) ((PERIPH) == IR)
+/** \} */
+
+/**
+ * \defgroup    IR_FIFO_SIZE    IR FIFO SIZE
+ * \{
+ * \ingroup     IR_Exported_Constants
+ */
 #define IR_TX_FIFO_SIZE                   32
 #define IR_RX_FIFO_SIZE                   32
 /** \} */
 
 /**
- * \defgroup    IR_CLOCK    IR Clock
+ * \defgroup    IR_Clock    IR Clock
  * \{
  * \ingroup     IR_Exported_Constants
  */
@@ -509,7 +517,7 @@ typedef struct
 /** \} */
 
 /**
- * \defgroup     IR_Tx_Threshold IR TX Threshold
+ * \defgroup     IR_TX_Threshold IR TX Threshold
  * \{
  * \ingroup     IR_Exported_Constants
  */
@@ -517,7 +525,7 @@ typedef struct
 /** \} */
 
 /**
- * \defgroup     IR_Rx_Threshold IR RX Threshold
+ * \defgroup     IR_RX_Threshold IR RX Threshold
  * \{
  * \ingroup     IR_Exported_Constants
  */
@@ -525,7 +533,7 @@ typedef struct
 /** \} */
 
 /**
- * \defgroup    IR_Rx_Start_Mode IR RX Start Mode
+ * \defgroup    IR_RX_Start_Mode IR RX Start Mode
  * \{
  * \ingroup     IR_Exported_Constants
  */
@@ -594,7 +602,7 @@ typedef struct
 /** \} */
 
 /**
- * \defgroup    IR_Rx_Counter_Threshold IR RX Counter Threshold
+ * \defgroup    IR_RX_Counter_Threshold IR RX Counter Threshold
  * \{
  * \ingroup     IR_Exported_Constants
  */
@@ -710,7 +718,6 @@ typedef enum
 
 /**
  * \brief  Deinitialize the IR peripheral registers to their default values.
- * \param[in]  None.
  * \return None.
  *
  * <b>Example usage</b>
@@ -803,7 +810,7 @@ void IR_StructInit(IR_InitTypeDef *IR_InitStruct);
 /**
  * \brief   Enable or disable the selected IR mode.
  * \param[in] mode: Selected IR operation mode.
- *      This parameter can be one of the following values:
+ *      This parameter can be one of the following values, which refers to \ref IR_Mode.
  *      \arg IR_MODE_TX: Transmission mode.
  *      \arg IR_MODE_RX: Receiving mode.
  * \param[in] NewState: New state of the operation mode.
@@ -844,7 +851,6 @@ void IR_Cmd(uint32_t mode, FunctionalState NewState);
 
 /**
  * \brief   Start trigger receive, only in manual receive mode.
- * \param[in]   None.
  * \return  None.
  *
  * <b>Example usage</b>
@@ -861,7 +867,7 @@ void IR_StartManualRxTrigger(void);
 /**
  * \brief   Config counter threshold value in receiving mode. It can be used to stop receiving IR data.
  * \param[in] IR_RxCntThrType: Count threshold type.
- *      This parameter can be the following values:
+ *      This parameter can be the following values, which refers to \ref IR_RX_COUNTER_THRESHOLD_TYPE.
  *      \arg IR_RX_Count_Low_Level: Low level counter value >= IR_RxCntThr, trigger IR_INT_RX_CNT_THR interrupt.
  *      \arg IR_RX_Count_High_Level: High level counter value >= IR_RxCntThr, trigger IR_INT_RX_CNT_THR interrupt.
  * \param[in] IR_RxCntThr: Configure IR Rx counter threshold value which can be 0 to 0x7fffffff.
@@ -898,12 +904,12 @@ void IR_SetRxCounterThreshold(uint32_t IR_RxCntThrType, uint32_t IR_RxCntThr);
  * }
  * \endcode
  */
-void IR_SendBuf(const uint32_t *pBuf, uint32_t len, FunctionalState IsLastPacket);
+void IR_SendBuf(uint32_t *pBuf, uint32_t len, FunctionalState IsLastPacket);
 
 /**
  * \brief  Send compensation data.
  * \param[in] comp_type: Compensation data type.
- *      This parameter can be one of the following values:
+ *      This parameter can be one of the following values, which refers to \ref IR_Compensation_Flag.
  *     \arg IR_COMPEN_FLAG_1_2_CARRIER: 1/2 carrier frequency.
  *     \arg IR_COMPEN_FLAG_1_4_CARRIER: 1/4 carrier frequency.
  *     \arg IR_COMPEN_FLAG_1_N_SYSTEM_CLK: MOD((0x48[27:16]+0x00[11:0]), 4095)/40MHz.
@@ -931,7 +937,7 @@ void IR_SendCompenBuf(IR_TX_COMPEN_TYPE comp_type, uint32_t *pBuf, uint32_t len,
 
 /**
  * \brief   Read data From RX FIO.
- * \param[in] pBuf: Buffer address to receive data.
+ * \param[out] pBuf: Buffer address to receive data.
  * \param[in] length: Read data length.
  * \return None.
  *
@@ -950,10 +956,10 @@ void IR_ReceiveBuf(uint32_t *pBuf, uint32_t length);
 /**
  * \brief     Enable or disable the specified IR interrupt source.
  * \param[in] IR_INT: Specify the IR interrupt source to be enabled or disabled.
- *            This parameter can be one of the following values:
+ *            This parameter can be one of the following values, which refers to \ref IR_Interrupt_Definition.
  *            \arg IR_INT_TF_EMPTY: When TX FIFO is empty, TX FIFO Empty Interrupt will be triggered.
  *            \arg IR_INT_TF_LEVEL: When TX FIFO offset <= threshold value, trigger TX FIFO Level Interrupt.
- *            \arg IR_INT_TF_OF: When TX FIFO is full, data continues to be written to TX FIFO, TX FIFO Over interrupt will be triggered.
+ *            \arg IR_INT_TF_OF: When TX FIFO is full, data continues to be written to TX FIFO, TX FIFO overflow interrupt will be triggered.
  *            \arg IR_INT_TX_FINISH: When TX finished, TX Finish Interrupt will be triggered.
  *            \arg IR_INT_RF_FULL: When RX FIFO offset = 32, RX FIFO Full Interrupt will be triggered.
  *            \arg IR_INT_RF_LEVEL: When RX FIFO offset > threshold value, trigger RX FIFO Level Interrupt.
@@ -981,10 +987,10 @@ void IR_INTConfig(uint32_t IR_INT, FunctionalState newState);
 /**
  * \brief     Mask or unmask the specified IR interrupt source.
  * \param[in] IR_INT: Specify the IR interrupts sources to be masked or unmasked.
- *            This parameter can be the following values:
+ *            This parameter can be the following values, which refers to \ref IR_Interrupt_Definition.
  *            \arg IR_INT_TF_EMPTY: When TX FIFO is empty, TX FIFO Empty Interrupt will be triggered.
  *            \arg IR_INT_TF_LEVEL: When TX FIFO offset <= threshold value, trigger TX FIFO Level Interrupt.
- *            \arg IR_INT_TF_OF: When TX FIFO is full, data continues to be written to TX FIFO, TX FIFO Over interrupt will be triggered.
+ *            \arg IR_INT_TF_OF: When TX FIFO is full, data continues to be written to TX FIFO, TX FIFO Overflow interrupt will be triggered.
  *            \arg IR_INT_TX_FINISH: When TX finished, TX Finish Interrupt will be triggered.
  *            \arg IR_INT_RF_FULL: When RX FIFO offset = 32, RX FIFO Full Interrupt will be triggered.
  *            \arg IR_INT_RF_LEVEL: When RX FIFO offset > threshold value, trigger RX FIFO Level Interrupt.
@@ -1012,10 +1018,10 @@ void IR_MaskINTConfig(uint32_t IR_INT, FunctionalState newState);
 /**
  * \brief     Get the specified IR interrupt status.
  * \param[in] IR_INT: the specified IR interrupts.
- *            This parameter can be one of the following values:
+ *            This parameter can be one of the following values, which refers to \ref IR_Interrupt_Definition.
  *            \arg IR_INT_TF_EMPTY: When TX FIFO is empty, TX FIFO Empty Interrupt will be triggered.
  *            \arg IR_INT_TF_LEVEL: When TX FIFO offset <= threshold value, trigger TX FIFO Level Interrupt.
- *            \arg IR_INT_TF_OF: When TX FIFO is full, data continues to be written to TX FIFO, TX FIFO Over interrupt will be triggered.
+ *            \arg IR_INT_TF_OF: When TX FIFO is full, data continues to be written to TX FIFO, TX FIFO Overflow interrupt will be triggered.
  *            \arg IR_INT_TX_FINISH: When TX finished, TX Finish Interrupt will be triggered.
  *            \arg IR_INT_RF_FULL: When RX FIFO offset = 32, RX FIFO Full Interrupt will be triggered.
  *            \arg IR_INT_RF_LEVEL: When RX FIFO offset > threshold value, trigger RX FIFO Level Interrupt.
@@ -1041,7 +1047,7 @@ ITStatus IR_GetINTStatus(uint32_t IR_INT);
 /**
  * \brief     Clear the IR interrupt pending bit.
  * \param[in] IR_CLEAR_INT: Specify the interrupt pending bit to clear.
- *      This parameter can be any combination of the following values:
+ *      This parameter can be any combination of the following values, which refers to \ref IR_Interrupts_Clear_Flag.
  *      \arg IR_INT_TF_EMPTY_CLR: Clear TX FIFO empty interrupt.
  *      \arg IR_INT_TF_LEVEL_CLR: Clear TX FIFO threshold interrupt.
  *      \arg IR_INT_TF_OF_CLR: Clear TX FIFO overflow interrupt.
@@ -1069,7 +1075,6 @@ void IR_ClearINTPendingBit(uint32_t IR_CLEAR_INT);
 
 /**
  * \brief  Get free size of TX FIFO.
- * \param[in]  None.
  * \return The free size of TX FIFO.
  *
  * <b>Example usage</b>
@@ -1089,7 +1094,6 @@ __STATIC_INLINE uint16_t IR_GetTxFIFOFreeLen(void)
 
 /**
  * \brief   Get data size in RX FIFO.
- * \param[in]   None.
  * \return  Current data size in RX FIFO.
  *
  * <b>Example usage</b>
@@ -1127,7 +1131,6 @@ __STATIC_INLINE void IR_SendData(uint32_t data)
 
 /**
  * \brief   Read one data.
- * \param[in]   None.
  * \return  Data which is read from RX FIFO.
  *
  * <b>Example usage</b>
@@ -1135,7 +1138,7 @@ __STATIC_INLINE void IR_SendData(uint32_t data)
  *
  * void ir_demo(void)
  * {
- *     uint32_t data = IR_ReceiveData(30);
+ *     uint32_t data = IR_ReceiveData();
  * }
  * \endcode
  */
@@ -1145,7 +1148,7 @@ __STATIC_INLINE uint32_t IR_ReceiveData(void)
 }
 
 /**
- * \brief  Set tx threshold, when TX FIFO depth <= threshold value trigger interrupt.
+ * \brief  Set tx threshold, when TX FIFO depth <= threshold value, trigger interrupt.
  * \param[in] thd: Tx threshold.
  * \return None.
  *
@@ -1165,7 +1168,7 @@ __STATIC_INLINE void IR_SetTxThreshold(uint8_t thd)
 }
 
 /**
- * \brief   Set tx threshold, when RX FIFO depth > threshold value trigger interrupt.
+ * \brief   Set rx threshold, when RX FIFO depth > threshold value, trigger interrupt.
  * \param[in] thd: Rx threshold.
  * \return  None.
  *
@@ -1186,7 +1189,6 @@ __STATIC_INLINE void IR_SetRxThreshold(uint8_t thd)
 
 /**
  * \brief  Get IR RX current count.
- * \param[in]  None.
  * \return Current counter.
  *
  * <b>Example usage</b>
@@ -1205,7 +1207,6 @@ __STATIC_INLINE uint32_t IR_GetRxCurrentCount(void)
 
 /**
  * \brief  Clear IR TX FIFO.
- * \param[in]  None.
  * \return None.
  *
  * <b>Example usage</b>
@@ -1224,7 +1225,6 @@ __STATIC_INLINE void IR_ClearTxFIFO(void)
 
 /**
  * \brief   Clear IR RX FIFO.
- * \param[in]   None.
  * \return  None.
  *
  * <b>Example usage</b>
@@ -1244,7 +1244,7 @@ __STATIC_INLINE void IR_ClearRxFIFO(void)
 /**
  * \brief  Check whether the specified IR flag is set.
  * \param[in]  IR_FLAG: Specify the flag to check.
- *      This parameter can be one of the following values:
+ *      This parameter can be one of the following values, which refer to \ref IR_Flag.
  *      \arg IR_FLAG_TF_EMPTY: TX FIFO empty or not. If SET, TX FIFO is empty.
  *      \arg IR_FLAG_TF_FULL: TX FIFO full or not. If SET, TX FIFO is full.
  *      \arg IR_FLAG_TX_RUN: TX run or not. If SET, TX is running.
@@ -1288,7 +1288,7 @@ __STATIC_INLINE FlagStatus IR_GetFlagStatus(uint32_t IR_FLAG)
 }
 
 /**
- * \brief  Enable TX FIFO define or not.
+ * \brief  Enable TX FIFO inverse or not.
  * \param[in] NewState: This parameter can be: ENABLE or DISABLE.
  * \return  None.
  *
@@ -1347,7 +1347,6 @@ __STATIC_INLINE void IR_TxOutputInverse(FunctionalState NewState)
 
 /**
  * \brief  Get IR RX Level.
- * \param[in]  None.
  * \return Current Level.
  *
  * <b>Example usage</b>

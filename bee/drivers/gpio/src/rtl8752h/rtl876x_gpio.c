@@ -1,18 +1,19 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
-**********************************************************************************************************
+*****************************************************************************************
+*     Copyright(c) 2025, Realtek Semiconductor Corporation. All rights reserved.
+*
+*     SPDX-License-Identifier: Apache-2.0
+*****************************************************************************************
 * @file     rtl876x_gpio.c
 * @brief    This file provides all the GPIO firmware functions.
 * @details
 * @author   Yuan
 * @date     2020-10-13
 * @version  v1.0.0
-*********************************************************************************************************
+***************************************************************************************
+* @attention
+* <h2><center>&copy; COPYRIGHT 2025 Realtek Semiconductor Corporation</center></h2>
+***************************************************************************************
 */
 
 /* Includes ------------------------------------------------------------------*/
@@ -229,7 +230,6 @@ uint32_t GPIO_GetPin(uint8_t Pin_num)
     {
         return BIT(Pin_num);
     }
-#if (IC_TYPE == IC_TYPE_RTL8762E)
     else if (Pin_num == P4_0)
     {
         return BIT(13);
@@ -242,16 +242,7 @@ uint32_t GPIO_GetPin(uint8_t Pin_num)
     {
         return BIT(Pin_num - 26);
     }
-#else
-    else if ((Pin_num <= P4_3) && (Pin_num >= P4_0))
-    {
-        return BIT(Pin_num - 4);
-    }
-    else if ((Pin_num == H_0) || (Pin_num == H_1) || (Pin_num == H_2))
-    {
-        return BIT(Pin_num - 11);
-    }
-#endif
+
     return 0xFF;
 }
 
@@ -269,7 +260,6 @@ uint8_t GPIO_GetNum(uint8_t Pin_num)
     {
         return (Pin_num);
     }
-#if (IC_TYPE == IC_TYPE_RTL8762E)
     else if (Pin_num == P4_0)
     {
         return 13;
@@ -282,16 +272,6 @@ uint8_t GPIO_GetNum(uint8_t Pin_num)
     {
         return (Pin_num - 26);
     }
-#else
-    else if ((Pin_num <= P4_3) && (Pin_num >= P4_0))
-    {
-        return (Pin_num - 4);
-    }
-    else if ((Pin_num == H_0) || (Pin_num == H_1) || (Pin_num == H_2))
-    {
-        return (Pin_num - 11);
-    }
-#endif
 
     return 0xFF;
 }

@@ -1,18 +1,19 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
-*********************************************************************************************************
+*****************************************************************************************
+*     Copyright(c) 2025, Realtek Semiconductor Corporation. All rights reserved.
+*
+*     SPDX-License-Identifier: Apache-2.0
+*****************************************************************************************
 * \file     rtl876x_rtc.h
 * \brief    The header file of the peripheral RTC driver.
 * \details  This file provides all RTC firmware functions.
 * \author   yuan
 * \date     2024-01-18
 * \version  v2.1.0
-* *********************************************************************************************************
+***************************************************************************************
+* @attention
+* <h2><center>&copy; COPYRIGHT 2025 Realtek Semiconductor Corporation</center></h2>
+***************************************************************************************
 */
 
 #ifndef _RTL876X_RTC_H_
@@ -163,97 +164,97 @@ extern "C" {
 /* Description: Interrupt clear register. Offset: 0x04. Address: 0x40000104. */
 
 /* INT_CLR[15] :RTC_COMP3_WK_CLR. Clear Interrupt Status of Comparator1. */
-/* This status is cleared by software.write 1 then write 0 after 2T to clear. */
+/* This status is cleared by software. Write 1 then write 0 after 2T to clear. */
 #define RTC_COMP3_WK_CLR_Pos            (15UL)
 #define RTC_COMP3_WK_CLR_SET            (0x1UL << RTC_COMP3_WK_CLR_Pos)
 #define RTC_COMP3_WK_CLR_RESET          (~(RTC_COMP3_WK_CLR_SET))
 
 /* INT_CLR[14] :RTC_COMP2_WK_CLR. Clear Interrupt Status of Comparator1. */
-/* This status is cleared by software.write 1 then write 0 after 2T to clear. */
+/* This status is cleared by software. Write 1 then write 0 after 2T to clear. */
 #define RTC_COMP2_WK_CLR_Pos            (14UL)
 #define RTC_COMP2_WK_CLR_SET            (0x1UL << RTC_COMP2_WK_CLR_Pos)
 #define RTC_COMP2_WK_CLR_RESET          (~(RTC_COMP2_WK_CLR_SET))
 
 /* INT_CLR[13] :RTC_COMP1_WK_CLR. Clear Interrupt Status of Comparator1. */
-/* This status is cleared by software.write 1 then write 0 after 2T to clear. */
+/* This status is cleared by software. Write 1 then write 0 after 2T to clear. */
 #define RTC_COMP1_WK_CLR_Pos            (13UL)
 #define RTC_COMP1_WK_CLR_SET            (0x1UL << RTC_COMP1_WK_CLR_Pos)
 #define RTC_COMP1_WK_CLR_RESET          (~(RTC_COMP1_WK_CLR_SET))
 
 /* INT_CLR[12] :RTC_COMP0_WK_CLR. Clear Interrupt Status of Comparator0. */
-/* This status is cleared by software.write 1 then write 0 after 2T to clear. */
+/* This status is cleared by software. Write 1 then write 0 after 2T to clear. */
 #define RTC_COMP0_WK_CLR_Pos            (12UL)
 #define RTC_COMP0_WK_CLR_SET            (0x1UL << RTC_COMP0_WK_CLR_Pos)
 #define RTC_COMP0_WK_CLR_RESET          (~(RTC_COMP0_WK_CLR_SET))
 
 /* INT_CLR[11] :RTC_COMP3_CLR. Clear Interrupt Status of Comparator1. */
-/* This interrupt is cleared by software.write 1 then write 0 after 2T to clear. */
+/* This interrupt is cleared by software. Write 1 then write 0 after 2T to clear. */
 #define RTC_COMP3_CLR_Pos               (11UL)
 #define RTC_COMP3_CLR_SET               (0x1UL << RTC_COMP3_CLR_Pos)
 #define RTC_COMP3_CLR_RESET             (~(RTC_COMP3_CLR_SET))
 
 /* INT_CLR[10] :RTC_COMP2_CLR. Clear Interrupt Status of Comparator1. */
-/* This interrupt is cleared by software.write 1 then write 0 after 2T to clear. */
+/* This interrupt is cleared by software. Write 1 then write 0 after 2T to clear. */
 #define RTC_COMP2_CLR_Pos               (10UL)
 #define RTC_COMP2_CLR_SET               (0x1UL << RTC_COMP2_CLR_Pos)
 #define RTC_COMP2_CLR_RESET             (~(RTC_COMP2_CLR_SET))
 
 /* INT_CLR[9] :RTC_COMP1_CLR. Clear Interrupt Status of Comparator1. */
-/* This interrupt is cleared by software.write 1 then write 0 after 2T to clear. */
+/* This interrupt is cleared by software. Write 1 then write 0 after 2T to clear. */
 #define RTC_COMP1_CLR_Pos               (9UL)
 #define RTC_COMP1_CLR_SET               (0x1UL << RTC_COMP1_CLR_Pos)
 #define RTC_COMP1_CLR_RESET             (~(RTC_COMP1_CLR_SET))
 
 /* INT_CLR[8] :RTC_COMP0_CLR. Clear Interrupt Status of Comparator0. */
-/* This interrupt is cleared by software.write 1 then write 0 after 2T to clear. */
+/* This interrupt is cleared by software. Write 1 then write 0 after 2T to clear. */
 #define RTC_COMP0_CLR_Pos               (8UL)
 #define RTC_COMP0_CLR_SET               (0x1UL << RTC_COMP0_CLR_Pos)
 #define RTC_COMP0_CLR_RESET             (~(RTC_COMP0_CLR_SET))
 
 /* INT_CLR[7] :RTC_COMP3_CLR. Clear Interrupt Status of Comparator1. */
-/* This interrupt is cleared by software.write 1 then write 0 after 2T to clear. */
+/* This interrupt is cleared by software. Write 1 then write 0 after 2T to clear. */
 #define RTC_COMP3GT_CLR_Pos             (7UL)
 #define RTC_COMP3GT_CLR_SET             (0x1UL << RTC_COMP3GT_CLR_Pos)
 #define RTC_COMP3GT_CLR_RESET           (~(RTC_COMP3GT_CLR_SET))
 
-/* INT_CLR[6] :RTC_COMP2GT_CLR. Clear Interrupt Status of Comparator1. */
-/* This interrupt is cleared by software.write 1 then write 0 after 2T to clear. */
+/* INT_CLR[6] :RTC_COMP2GT_CLR. Clear Interrupt Status of Comparator2. */
+/* This interrupt is cleared by software. Write 1 then write 0 after 2T to clear. */
 #define RTC_COMP2GT_CLR_Pos             (6UL)
 #define RTC_COMP2GT_CLR_SET             (0x1UL << RTC_COMP2GT_CLR_Pos)
 #define RTC_COMP2GT_CLR_RESET           (~(RTC_COMP2GT_CLR_SET))
 
 /* INT_CLR[5] :RTC_COMP1GT_CLR. Clear Interrupt Status of Comparator1. */
-/* This interrupt is cleared by software.write 1 then write 0 after 2T to clear. */
+/* This interrupt is cleared by software. Write 1 then write 0 after 2T to clear. */
 #define RTC_COMP1GT_CLR_Pos             (5UL)
 #define RTC_COMP1GT_CLR_SET             (0x1UL << RTC_COMP1GT_CLR_Pos)
 #define RTC_COMP1GT_CLR_RESET           (~(RTC_COMP1GT_CLR_SET))
 
 /* INT_CLR[4] :RTC_COMP0GT_CLR. Clear Interrupt Status of Comparator0. */
-/* This interrupt is cleared by software.write 1 then write 0 after 2T to clear. */
+/* This interrupt is cleared by software. Write 1 then write 0 after 2T to clear. */
 #define RTC_COMP0GT_CLR_Pos             (4UL)
 #define RTC_COMP0GT_CLR_SET             (0x1UL << RTC_COMP0GT_CLR_Pos)
 #define RTC_COMP0GT_CLR_RESET           (~(RTC_COMP0GT_CLR_SET))
 
 /* INT_CLR[3] :RTC_PRE_COMP3_CLR. Clear Interrupt Status of prescale and prescale_comp3. */
-/* This interrupt is cleared by software.write 1 then write 0 after 2T to clear. */
+/* This interrupt is cleared by software. Write 1 then write 0 after 2T to clear. */
 #define RTC_PRE_COMP3_CLR_Pos           (3UL)
 #define RTC_PRE_COMP3_CLR_SET           (0x1UL << RTC_PRE_COMP3_CLR_Pos)
 #define RTC_PRE_COMP3_CLR_RESET         (~(RTC_PRE_COMP3_CLR_SET))
 
 /* INT_CLR[6] :RTC_PRE_COMP_CLR. Clear Interrupt Status of Comparator1. */
-/* This interrupt is cleared by software.write 1 then write 0 after 2T to clear. */
+/* This interrupt is cleared by software. Write 1 then write 0 after 2T to clear. */
 #define RTC_PRE_COMP_CLR_Pos            (2UL)
 #define RTC_PRE_COMP_CLR_SET            (0x1UL << RTC_PRE_COMP_CLR_Pos)
 #define RTC_PRE_COMP_CLR_RESET          (~(RTC_PRE_COMP_CLR_SET))
 
 /* INT_CLR[1] :RTC_OVERFLOW_CLR. Clear Interrupt Status of Overflow. */
-/* This interrupt is cleared by software.write 1 then write 0 after 2T to clear. */
+/* This interrupt is cleared by software. Write 1 then write 0 after 2T to clear. */
 #define RTC_OVERFLOW_CLR_Pos            (1UL)
 #define RTC_OVERFLOW_CLR_SET            (0x1UL << RTC_OVERFLOW_CLR_Pos)
 #define RTC_OVERFLOW_CLR_RESET          (~(RTC_OVERFLOW_CLR_SET))
 
 /* INT_CLR[0] :RTC_TICK_CLR. Clear Interrupt Status of Tick. */
-/* This interrupt is cleared by software.write 1 then write 0 after 2T to clear. */
+/* This interrupt is cleared by software. Write 1 then write 0 after 2T to clear. */
 #define RTC_TICK_CLR_Pos                (0UL)
 #define RTC_TICK_CLR_SET                (0x1UL << RTC_TICK_CLR_Pos)
 #define RTC_TICK_CLR_RESET              (~(RTC_TICK_CLR_SET))
@@ -262,13 +263,13 @@ extern "C" {
 #define RTC_PRE_COMP_INT_EN_OFFSET      (RTC_INT_PRE_COMP_EN_Pos - RTC_PRE_COMP_CLR_Pos)
 
 
-/* Clear all interrupt */
+/* Clear all interrupts */
 #define RTC_ALL_INT_CLR_SET             (RTC_PRE_COMP3_CLR_SET | RTC_PRE_COMP_CLR_SET | \
                                          RTC_COMP3_CLR_SET | RTC_COMP2_CLR_SET | \
                                          RTC_COMP1_CLR_SET | RTC_COMP0_CLR_SET | \
                                          RTC_OVERFLOW_CLR_SET | RTC_TICK_CLR_SET)
 
-/* Clear all wakeup */
+/* Clear all wakeups */
 #define RTC_ALL_WAKEUP_CLR_SET          (RTC_COMP3_WK_CLR_SET | RTC_COMP2_WK_CLR_SET | \
                                          RTC_COMP1_WK_CLR_SET | RTC_COMP0_WK_CLR_SET | \
                                          RTC_COMP3GT_CLR_SET | RTC_COMP2GT_CLR_SET | \
@@ -284,7 +285,7 @@ extern "C" {
  */
 
 /**
- * \defgroup    RTC_Interrupts_Definition RTC Interrupts Definition
+ * \defgroup    RTC_Interrupt_Definition RTC Interrupt Definition
  * \{
  * \ingroup     RTC_Exported_Constants
  */
@@ -300,8 +301,6 @@ typedef enum
     RTC_INT_COMP3       = RTC_INT_COMP3_EN_Msk,
 } E_RTC_INT;
 
-/** \} */
-
 #define IS_RTC_INT(INT) (((INT) == RTC_INT_TICK) || \
                          ((INT) == RTC_INT_OVF) || \
                          ((INT) == RTC_INT_COMP0) || \
@@ -310,6 +309,7 @@ typedef enum
                          ((INT) == RTC_INT_COMP3) || \
                          ((INT) == RTC_INT_PRE_COMP) || \
                          ((INT) == RTC_INT_PRE_COMP3))
+/** \} */
 
 /**
  * \defgroup    RTC_Wakeup_Definition RTC Wakeup Definition
@@ -332,8 +332,6 @@ typedef enum
     RTC_WK_COMP3        = RTC_COMP3_WAKEUP_EN_Msk,
 } E_RTC_WK;
 
-/** \} */
-
 #define IS_RTC_WK(WK) (((WK) == RTC_WK_TICK) || \
                        ((WK) == RTC_WK_OVF) || \
                        ((WK) == RTC_WK_PRE_COMP) || \
@@ -346,9 +344,10 @@ typedef enum
                        ((WK) == RTC_WK_COMP1) || \
                        ((WK) == RTC_WK_COMP2) || \
                        ((WK) == RTC_WK_COMP3))
+/** \} */
 
 /**
- * \defgroup    RTC_Comp_Definition RTC Comparator Definition
+ * \defgroup    RTC_Comp_Index RTC Comparator Index
  * \{
  * \ingroup     RTC_Exported_Constants
  */
@@ -360,15 +359,14 @@ typedef enum
     RTC_COMP3,
 } E_RTC_COMP_INDEX;
 
-/** \} */
-
 #define IS_RTC_COMP(COMP) (((COMP) == RTC_COMP0) || \
                            ((COMP) == RTC_COMP1) || \
                            ((COMP) == RTC_COMP2) || \
                            ((COMP) == RTC_COMP3))
+/** \} */
 
 /**
- * \defgroup    RTC_CompGT_Definition RTC ComparatorGT Definition
+ * \defgroup    RTC_CompGT_Index RTC ComparatorGT Index
  * \{
  * \ingroup     RTC_Exported_Constants
  */
@@ -396,16 +394,15 @@ typedef enum
  */
 
 /**
- * \brief     Fast write RTC register,internal function.
+ * \brief     Fast write RTC register, internal function.
  * \param[in] regAddress: The register address.
- * \param[in] data: Data which write to register.
+ * \param[in] data: Data to be written to the register.
  * \return    None.
  */
 void RTC_WriteReg(uint32_t regAddress, uint32_t data);
 
 /**
- * \brief     Deinitializes the RTC peripheral registers to their default reset values(turn off clock).
- * \param[in] None.
+ * \brief     Deinitialize the RTC peripheral registers to their default reset values (turn off clock).
  * \return    None.
  *
  * <b>Example usage</b>
@@ -421,7 +418,7 @@ void RTC_DeInit(void);
 
 /**
  * \brief     Set RTC prescaler value.
- * \param[in] value: The prescaler value to be set.Should be no more than 12 bits!
+ * \param[in] value: The prescaler value to be set. Should be no more than 12 bits!
  * \return    None.
  *
  * <b>Example usage</b>
@@ -450,8 +447,8 @@ void RTC_DeInit(void);
 void RTC_SetPrescaler(uint16_t value);
 
 /**
- * \brief     Start or stop RTC peripheral.
- * \param[in] NewState: New state of RTC peripheral.
+ * \brief     Start or stop the RTC peripheral.
+ * \param[in] NewState: New state of the RTC peripheral.
  *            This parameter can be one of the following values:
  *            \arg ENABLE: Start RTC.
  *            \arg DISABLE: Stop RTC.
@@ -484,10 +481,10 @@ void RTC_Cmd(FunctionalState NewState);
 
 /**
  * \brief     Enable or disable the specified RTC interrupt source.
- * \param[in] RTC_INT: Specifies the RTC interrupt source which to be enabled or disabled.
- *            This parameter can be any combination of the following values:
+ * \param[in] RTC_INT: Specify the RTC interrupt source to be enabled or disabled.
+ *            This parameter can be any combination of the following values, refer to \ref RTC_Interrupt_Definition.
  *            \arg RTC_INT_TICK: Tick interrupt source.
- *            \arg RTC_INT_OVF: counter overflow interrupt
+ *            \arg RTC_INT_OVF: Counter overflow interrupt.
  *            \arg RTC_INT_COMP0: Compare 0 interrupt source.
  *            \arg RTC_INT_COMP1: Compare 1 interrupt source.
  *            \arg RTC_INT_COMP2: Compare 2 interrupt source.
@@ -525,8 +522,8 @@ void RTC_INTConfig(E_RTC_INT RTC_INT, FunctionalState NewState);
 
 /**
  * \brief  Enable or disable the specified RTC wakeup function.
- * \param  RTC_WK: specifies the RTC wakeup function to be enabled or disabled.
- *         This parameter can be any combination of the following values:
+ * \param  RTC_WK: Specify the RTC wakeup function to be enabled or disabled.
+ *         This parameter can be any combination of the following values, refer to \ref RTC_Wakeup_Definition.
  *         \arg RTC_WK_TICK: tick wakeup function
  *         \arg RTC_WK_OVF: tick wakeup function
  *         \arg RTC_WK_PRE_CMP: prescale compare wakeup function
@@ -570,8 +567,8 @@ void RTC_WKConfig(E_RTC_WK RTC_WK, FunctionalState NewState);
 
 /**
  * \brief     Enable RTC interrupt signal to CPU NVIC.
- * \param[in] NewState: Enable or disable RTC interrupt signal to MCU.
- *            This parameter can be: ENABLE or DISABLE..
+ * \param[in] NewState: Enable or disable the RTC interrupt signal to MCU.
+ *            This parameter can be: ENABLE or DISABLE.
  * \return    None.
  *
  * <b>Example usage</b>
@@ -600,8 +597,8 @@ void RTC_WKConfig(E_RTC_WK RTC_WK, FunctionalState NewState);
 void RTC_NvCmd(FunctionalState NewState);
 
 /**
- * \brief     Enable or disable system wake up function of RTC.
- * \param[in] NewState: new state of the wake up function.
+ * \brief     Enable or disable the system wakeup function of RTC.
+ * \param[in] NewState: New state of the wakeup function.
  *            This parameter can be: ENABLE or DISABLE.
  * \return    None.
  *
@@ -617,8 +614,7 @@ void RTC_NvCmd(FunctionalState NewState);
 void RTC_SystemWakeupConfig(FunctionalState NewState);
 
 /**
- * \brief     Reset counter value of RTC.
- * \param[in] None.
+ * \brief     Reset the counter value of RTC.
  * \return    None.
  *
  * <b>Example usage</b>
@@ -635,7 +631,6 @@ void RTC_ResetCounter(void);
 
 /**
  * \brief     Reset prescaler counter value of RTC.
- * \param[in] None.
  * \return    None.
  *
  * <b>Example usage</b>
@@ -652,8 +647,8 @@ void RTC_ResetPrescalerCounter(void);
 
 /**
  * \brief  Check whether the specified RTC interrupt is set.
-  * \param[in]  RTC_INT: Specifies the RTC interrupt source to be enabled or disabled.
- *   This parameter can be any combination of the following values:
+  * \param[in]  RTC_INT: Specify the RTC interrupt source to be enabled or disabled.
+ *   This parameter can be any combination of the following values, refer to \ref RTC_Interrupt_Definition.
  *            \arg RTC_INT_TICK: RTC tick interrupt source.
  *            \arg RTC_INT_COMP0: Compare 0 interrupt source.
  *            \arg RTC_INT_COMP1: Compare 1 interrupt source.
@@ -676,8 +671,8 @@ ITStatus RTC_GetINTStatus(E_RTC_INT RTC_INT);
 
 /**
  * \brief     Clear the interrupt pending bits of RTC.
- * \param[in] RTC_INT: specifies the RTC interrupt flag to clear.
- *            This parameter can be any combination of the following values:
+ * \param[in] RTC_INT: Specify the RTC interrupt flag to clear.
+ *            This parameter can be any combination of the following values, refer to \ref RTC_Interrupt_Definition.
  *            \arg RTC_INT_TICK: RTC tick interrupt source.
  *            \arg RTC_INT_OVF: RTC counter overflow interrupt source.
  *            \arg RTC_INT_COMP0: Compare 0 interrupt source.
@@ -700,48 +695,48 @@ ITStatus RTC_GetINTStatus(E_RTC_INT RTC_INT);
 void RTC_ClearINTPendingBit(E_RTC_INT RTC_INT);
 
 /**
-  * \brief  Checks whether the specified RTC wakeup state is set or not.
-  * \param  RTC_WK: specifies the RTC interrupt source to be enabled or disabled.
-  *         This parameter can be any combination of the following values:
-  *         \arg RTC_WK_TICK: tick wakeup function
-  *         \arg RTC_WK_OVF: tick wakeup function
-  *         \arg RTC_WK_PRE_CMP: prescale compare wakeup function
-  *         \arg RTC_WK_PRE_CMP3: prescale & compare 3 wakeup function
-  *         \arg RTC_WK_COMP0GT: compare 0 gt wakeup function
-  *         \arg RTC_WK_COMP1GT: compare 1 gt wakeup function
-  *         \arg RTC_WK_COMP2GT: compare 2 gt wakeup function
-  *         \arg RTC_WK_COMP3GT: compare 3 gt wakeup function
-  *         \arg RTC_WK_CMP0: compare 0 wakeup function
-  *         \arg RTC_WK_CMP1: compare 1 wakeup function
-  *         \arg RTC_WK_CMP2: compare 2 wakeup function
-  *         \arg RTC_WK_CMP3: compare 3 wakeup function
+  * \brief  Check whether the specified RTC wakeup state is set or not.
+  * \param  RTC_WK: Specify the RTC interrupt source to be enabled or disabled.
+  *         This parameter can be any combination of the following values, refer to \ref RTC_Wakeup_Definition.
+  *         \arg RTC_WK_TICK: Tick wakeup function.
+  *         \arg RTC_WK_OVF: Tick wakeup function.
+  *         \arg RTC_WK_PRE_CMP: Prescale compare wakeup function.
+  *         \arg RTC_WK_PRE_CMP3: Prescale & compare 3 wakeup function.
+  *         \arg RTC_WK_COMP0GT: Compare 0 gt wakeup function.
+  *         \arg RTC_WK_COMP1GT: Compare 1 gt wakeup function.
+  *         \arg RTC_WK_COMP2GT: Compare 2 gt wakeup function.
+  *         \arg RTC_WK_COMP3GT: Compare 3 gt wakeup function.
+  *         \arg RTC_WK_CMP0: Compare 0 wakeup function.
+  *         \arg RTC_WK_CMP1: Compare 1 wakeup function.
+  *         \arg RTC_WK_CMP2: Compare 2 wakeup function.
+  *         \arg RTC_WK_CMP3: Compare 3 wakeup function.
   * \return The new state of RTC_INT (SET or RESET).
   */
 ITStatus RTC_GetWakeupStatus(E_RTC_WK RTC_WK);
 
 /**
   * \brief  Clear the wakeup status bits of RTC.
-  * \param  RTC_WK: specifies the RTC wakeup flag to clear.
-  *         This parameter can be any combination of the following values:
-  *         \arg RTC_WK_TICK: tick wakeup function
-  *         \arg RTC_WK_OVF: tick wakeup function
-  *         \arg RTC_WK_PRE_CMP: prescale compare wakeup function
-  *         \arg RTC_WK_PRE_CMP3: prescale & compare 3 wakeup function
-  *         \arg RTC_WK_COMP0GT: compare 0 gt wakeup function
-  *         \arg RTC_WK_COMP1GT: compare 1 gt wakeup function
-  *         \arg RTC_WK_COMP2GT: compare 2 gt wakeup function
-  *         \arg RTC_WK_COMP3GT: compare 3 gt wakeup function
-  *         \arg RTC_WK_CMP0: compare 0 wakeup function
-  *         \arg RTC_WK_CMP1: compare 1 wakeup function
-  *         \arg RTC_WK_CMP2: compare 2 wakeup function
-  *         \arg RTC_WK_CMP3: compare 3 wakeup function
+  * \param  RTC_WK: Specify the RTC wakeup flag to clear.
+  *         This parameter can be any combination of the following values, refer to \ref RTC_Wakeup_Definition.
+  *         \arg RTC_WK_TICK: Tick wakeup function.
+  *         \arg RTC_WK_OVF: Tick wakeup function.
+  *         \arg RTC_WK_PRE_CMP: Prescale compare wakeup function.
+  *         \arg RTC_WK_PRE_CMP3: Prescale & compare 3 wakeup function.
+  *         \arg RTC_WK_COMP0GT: Compare 0 gt wakeup function.
+  *         \arg RTC_WK_COMP1GT: Compare 1 gt wakeup function.
+  *         \arg RTC_WK_COMP2GT: Compare 2 gt wakeup function.
+  *         \arg RTC_WK_COMP3GT: Compare 3 gt wakeup function.
+  *         \arg RTC_WK_CMP0: Compare 0 wakeup function.
+  *         \arg RTC_WK_CMP1: Compare 1 wakeup function.
+  *         \arg RTC_WK_CMP2: Compare 2 wakeup function.
+  *         \arg RTC_WK_CMP3: Compare 3 wakeup function.
   * \return None.
   */
 void RTC_ClearWakeupStatusBit(E_RTC_WK RTC_WK);
 
 /**
  * \brief     Clear the interrupt pending bit of the select comparator of RTC.
- * \param[in] index: the comparator number.
+ * \param[in] index: the comparator number, refer to \ref RTC_Comp_Index.
  * \return    None.
  *
  * <b>Example usage</b>
@@ -757,7 +752,6 @@ void RTC_ClearCompINT(E_RTC_COMP_INDEX index);
 
 /**
  * \brief     Clear the overflow interrupt pending bit of RTC.
- * \param[in] None.
  * \return    None.
  *
  * <b>Example usage</b>
@@ -773,7 +767,6 @@ void RTC_ClearOverFlowINT(void);
 
 /**
  * \brief     Clear the tick interrupt pending bit of RTC.
- * \param[in] None.
  * \return    None.
  *
  * <b>Example usage</b>
@@ -789,8 +782,8 @@ void RTC_ClearTickINT(void);
 
 /**
  * \brief     Set RTC comparator value.
- * \param[in] index: The comparator number,can be 0 ~ 3.
- * \param[in] value: The comparator value to be set.Should be no more than 24 bits!
+ * \param[in] index: The comparator number can be 0 ~ 3.
+ * \param[in] value: The comparator value to be set. Should be no more than 24 bits!
  * \return    None.
  *
  * <b>Example usage</b>
@@ -826,7 +819,7 @@ __STATIC_INLINE void RTC_SetCompValue(E_RTC_COMP_INDEX index, uint32_t value)
 
 /**
  * \brief     Set RTC comparator GT value.
- * \param[in] index: The comparator gt number, can be 0 ~ 3.
+ * \param[in] index: The comparator GT number, can be 0 ~ 3.
  * \param[in] value: The comparator value to be set.
  * \return    None.
  *
@@ -863,7 +856,7 @@ __STATIC_INLINE void RTC_SetCompGTValue(E_RTC_COMPGT_INDEX index, uint32_t value
 
 /**
  * \brief     Set RTC prescaler comparator value.
- * \param[in] value: The comparator value to be set.Should be no more than 12 bits!
+ * \param[in] value: The comparator value to be set. Should be no more than 12 bits!
  * \return    None.
  *
  * <b>Example usage</b>
@@ -896,7 +889,6 @@ __STATIC_INLINE void RTC_SetPreCompValue(uint32_t value)
 
 /**
  * \brief     Get counter value of RTC.
- * \param[in] None.
  * \return    The counter value.
  *
  * <b>Example usage</b>
@@ -904,7 +896,7 @@ __STATIC_INLINE void RTC_SetPreCompValue(uint32_t value)
  *
  * void rtc_demo(void)
  * {
- *     uitn32_t counter = RTC_GetCounter();
+ *     uint32_t counter = RTC_GetCounter();
  * }
  * \endcode
  */
@@ -915,7 +907,6 @@ __STATIC_INLINE uint32_t RTC_GetCounter(void)
 
 /**
  * \brief     Get prescaler counter value of RTC.
- * \param[in] None.
  * \return    The prescaler counter value.
  *
  * <b>Example usage</b>
@@ -923,7 +914,7 @@ __STATIC_INLINE uint32_t RTC_GetCounter(void)
  *
  * void rtc_demo(void)
  * {
- *     uitn32_t pre_counter = RTC_GetPreCounter();
+ *     uint32_t pre_counter = RTC_GetPreCounter();
  * }
  * \endcode
  */
@@ -942,7 +933,7 @@ __STATIC_INLINE uint32_t RTC_GetPreCounter(void)
  *
  * void rtc_demo(void)
  * {
- *     uitn32_t data = RTC_GetCompValue(0);
+ *     uint32_t data = RTC_GetCompValue(0);
  * }
  * \endcode
  */
@@ -952,7 +943,7 @@ __STATIC_INLINE uint32_t RTC_GetCompValue(E_RTC_COMP_INDEX index)
 }
 
 /**
- * \brief     Get RTC comparator gt value.
+ * \brief     Get RTC comparator GT value.
  * \param[in] index: The comparator number 0~3.
  * \return    The comparator value.
  *
@@ -961,7 +952,7 @@ __STATIC_INLINE uint32_t RTC_GetCompValue(E_RTC_COMP_INDEX index)
  *
  * void rtc_demo(void)
  * {
- *     uitn32_t data = RTC_GetCompGTValue(0);
+ *     uint32_t data = RTC_GetCompGTValue(0);
  * }
  * \endcode
  */
@@ -972,7 +963,6 @@ __STATIC_INLINE uint32_t RTC_GetCompGTValue(E_RTC_COMPGT_INDEX index)
 
 /**
  * \brief     Get RTC prescaler comparator value.
- * \param[in] None.
  * \return    The prescaler comparator value.
  *
  * <b>Example usage</b>
@@ -980,7 +970,7 @@ __STATIC_INLINE uint32_t RTC_GetCompGTValue(E_RTC_COMPGT_INDEX index)
  *
  * void rtc_demo(void)
  * {
- *     uitn32_t data = RTC_GetPreCompValue();
+ *     uint32_t data = RTC_GetPreCompValue();
  * }
  * \endcode
  */
@@ -991,7 +981,7 @@ __STATIC_INLINE uint32_t RTC_GetPreCompValue(void)
 
 /**
  * \brief     Write backup register for store time information.
- * \param[in] value: valuer=write to back up reister
+ * \param[in] value: value write to backup register.
  * \return    None.
  *
  * <b>Example usage</b>
@@ -1011,7 +1001,6 @@ __STATIC_INLINE void RTC_WriteBackupReg(uint32_t value)
 
 /**
  * \brief     Read backup register.
- * \param[in] None.
  * \return    Register value.
  *
  * <b>Example usage</b>
@@ -1044,5 +1033,5 @@ __STATIC_INLINE uint32_t RTC_ReadBackupReg(void)
 #endif /* _RTL876X_RTC_H_ */
 
 
-/******************* (C) COPYRIGHT 2020 Realtek Semiconductor *****END OF FILE****/
+/******************* (C) COPYRIGHT 2024 Realtek Semiconductor *****END OF FILE****/
 

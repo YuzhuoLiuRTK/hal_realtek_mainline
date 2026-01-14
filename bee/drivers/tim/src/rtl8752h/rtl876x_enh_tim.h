@@ -1,18 +1,19 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
-*********************************************************************************************************
+*****************************************************************************************
+*     Copyright(c) 2025, Realtek Semiconductor Corporation. All rights reserved.
+*
+*     SPDX-License-Identifier: Apache-2.0
+*****************************************************************************************
 * \file     rtl876x_enh_tim.h
 * \brief    The header file of the peripheral Enhance ENHTIMER driver.
 * \details  This file provides all Enhance ENHTIMER firmware functions.
 * \author   Yuan
 * \date     2024-01-17
 * \version  v1.0.0
-* *********************************************************************************************************
+***************************************************************************************
+* @attention
+* <h2><center>&copy; COPYRIGHT 2025 Realtek Semiconductor Corporation</center></h2>
+***************************************************************************************
 */
 
 #ifndef _RTL876X_ENH_TIM_H_
@@ -64,9 +65,10 @@ typedef struct
  */
 #define ENHTIM_TIMER_TOGGLE_OUTPUT          ((uint16_t)0x1)
 #define ENHTIM_DIVIDER_CLOCK                ((uint16_t)0x0)
-/** \} */
+
 #define IS_ENHTIM_CLOCK_SOURCE(src) (((src) == ENHTIM_TIMER_TOGGLE_OUTPUT) || \
                                      ((src) == ENHTIM_DIVIDER_CLOCK))
+/** \} */
 
 /**
  * \defgroup    ENHTIM_Latch_En ENHTIM Latch Count Enable
@@ -75,22 +77,24 @@ typedef struct
  */
 #define ENHTIM_LATCH_COUNT_ENABLE          ((uint16_t)0x1)
 #define ENHTIM_LATCH_COUNT_DISABLE         ((uint16_t)0x0)
-/** \} */
+
 #define IS_ENHTIM_LATCH_COUNT_En(mode) (((mode) == ENHTIM_LATCH_COUNT_ENABLE) || \
                                         ((mode) == ENHTIM_LATCH_COUNT_DISABLE))
+/** \} */
 
 /**
- * \defgroup    ENHTIM_LATCH_TRIGGER_Mode Latch Count Trigger Mode
+ * \defgroup    ENHTIM_Latch_Trigger_Mode ENHTIM Latch Count Trigger Mode
  * \{
  * \ingroup     ENHTIM_Exported_Constants
  */
 #define ENHTIM_LATCH_TRIGGER_BOTH_EDGE      ((uint16_t)0x02)
 #define ENHTIM_LATCH_TRIGGER_FALLING_EDGE   ((uint16_t)0x01)
 #define ENHTIM_LATCH_TRIGGER_RISING_EDGE    ((uint16_t)0x00)
-/** \} */
-#define IS_ENHTIM_LATCH_TRIGGER_Mode(mode) (((mode) == ENHTIM_LATCH_TRIGGER_BOTH_EDGE) || \
+
+#define IS_ENHTIM_Latch_Trigger_Mode(mode) (((mode) == ENHTIM_LATCH_TRIGGER_BOTH_EDGE) || \
                                             ((mode) == ENHTIM_LATCH_TRIGGER_FALLING_EDGE) || \
                                             ((mode) == ENHTIM_LATCH_TRIGGER_RISING_EDGE))
+/** \} */
 
 /**
  * \defgroup    ENHTIM_PWM_En ENHTIM PWM Output Enable
@@ -99,9 +103,10 @@ typedef struct
  */
 #define ENHTIM_PWM_ENABLE                   ((uint16_t)0x08)
 #define ENHTIM_PWM_DISABLE                  ((uint16_t)0x00)
-/** \} */
+
 #define IS_ENHTIM_PWM_En(mode) (((mode) == ENHTIM_PWM_ENABLE) || \
                                 ((mode) == ENHTIM_PWM_DISABLE))
+/** \} */
 
 /**
  * \defgroup    ENHTIM_PWM_Polarity ENHTIM PWM Polarity
@@ -110,10 +115,10 @@ typedef struct
  */
 #define ENHTIM_PWM_START_WITH_HIGH          ((uint16_t)0x04)
 #define ENHTIM_PWM_START_WITH_LOW           ((uint16_t)0x00)
-/** \} */
+
 #define IS_ENHTIM_PWM_POLARITY(pola) (((pola) == ENHTIM_PWM_START_WITH_HIGH) || \
                                       ((pola) == ENHTIM_PWM_START_WITH_LOW))
-
+/** \} */
 
 /**
  * \defgroup    ENHTIM_Mode ENHTIM Mode
@@ -122,28 +127,27 @@ typedef struct
  */
 #define ENHTIM_MODE_PWM_MANUAL              ((uint16_t)0x02) /*!< User define pwm manual mode. */
 #define ENHTIM_MODE_PWM_AUTO                ((uint16_t)0x01) /*!< User define pwm auto mode. */
-#define ENHTIM_MODE_FreeRun                 ((uint16_t)0x00) /*!< User define freerun mode. */
-/** \} */
+#define ENHTIM_MODE_FreeRun                 ((uint16_t)0x00) /*!< Freerun mode. */
+
 #define IS_ENHTIM_MODE(mode) (((mode) == ENHTIM_MODE_PWM_MANUAL) || \
                               ((mode) == ENHTIM_MODE_PWM_AUTO) || \
-                              ((mode) == ENHTIM_MODE_UserDefine))
+                              ((mode) == ENHTIM_MODE_FreeRun))
+/** \} */
+
 /**
  * \defgroup    ENHTIM_Interrupts_Definition ENHTIM Interrupts Definition
  * \{
  * \ingroup     ENHTIM_Exported_Constants
  */
 #define ENHTIM_INT_TIM                      (0x00)
+#define ENHTIM_INT_LATCH_CNT2_FIFO_EMPTY    (0x01)
 #define ENHTIM_INT_LATCH_CNT2_FIFO_FULL     (0x40)
 #define ENHTIM_INT_LATCH_CNT2_FIFO_THD      (0x42)
 
-
-/** \} */
 #define IS_ENHTIM_INT(INT) (((INT) == ENHTIM_INT_TIM) || \
                             ((INT) == ENHTIM_INT_LATCH_CNT2_FIFO_FULL) || \
                             ((INT) == ENHTIM_INT_LATCH_CNT2_FIFO_THD))
-
-
-#define ENHTIM_INT_LATCH_CNT2_FIFO_EMPTY    (0x01)
+/** \} */
 
 /**
  * \defgroup    ENHTIM_FIFO_Flag ENHTIM FIFO Flag
@@ -156,37 +160,39 @@ typedef struct
 #define ENHTIM_FLAG_TIM1_CCR_FIFO_FULL          BIT(2)
 #define ENHTIM_FLAG_TIM0_CCR_FIFO_EMPTY         BIT(1)
 #define ENHTIM_FLAG_TIM0_CCR_FIFO_FULL          BIT(0)
-/** \} */
+
 #define IS_ENHTIM_CCR_FIFO_FLAG(flag) (((flag) == ENHTIM_FLAG_TIM1_LC_FIFO_EMPTY) || \
                                        ((flag) == ENHTIM_FLAG_TIM0_LC_FIFO_EMPTY) || \
                                        ((flag) == ENHTIM_FLAG_TIM1_CCR_FIFO_EMPTY) || \
                                        ((flag) == ENHTIM_FLAG_TIM1_CCR_FIFO_FULL) || \
                                        ((flag) == ENHTIM_FLAG_TIM0_CCR_FIFO_EMPTY) || \
-                                       ((flag) == ENHTIM_FLAG_TIM0_CCR_FIFO_FULL) ))
-
+                                       ((flag) == ENHTIM_FLAG_TIM0_CCR_FIFO_FULL))
+/** \} */
 
 /**
- * \defgroup    PWM_DeadZone_En PWM DeadZone enable
+ * \defgroup    ENHTIM_PWM_DeadZone_En ENHTIM PWM DeadZone Enable
  * \{
  * \ingroup     ENHTIM_Exported_Constants
  */
 #define ENHTIM_PWM_DEADZONE_ENABLE          ((uint16_t)0x1)
 #define ENHTIM_PWM_DEADZONE_DISABLE         ((uint16_t)0x0)
-/** \} */
+
 #define IS_ENHTIM_PWM_DEADZONE_EN(mode) (((mode) == ENHTIM_PWM_DEADZONE_ENABLE) || \
                                          ((mode) == ENHTIM_PWM_DEADZONE_DISABLE))
+/** \} */
 
 /**
- * \defgroup    PWM_DeadZone_En PWM DeadZone enable
+ * \defgroup    ENHTIM_PWM_DeadZone_Clock ENHTIM PWM DeadZone Clock
  * \{
  * \ingroup     ENHTIM_Exported_Constants
  */
 #define ENHTIM_PWM_DZCLKSRCE_ENHTIM         ((uint32_t)0x80000)
 #define ENHTIM_PWM_DZCLKSRCE_5M             ((uint32_t)0x10000)
 #define ENHTIM_PWM_DZCLKSRCE_32K            ((uint32_t)0x0)
+
+#define IS_ENHTIM_PWM_DEADZONE_Clock(mode) (((mode) == ENHTIM_PWM_DEADZONE_ENABLE) || \
+                                            ((mode) == ENHTIM_PWM_DEADZONE_DISABLE))
 /** \} */
-#define IS_ENHTIM_PWM_DEADZONE_EN(mode) (((mode) == ENHTIM_PWM_DEADZONE_ENABLE) || \
-                                         ((mode) == ENHTIM_PWM_DEADZONE_DISABLE))
 
 /**
  * \defgroup    ENHTIM_PWM_DeadZone_Stop_State ENHTIM PWM DeadZone Stop State
@@ -204,7 +210,6 @@ typedef struct
  */
 #define ENHTIM_FIFO_CLR_CCR                 (0)
 #define ENHTIM_FIFO_CLR_CNT2                (24)
-
 /** \} */
 
 /**
@@ -221,7 +226,6 @@ typedef enum
     ENHTIM_CLOCK_DIVIDER_8   = 0x06,
     ENHTIM_CLOCK_DIVIDER_40  = 0x07,
 } E_ENHTIM_CLKDIV;
-
 /** \} */
 
 /**
@@ -235,7 +239,6 @@ typedef enum
     LATCH_CNT_1 = 1,
     LATCH_CNT_2 = 2,
 } E_ENHTIM_LATCHCNT;
-
 /** \} */
 
 /** End of ENHTIM_Exported_Constants
@@ -259,39 +262,40 @@ typedef enum
 typedef struct
 {
     uint16_t ENHTIM_ClockSource;            /*!< <b>Deprecated</b> use RCC instead.*/
-    E_ENHTIM_CLKDIV ENHTIM_ClockDiv;        /*!< Specifies the clock source div.
-                                                 This parameter can be a value of \ref ENHTIM_Clock_Divider*/
-    uint16_t ENHTIM_Mode;                   /*!< Specifies the counter mode.
+    E_ENHTIM_CLKDIV ENHTIM_ClockDiv;        /*!< Specify the clock source div.
+                                                 This parameter can be a value of \ref ENHTIM_Clock_Divider.*/
+    uint16_t ENHTIM_Mode;                   /*!< Specify the counter mode.
                                                  This parameter can be a value of \ref ENHTIM_Mode. */
-    uint16_t ENHTIM_PWMOutputEn;            /*!< Specifies the PWM mode.
-                                                 This parameter can be a value of DISABLE or ENABLE */
-    uint16_t ENHTIM_PWMStartPolarity;       /*!< Specifies the PWM mode.
-                                                  This parameter can be a value of DISABLE or ENABLE */
-    uint16_t ENHTIM_LatchCountEn[3];        /*!< Specifies enbale EnhtimerN Latch_cnt.
-                                                 This parameter can be a value of DISABLE or ENABLE */
-    uint16_t ENHTIM_LatchCountTrigger[3];   /*!< Specifies EnhtimerN counter latch trigger mode.
-                                                 This parameter can be a value of DISABLE or ENABLE */
-    uint16_t ENHTIM_LatchCount2Thd;         /*!< Specifies EnhtimerN latched counter fifo threshold.
-                                                 This parameter can be a value of DISABLE or ENABLE */
-    uint16_t ENHTIM_LatchTriggerPad;        /*!< Specifies the PWM mode.
-                                                 This parameter can be a value of DISABLE or ENABLE */
-    uint16_t ENHTIM_TimerGPIOTriggerEn;         /*!< Specifies the PWM mode.
-                                                 This parameter can be a value of DISABLE or ENABLE */
-    uint16_t ENHTIM_BTGPIOTriggerEn;        /*!< Specifies the PWM mode.
-                                                 This parameter can be a value of DISABLE or ENABLE */
-    uint32_t ENHTIM_MaxCount;               /*!< Specifies the Enhtimer max counter value for user-define PWM mode.
-                                                 This parameter leagel value range is from 0 ~ 2^32-2. */
-    uint32_t ENHTIM_CCValue;                /*!< Specifies the Enhtimer capture/compare value for user-define PWM mode.*/
-    uint16_t ENHTIM_PWMDeadZoneEn;          /*!<PWM Deadzone enable, pwm0_pn: timer2, pwm1_pn:timer3
+    uint16_t ENHTIM_PWMOutputEn;            /*!< Enable or disable the PWM mode.
+                                                 This parameter can be a value of \ref ENHTIM_PWM_En. */
+    uint16_t ENHTIM_PWMStartPolarity;       /*!< Specify the PWM start polarity.
+                                                 This parameter can be a value of \ref ENHTIM_PWM_Polarity. */
+    uint16_t ENHTIM_LatchCountEn[3];        /*!< Enable or disable Enhtimer Latch_cnt.
+                                                 This parameter can be a value of DISABLE or ENABLE. */
+    uint16_t ENHTIM_LatchCountTrigger[3];   /*!< Specify Enhtimer counter latch trigger mode.
+                                                 This parameter can be a value of \ref ENHTIM_Latch_Trigger_Mode. */
+    uint16_t ENHTIM_LatchCount2Thd;         /*!< Specify Enhtimer latched counter fifo threshold.
+                                                 This parameter can be a value of 0~4. */
+    uint16_t ENHTIM_LatchTriggerPad;        /*!< Specify the Enhtimer latch trigger Pad.
+                                                 This parameter can be a value of P0_0 to P5_2. */
+    uint16_t ENHTIM_TimerGPIOTriggerEn;     /*!< Enable or disable acc latch.
+                                                 This parameter can be a value of DISABLE or ENABLE. */
+    uint16_t ENHTIM_BTGPIOTriggerEn;        /*!< Enable or disable BT latch.
+                                                 This parameter can be a value of DISABLE or ENABLE. */
+    uint32_t ENHTIM_MaxCount;               /*!< Specify the Enhtimer max counter value for user-defined PWM mode.
+                                                 This parameter legal value range is from 0 ~ 2^32-2. */
+    uint32_t ENHTIM_CCValue;                /*!< Specify the Enhtimer capture/compare value for user-defined PWM manual mode.
+                                                 This parameter legal value range is from 0 ~ 2^32-2.*/
+    uint16_t ENHTIM_PWMDeadZoneEn;          /*!< Enable or disable PWM Deadzone, pwm0_pn: timer2, pwm1_pn:timer3.
                                                  This parameter can be a value of ENABLE or DISABLE. */
-    uint32_t ENHTIM_PWMDeadZoneClockSource; /*!< Specifies ENHTIM Source depend.timer3 depend timer2 ,timer5 depend timer4, timer7 depend timer6.
-                                                 This parameter can be a value of ENABLE or DISABLE */
-    uint16_t ENHTIM_PWMStopStateP;          /*!< Specifies the PWM P stop state.
-                                                 This parameter can be a value of \ref PWMDeadZone_Stop_state. */
-    uint16_t ENHTIM_PWMStopStateN;          /*!< Specifies the PWM N stop state.
-                                                 This parameter can be a value of \ref PWMDeadZone_Stop_state. */
-    uint32_t ENHTIM_DeadZoneSize;           /*!<Size of deadzone time, DeadzoneTime=deadzonesize/32000 or 32768.
-                                                 This parameter must range from 1 to 0xffffffff. */
+    uint32_t ENHTIM_PWMDeadZoneClockSource; /*!< Specify the pwm deadzone clock source.
+                                                 This parameter can be a value of \ref ENHTIM_PWM_DeadZone_Clock. */
+    uint16_t ENHTIM_PWMStopStateP;          /*!< Specify the PWM P stop state.
+                                                 This parameter can be a value of \ref PWMDeadZone_Stop_State. */
+    uint16_t ENHTIM_PWMStopStateN;          /*!< Specify the PWM N stop state.
+                                                 This parameter can be a value of \ref PWMDeadZone_Stop_State. */
+    uint32_t ENHTIM_DeadZoneSize;           /*!< Specify the size of deadzone time, deadzone Time = ENHTIM_DeadZoneSize/32000(internal clock src) or 32768(external clock src).
+                                                 This parameter must range 0x1 ~ 0xFF. */
 } ENHTIM_InitTypeDef;
 
 /** End of ENHTIM_Exported_Types
@@ -309,34 +313,10 @@ typedef struct
 
 /**
  * \brief     Initialize the ENHTIMx unit peripheral according to
- *            the specified parameters in ENHTIM_InitStruct.
+ *            the specified parameters in ENHTIM_TimeBaseInitStruct.
  * \param[in] ENHTIMx: Where x can be 0 to 1 to select the ENHTIM peripheral.
- * \param[in] ENHTIM_InitStruct: pointer to a ENHTIM_InitTypeDef structure
+ * \param[in] ENHTIM_TimeBaseInitStruct: pointer to a ENHTIM_InitTypeDef structure
   *           that contains the configuration information for the specified ENHTIM peripheral.
- * \return  None.
- *
- * <b>Example usage</b>
- * \code{.c}
- *
- * void driver_enhance_timer_init(void)
- * {
- *     RCC_PeriphClockCmd(APBPeriph_TIMER, APBPeriph_TIMER_CLOCK, ENABLE);
- *
- *     ENHTIM_InitTypeDef ENHTIM_InitStruct;
- *     ENHTIM_StructInit(&ENHTIM_InitStruct);
- *
- *     ENHTIM_InitStruct.ENHTIM_PWM_En = PWM_DISABLE;
- *     ENHTIM_InitStruct.ENHTIM_Period = 1000000 - 1 ;
- *     ENHTIM_InitStruct.ENHTIM_Mode = ENHTIM_Mode_UserDefine;
- *     ENHTIM_Init(ENHTIMER_NUM, &ENHTIM_InitStruct);
- * }
- * \endcode
- */
-void ENHTIM_Init(ENHTIM_TypeDef *ENHTIMx, ENHTIM_InitTypeDef *ENHTIM_TimeBaseInitStruct);
-
-/**
- * \brief   Fills each ENHTIM_InitStruct member with its default value.
- * \param[in] ENHTIM_TimeBaseInitStruct: Pointer to a ENHTIM_TimeBaseInitTypeDef structure which will be initialized.
  * \return  None.
  *
  * <b>Example usage</b>
@@ -346,20 +326,46 @@ void ENHTIM_Init(ENHTIM_TypeDef *ENHTIMx, ENHTIM_InitTypeDef *ENHTIM_TimeBaseIni
  * {
  *     RCC_PeriphClockCmd(APBPeriph_ENHTIMER, APBPeriph_ENHTIMER_CLOCK, ENABLE);
  *
- *     ENHTIM_TimeBaseInitTypeDef ENHTIM_InitStruct;
+ *     ENHTIM_InitTypeDef ENHTIM_InitStruct;
  *     ENHTIM_StructInit(&ENHTIM_InitStruct);
  *
- *     ENHTIM_InitStruct.ENHTIM_PWM_En = PWM_DISABLE;
- *     ENHTIM_InitStruct.ENHTIM_Period = 1000000 - 1;
- *     ENHTIM_InitStruct.ENHTIM_Mode = ENHTIM_Mode_UserDefine;
- *     ENHTIM_TimeBaseInit(ENH_TIM0, &ENHTIM_InitStruct);
+ *     ENHTIM_InitStruct.ENHTIM_PWMOutputEn = ENHTIM_PWM_DISABLE;
+ *     ENHTIM_InitStruct.ENHTIM_MaxCount = 4000;
+ *     ENHTIM_InitStruct.ENHTIM_CCValue  = 2000;
+ *     ENHTIM_InitStruct.ENHTIM_Mode = ENHTIM_MODE_PWM_MANUAL;
+ *     ENHTIM_Init(ENHTIMER_NUM, &ENHTIM_InitStruct);
+ * }
+ * \endcode
+ */
+void ENHTIM_Init(ENHTIM_TypeDef *ENHTIMx, ENHTIM_InitTypeDef *ENHTIM_TimeBaseInitStruct);
+
+/**
+ * \brief   Fill each ENHTIM_InitStruct member with its default value.
+ * \param[in] ENHTIM_InitStruct: Pointer to a ENHTIM_InitTypeDef structure which will be initialized.
+ * \return  None.
+ *
+ * <b>Example usage</b>
+ * \code{.c}
+ *
+ * void driver_enhance_timer_init(void)
+ * {
+ *     RCC_PeriphClockCmd(APBPeriph_ENHTIMER, APBPeriph_ENHTIMER_CLOCK, ENABLE);
+ *
+ *     ENHTIM_InitTypeDef ENHTIM_InitStruct;
+ *     ENHTIM_StructInit(&ENHTIM_InitStruct);
+ *
+ *     ENHTIM_InitStruct.ENHTIM_PWMOutputEn = ENHTIM_PWM_ENABLE;
+ *     ENHTIM_InitStruct.ENHTIM_MaxCount = 4000;
+ *     ENHTIM_InitStruct.ENHTIM_CCValue  = 2000;
+ *     ENHTIM_InitStruct.ENHTIM_Mode = ENHTIM_MODE_PWM_MANUAL;
+ *     ENHTIM_Init(ENHTIMER_NUM, &ENHTIM_InitStruct);
  * }
  * \endcode
  */
 void ENHTIM_StructInit(ENHTIM_InitTypeDef *ENHTIM_InitStruct);
 
 /**
- * \brief     Enables or disables the specified ENHTIM peripheral.
+ * \brief     Enable or disable the specified ENHTIM peripheral.
  * \param[in] ENHTIMx: Where x can be 0 to 1 to select the ENHTIMx peripheral.
  * \param[in] NewState: New state of the ENHTIMx peripheral.
  *            This parameter can be: ENABLE or DISABLE.
@@ -375,11 +381,12 @@ void ENHTIM_StructInit(ENHTIM_InitTypeDef *ENHTIM_InitStruct);
  *     ENHTIM_InitTypeDef ENHTIM_InitStruct;
  *     ENHTIM_StructInit(&ENHTIM_InitStruct);
  *
- *     ENHTIM_InitStruct.ENHTIM_PWM_En = PWM_DISABLE;
- *     ENHTIM_InitStruct.ENHTIM_Period = 1000000 - 1;
- *     ENHTIM_InitStruct.ENHTIM_Mode = ENHTIM_Mode_UserDefine;
- *     ENHTIM_Init(ENH_TIM0, &ENHTIM_InitStruct);
- *     ENHTIM_Cmd(ENH_TIM0, ENABLE);
+ *     ENHTIM_InitStruct.ENHTIM_PWMOutputEn = ENHTIM_PWM_ENABLE;
+ *     ENHTIM_InitStruct.ENHTIM_MaxCount = 4000;
+ *     ENHTIM_InitStruct.ENHTIM_CCValue  = 2000;
+ *     ENHTIM_InitStruct.ENHTIM_Mode = ENHTIM_MODE_PWM_MANUAL;
+ *     ENHTIM_Init(ENHTIMER_NUM, &ENHTIM_InitStruct);
+ *     ENHTIM_Cmd(ENHTIMER_NUM, ENABLE);
  * }
  * \endcode
  */
@@ -390,15 +397,15 @@ void ENHTIM_Cmd(ENHTIM_TypeDef *ENHTIMx, FunctionalState NewState);
   * \param[in] ENHTIMx: Where x can be 0 to 1 to select the ENHTIMx peripheral.
   * \param[in] NewState: New state of the specified ENHTIMx peripheral latch count2 fifo interrupt.
   *            This parameter can be: ENABLE or DISABLE.
-  * \retval None.
+  * \return None.
   */
 void ENHTIM_LCFIFOMaskConfig(ENHTIM_TypeDef *ENHTIMx, FunctionalState NewState);
 
 /**
- * \brief     Enables or disables ENHTIMx interrupt.
+ * \brief     Enable or disable ENHTIMx interrupt.
  * \param[in] ENHTIMx: Where x can be 0 to 1 to select the ENHTIMx peripheral.
- * \param[in] ENHTIM_INT: Specifies the ENHTIMx interrupt source which to be enabled or disabled.
- *            This parameter can be one of the following values:
+ * \param[in] ENHTIM_INT: Specify the ENHTIMx interrupt source which is to be enabled or disabled.
+ *            This parameter can be one of the following values, which refer to \ref ENHTIM_Interrupts_Definition.
  *            \arg ENHTIM_INT_TIM: Enhance Timer interrupt source.
  *            \arg ENHTIM_INT_LATCH_CNT2_FIFO_FULL: Enhance Timer latch count2 fifo full interrupt source.
  *            \arg ENHTIM_INT_LATCH_CNT2_FIFO_EMPTY: Enhance Timer latch count2 fifo empty interrupt source.
@@ -412,17 +419,22 @@ void ENHTIM_LCFIFOMaskConfig(ENHTIM_TypeDef *ENHTIMx, FunctionalState NewState);
  *
  * void driver_enhance_timer_init(void)
  * {
- *     RCC_PeriphClockCmd(APBPeriph_TIMER, APBPeriph_TIMER_CLOCK, ENABLE);
+ *     RCC_PeriphClockCmd(APBPeriph_ENHTIMER, APBPeriph_ENHTIMER_CLOCK, ENABLE);
  *
  *     ENHTIM_InitTypeDef ENHTIM_InitStruct;
  *     ENHTIM_StructInit(&ENHTIM_InitStruct);
  *
- *     ENHTIM_InitStruct.ENHTIM_PWM_En = PWM_DISABLE;
- *     ENHTIM_InitStruct.ENHTIM_Period = 1000000 - 1;
- *     ENHTIM_InitStruct.ENHTIM_Mode = ENHTIM_Mode_UserDefine;
- *     ENHTIM_Init(ENH_TIM0, &ENHTIM_InitStruct);
- *     ENHTIM_ClearINT(ENH_TIM0);
- *     ENHTIM_INTConfig(ENH_TIM0, ENABLE);
+ *     ENHTIM_InitStruct.ENHTIM_ClockDiv               = ENHTIM_CLOCK_DIVIDER_1;
+ *     ENHTIM_InitStruct.ENHTIM_Mode                   = ENHTIM_MODE_FreeRun;
+ *     ENHTIM_InitStruct.ENHTIM_LatchCountEn[2]        = ENHTIM_LATCH_COUNT_ENABLE;
+ *     ENHTIM_InitStruct.ENHTIM_LatchCountTrigger[2]   = ENHTIM_LATCH_TRIGGER_RISING_EDGE;
+ *     ENHTIM_InitStruct.ENHTIM_LatchCount2Thd         = 3;
+ *     ENHTIM_InitStruct.ENHTIM_LatchTriggerPad        = GPIO_INPUT_PIN_0;
+ *     ENHTIM_Init(ENHTIMER_NUM, &ENHTIM_InitStruct);
+ *     ENHTIM_ClearINTPendingBit(ENHTIMER_NUM, ENHTIM_INT_LATCH_CNT2_FIFO_THD);
+ *     ENHTIM_INTConfig(ENHTIMER_NUM, ENHTIM_INT_LATCH_CNT2_FIFO_THD, ENABLE);
+ * }
+ * \endcode
  */
 void ENHTIM_INTConfig(ENHTIM_TypeDef *ENHTIMx, uint8_t ENHTIM_INT, FunctionalState NewState);
 
@@ -439,16 +451,18 @@ void ENHTIM_INTConfig(ENHTIM_TypeDef *ENHTIMx, uint8_t ENHTIM_INT, FunctionalSta
  * void enhance_timer_demo(void)
  * {
  *     uint8_t length = ENHTIM_GetLatchCount2FIFOLength(ENH_TIM0);
+ *     uint32_t data[4] = {0};
+ *     ENHTIM_ReadLatchCount2FIFO(ENH_TIM0, data, length);
  * }
  * \endcode
  */
 void ENHTIM_ReadLatchCount2FIFO(ENHTIM_TypeDef *ENHTIMx, uint32_t *pBuf, uint8_t length);
 
 /**
- * \brief     Check whether the ENHTIM interrupt has occurred or not.
+ * \brief     Check whether the ENHTIM latch count2 fifo interrupt has occurred or not.
  * \param[in] ENHTIMx: Where x can be 0 to 1 to select the ENHTIMx peripheral.
  * \return    The new state of the specified ENHTIMx peripheral
- *            latch count2 fifo interrupt(SET or RESET).
+ *            latch count2 fifo interrupt (SET or RESET).
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -464,13 +478,13 @@ ITStatus ENHTIM_GetLCFIFOMaskStatus(ENHTIM_TypeDef *ENHTIMx);
 /**
  * \brief     Check whether the ENHTIM interrupt has occurred or not.
  * \param[in] ENHTIMx: Where x can be 0 to 1 to select the ENHTIMx peripheral.
- * \param[in] ENHTIM_INT: Specifies the ENHTIMx interrupt source which to be enabled or disabled.
- *            This parameter can be one of the following values:
+ * \param[in] ENHTIM_INT: Specify the ENHTIMx interrupt source which is to be enabled or disabled.
+ *            This parameter can be one of the following values, which refer to \ref ENHTIM_Interrupts_Definition.
  *            \arg ENHTIM_INT_TIM: Enhance Timer interrupt source.
  *            \arg ENHTIM_INT_LATCH_CNT2_FIFO_FULL: Enhance Timer latch count2 fifo full interrupt source.
  *            \arg ENHTIM_INT_LATCH_CNT2_FIFO_EMPTY: Enhance Timer latch count2 fifo empty interrupt source.
  *            \arg ENHTIM_INT_LATCH_CNT2_FIFO_THD: Enhance Timer latch count2 fifo threshold interrupt source.
- * \return    The new state of the ENHTIM_INT(SET or RESET).
+ * \return    The new state of the ENHTIM_INT (SET or RESET).
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -486,10 +500,11 @@ ITStatus ENHTIM_GetINTStatus(ENHTIM_TypeDef *ENHTIMx, uint8_t ENHTIM_INT);
 /**
  * \brief     Clear ENHTIMx interrupt.
  * \param[in] ENHTIMx: Where x can be 0 to 1 to select the ENHTIMx peripheral.
- * \param[in] ENHTIM_INT: Specifies the ENHTIMx interrupt source which to be enabled or disabled.
- *            This parameter can be one of the following values:
+ * \param[in] ENHTIM_INT: Specify the ENHTIMx interrupt source which is to be enabled or disabled.
+ *            This parameter can be one of the following values, which refer to \ref ENHTIM_Interrupts_Definition.
  *            \arg ENHTIM_INT_TIM: Enhance Timer interrupt source.
  *            \arg ENHTIM_INT_LATCH_CNT2_FIFO_FULL: Enhance Timer latch count2 fifo full interrupt source.
+ *            \arg ENHTIM_INT_LATCH_CNT2_FIFO_EMPTY: Enhance Timer latch count2 fifo empty interrupt source.
  *            \arg ENHTIM_INT_LATCH_CNT2_FIFO_THD: Enhance Timer latch count2 fifo threshold interrupt source.
  * \return    None.
  *
@@ -506,7 +521,7 @@ void ENHTIM_ClearINTPendingBit(ENHTIM_TypeDef *ENHTIMx, uint8_t ENHTIM_INT);
 
 /**
  * \brief     Get ENHTIMx current value when timer is running.
- * \param[in] ENHTIMx: where x can be 0 to 1 to select the ENHTIMx peripheral.
+ * \param[in] ENHTIMx: Where x can be 0 to 1 to select the ENHTIMx peripheral.
  * \return    The counter value.
  *
  * <b>Example usage</b>
@@ -529,7 +544,11 @@ __STATIC_INLINE uint32_t ENHTIM_GetCurrentCount(ENHTIM_TypeDef *ENHTIMx)
 /**
  * \brief     Set Max Count value.
  * \param[in] ENHTIMx: Where x can be 0 to 1 to select the ENHTIMx peripheral.
- * \param[in] count: .
+ * \param[in] count: This parameter legal value range is from 0 ~ 2^32-2.
+ * \note      If it needs a dynamic change of MAX_CNT value, MAX_CNT has a minimum value limit.
+ *            Ex. cpu_clk = 40MHz, ETIMER_CLK = 40MHz, then MAX_CNT should larger than 10.
+ *            Ex. cpu_clk = 40MHz, ETIMER_CLK = 32kHz, then MAX_CNT should larger than 4.
+ *            If in the state where ENHTIM is disabled, there is no such limitation.
  * \return    None.
  *
  * <b>Example usage</b>
@@ -550,9 +569,13 @@ __STATIC_INLINE void ENHTIM_SetMaxCount(ENHTIM_TypeDef *ENHTIMx, uint32_t count)
 }
 
 /**
- * \brief     Set ENHTIMx capture/compare value for user-define PWM manual mode.
+ * \brief     Set ENHTIMx capture/compare value for user-defined manual mode.
  * \param[in] ENHTIMx: Where x can be 0 to 1 to select the ENHTIMx peripheral.
- * \param[in] value: .
+ * \param[in] value: This parameter legal value range is from 0 ~ 2^32-2.
+ * \note      If it needs a dynamic change of CCR value, CCR value has a minimum value limit.
+ *            Ex. cpu_clk = 40MHz, ETIMER_CLK = 40MHz, then CCR value should larger than 10.
+ *            Ex. cpu_clk = 40MHz, ETIMER_CLK = 32kHz, then CCR value should larger than 4.
+ *            If in the state where ENHTIM is disabled, there is no such limitation.
  * \return    None.
  *
  * <b>Example usage</b>
@@ -573,9 +596,9 @@ __STATIC_INLINE void ENHTIM_SetCCValue(ENHTIM_TypeDef *ENHTIMx, uint32_t value)
 }
 
 /**
- * \brief     Set ENHTIMx capture/compare value for user-define PWM auto mode.
+ * \brief     Write value to ENHTIM CCR FIFO.
  * \param[in] ENHTIMx: Where x can be 0 to 1 to select the ENHTIMx peripheral.
- * \param[in] value: .
+ * \param[in] value: This parameter legal value range is from 0 ~ 2^32-2.
  * \return    None.
  *
  * <b>Example usage</b>
@@ -583,7 +606,7 @@ __STATIC_INLINE void ENHTIM_SetCCValue(ENHTIM_TypeDef *ENHTIMx, uint32_t value)
  *
  * void enhance_timer_demo(void)
  * {
- *     ENHTIM_WriteCCFIFO(ENH_TIM0,0x10000);
+ *     ENHTIM_WriteCCFIFO(ENH_TIM0, 0x10000);
  * }
  * \endcode
  */
@@ -595,76 +618,10 @@ __STATIC_INLINE void ENHTIM_WriteCCFIFO(ENHTIM_TypeDef *ENHTIMx, uint32_t value)
     ENHTIMx->CCR_FIFO = value;
 }
 
-///**
-// * \brief     Check whether the specified ENHTIM CCR FIFO flag is set.
-// * \param[in] ENHTIM_FLAG: Specifies the flag to check.
-// *            This parameter can be one of the following values:
-// *            \arg ENHTIM_FLAG_TIM1_LC_FIFO_EMPTY: FIFO empty or not. If SET, CCR FIFO is empty.
-// *            \arg ENHTIM_FLAG_TIM0_LC_FIFO_EMPTY: FIFO full or not. If SET, CCR FIFO is full.
-// * \return    The new state of ENHTIM_FLAG (SET or RESET).
-// *
-// * <b>Example usage</b>
-// * \code{.c}
-// *
-// * void enhance_timer_demo(void)
-// * {
-// *     FlagStatus flag_status = ENHTIM_GetCCRFIFOFlagStatus(ENHTIM_FLAG_FIFO_EMPTY);
-// * }
-// * \endcode
-// */
-//__STATIC_INLINE FlagStatus ENHTIM_GetLCFIFOFlagStatus(uint32_t ENHTIM_FLAG)
-//{
-//    /* Check the parameters */
-//    assert_param(IS_ENHTIM_LC_FIFO_FLAG(ENHTIM_FLAG));
-
-//    FlagStatus bitstatus = RESET;
-
-//  if (ENH_TIM_SHARE->FIFO_SR2 & ENHTIM_FLAG)
-//  {
-//      bitstatus = SET;
-//  }
-
-//  return bitstatus;
-//}
-
-///**
-// * \brief     Check whether the specified ENHTIM CCR FIFO flag is set.
-// * \param[in] ENHTIM_FLAG: Specifies the flag to check.
-// *            This parameter can be one of the following values:
-// *            \arg ENHTIM_FLAG_TIM1_CCR_FIFO_EMPTY: FIFO empty or not. If SET, CCR FIFO is empty.
-// *            \arg ENHTIM_FLAG_TIM1_CCR_FIFO_FULL: FIFO full or not. If SET, CCR FIFO is full.
-// *            \arg ENHTIM_FLAG_TIM0_CCR_FIFO_EMPTY: FIFO empty or not. If SET, CCR FIFO is empty.
-// *            \arg ENHTIM_FLAG_TIM0_CCR_FIFO_FULL: FIFO full or not. If SET, CCR FIFO is full.
-// * \return    The new state of ENHTIM_FLAG (SET or RESET).
-// *
-// * <b>Example usage</b>
-// * \code{.c}
-// *
-// * void enhance_timer_demo(void)
-// * {
-// *     FlagStatus flag_status = ENHTIM_GetCCRFIFOFlagStatus(ENHTIM_FLAG_FIFO_EMPTY);
-// * }
-// * \endcode
-// */
-//__STATIC_INLINE FlagStatus ENHTIM_GetCCRFIFOFlagStatus(uint32_t ENHTIM_FLAG)
-//{
-//    /* Check the parameters */
-//    assert_param(IS_ENHTIM_CCR_FIFO_FLAG(ENHTIM_FLAG));
-
-//    FlagStatus bitstatus = RESET;
-
-//  if (ENH_TIM_SHARE->FIFO_SR2 & ENHTIM_FLAG)
-//  {
-//      bitstatus = SET;
-//  }
-
-//  return bitstatus;
-//}
-
 /**
  * \brief     Check whether the specified ENHTIM CCR FIFO flag is set.
- * \param[in] ENHTIM_FLAG: Specifies the flag to check.
- *            This parameter can be one of the following values:
+ * \param[in] ENHTIM_FLAG: Specify the flag to check.
+ *            This parameter can be one of the following values, which refer to \ref ENHTIM_FIFO_Flag.
  *            \arg ENHTIM_FLAG_TIM1_LC_FIFO_EMPTY: FIFO empty or not. If SET, CCR FIFO is empty.
  *            \arg ENHTIM_FLAG_TIM0_LC_FIFO_EMPTY: FIFO full or not. If SET, CCR FIFO is full.
  *            \arg ENHTIM_FLAG_TIM1_CCR_FIFO_EMPTY: FIFO empty or not. If SET, CCR FIFO is empty.
@@ -699,9 +656,9 @@ __STATIC_INLINE FlagStatus ENHTIM_GetFIFOFlagStatus(uint32_t ENHTIM_FLAG)
 
 /**
  * \brief     Enable ENHTIMx latch counter.
- * \param[in] ENHTIMx: where x can be 0 to 1 to select the ENHTIMx peripheral.
+ * \param[in] ENHTIMx: Where x can be 0 to 1 to select the ENHTIMx peripheral.
  * \param[in] LatchCntIdx: E_ENHTIM_LATCHCNT enum value.
- *            This parameter can be one of follow.
+ *            This parameter can be one of the following.
  *            \arg LATCH_COUNT_0: Enhance timer latch count 0.
  *            \arg LATCH_COUNT_1: Enhance timer latch count 1.
  *            \arg LATCH_COUNT_2: Enhance timer latch count 2.
@@ -728,7 +685,7 @@ __STATIC_INLINE void ENHTIM_LatchCountEnable(ENHTIM_TypeDef *ENHTIMx, E_ENHTIM_L
  * \brief     Disable ENHTIMx latch counter.
  * \param[in] ENHTIMx: where x can be 0 to 1 to select the ENHTIMx peripheral.
  * \param[in] LatchCntIdx: E_ENHTIM_LATCHCNT enum value.
- *            This parameter can be one of follow.
+ *            This parameter can be one of the following.
  *            \arg LATCH_COUNT_0: Enhance timer latch count 0.
  *            \arg LATCH_COUNT_1: Enhance timer latch count 1.
  *            \arg LATCH_COUNT_2: Enhance timer latch count 2.
@@ -753,10 +710,10 @@ __STATIC_INLINE void ENHTIM_LatchCountDisable(ENHTIM_TypeDef *ENHTIMx,
 }
 
 /**
- * \brief     Get ENHTIMx latch count value.
+ * \brief     Get the value of ENHTIMx latch counter.
  * \param[in] ENHTIMx: Where x can be 0 to 1 to select the ENHTIMx peripheral.
  * \param[in] LatchCntIdx: E_ENHTIM_LATCHCNT enum value.
- *            This parameter can be one of follow.
+ *            This parameter can be one of the following.
  *            \arg LATCH_COUNT_0: Enhance timer latch count 0.
  *            \arg LATCH_COUNT_1: Enhance timer latch count 1.
  *            \arg LATCH_COUNT_2: Enhance timer latch count 2.
@@ -783,7 +740,7 @@ __STATIC_INLINE uint32_t ENHTIM_GetLatchCount(ENHTIM_TypeDef *ENHTIMx,
 }
 
 /**
- * \brief     Get ENHTIMx latch counter2 fifo length.
+ * \brief     Get the fifo length of ENHTIMx latch counter.
  * \param[in] ENHTIMx: where x can be 0 to 1 to select the ENHTIMx peripheral.
  * \return    FIFO data length.
  *
@@ -810,8 +767,8 @@ __STATIC_INLINE uint8_t ENHTIM_GetLatchCount2FIFOLength(ENHTIM_TypeDef *ENHTIMx)
 /**
  * \brief     Clear capture/compare or latch count2 fifo.
  * \param[in] ENHTIMx: Where x can be 0 to 1 to select the ENHTIMx peripheral.
- * \param[in] FIFO_CLR: Specifies the FIFO type which to be clear.
- *            This parameter can be one of the following values:
+ * \param[in] FIFO_CLR: Specify the FIFO type which to be cleared.
+ *            This parameter can be one of the following values, which refer to \ref ENHTIM_FIFO_Clear_Flag.
  *            \arg ENHTIM_FIFO_CLR_CCR: Enhance Timer CCR FIFO clear flag.
  *            \arg ENHTIM_FIFO_CLR_CNT2: Enhance Timer latch count2 FIFO clear flag.
  * \return    None.
@@ -837,7 +794,6 @@ __STATIC_INLINE void ENHTIM_ClearFIFO(ENHTIM_TypeDef *ENHTIMx, uint8_t FIFO_CLR)
 
 /**
  * \brief   ENHTIM PWM complementary output emergency stop.
- * \param   None.
  * \return  None.
  *
  * <b>Example usage</b>
@@ -857,7 +813,7 @@ __STATIC_INLINE void ENHTIM_PWMDeadZoneEMStop(void)
 /**
  * \brief     Get ENHTIM PWM output status.
  * \param[in] ENHTIMx: Where x can be 0 to 1 to select the ENHTIMx peripheral.
- * \return    ENHTIM PWM output status(SET or RESET).
+ * \return    ENHTIM PWM output status (SET or RESET).
  *
  * <b>Example usage</b>
  * \code{.c}
@@ -877,25 +833,6 @@ __STATIC_INLINE FlagStatus ENHTIM_GetPWMOutputState(ENHTIM_TypeDef *ENHTIMx)
     uint32_t status = ENHTIM_LATCH_COUNT_CR & (0x1 << (enhtim_id + 6));
     return (FlagStatus)(status >> (enhtim_id + 6));
 }
-
-///**
-// * \brief     Check whether the ENHTIM interrupt has occurred or not.
-// * \param[in] ENHTIMx: Where x can be 0 to 1 to select the ENHTIMx peripheral.
-// * \return    The new state of the ENHTIM_IT(SET or RESET).
-// *
-// * <b>Example usage</b>
-// * \code{.c}
-// *
-// * void enhance_timer_demo(void)
-// * {
-// *     ITStatus int_status = ENHTIM_GetINTStatus(ENH_TIM0);
-// * }
-// * \endcode
-// */
-//__STATIC_INLINE uint32_t ENHTIM_GetAllINTStatus(void)
-//{
-//    return ENH_TIM_SHARE->MASK_INT_SR;
-//}
 
 /**
  * \brief   Enable or disable bypass dead zone function of PWM complementary output.

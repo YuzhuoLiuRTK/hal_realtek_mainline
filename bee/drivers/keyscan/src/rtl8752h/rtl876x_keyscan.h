@@ -1,18 +1,19 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
-*********************************************************************************************************
+*****************************************************************************************
+*     Copyright(c) 2025, Realtek Semiconductor Corporation. All rights reserved.
+*
+*     SPDX-License-Identifier: Apache-2.0
+*****************************************************************************************
 * \file     rtl876x_keyscan.h
 * \brief    The header file of the peripheral KEYSCAN driver.
 * \details  This file provides all KEYSCAN firmware functions.
 * \author   tifnan_ge
 * \date     2024-01-22
 * \version  v1.0
-* *********************************************************************************************************
+***************************************************************************************
+* @attention
+* <h2><center>&copy; COPYRIGHT 2025 Realtek Semiconductor Corporation</center></h2>
+***************************************************************************************
 */
 
 /*============================================================================*
@@ -27,9 +28,9 @@ extern "C" {
 
 /**
  * \addtogroup  IO          Peripheral Drivers
- * \defgroup    KeyScan     KeyScan
+ * \defgroup    KEYSCAN     KEYSCAN
  *
- * \brief       Manage the KeyScan peripheral functions.
+ * \brief       Manage the KEYSCAN peripheral functions.
  *
  * \ingroup     IO
  */
@@ -48,47 +49,50 @@ typedef struct
  *                         Types
  *============================================================================*/
 /**
- * \defgroup    KeyScan_Exported_Types  KeyScan Exported Types
+ * \defgroup    KEYSCAN_Exported_Types  KEYSCAN Exported Types
  *
- * \ingroup     KeyScan
+ * \ingroup     KEYSCAN
  */
 
 /**
- * \brief       keyscan initialize parameters
+ * \brief       KEYSCAN initialize parameters
  *
- * \ingroup     KeyScan_Exported_Types
+ * \ingroup     KEYSCAN_Exported_Types
  */
 typedef struct
 {
-    uint16_t rowSize;           /*!< Specifies Keyscan Row Size.
+    uint16_t rowSize;           /*!< Specify Keyscan Row Size.
                                         This parameter can be a value <=12. */
-    uint16_t colSize;           /*!< Specifies Keyscan Column Size.
+    uint16_t colSize;           /*!< Specify Keyscan Column Size.
                                         This parameter can be a value <=20. */
-    uint32_t detectPeriod;      /*!< Specifies detect period(ms). */
-    uint16_t timeout;           /*!< Specifies sw interrupt timeout(s). */
-    uint16_t scanInterval;      /*!< Specifies Keyscan release time. */
-    uint32_t debounceEn;        /*!< Enable or disable debounce. */
-    uint32_t scantimerEn;       /*!< Enable or disable scan timer. */
-    uint32_t detecttimerEn;     /*!< Enable or disable detect timer. */
-    uint16_t debounceTime;      /*!< Specifies debounce time,debounce time = 31.25us * debounceTime. */
-    uint32_t detectMode;        /*!< Specifies Key Detect mode.
-                                        This parameter can be a value of \ref Keyscan_Press_Detect_Mode */
-    uint32_t fifoOvrCtrl;       /*!< Specifies Keyscan fifo over flow control.
-                                        This parameter can be a value of \ref Keyscan_Fifo_Overflow_Control */
-
-    uint16_t maxScanData;       /*!< Specifies max scan data allowable in each scan. */
-    uint32_t scanmode;          /*!< Specifies Keyscan mode.
-                                        This parameter can be a value of \ref Keyscan_Scan_Mode. */
-    uint16_t clockdiv;          /*!< Specifies Keyscan clock divider.system clock/(SCAN_DIV+1)=scan clock. */
-    uint8_t delayclk;           /*!< Specifies Keyscan delay clock divider.delay clock= scan clock/(DELAY_DIV+1)*/
-    uint16_t fifotriggerlevel;  /*!< Specifies Keyscan fifo threshold to trigger interrupt KEYSCAN_INT_THRESHOLD.*/
-    uint8_t debouncecnt;        /*!< Specifies Keyscan Debounce time. */
-    uint8_t releasecnt;         /*!< Specifies Keyscan release time. */
-    uint8_t keylimit;           /*!< Specifies max scan data allowable in each scan. */
-    uint32_t manual_sel;        /*!< Specifies trigger mode in manual mode. */
+    uint32_t detectPeriod;      /*!< <b>Deprecated</b> */
+    uint16_t timeout;           /*!< <b>Deprecated</b> */
+    uint16_t scanInterval;      /*!< Specify Keyscan scan interval. scan interval = delay clock * scanInterval*/
+    uint32_t debounceEn;        /*!< Enable or disable debounce.
+                                     This parameter can be a value of \ref KEYSCAN_Debounce_Config. */
+    uint32_t scantimerEn;       /*!< Enable or disable scan timer.
+                                     This parameter can be a value of \ref KEYSCAN_Scan_Interval_En. */
+    uint32_t detecttimerEn;     /*!< Enable or disable detect timer.
+                                     This parameter can be a value of \ref KEYSCAN_Release_Detect_Timer_En. */
+    uint16_t debounceTime;      /*!< <b>Deprecated</b> */
+    uint32_t detectMode;        /*!< Specify Key Detect mode.
+                                     This parameter can be a value of \ref KEYSCAN_Press_Detect_Mode */
+    uint32_t fifoOvrCtrl;       /*!< Specify Keyscan fifo over flow control.
+                                     This parameter can be a value of \ref KEYSCAN_FIFO_Overflow_Control */
+    uint16_t maxScanData;       /*!< <b>Deprecated</b> */
+    uint32_t scanmode;          /*!< Specify Keyscan mode.
+                                     This parameter can be a value of \ref KEYSCAN_Scan_Mode. */
+    uint16_t clockdiv;          /*!< Specify Keyscan clock divider. scan clock = system clock/(clockdiv+1). */
+    uint8_t delayclk;           /*!< Specify Keyscan delay clock divider. delay clock = scan clock/(delayclk+1)*/
+    uint16_t fifotriggerlevel;  /*!< Specify Keyscan fifo threshold to trigger interrupt KEYSCAN_INT_THRESHOLD.*/
+    uint8_t debouncecnt;        /*!< Specify Keyscan debounce time, debounce time = delay clock * debouncecnt. */
+    uint8_t releasecnt;         /*!< Specify Keyscan release time, release time = delay clock * releasecnt. */
+    uint8_t keylimit;           /*!< Specify max scan data allowable in each scan. 0 means no limit. */
+    uint32_t manual_sel;        /*!< Specify trigger mode in manual mode.
+                                     This parameter can be a value of \ref KEYSCAN_Manual_Mode. */
 } KEYSCAN_InitTypeDef;
 
-/** End of KeyScan_Exported_Types
+/** End of KEYSCAN_Exported_Types
   * \}
   */
 
@@ -96,126 +100,142 @@ typedef struct
  *                         Constants
  *============================================================================*/
 /**
- * \defgroup    KeyScan_Exported_Constants  KeyScan Exported Constants
+ * \defgroup    KEYSCAN_Exported_Constants  KEYSCAN Exported Constants
  *
- * \ingroup     KeyScan
+ * \ingroup     KEYSCAN
  */
 
+/**
+ * \defgroup    KEYSCAN_Config KEYSCAN Config
+ * \{
+ * \ingroup     KEYSCAN_Exported_Constants
+ */
 #define IS_KeyScan_PERIPH(PERIPH) ((PERIPH) == KEYSCAN)
+/** \} */
 
 /**
- * \def     Keyscan_Row_Number Keyscan Row Number
+ * \defgroup    KEYSCAN_Row_Number KEYSCAN Row Number
+ * \{
+ * \ingroup     KEYSCAN_Exported_Constants
  */
-
 #define IS_KEYSCAN_ROW_NUM(ROW) ((ROW) <= 12)
+/** \} */
 
 /**
- * \def     Keyscan_Column_Number Keyscan Column Number
+ * \defgroup    KEYSCAN_Column_Number KEYSCAN Column Number
+ * \{
+ * \ingroup     KEYSCAN_Exported_Constants
  */
-
 #define IS_KEYSCAN_COL_NUM(COL) ((COL) <= 20)
+/** \} */
 
 /**
- * \def     Keyscan_Debounce_Time Keyscan Debounce Time
+ * \defgroup    KEYSCAN_Debounce_Time KEYSCAN Debounce Time
+ * \{
+ * \ingroup     KEYSCAN_Exported_Constants
  */
 #define IS_KEYSCAN_MAX_SCAN_DATA(DATA_NUM) ((DATA_NUM) <= 26) //0 means no limit
+/** \} */
 
 /**
- * \defgroup    Keyscan_Scan_Mode Keyscan scan mode
+ * \defgroup    KEYSCAN_Scan_Mode KEYSCAN Scan Mode
  * \{
- * \ingroup     KeyScan_Exported_Constants
+ * \ingroup     KEYSCAN_Exported_Constants
  */
 #define KeyScan_Manual_Scan_Mode        ((uint32_t)(0x0 << 30))
 #define KeyScan_Auto_Scan_Mode          ((uint32_t)(0x1 << 30))
+
+#define IS_KEYSCAN_SCAN_MODE(MODE)    (((MODE) == KeyScan_Detect_Mode_Edge) || ((MODE) == KeyScan_Detect_Mode_Level))
 /** \} */
 
-#define IS_KEYSCAN_DETECT_MODE(MODE)    (((MODE) == KeyScan_Detect_Mode_Edge) || ((MODE) == KeyScan_Detect_Mode_Level))
-
 /**
- * \defgroup    Keyscan_Manual_Mode Keyscan Manual Mode
+ * \defgroup    KEYSCAN_Manual_Mode KEYSCAN Manual Mode
  * \{
- * \ingroup     KeyScan_Exported_Constants
+ * \ingroup     KEYSCAN_Exported_Constants
  */
 #define KeyScan_Manual_Sel_Bit          ((uint32_t)(0x0 << 11))
 #define KeyScan_Manual_Sel_Key          ((uint32_t)(0x1 << 11))
 /** \} */
 
 /**
- * \defgroup    Keyscan_Fifo_Overflow_Control Keyscan Fifo Overflow Control
+ * \defgroup    KEYSCAN_FIFO_Overflow_Control KEYSCAN FIFO Overflow Control
  * \{
- * \ingroup     KeyScan_Exported_Constants
+ * \ingroup     KEYSCAN_Exported_Constants
  */
 
 #define KeyScan_FIFO_OVR_CTRL_DIS_ALL   ((uint32_t)(0x0 << 28))   //discard all the new scan data when FIFO is full
 #define KeyScan_FIFO_OVR_CTRL_DIS_LAST  ((uint32_t)(0x1 << 28))   //discard the oldest scan data when FIFO is full
-/** \} */
 
 #define IS_KEYSCAN_FIFO_OVR_CTRL(CTRL)  (((CTRL) == KeyScan_FIFO_OVR_CTRL_DIS_ALL) || ((CTRL) == KeyScan_FIFO_OVR_CTRL_DIS_LAST))
+/** \} */
 
 /**
- * \defgroup    Keyscan_Debounce_Config Keyscan Debounce Config
+ * \defgroup    KEYSCAN_Debounce_Config KEYSCAN Debounce Config
  * \{
- * \ingroup     KeyScan_Exported_Constants
+ * \ingroup     KEYSCAN_Exported_Constants
  */
 #define KeyScan_Debounce_Enable              ((uint32_t)0x1 << 31)
 #define KeyScan_Debounce_Disable             ((uint32_t)0x0 << 31)
-/** \} */
+
 #define IS_KEYSCAN_DEBOUNCE_EN(EN) (((EN) == KeyScan_Debounce_Enable) || ((EN) == KeyScan_Debounce_Disable))    //0 means no limit
+/** \} */
 
 /**
- * \defgroup    Keyscan_Scan_Interval_En   Keyscan Scan Interval Enable
+ * \defgroup    KEYSCAN_Scan_Interval_En   KEYSCAN Scan Interval Enable
  * \{
- * \ingroup     KeyScan_Exported_Constants
+ * \ingroup     KEYSCAN_Exported_Constants
  */
 #define KeyScan_ScanInterval_Enable              ((uint32_t)(0x1 << 30))
 #define KeyScan_ScanInterval_Disable             ((uint32_t)(0x0 << 30))
-/** \} */
+
 #define IS_KEYSCAN_SCANINTERVAL_EN(EN) (((EN) == KeyScan_ScanInterval_Enable) || ((EN) == KeyScan_ScanInterval_Disable))    //0 means no limit
+/** \} */
 
 /**
- * \defgroup    Keyscan_Release_Detect_Timer_En     Keyscan Release Detect Timer Enable
+ * \defgroup    KEYSCAN_Release_Detect_Timer_En     KEYSCAN Release Detect Timer Enable
  * \{
- * \ingroup     KeyScan_Exported_Constants
+ * \ingroup     KEYSCAN_Exported_Constants
  */
 #define KeyScan_Release_Detect_Enable              ((uint32_t)(0x1 << 29))
 #define KeyScan_Release_Detect_Disable             ((uint32_t)(0x0 << 29))
-/** \} */
+
 #define IS_KEYSCAN_RELEASE_DETECT_EN(EN) (((EN) == KeyScan_Release_Detect_Enable) || ((EN) == KeyScan_Release_Detect_Disable))    //0 means no limit
+/** \} */
 
 /**
- * \defgroup    Keyscan_Press_Detect_Mode Keyscan Press Detect Mode
+ * \defgroup    KEYSCAN_Press_Detect_Mode KEYSCAN Press Detect Mode
  * \{
- * \ingroup     KeyScan_Exported_Constants
+ * \ingroup     KEYSCAN_Exported_Constants
  */
 
 #define KeyScan_Detect_Mode_Edge        ((uint32_t)(0x0 << 29))
 #define KeyScan_Detect_Mode_Level       ((uint32_t)(0x1 << 29))
-/** \} */
 
 #define IS_KEYSCAN_DETECT_MODE(MODE)    (((MODE) == KeyScan_Detect_Mode_Edge) || ((MODE) == KeyScan_Detect_Mode_Level))
+/** \} */
 
 /**
- * \defgroup    Keyscan_Interrupt_Definition    Keyscan Interrupt Definition
+ * \defgroup    KEYSCAN_Interrupt_Definition    KEYSCAN Interrupt Definition
  * \{
- * \ingroup     KeyScan_Exported_Constants
+ * \ingroup     KEYSCAN_Exported_Constants
  */
 #define KEYSCAN_INT_THRESHOLD                    ((uint16_t)(0x1 << 4))
 #define KEYSCAN_INT_OVER_READ                    ((uint16_t)(0x1 << 3))
 #define KEYSCAN_INT_SCAN_END                     ((uint16_t)(0x1 << 2))
 #define KEYSCAN_INT_FIFO_NOT_EMPTY               ((uint16_t)(0x1 << 1))
 #define KEYSCAN_INT_ALL_RELEASE                  ((uint16_t)(0x1 << 0))
-/** \} */
 
 #define IS_KEYSCAN_CONFIG_IT(IT) (((IT) == KEYSCAN_INT_ALL_RELEASE) || \
                                   ((IT) == KEYSCAN_INT_FIFO_NOT_EMPTY) || \
                                   ((IT) == KEYSCAN_INT_SCAN_END) || \
                                   ((IT) == KEYSCAN_INT_OVER_READ) || \
                                   ((IT) == KEYSCAN_INT_THRESHOLD))
+/** \} */
 
 /**
- * \defgroup    Keyscan_Flag_Definition   Keyscan Flag Definition
+ * \defgroup    KEYSCAN_Flag_Definition   KEYSCAN Flag Definition
  * \{
- * \ingroup     KeyScan_Exported_Constants
+ * \ingroup     KEYSCAN_Exported_Constants
  */
 #define KEYSCAN_FLAG_FIFOLIMIT                       ((uint32_t)(0x1 << 20))
 #define KEYSCAN_INT_FLAG_THRESHOLD                   ((uint32_t)(0x1 << 19))
@@ -227,20 +247,22 @@ typedef struct
 #define KEYSCAN_FLAG_OVR                             ((uint32_t)(0x1 << 2))
 #define KEYSCAN_FLAG_FULL                            ((uint32_t)(0x1 << 1))
 #define KEYSCAN_FLAG_EMPTY                           ((uint32_t)(0x1 << 0))
-/** \} */
 
 #define IS_KEYSCAN_FLAG(FLAG)       ((((FLAG) & (~(uint32_t)0x1F800F)) == 0x00) && ((FLAG) != (uint32_t)0x00))
 #define IS_KEYSCAN_CLEAR_FLAG(FLAG) (((FLAG) == KEYSCAN_FLAG_FIFOLIMIT) || \
                                      ((FLAG) == KEYSCAN_FLAG_DATAFILTER) || \
                                      ((FLAG) == KEYSCAN_FLAG_OVR))
+/** \} */
 
 /**
- * \def     Keyscan_FIFO_AVALIABLE_MASK
+ * \defgroup    KEYSCAN_FIFO_Available_Mask KEYSCAN FIFO Available Mask
+ * \{
+ * \ingroup     KEYSCAN_Exported_Constants
  */
-
 #define STATUS_FIFO_DATA_NUM_MASK           ((uint32_t)(0x3F << 4))
+/** \} */
 
-/** End of KeyScan_Exported_Constants
+/** End of KEYSCAN_Exported_Constants
   * \}
   */
 
@@ -248,14 +270,14 @@ typedef struct
  *                         Functions
  *============================================================================*/
 /**
- * \defgroup    Keyscan_Exported_Functions Keyscan_Exported_Functions
+ * \defgroup    KEYSCAN_Exported_Functions KEYSCAN Exported Functions
  * \{
- * \ingroup     KeyScan
+ * \ingroup     KEYSCAN
  */
 
 /**
- * \brief  Deinitializes the Keyscan peripheral registers to their default reset values(turn off keyscan clock).
- * \param[in]  KeyScan: selected KeyScan peripheral.
+ * \brief  Deinitialize the Keyscan peripheral registers to their default reset values(turn off keyscan clock).
+ * \param[in]  KeyScan: SSelected KeyScan peripheral.
  * \return None.
  *
  * <b>Example usage</b>
@@ -263,14 +285,14 @@ typedef struct
  *
  * void driver_keyscan_init(void)
  * {
- *     KeyScan_DeInit(APBPeriph_KEYSCAN);
+ *     KeyScan_DeInit(KEYSCAN);
  * }
  * \endcode
  */
 void KeyScan_DeInit(KEYSCAN_TypeDef *KeyScan);
 
 /**
- * \brief   Initializes the KeyScan peripheral according to the specified
+ * \brief   Initialize the KeyScan peripheral according to the specified
  *          parameters in the KeyScan_InitStruct
  * \param[in]  KeyScan: Selected KeyScan peripheral.
  * \param[in]  KeyScan_InitStruct: Pointer to a KEYSCAN_InitTypeDef structure that
@@ -287,10 +309,9 @@ void KeyScan_DeInit(KEYSCAN_TypeDef *KeyScan);
  *     KEYSCAN_InitTypeDef KEYSCAN_InitStruct;
  *     KeyScan_StructInit(&KEYSCAN_InitStruct);
 
- *     KEYSCAN_InitStruct.rowSize  = KEYBOARD_ROW_SIZE;
- *     KEYSCAN_InitStruct.colSize  = KEYBOARD_COLUMN_SIZE;
+ *     KEYSCAN_InitStruct.rowSize  = 2;
+ *     KEYSCAN_InitStruct.colSize  = 2;
  *     KEYSCAN_InitStruct.scanmode     = KeyScan_Manual_Scan_Mode;
- *     KEYSCAN_InitStruct.debounceEn   = vDebounce_En;
 
  *     KeyScan_Init(KEYSCAN, &KEYSCAN_InitStruct);
 
@@ -304,8 +325,8 @@ void KeyScan_DeInit(KEYSCAN_TypeDef *KeyScan);
 void KeyScan_Init(KEYSCAN_TypeDef *KeyScan, KEYSCAN_InitTypeDef *KeyScan_InitStruct);
 
 /**
- * \brief  Fills each Keyscan_InitStruct member with its default value.
- * \param[in]  KeyScan_InitStruct: Pointer to an KEYSCAN_InitTypeDef structure which will be initialized.
+ * \brief  Fill each KeyScan_InitStruct member with its default value.
+ * \param[in]  KeyScan_InitStruct: Pointer to a KEYSCAN_InitTypeDef structure which will be initialized.
  * \return None.
  *
  * <b>Example usage</b>
@@ -318,10 +339,9 @@ void KeyScan_Init(KEYSCAN_TypeDef *KeyScan, KEYSCAN_InitTypeDef *KeyScan_InitStr
  *     KEYSCAN_InitTypeDef KEYSCAN_InitStruct;
  *     KeyScan_StructInit(&KEYSCAN_InitStruct);
 
- *     KEYSCAN_InitStruct.rowSize  = KEYBOARD_ROW_SIZE;
- *     KEYSCAN_InitStruct.colSize  = KEYBOARD_COLUMN_SIZE;
+ *     KEYSCAN_InitStruct.rowSize  = 2;
+ *     KEYSCAN_InitStruct.colSize  = 2;
  *     KEYSCAN_InitStruct.scanmode     = KeyScan_Manual_Scan_Mode;
- *     KEYSCAN_InitStruct.debounceEn   = vDebounce_En;
 
  *     KeyScan_Init(KEYSCAN, &KEYSCAN_InitStruct);
 
@@ -335,13 +355,17 @@ void KeyScan_Init(KEYSCAN_TypeDef *KeyScan, KEYSCAN_InitTypeDef *KeyScan_InitStr
 void KeyScan_StructInit(KEYSCAN_InitTypeDef *KeyScan_InitStruct);
 
 /**
- * \brief  Enables or disables the specified KeyScan interrupt.
+ * \brief  Enable or disable the specified KeyScan interrupt.
  * \param[in]  KeyScan: Selected KeyScan peripheral.
- * \param[in]  KeyScan_IT: Specifies the KeyScan interrupts sources to be enabled or disabled.
- *      This parameter can be any combination of the following values:
- *      \arg KEYSCAN_INT_TIMEOUT: KeyScan timeout interrupt.
- *      \arg KEYSCAN_INT_OVER_THRESHOLD: Kescan FIFO data over threshold interrupt.
- *      \arg KEYSCAN_INT_SCAN_END: KeyScan scan end interrupt.
+ * \param[in]  KeyScan_IT: Specify the KeyScan interrupt sources to be enabled or disabled.
+ *      This parameter can be any combination of the following values, which refer to \ref KEYSCAN_Interrupt_Definition.
+ *      \arg KEYSCAN_INT_THRESHOLD: The interrupt is triggered when FIFO data size equals the threshold level.
+ *      \arg KEYSCAN_INT_OVER_READ: The interrupt is triggered when reading an empty FIFO to prevent over-reading.
+ *      \arg KEYSCAN_INT_SCAN_END: The interrupt is triggered after the Scan key matrix is completed.
+ *      \arg KEYSCAN_INT_FIFO_NOT_EMPTY: The interrupt is triggered when there is data in the FIFO,
+ *                                       and it can be cleared automatically after the FIFO reads empty.
+ *      \arg KEYSCAN_INT_ALL_RELEASE: The interrupt is triggered if no key is pressed
+ *                                    before the release time counter equals the set value.
  * \param[in] newState: New state of the specified KeyScan interrupts.
  *      This parameter can be: ENABLE or DISABLE.
  * \return None.
@@ -351,9 +375,9 @@ void KeyScan_StructInit(KEYSCAN_InitTypeDef *KeyScan_InitStruct);
  *
  * void keyscan_demo(void)
  * {
- *     KeyScan_INTMask(KEYSCAN, KEYSCAN_INT_TIMEOUT, ENABLE);
- *     KeyScan_INTConfig(KEYSCAN, KEYSCAN_INT_TIMEOUT, ENABLE);
- *     KeyScan_INTMask(KEYSCAN, KEYSCAN_INT_TIMEOUT, DISABLE);
+ *     KeyScan_INTMask(KEYSCAN, KEYSCAN_INT_SCAN_END, ENABLE);
+ *     KeyScan_INTConfig(KEYSCAN, KEYSCAN_INT_SCAN_END, ENABLE);
+ *     KeyScan_INTMask(KEYSCAN, KEYSCAN_INT_SCAN_END, DISABLE);
  * }
  * \endcode
  */
@@ -361,13 +385,17 @@ void KeyScan_INTConfig(KEYSCAN_TypeDef *KeyScan, uint32_t KeyScan_IT,
                        FunctionalState newState);
 
 /**
- * \brief  Mask the specified KeyScan interrupt .
- * \param[in]  KeyScan: selected KeyScan peripheral.
- * \param[in]  KeyScan_IT: Specifies the KeyScan interrupts sources to be enabled or disabled.
- *      This parameter can be any combination of the following values:
- *      \arg KEYSCAN_INT_TIMEOUT: KeyScan timeout interrupt mask.
- *      \arg KEYSCAN_INT_OVER_THRESHOLD: Kescan FIFO data over threshold interrupt mask.
- *      \arg KEYSCAN_INT_SCAN_END: KeyScan scan end interrupt mask.
+ * \brief  Mask the specified KeyScan interrupt.
+ * \param[in]  KeyScan: Selected KeyScan peripheral.
+ * \param[in]  KeyScan_IT: Specify the KeyScan interrupt sources to be enabled or disabled.
+ *      This parameter can be any combination of the following values, which refer to \ref KEYSCAN_Interrupt_Definition.
+ *      \arg KEYSCAN_INT_THRESHOLD: The interrupt is triggered when FIFO data size equals the threshold level.
+ *      \arg KEYSCAN_INT_OVER_READ: The interrupt is triggered when reading an empty FIFO to prevent over-reading.
+ *      \arg KEYSCAN_INT_SCAN_END: The interrupt is triggered after the Scan key matrix is completed.
+ *      \arg KEYSCAN_INT_FIFO_NOT_EMPTY: The interrupt is triggered when there is data in the FIFO,
+ *                                       and it can be cleared automatically after the FIFO reads empty.
+ *      \arg KEYSCAN_INT_ALL_RELEASE: The interrupt is triggered if no key is pressed
+ *                                    before the release time counter equals the set value.
  * \param[in] newState: New state of the specified KeyScan interrupts mask.
  *      This parameter can be: ENABLE or DISABLE.
  * \return  None.
@@ -377,7 +405,9 @@ void KeyScan_INTConfig(KEYSCAN_TypeDef *KeyScan, uint32_t KeyScan_IT,
  *
  * void keyscan_demo(void)
  * {
- *     KeyScan_INTMask(KEYSCAN, KEYSCAN_INT_TIMEOUT, ENABLE);
+ *     KeyScan_INTMask(KEYSCAN, KEYSCAN_INT_SCAN_END, ENABLE);
+ *     KeyScan_INTConfig(KEYSCAN, KEYSCAN_INT_SCAN_END, ENABLE);
+ *     KeyScan_INTMask(KEYSCAN, KEYSCAN_INT_SCAN_END, DISABLE);
  * }
  * \endcode
  */
@@ -423,10 +453,10 @@ void KeyScan_Cmd(KEYSCAN_TypeDef *KeyScan, FunctionalState NewState);
 
 /**
  * \brief   Set filter data.
- * \param[in] KeyScan: selected KeyScan peripheral.
- * \param[in] data: Config the data to be filtered.
+ * \param[in] KeyScan: Selected KeyScan peripheral.
+ * \param[in] data: Configure the data to be filtered.
  *      This parameter should not be more than 9 bits.
- * \param[in] NewState: New state of the KeyScan peripheral.
+ * \param[in] NewState: New state of the data filter.
  *      This parameter can be: ENABLE or DISABLE.
  * \return  None.
  *
@@ -445,8 +475,8 @@ void KeyScan_FilterDataConfig(KEYSCAN_TypeDef *KeyScan, uint16_t data,
 
 /**
  * \brief   KeyScan debounce time config.
- * \param[in] KeyScan: selected KeyScan peripheral.
- * \param[in] time: Keyscan hardware debounce time.
+ * \param[in] KeyScan: Selected KeyScan peripheral.
+ * \param[in] time: Keyscan hardware debounce time. debounce time = delay clock * time.
  * \param[in] NewState: New state of the KeyScan debounce function.
  *      This parameter can be: ENABLE or DISABLE.
  * \return  None.
@@ -475,7 +505,7 @@ __STATIC_INLINE void KeyScan_debounceConfig(KEYSCAN_TypeDef *KeyScan, uint8_t ti
 
 /**
  * \brief   Get KeyScan FIFO data num.
- * \param[in]  KeyScan: selected KeyScan peripheral.
+ * \param[in]  KeyScan: Selected KeyScan peripheral.
  * \return  Data length in FIFO.
  *
  * <b>Example usage</b>
@@ -496,15 +526,16 @@ __STATIC_INLINE uint16_t KeyScan_GetFifoDataNum(KEYSCAN_TypeDef *KeyScan)
 
 /**
  * \brief  Clear the KeyScan interrupt pending bit.
- * \param[in]  KeyScan: selected KeyScan peripheral.
- * \param[in]  KeyScan_IT: specifies the interrupt pending bit to clear.
- *      This parameter can be any combination of the following values:
- *      \arg KEYSCAN_INT_TIMEOUT: KeyScan timeout interrupt mask
- *      \arg KEYSCAN_INT_THRESHOLD
- *      \arg KEYSCAN_INT_OVER_READ
- *      \arg KEYSCAN_INT_SCAN_END
- *      \arg KEYSCAN_INT_FIFO_NOT_EMPTY
- *      \arg KEYSCAN_INT_ALL_RELEASE
+ * \param[in]  KeyScan: Selected KeyScan peripheral.
+ * \param[in]  KeyScan_IT: Specify the interrupt pending bit to clear.
+ *      This parameter can be any combination of the following values, which refer to \ref KEYSCAN_Interrupt_Definition.
+ *      \arg KEYSCAN_INT_THRESHOLD: The interrupt is triggered when FIFO data size equals the threshold level.
+ *      \arg KEYSCAN_INT_OVER_READ: The interrupt is triggered when reading an empty FIFO to prevent over-reading.
+ *      \arg KEYSCAN_INT_SCAN_END: The interrupt is triggered after the Scan key matrix is completed.
+ *      \arg KEYSCAN_INT_FIFO_NOT_EMPTY: The interrupt is triggered when there is data in the FIFO,
+ *                                       and it can be cleared automatically after the FIFO reads empty.
+ *      \arg KEYSCAN_INT_ALL_RELEASE: The interrupt is triggered if no key is pressed
+ *                                    before the release time counter equals the set value.
  * \return  None.
  *
  * <b>Example usage</b>
@@ -512,7 +543,7 @@ __STATIC_INLINE uint16_t KeyScan_GetFifoDataNum(KEYSCAN_TypeDef *KeyScan)
  *
  * void keyscan_demo(void)
  * {
- *     KeyScan_ClearINTPendingBit(KEYSCAN, KEYSCAN_INT_TIMEOUT);
+ *     KeyScan_ClearINTPendingBit(KEYSCAN, KEYSCAN_INT_SCAN_END);
  * }
  * \endcode
  */
@@ -530,11 +561,11 @@ __STATIC_INLINE void KeyScan_ClearINTPendingBit(KEYSCAN_TypeDef *KeyScan, uint32
 /**
  * \brief   Clear the specified KeyScan flag.
  * \param[in]  KeyScan: Selected KeyScan peripheral.
- * \param[in]  KeyScan_FLAG: Specifies the flag to clear.
- *      This parameter can be one of the following values:
- *      \arg KEYSCAN_FLAG_FIFOLIMIT
- *      \arg KEYSCAN_FLAG_DATAFILTER
- *      \arg KEYSCAN_FLAG_OVR
+ * \param[in]  KeyScan_FLAG: Specify the flag to clear.
+ *      This parameter can be one of the following values, which refer to \ref KEYSCAN_Flag_Definition.
+ *      \arg KEYSCAN_FLAG_FIFOLIMIT: Overflow FIFO limit in one scan
+ *      \arg KEYSCAN_FLAG_DATAFILTER: FIFO filter status
+ *      \arg KEYSCAN_FLAG_OVR: The flag to indicate FIFO is overflow
  * \return  None.
  * \note    KEYSCAN_FLAG_FULL and KEYSCAN_FLAG_EMPTY can't be cleared manually.
  *          They are cleared by hardware automatically.
@@ -573,18 +604,18 @@ __STATIC_INLINE void KeyScan_ClearFlags(KEYSCAN_TypeDef *KeyScan, uint32_t KeySc
 /**
  * \brief   Check whether the specified KeyScan flag is set.
  * \param[in]  KeyScan: Selected KeyScan peripheral.
- * \param[in]  KeyScan_FLAG: Specifies the flag to check.
- *      This parameter can be one of the following values:
- *      \arg KEYSCAN_FLAG_FIFOLIMIT:
- *      \arg KEYSCAN_FLAG_THRESHOLD:
- *      \arg KEYSCAN_FLAG_OVER_READ:
- *      \arg KEYSCAN_FLAG_SCAN_END:
- *      \arg KEYSCAN_FLAG_FIFO_NOT_EMPTY:
- *      \arg KEYSCAN_FLAG_ALL_RELEASE:
- *      \arg KEYSCAN_FLAG_DATAFILTER:
- *      \arg KEYSCAN_FLAG_OVR:
- *      \arg KEYSCAN_FLAG_FULL:
- *      \arg KEYSCAN_FLAG_EMPTY:
+ * \param[in]  KeyScan_FLAG: Specify the flag to check.
+ *      This parameter can be one of the following values, which refer to \ref KEYSCAN_Flag_Definition.
+ *      \arg KEYSCAN_FLAG_FIFOLIMIT: Overflow FIFO limit in one scan
+ *      \arg KEYSCAN_INT_FLAG_THRESHOLD: FIFO threshold interrupt status
+ *      \arg KEYSCAN_INT_FLAG_OVER_READ: FIFO over read interrupt status
+ *      \arg KEYSCAN_INT_FLAG_SCAN_END: Scan finish interrupt status
+ *      \arg KEYSCAN_INT_FLAG_FIFO_NOT_EMPTY: FIFO not empty interrupt status
+ *      \arg KEYSCAN_INT_FLAG_ALL_RELEASE: Release interrupt status
+ *      \arg KEYSCAN_FLAG_DATAFILTER: FIFO filter status
+ *      \arg KEYSCAN_FLAG_OVR: The flag to indicate FIFO is overflow
+ *      \arg KEYSCAN_FLAG_FULL: The flag to indicate FIFO is full
+ *      \arg KEYSCAN_FLAG_EMPTY: The flag to indicate FIFO is empty
  * \return  The new state of KeyScan_FLAG (SET or RESET).
  *
  * <b>Example usage</b>
@@ -638,11 +669,11 @@ __STATIC_INLINE uint16_t KeyScan_ReadFifoData(KEYSCAN_TypeDef *KeyScan)
 #define KeyScan_SetPreGuadTime(KeyScan, time) \
     ((KEYSCAN_TypeDef *)(keyscan))->CLKDIV = (((KEYSCAN_TypeDef *)(keyscan))->CLKDIV & ~(0x7 << 26)) | (time << 26)
 
-/** End of KeyScan_Exported_Functions
+/** End of KEYSCAN_Exported_Functions
   * \}
   */
 
-/** End of KeyScan
+/** End of KEYSCAN
   * \}
   */
 
