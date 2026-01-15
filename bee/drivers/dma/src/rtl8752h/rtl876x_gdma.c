@@ -1,20 +1,8 @@
-/**
-*****************************************************************************************
-*     Copyright(c) 2025, Realtek Semiconductor Corporation. All rights reserved.
-*
-*     SPDX-License-Identifier: Apache-2.0
-*****************************************************************************************
-* @file     rtl876x_gdma.c
-* @brief    This file provides all the DMA firmware functions.
-* @details
-* @author   Yuan
-* @date     2020-11-09
-* @version  v1.0.1
-***************************************************************************************
-* @attention
-* <h2><center>&copy; COPYRIGHT 2025 Realtek Semiconductor Corporation</center></h2>
-***************************************************************************************
-*/
+/*
+ * Copyright (c) 2026, Realtek Semiconductor Corporation
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
 /* Includes ------------------------------------------------------------------*/
 #include "rtl876x_rcc.h"

@@ -1,20 +1,8 @@
-/**
-*****************************************************************************************
-*     Copyright(c) 2025, Realtek Semiconductor Corporation. All rights reserved.
-*
-*     SPDX-License-Identifier: Apache-2.0
-*****************************************************************************************
-* \file     rtl876x_rtc.h
-* \brief    The header file of the peripheral RTC driver.
-* \details  This file provides all RTC firmware functions.
-* \author   yuan
-* \date     2024-01-18
-* \version  v2.1.0
-***************************************************************************************
-* @attention
-* <h2><center>&copy; COPYRIGHT 2025 Realtek Semiconductor Corporation</center></h2>
-***************************************************************************************
-*/
+/*
+ * Copyright (c) 2026, Realtek Semiconductor Corporation
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
 #ifndef _RTL876X_RTC_H_
 #define _RTL876X_RTC_H_

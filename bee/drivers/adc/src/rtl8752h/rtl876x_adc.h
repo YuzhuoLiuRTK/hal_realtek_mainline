@@ -1,20 +1,8 @@
-/**
-*****************************************************************************************
-*     Copyright(c) 2025, Realtek Semiconductor Corporation. All rights reserved.
-*
-*     SPDX-License-Identifier: Apache-2.0
-*****************************************************************************************
-* \file     rtl876x_adc.h
-* \brief    The header file of the peripheral ADC driver.
-* \details  This file provides all ADC firmware functions.
-* \author   yuan
-* \date     2024-01-25
-* \version  v1.0.0
-***************************************************************************************
-* @attention
-* <h2><center>&copy; COPYRIGHT 2025 Realtek Semiconductor Corporation</center></h2>
-***************************************************************************************
-*/
+/*
+ * Copyright (c) 2026, Realtek Semiconductor Corporation
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
 #ifndef _RTL876X_ADC_H_
 #define _RTL876X_ADC_H_

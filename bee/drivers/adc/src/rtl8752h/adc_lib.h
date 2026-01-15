@@ -1,19 +1,8 @@
 /*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
+ * Copyright (c) 2026, Realtek Semiconductor Corporation
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-
-/**
-*********************************************************************************************************
-* \file     adc_lib.h
-* \brief    The header file of the peripheral ADC driver.
-* \details  This file provides all ADC firmware functions.
-* \author   yuan
-* \date     2024-01-25
-* \version  v1.0.0
-* *********************************************************************************************************
-*/
 
 #ifndef __ADC_K_LIB_H
 #define __ADC_K_LIB_H

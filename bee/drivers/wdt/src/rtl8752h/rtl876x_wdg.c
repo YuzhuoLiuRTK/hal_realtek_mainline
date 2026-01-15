@@ -1,19 +1,8 @@
 /*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
+ * Copyright (c) 2026, Realtek Semiconductor Corporation
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-
-/**
-**********************************************************************************************************
-* @file     rtl876x_wdg.c
-* @brief    This file provides all the Watch Dog firmware functions.
-* @details
-* @author   Lory_xu
-* @date     2016-06-12
-* @version  v0.1
-*********************************************************************************************************
-*/
 
 #include "rtl876x_wdg.h"
 #include "patch_iodriver.h"
