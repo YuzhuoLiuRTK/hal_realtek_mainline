@@ -468,20 +468,12 @@ void ADC_SchTableConfig(ADC_TypeDef *ADCx, uint16_t Index, uint8_t adcMode)
   *   This parameter can be: ENABLE or DISABLE.
   * @return none.
   */
-void ADC_BitMapConfig(ADC_TypeDef *ADCx, uint16_t bitMap, FunctionalState NewState)
+void ADC_BitMapConfig(ADC_TypeDef *ADCx, uint16_t bitMap)
 {
     /* Check the parameters */
     assert_param(IS_ADC_PERIPH(ADCx));
-    assert_param(IS_FUNCTIONAL_STATE(NewState));
 
-    if (NewState == ENABLE)
-    {
-        ADCx->SCHCR |= bitMap;
-    }
-    else
-    {
-        ADCx->SCHCR &= (~bitMap);
-    }
+    ADCx->SCHCR = bitMap;
 
     return;
 }

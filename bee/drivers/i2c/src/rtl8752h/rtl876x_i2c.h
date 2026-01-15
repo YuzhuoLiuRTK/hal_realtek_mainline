@@ -38,11 +38,6 @@ extern "C" {
  *============================================================================*/
 #include "rtl876x.h"
 
-typedef struct
-{
-    uint32_t i2c_reg[20];
-} I2CStoreReg_Typedef;
-
 /*============================================================================*
  *                         Types
  *============================================================================*/
@@ -458,8 +453,30 @@ I2C_Status I2C_RepeatRead(I2C_TypeDef *I2Cx, uint8_t *pWriteBuf, uint16_t Writel
 /**
  * \brief Enable or disable the specified I2C interrupt.
  * \param[in] I2Cx: Where x can be 0 or 1.
- * \param[in] I2C_IT
- * \param[in]  NewState: Disable or enable I2C interrupt.
+ * \param[in] I2C_IT: This parameter can be one of the following values, which refer to \ref I2C_Interrupts_Definition.
+ *      \arg I2C_INT_GEN_CALL: When a General Call address is received and it is acknowledged.
+ *      \arg I2C_INT_START_DET: When a START or RESTART condition has occurred on the I2C interface
+ *                            regardless of whether I2C is operating in slave or master mode.
+ *      \arg I2C_INT_STOP_DET: When a STOP condition has occurred on the I2C interface
+ *                            regardless of whether I2C is operating in slave or master mode.
+ *      \arg I2C_INT_ACTIVITY: When I2C is active on the bus. Stays set until it is cleared.
+ *      \arg I2C_INT_RX_DONE: When the I2C is acting as a slave-transmitter and the master does
+ *                            not acknowledge a transmitted byte.
+ *                            This occurs on the last byte of the transmission,
+ *                            indicating that the transmission is done.
+ *      \arg I2C_INT_TX_ABRT: When an I2C transmitter is unable to complete the intended actions
+ *                           on the contents of the transmit FIFO.
+ *      \arg I2C_INT_RD_REQ: When I2C is acting as a slave and another I2C master is attempting to read data from I2C.
+ *      \arg I2C_INT_TX_EMPTY: When the transmit buffer is at or below the threshold value set in the REG_IC_TXFLR register.
+ *      \arg I2C_INT_TX_OVER: When transmit buffer is filled to IC_TX_BUFFER_DEPTH and
+ *                           the processor attempts to issue another I2C command by writing to the REG_IC_DATA_CMD register.
+ *      \arg I2C_INT_RX_FULL: When the receive buffer reaches or goes above the RX_TL threshold in the REG_IC_RX_TL register.
+ *                           A value of 0 sets the threshold for 1 entry, and a value of 255 sets the threshold for 256 entries.
+ *      \arg I2C_INT_RX_OVER: When the receive buffer is completely filled to IC_RX_BUFFER_DEPTH and
+ *                           an additional byte is received from an external I2C device.
+ *      \arg I2C_INT_RX_UNDER: When the processor attempts to read the receive buffer
+ *                            when it is empty by reading from the REG_IC_DATA_CMD register.
+ * \param[in]  NewState: New state of the I2C interrupt. This parameter can be: ENABLE or DISABLE.
  * \return  None.
  *
  * <b>Example usage</b>
@@ -481,27 +498,32 @@ I2C_Status I2C_RepeatRead(I2C_TypeDef *I2Cx, uint8_t *pWriteBuf, uint16_t Writel
 void I2C_INTConfig(I2C_TypeDef *I2Cx, uint16_t I2C_IT, FunctionalState NewState);
 
 /**
- * \brief  Enable or disable the specified I2C peripheral.
- *
- * \param[in] I2Cx  Select the I2C peripheral. Refer to \ref I2C_Declaration.
- *
- * \return The status of I2Cx. Refer to \ref I2C_Status.
- *
- * <b>Example usage</b>
- * \code{.c}
- *
- * void i2c0_demo(void)
- * {
- *     I2C_CheckAbortStatus(I2C0);
- * }
- * \endcode
- */
-I2C_Status I2C_CheckAbortStatus(I2C_TypeDef *I2Cx);
-
-/**
  * \brief   Clear the specified I2C interrupt pending bit.
  * \param[in] I2Cx: Where x can be 0 or 1.
  * \param[in] I2C_IT
+ *      This parameter can be one of the following values, which refer to \ref I2C_Interrupts_Definition.
+ *      \arg I2C_INT_GEN_CALL: When a General Call address is received and it is acknowledged.
+ *      \arg I2C_INT_START_DET: When a START or RESTART condition has occurred on the I2C interface
+  *                            regardless of whether I2C is operating in slave or master mode.
+ *      \arg I2C_INT_STOP_DET: When a STOP condition has occurred on the I2C interface
+  *                            regardless of whether I2C is operating in slave or master mode.
+ *      \arg I2C_INT_ACTIVITY: When I2C is active on the bus. Stays set until it is cleared.
+ *      \arg I2C_INT_RX_DONE: When the I2C is acting as a slave-transmitter and the master does
+  *                           not acknowledge a transmitted byte.
+  *                           This occurs on the last byte of the transmission,
+  *                           indicating that the transmission is done.
+ *      \arg I2C_INT_TX_ABRT: When an I2C transmitter is unable to complete the intended actions
+  *                           on the contents of the transmit FIFO.
+ *      \arg I2C_INT_RD_REQ: When I2C is acting as a slave and another I2C master is attempting to read data from I2C.
+ *      \arg I2C_INT_TX_EMPTY: When the transmit buffer is at or below the threshold value set in the REG_IC_TXFLR register.
+ *      \arg I2C_INT_TX_OVER: When transmit buffer is filled to IC_TX_BUFFER_DEPTH and
+  *                           the processor attempts to issue another I2C command by writing to the REG_IC_DATA_CMD register.
+ *      \arg I2C_INT_RX_FULL: When the receive buffer reaches or goes above the RX_TL threshold in the REG_IC_RX_TL register.
+  *                           A value of 0 sets the threshold for 1 entry, and a value of 255 sets the threshold for 256 entries.
+ *      \arg I2C_INT_RX_OVER: When the receive buffer is completely filled to IC_RX_BUFFER_DEPTH and
+  *                           an additional byte is received from an external I2C device.
+ *      \arg I2C_INT_RX_UNDER: When the processor attempts to read the receive buffer
+  *                            when it is empty by reading from the REG_IC_DATA_CMD register.
  * \return  None.
  *
  * <b>Example usage</b>
@@ -711,6 +733,23 @@ __STATIC_INLINE FlagStatus I2C_GetFlagState(I2C_TypeDef *I2Cx, uint32_t I2C_FLAG
  * \brief  Check whether the last I2Cx event is equal to the passed parameter.
  * \param[in] I2Cx: Where x can be 0 or 1 to select the I2C peripheral.
  * \param[in] I2C_EVENT: Specify the event to be checked about I2C Transmit Abort Status Register.
+ *      This parameter can be one of the following values, which refer to \ref I2C_Transmit_Abort_Source.
+ *      \arg ABRT_SLVRD_INTX: When the processor side responds to a slave mode request for data to be transmitted to a remote master and user send read command.
+ *      \arg ABRT_SLV_ARBLOST: Slave lost the bus while transmitting data to a remote master.
+ *      \arg ABRT_SLVFLUSH_TXFIFO: Slave has received a read command and some data exists in the TX FIFO so the slave issues a TX_ABRT interrupt to flush old data in TX FIFO.
+ *      \arg ARB_LOST: Master has lost arbitration or the slave transmitter has lost arbitration.
+ *      \arg ABRT_MASTER_DIS: User tries to initiate a Master operation with the Master mode disabled
+ *      \arg ABRT_10B_RD_NORSTRT: The restart is disabled and the master sends a read command in 10-bit addressing mode.
+ *      \arg ABRT_SBYTE_NORSTRT: The restart is disabled and the user is trying to send a START Byte.
+ *      \arg ABRT_HS_NORSTRT: The restart is disabled and the user is trying to use the master to transfer data in High Speed mode.
+ *      \arg ABRT_SBYTE_ACKDET: Master has sent a START Byte and the START Byte was acknowledged (wrong behavior).
+ *      \arg ABRT_HS_ACKDET: Master is in High Speed mode and the High Speed Master code was acknowledged (wrong behavior).
+ *      \arg ABRT_GCALL_READ: Sent a General Call but the user programmed the byte following the General Call to be a read from the bus.
+ *      \arg ABRT_GCALL_NOACK: Sent a General Call and no slave on the bus acknowledged the General Call.
+ *      \arg ABRT_TXDATA_NOACK: Master sent data byte(s) following the address, it did not receive an acknowledge from the remote slave.
+ *      \arg ABRT_10ADDR2_NOACK: Master is in 10-bit address mode and the second address byte of the 10-bit address was not acknowledged by any slave.
+ *      \arg ABRT_10ADDR1_NOACK: Master is in 10-bit address mode and the first 10-bit address byte was not acknowledged by any slave.
+ *      \arg ABRT_7B_ADDR_NOACK: Master is in 7-bit addressing mode and the address sent was not acknowledged by any slave.
  * \return  An ErrorStatus enumeration value, SET(Last event is equal to the I2C_EVENT) or RESET(Last event is different from the I2C_EVENT).
  *
  * <b>Example usage</b>
@@ -744,6 +783,29 @@ __STATIC_INLINE FlagStatus I2C_CheckEvent(I2C_TypeDef *I2Cx, uint32_t I2C_EVENT)
  * \brief   Get the specified I2C interrupt status.
  * \param[in] I2Cx: Where x can be 0 or 1 to select the I2C peripheral.
  * \param[in] I2C_IT
+ *      This parameter can be one of the following values, which refer to \ref I2C_Interrupts_Definition.
+ *      \arg I2C_INT_GEN_CALL: When a General Call address is received and it is acknowledged.
+ *      \arg I2C_INT_START_DET: When a START or RESTART condition has occurred on the I2C interface
+  *                            regardless of whether I2C is operating in slave or master mode.
+ *      \arg I2C_INT_STOP_DET: When a STOP condition has occurred on the I2C interface
+  *                            regardless of whether I2C is operating in slave or master mode.
+ *      \arg I2C_INT_ACTIVITY: When I2C is active on the bus. Stays set until it is cleared.
+ *      \arg I2C_INT_RX_DONE: When the I2C is acting as a slave-transmitter and the master does
+  *                           not acknowledge a transmitted byte.
+  *                           This occurs on the last byte of the transmission,
+  *                           indicating that the transmission is done.
+ *      \arg I2C_INT_TX_ABRT: When an I2C transmitter is unable to complete the intended actions
+  *                           on the contents of the transmit FIFO.
+ *      \arg I2C_INT_RD_REQ: When I2C is acting as a slave and another I2C master is attempting to read data from I2C.
+ *      \arg I2C_INT_TX_EMPTY: When the transmit buffer is at or below the threshold value set in the REG_IC_TXFLR register.
+ *      \arg I2C_INT_TX_OVER: When the transmit buffer is filled to IC_TX_BUFFER_DEPTH and
+  *                           the processor attempts to issue another I2C command by writing to the REG_IC_DATA_CMD register.
+ *      \arg I2C_INT_RX_FULL: When the receive buffer reaches or goes above the RX_TL threshold in the REG_IC_RX_TL register.
+  *                           A value of 0 sets the threshold for 1 entry, and a value of 255 sets the threshold for 256 entries.
+ *      \arg I2C_INT_RX_OVER: When the receive buffer is completely filled to IC_RX_BUFFER_DEPTH and
+  *                           an additional byte is received from an external I2C device.
+ *      \arg I2C_INT_RX_UNDER: When the processor attempts to read the receive buffer
+  *                            when it is empty by reading from the REG_IC_DATA_CMD register.
  * \return  The new state of I2C_IT (SET or RESET).
  *
  * <b>Example usage</b>

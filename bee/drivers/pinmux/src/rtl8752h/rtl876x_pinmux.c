@@ -71,6 +71,103 @@ void Pinmux_Deinit(uint8_t Pin_Num)
     return;
 }
 
+/**
+  * @brief  Config pin to its corresponding IO function.
+  * @param  Pin_Num: pin number.
+  *     This parameter is from ADC_0 to P4_1, please refer to rtl876x.h "Pin_Number" part.
+  * @param  Pin_Func: mean one IO function, please refer to rtl876x_pinmux.h "Pin_Function_Number" part.
+  * @retval None
+  */
+void Pinmux_Config(uint8_t Pin_Num, uint8_t Pin_Func)
+{
+    uint8_t pinmux_reg_num;
+    uint8_t reg_offset;
+
+    pinmux_reg_num = Pin_Num >> 2;
+    reg_offset = (Pin_Num & 0x03) << 3;
+
+    PINMUX->CFG[pinmux_reg_num] = (PINMUX->CFG[pinmux_reg_num] & ~(0xFF << reg_offset))
+                                  | Pin_Func << reg_offset;
+
+    return;
+}
+
+/**
+  * @brief  config the corresponding pad.
+  * @param  Pin_Num: pin number.
+  *     This parameter is from ADC_0 to P4_1, please refer to rtl876x.h "Pin_Number" part.
+  * @param  AON_PAD_MODE: use software mode or pinmux mode.
+  *     This parameter can be one of the following values:
+  *     @arg PAD_SW_MODE: use software mode.
+  *     @arg PAD_PINMUX_MODE: use pinmux mode.
+  * @param  AON_PAD_PwrOn: config power of pad.
+  *     This parameter can be one of the following values:
+  *     @arg PAD_NOT_PWRON: shutdown power of pad.
+  *     @arg PAD_IS_PWRON: enable power of pad.
+  * @param  AON_PAD_Pull: config pad pull mode.
+  *     This parameter can be one of the following values:
+  *     @arg PAD_PULL_NONE: no pull.
+  *     @arg PAD_PULL_UP: pull this pin up.
+  *     @arg PAD_PULL_DOWN: pull thi pin down.
+  * @param  AON_PAD_E: config pad out put function.
+  *     This parameter can be one of the following values:
+  *     @arg PAD_OUT_DISABLE: disable pin output.
+  *     @arg PAD_OUT_ENABLE: enable pad output.
+  * @param  AON_PAD_O: config pin output level.
+  *     This parameter can be one of the following values:
+  *     @arg PAD_OUT_LOW: pad output low.
+  *     @arg PAD_OUT_HIGH: pad output high.
+  * @retval None
+  */
+
+void Pad_Config(uint8_t Pin_Num,
+                PAD_Mode AON_PAD_Mode,
+                PAD_PWR_Mode AON_PAD_PwrOn,
+                PAD_Pull_Mode AON_PAD_Pull,
+                PAD_OUTPUT_ENABLE_Mode AON_PAD_E,
+                PAD_OUTPUT_VAL AON_PAD_O)
+{
+    uint16_t tmpVal;
+    uint8_t addr = PINADDR_TABLE[Pin_Num];
+
+    tmpVal = btaon_fast_read_safe(addr);
+
+    /* Clear reg value first*/
+    tmpVal &= ~0xF;
+
+    /* Pull Config */
+    if (AON_PAD_Pull == PAD_PULL_UP)
+    {
+        tmpVal |= Pull_En;
+    }
+    else if (AON_PAD_Pull == PAD_PULL_DOWN)
+    {
+        tmpVal |= (Pull_En | Pull_Direction);
+    }
+
+    /* Output Config */
+    tmpVal |= (AON_PAD_O | (AON_PAD_E << 1));
+
+    if (AON_PAD_Mode)
+    {
+        tmpVal |= Pin_Mode;
+    }
+    else
+    {
+        tmpVal &= ~Pin_Mode;
+    }
+
+    btaon_fast_write_safe(addr, tmpVal | SHDN);
+
+    /* Pad control mode */
+    if (AON_PAD_PwrOn == PAD_NOT_PWRON)
+    {
+        tmpVal &= ~SHDN;
+        btaon_fast_write_safe(addr, tmpVal);
+    }
+
+}
+
 //1ms~64ms
 void System_WakeUpDebounceTime(uint8_t time)
 {
@@ -83,6 +180,38 @@ void System_WakeUpDebounceTime(uint8_t time)
     /* clear debounce status */
     tmpVal |= (BIT15 | BIT14);
     btaon_fast_write_safe(0x2a, tmpVal);
+}
+
+/**
+  * @brief  Enable pin wakeup function.
+  * @param  Pin_Num: pin number.
+  *     This parameter is from ADC_0 to P4_1, please refer to rtl876x.h "Pin_Number" part.
+  * @param  Polarity: PAD_WAKEUP_POL_HIGH--use high level wakeup, PAD_WAKEUP_POL_LOW-- use low level wakeup.
+  * @param[in] DebounceEn: Enable delay function.
+  *      \arg PAD_WK_DEBOUNCE_DISABLE: Disable delay function.
+  *      \arg PAD_WK_DEBOUNCE_ENABLE: Enable delay function.
+  * @param[in] DebounceTime: Set debounce time, range from 0~63ms.
+  * @retval None
+  */
+void System_WakeUpPinEnable(uint8_t Pin_Num, uint8_t Polarity, uint8_t DebounceEn,
+                            uint8_t DebounceTime)
+{
+    if (DebounceEn == ENABLE)
+    {
+        System_WakeUpPinDisable(Pin_Num);
+        if (DebounceTime >= 64)
+        {
+            DebounceTime = 63;
+        }
+        System_WakeUpDebounceTime(DebounceTime);
+    }
+    else
+    {
+        System_DebounceWakeupStatus();
+    }
+    Pad_WakeupPolarityValue(Pin_Num, Polarity);
+    Pad_WKDebounceConfig(Pin_Num, DebounceEn);
+    Pad_WakeupEnableValue(Pin_Num, 1);
 }
 
 /**

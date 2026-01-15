@@ -40,10 +40,6 @@ extern "C" {
  *============================================================================*/
 #include "rtl876x.h"
 
-typedef struct
-{
-    uint32_t keyscan_reg[7];
-} KEYSCANStoreReg_Typedef;
 
 /*============================================================================*
  *                         Types
@@ -665,9 +661,6 @@ __STATIC_INLINE uint16_t KeyScan_ReadFifoData(KEYSCAN_TypeDef *KeyScan)
 
     return (uint16_t)(KeyScan->FIFODATA);
 }
-
-#define KeyScan_SetPreGuadTime(KeyScan, time) \
-    ((KEYSCAN_TypeDef *)(keyscan))->CLKDIV = (((KEYSCAN_TypeDef *)(keyscan))->CLKDIV & ~(0x7 << 26)) | (time << 26)
 
 /** End of KEYSCAN_Exported_Functions
   * \}

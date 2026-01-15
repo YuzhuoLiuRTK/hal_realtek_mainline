@@ -37,11 +37,6 @@ extern "C" {
  *============================================================================*/
 #include "rtl876x.h"
 
-typedef struct
-{
-    uint32_t enhtim_reg[17];
-} ENHTIMStoreReg_Typedef;
-
 /*============================================================================*
  *                         Constants
  *============================================================================*/
@@ -55,8 +50,8 @@ typedef struct
  *
  * \ingroup     ENHTIM
  */
-#define IS_ENHTIM_ALL_PERIPH(PERIPH) (((PERIPH) == ENH_ENHTIM0) || \
-                                      ((PERIPH) == ENH_ENHTIM1))
+#define IS_ENHTIM_ALL_PERIPH(PERIPH) (((PERIPH) == ENH_TIM0) || \
+                                      ((PERIPH) == ENH_TIM1))
 
 /**
  * \defgroup    ENHTIM_Clock_Source ENHTIM Clock Source
@@ -565,7 +560,11 @@ __STATIC_INLINE void ENHTIM_SetMaxCount(ENHTIM_TypeDef *ENHTIMx, uint32_t count)
     /* Check the parameters */
     assert_param(IS_ENHTIM_ALL_PERIPH(ENHTIMx));
 
-    ENHTIMx->MAX_CNT = count & 0xFFFFFFFE;
+    if (count > 0xFFFFFFFE)
+    {
+        count = 0xFFFFFFFE;
+    }
+    ENHTIMx->MAX_CNT = count;
 }
 
 /**

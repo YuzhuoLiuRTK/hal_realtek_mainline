@@ -1,24 +1,26 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
-*********************************************************************************************************
+*****************************************************************************************
+*     Copyright(c) 2025, Realtek Semiconductor Corporation. All rights reserved.
+*
+*     SPDX-License-Identifier: Apache-2.0
+*****************************************************************************************
 * @file      rtl876x_aon_wdg.h
 * @brief     header file of aon watch dog driver.
 * @details
 * @author    Serval Li
-* @date      2017-06-27
+* @date      2024-01-18
 * @version   v0.1
-* *********************************************************************************************************
+***************************************************************************************
+* @attention
+* <h2><center>&copy; COPYRIGHT 2025 Realtek Semiconductor Corporation</center></h2>
+***************************************************************************************
 */
 
 #ifndef _RTL876X_AON_WDG_H_
 #define _RTL876X_AON_WDG_H_
 
 #include <stdint.h>
+#include <rtl876x.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -29,76 +31,140 @@ extern "C" {
   * @{
   */
 
-/** @defgroup AON_WATCH_DOG_Exported_Functions AON Watch Dog Exported Functions
+/** @defgroup AON_WATCH_DOG_Exported_Functions AON WATCH DOG Exported Functions
   * @{
   */
 
 /**
-   * @brief  AON Watchdog Config.
-   * @param  reset_level: 0, Reset whole chip except partial AON and RTC; 1, Reset whole chip.
-   * @param  comp: Set period in ms.
-   * @param  cnt_ctl: 0, Stop count in low power mode; 1, Continue count in low power mode.
-   * @param  cnt_reload: 0, Not reload counter when exit low power mode
-                         1, Reload counter when exit low power mode.
-   * @retval none.
-   */
+ * \brief  Configure initialization parameters.
+ * \param[in]  reset_level: Specify the reset level.
+ *     This parameter can be 0 or 1.
+ *     \arg 0: Reset whole chip except partial AON and RTC.
+ *     \arg 1: Reset whole chip.
+ * \param[in]  comp: Set period in ms.
+ * \param[in]  cnt_ctl: Specify whether to continue counting in low power mode.
+ *     This parameter can be 0 or 1.
+ *     \arg 0: Stop count in low power mode.
+ *     \arg 1: Continue count in low power mode.
+ * \param[in]  cnt_reload: Specify whether to reload counter when exiting low power mode.
+ *     This parameter can be 0 or 1.
+ *     \arg 0: Not reload counter when exiting low power mode.
+ *     \arg 1: Reload counter when exiting low power mode.
+ * \return None.
+ */
 void AON_WDG_Config(uint8_t reset_level, uint32_t comp, uint8_t cnt_ctl, uint8_t cnt_reload);
 
 /**
-   * @brief  Config Reset Level.
-   * @param  reset_level: 0, Reset whole chip; 1, Reset whole chip except partial AON and RTC.
-   * @retval none.
-   */
+ * \brief  Configure Reset Level.
+ * \param[in]  reset_level: Specify the reset level.
+ *     This parameter can be 0 or 1.
+ *     \arg 0: Reset whole chip except partial AON and RTC.
+ *     \arg 1: Reset whole chip.
+ * \return None.
+ */
 void AON_WDG_ConfigResetLevel(uint8_t reset_level);
 
 /**
-   * @brief  Config Period.
-   * @param  comp: Set period in ms.
-   * @retval none.
-   */
+ * \brief  Configure comp period of the AON Watch Dog.
+ * \param[in]  comp: Set period in ms.
+ * \return None.
+ */
 void AON_WDG_ConfigComp(uint32_t comp);
 
 /**
-   * @brief  Config wheather continue count in low power mode or not.
-   * @param  cnt_ctl: 0, Stop count in low power mode; 1, Continue count in low power mode.
-   * @retval none.
-   */
+ * \brief  Configure whether to continue counting in low power mode or not.
+ * \param[in]  cnt_ctl: Specify whether to continue counting in low power mode.
+ *     This parameter can be 0 or 1.
+ *     \arg 0: Stop count in low power mode.
+ *     \arg 1: Continue count in low power mode.
+ * \return None.
+ */
 void AON_WDG_ConfigCntCtl(uint8_t cnt_ctl);
 
 /**
-   * @brief  Config wheather reload counter when exit low power mode or not.
-   * @param  cnt_reload: 0, Not reload counter when exit low power mode
-                         1, Reload counter when exit low power mode.
-   * @retval none.
-   */
+ * \brief  Configure whether to reload the counter when exiting low power mode or not.
+ * \param[in]  cnt_reload: Specify whether to reload counter when exiting low power mode.
+ *     This parameter can be 0 or 1.
+ *     \arg 0: Not reload counter when exiting low power mode.
+ *     \arg 1: Reload counter when exiting low power mode.
+ * \return None.
+ */
 void AON_WDG_ConfigCntReload(uint8_t cnt_reload);
 
 /**
-   * @brief  AON Watch Dog Timer Enable.
-   */
+ * \brief  Enable the AON Watch Dog.
+ * \return None.
+ */
 void AON_WDG_Enable(void);
 
 /**
-   * @brief  AON Watch Dog Timer Disable.
-   */
+ * \brief  Disable the AON Watch Dog.
+ * \return None.
+ */
 void AON_WDG_Disable(void);
 
 /**
-   * @brief  AON Watch Dog Timer Restart.
-   */
+ * \brief  Restart the AON Watch Dog.
+ * \return None.
+ */
 void AON_WDG_Restart(void);
 
 /**
-   * @brief  AON Watch Dog System Reset.
-   */
+ * \brief  Reset the system of the AON Watch Dog.
+ * \return None.
+ */
 void AON_WDG_SystemReset(void);
 
 /**
-  * @}
+ * \brief  AON Watch Dog initialization.
+ * \param[in]  reset_level: Specify the reset level.
+ *     This parameter can be 0 or 1.
+ *     \arg 0: Reset whole chip except partial AON and RTC.
+ *     \arg 1: Reset whole chip.
+ * \param[in]  timeout_second: Specify the timeout period in seconds, the maximum value is 65s
+ * \return None.
+ */
+static inline void aon_wdg_init(uint8_t reset_level, uint8_t timeout_second)
+{
+    uint32_t comp = (timeout_second * 1000) & 0x3FFFF;  //only 18 bit
+    AON_WDG_Config(reset_level, comp, 1, 1);
+}
+
+/**
+ * \brief  Enable the AON Watch Dog.
+ * \return None.
+ * \note   For APP use.
+ */
+static inline void aon_wdg_enable(void)
+{
+    AON_WDG_Enable();
+}
+
+/**
+ * \brief  Restart and disable the AON Watch Dog.
+ * \return None.
+ * \note   For APP use.
+ */
+static inline void aon_wdg_disable(void)
+{
+    AON_WDG_Restart();
+    AON_WDG_Disable();
+}
+
+/**
+ * @brief  Is AON Watch Dog enable.
+ */
+static inline bool AON_WDG_IsEnable(void)
+{
+    return (AON_WDG->u.CRT_BITS.EN == 1);
+}
+
+/**
+  * \}
   */
 
 /**
-  * @}
+  * \}
   */
 
 #ifdef __cplusplus

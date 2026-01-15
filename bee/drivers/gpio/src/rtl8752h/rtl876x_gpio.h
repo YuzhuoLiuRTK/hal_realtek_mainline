@@ -36,11 +36,6 @@ extern "C" {
  *============================================================================*/
 #include "rtl876x.h"
 
-typedef struct
-{
-    uint32_t gpio_reg[10];
-} GPIOStoreReg_Typedef;
-
 /**
  * \cond        private
  * \defgroup    GPIO_Debounce_Register GPIO Debounce Register
@@ -815,36 +810,6 @@ __STATIC_INLINE void GPIO_Debounce_Time(uint32_t DebounceTime)
     count = (244 * DebounceTime) / 100 - 1;
     GPIO_DBCLK_DIV &= (~((0xff << 0)));
     GPIO_DBCLK_DIV = GPIO_DBCLK_DIV + count;
-}
-
-__STATIC_INLINE void GPIO_SetPolarity(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin,
-                                      GPIOIT_PolarityType int_type)
-{
-    if (int_type == GPIO_INT_POLARITY_ACTIVE_LOW)
-    {
-        GPIOx->INTPOLARITY = GPIOx->INTPOLARITY & (~GPIO_Pin);
-    }
-    else
-    {
-        GPIOx->INTPOLARITY = (GPIOx->INTPOLARITY & (~GPIO_Pin))
-                             | GPIO_Pin;
-    }
-}
-#define GPIO_GetPortIntStatus(GPIOx) (((GPIO_TypeDef *)(GPIOx))->INTSTATUS)
-#define GPIO_GetPortDirection(GPIOx) (((GPIO_TypeDef *)(GPIOx))->DATADIR)
-#define GPIO_GetPortPolarity(GPIOx) (((GPIO_TypeDef *)(GPIOx))->INTPOLARITY)
-#define GPIO_GetINTEnable(GPIOx, GPIO_Pin) \
-    (((GPIO_TypeDef *)(GPIOx))->INTEN & (uint32_t )(GPIO_Pin) ? true : false)
-
-__STATIC_INLINE GPIOIT_PolarityType GPIO_GetPolarity(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin)
-{
-    return GPIOx->INTPOLARITY & GPIO_Pin ? GPIO_INT_POLARITY_ACTIVE_HIGH : GPIO_INT_POLARITY_ACTIVE_LOW;
-}
-
-__STATIC_INLINE GPIOIT_LevelType GPIO_GetTrigger(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin)
-{
-    return GPIOx->INTBOTHEDGE & GPIO_Pin ? GPIO_INT_BOTH_EDGE :
-           GPIOx->INTTYPE & GPIO_Pin ? GPIO_INT_Trigger_EDGE : GPIO_INT_Trigger_LEVEL;
 }
 
 /** End of GPIO_Exported_Functions

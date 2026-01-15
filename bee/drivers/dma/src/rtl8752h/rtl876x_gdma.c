@@ -84,11 +84,11 @@ void GDMA_Init(GDMA_ChannelTypeDef *GDMA_Channelx, GDMA_InitTypeDef *GDMA_InitSt
     /*--------------------------- GDMA Configuration -----------------*/
     /* clear pending interrupts of corresponding GDMA channel */
     temp_bit = BIT(GDMA_InitStruct->GDMA_ChannelNum);
-    GDMA_BASE->CLEAR_TFR |= temp_bit;
-    GDMA_BASE->CLEAR_BLOCK |= temp_bit;
-    GDMA_BASE->CLEAR_DST_TRAN |= temp_bit;
-    GDMA_BASE->CLEAR_SRC_TRAN |= temp_bit;
-    GDMA_BASE->CLEAR_ERR |= temp_bit;
+    GDMA_BASE->CLEAR_TFR = temp_bit;
+    GDMA_BASE->CLEAR_BLOCK = temp_bit;
+    GDMA_BASE->CLEAR_DST_TRAN = temp_bit;
+    GDMA_BASE->CLEAR_SRC_TRAN = temp_bit;
+    GDMA_BASE->CLEAR_ERR = temp_bit;
 
     /* mask pending interrupts of corresponding GDMA channel */
     temp_bit = BIT(GDMA_InitStruct->GDMA_ChannelNum + 8);
@@ -182,11 +182,11 @@ void GDMA_Init(GDMA_ChannelTypeDef *GDMA_Channelx, GDMA_InitTypeDef *GDMA_InitSt
 
     /* ---------------clear pending interrupts of corresponding GDMA channel------------------ */
     temp_bit = BIT(GDMA_InitStruct->GDMA_ChannelNum);
-    GDMA_BASE->CLEAR_TFR |= temp_bit;
-    GDMA_BASE->CLEAR_BLOCK |= temp_bit;
-    GDMA_BASE->CLEAR_DST_TRAN |= temp_bit;
-    GDMA_BASE->CLEAR_SRC_TRAN |= temp_bit;
-    GDMA_BASE->CLEAR_ERR |= temp_bit;
+    GDMA_BASE->CLEAR_TFR = temp_bit;
+    GDMA_BASE->CLEAR_BLOCK = temp_bit;
+    GDMA_BASE->CLEAR_DST_TRAN = temp_bit;
+    GDMA_BASE->CLEAR_SRC_TRAN = temp_bit;
+    GDMA_BASE->CLEAR_ERR = temp_bit;
 }
 
 /**

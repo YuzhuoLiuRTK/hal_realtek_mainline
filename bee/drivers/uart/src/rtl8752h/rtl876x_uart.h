@@ -38,11 +38,6 @@ extern "C" {
 #include "rtl876x.h"
 #include "rtl876x_alias.h"
 
-typedef struct
-{
-    uint32_t uart_reg[12];
-} UARTStoreReg_Typedef;
-
 /*============================================================================*
  *                         Types
  *============================================================================*/
@@ -118,6 +113,8 @@ typedef struct
 #define UART_RX_FIFO_SIZE           32
 #define UART_TX_FIFO_ADDR(UARTx)    (uint32_t)(&(((UART_TypeDef *)(UARTx))->RB_THR))
 #define UART_RX_FIFO_ADDR(UARTx)    (uint32_t)(&(((UART_TypeDef *)(UARTx))->RB_THR))
+/** \} */
+
 /**
  * \defgroup    UART_BAUD_RATE_Define UART BAUD RATE Define
  * \{
@@ -202,7 +199,7 @@ typedef enum
 #define UART_PARITY_EVEN                        ((uint16_t)(0x03 << 3))
 
 #define IS_UART_PARITY(PARITY) (((PARITY) == UART_PARITY_NO_PARTY) || ((PARITY) == UART_PARITY_ODD)\
-                                || ((PARITY) == UART_PARITY_EVEN))
+                                ((PARITY) == UART_PARITY_EVEN))
 /** \} */
 
 /**
@@ -884,35 +881,6 @@ __STATIC_INLINE void UART_ClearRxBreak(UART_TypeDef *UARTx)
     return;
 }
 
-__STATIC_INLINE void UART_TxDmaCmd(UART_TypeDef *UARTx, FunctionalState NewState)
-{
-    /* Check the parameters */
-    assert_param(IS_UART_PERIPH(UARTx));
-
-    if (NewState != DISABLE)
-    {
-        UARTx->MISCR |= BIT(1);
-    }
-    else
-    {
-        UARTx->MISCR &= !BIT(1);
-    }
-}
-
-__STATIC_INLINE void UART_RxDmaCmd(UART_TypeDef *UARTx, FunctionalState NewState)
-{
-    /* Check the parameters */
-    assert_param(IS_UART_PERIPH(UARTx));
-
-    if (NewState != DISABLE)
-    {
-        UARTx->MISCR |= BIT(2);
-    }
-    else
-    {
-        UARTx->MISCR &= !BIT(2);
-    }
-}
 /** End of UART_Exported_Functions
   * \}
   */

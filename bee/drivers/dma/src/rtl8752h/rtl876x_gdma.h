@@ -979,58 +979,6 @@ __STATIC_INLINE uint32_t GDMA_GetDstTransferAddress(GDMA_ChannelTypeDef *GDMA_Ch
     return address;
 }
 
-__STATIC_INLINE GDMA_ChannelTypeDef *GDMA_GetGDMAChannelx(uint8_t GDMA_ChannelNum)
-{
-    /* Check the parameters */
-    assert_param(IS_GDMA_ChannelNum(GDMA_ChannelNum));
-
-    return DMA_CH_BASE(GDMA_ChannelNum);
-}
-
-__STATIC_INLINE void GDMA_ResetBlockTransfer(GDMA_ChannelTypeDef *GDMA_Channelx)
-{
-    /* Check the parameters */
-    assert_param(IS_GDMA_ALL_PERIPH(GDMA_Channelx));
-
-    GDMA_Channelx->CTL_LOW |= BIT27 | BIT28;
-    GDMA_Channelx->CFG_LOW &= ~(BIT30 | BIT31);
-}
-
-__STATIC_INLINE ITStatus GDMA_GetErrorINTStatus(uint8_t GDMA_Channel_Num)
-{
-    ITStatus bit_status = RESET;
-
-    /* Check the parameters */
-    assert_param(IS_GDMA_ChannelNum(GDMA_Channel_Num));
-
-    if ((GDMA_BASE->STATUS_ERR & BIT(GDMA_Channel_Num)) != (uint32_t)RESET)
-    {
-
-        bit_status = SET;
-    }
-
-    /* Return the transfer interrupt status */
-    return  bit_status;
-}
-
-__STATIC_INLINE ITStatus GDMA_GetBlockINTStatus(uint8_t GDMA_Channel_Num)
-{
-    ITStatus bit_status = RESET;
-
-    /* Check the parameters */
-    assert_param(IS_GDMA_ChannelNum(GDMA_Channel_Num));
-
-    if ((GDMA_BASE->STATUS_BLOCK & BIT(GDMA_Channel_Num)) != (uint32_t)RESET)
-    {
-
-        bit_status = SET;
-    }
-
-    /* Return the transfer interrupt status */
-    return  bit_status;
-}
-
-
 /** End of GDMA_Exported_Functions
   * \}
   */

@@ -38,10 +38,6 @@ extern "C" {
  *============================================================================*/
 #include "rtl876x.h"
 
-typedef struct
-{
-    uint32_t spi_reg[14];
-} SPIStoreReg_Typedef;
 
 /*============================================================================*
  *                         Types
@@ -212,6 +208,37 @@ typedef struct
                                    ((DATASIZE) == SPI_DataSize_32b))
 /** \} */
 
+/**
+ * \defgroup    SPI_BaudRate_Prescaler SPI BaudRate Prescaler Value
+ * \{
+ * \ingroup     SPI_Exported_Constants
+ */
+
+#define SPI_BaudRatePrescaler_2         ((uint32_t)0x0002)
+#define SPI_BaudRatePrescaler_4         ((uint32_t)0x0004)
+#define SPI_BaudRatePrescaler_6         ((uint32_t)0x0006)
+#define SPI_BaudRatePrescaler_8         ((uint32_t)0x0008)
+#define SPI_BaudRatePrescaler_10        ((uint32_t)0x000A)
+#define SPI_BaudRatePrescaler_12        ((uint32_t)0x000C)
+#define SPI_BaudRatePrescaler_14        ((uint32_t)0x000E)
+#define SPI_BaudRatePrescaler_16        ((uint32_t)0x0010)
+#define SPI_BaudRatePrescaler_32        ((uint32_t)0x0020)
+#define SPI_BaudRatePrescaler_64        ((uint32_t)0x0040)
+#define SPI_BaudRatePrescaler_128       ((uint32_t)0x0080)
+#define SPI_BaudRatePrescaler_256       ((uint32_t)0x0100)
+
+#define IS_SPI_BAUDRATE_PRESCALER(PRESCALER) (((PRESCALER) == SPI_BaudRatePrescaler_2) || \
+                                              ((PRESCALER) == SPI_BaudRatePrescaler_4) || \
+                                              ((PRESCALER) == SPI_BaudRatePrescaler_8) || \
+                                              ((PRESCALER) == SPI_BaudRatePrescaler_10) || \
+                                              ((PRESCALER) == SPI_BaudRatePrescaler_12) || \
+                                              ((PRESCALER) == SPI_BaudRatePrescaler_14) || \
+                                              ((PRESCALER) == SPI_BaudRatePrescaler_16) || \
+                                              ((PRESCALER) == SPI_BaudRatePrescaler_32) || \
+                                              ((PRESCALER) == SPI_BaudRatePrescaler_64) || \
+                                              ((PRESCALER) == SPI_BaudRatePrescaler_128) || \
+                                              ((PRESCALER) == SPI_BaudRatePrescaler_256))
+/** \} */
 
 /**
  * \defgroup    SPI_Clock_Polarity SPI Clock Polarity

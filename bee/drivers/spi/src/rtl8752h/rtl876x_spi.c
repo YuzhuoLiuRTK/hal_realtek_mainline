@@ -169,7 +169,7 @@ void SPI_StructInit(SPI_InitTypeDef *SPI_InitStruct)
         1;                  /* 1:Serial clock toggles in first of first data bit;
                                                                    0:Serial clock toggles in middle of first data bit*/
     SPI_InitStruct->SPI_BaudRatePrescaler =
-        128;             /* Speed = SPI Clock source/ SPI_ClkDIV*/
+        SPI_BaudRatePrescaler_128;             /* Speed = SPI Clock source/ SPI_ClkDIV*/
     SPI_InitStruct->SPI_TxThresholdLevel  = 1;                  /* Transmit FIFO Threshold */
     SPI_InitStruct->SPI_RxThresholdLevel  = 0;                  /* Receive FIFO Threshold */
     SPI_InitStruct->SPI_NDF               = 1;

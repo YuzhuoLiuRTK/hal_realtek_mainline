@@ -1,45 +1,45 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
-***************************************************************************************************
+*****************************************************************************************
+*     Copyright(c) 2025, Realtek Semiconductor Corporation. All rights reserved.
+*
+*     SPDX-License-Identifier: Apache-2.0
+*****************************************************************************************
 * @file     rtl876x_aon_wdg.c
 * @brief    This file provides all the AON Watch Dog firmware functions.
 * @details
 * @author   Serval Li
 * @date     2017-06-27
 * @version  v0.1
-***************************************************************************************************
+***************************************************************************************
+* @attention
+* <h2><center>&copy; COPYRIGHT 2025 Realtek Semiconductor Corporation</center></h2>
+***************************************************************************************
 */
 
 #include "rtl876x.h"
 #include "rtl876x_aon_wdg.h"
-#include "patch_iodriver.h"
+#include "rtl876x_rtc.h"
 
-#define REG_FAST_WRITE_BASE_ADDR        (0x40000100UL)
-#define REG_RTC_FAST_WDATA              (0x400001F0UL)
-#define REG_RTC_FAST_ADDR               (0x400001F4UL)
-#define REG_RTC_WR_STROBE               (0x400001F8UL)
+
+#define REG_RTC_FAST_WRITE_BASE_ADDR    (0x40000100UL)
+#define REG_RTC_FAST_WDATA              (0x400001f0UL)
+#define REG_RTC_FAST_ADDR               (0x400001f4UL)
+#define REG_RTC_WR_STROBE               (0x400001f8UL)
+
+/* Enable Write to CRT register */
+#define AON_WDG_EnableWriteCRT() AON_WDG_WriteReg((uint32_t)&AON_WDG->WP - SYSTEM_REG_BASE, AON_WDG->WP | BIT0)
+
+/* Disable Write to CRT register */
+#define AON_WDG_DisableWriteCRT() AON_WDG_WriteReg((uint32_t)&AON_WDG->WP - SYSTEM_REG_BASE, AON_WDG->WP & ~BIT0);
 
 /**
   * @brief  Fast write RTC register.
-  * @param  offset: the register address.
+  * @param  offset: the offset of RTC register.
   * @param  data: data which write to register.
   * @retval None
   */
-void RTC_WriteReg(uint32_t regAddress, uint32_t data)
+static void AON_WDG_WriteReg(uint32_t offset, uint32_t data)
 {
-    if (patch_RTC_Register_Write)
-    {
-        if (patch_RTC_Register_Write(regAddress, data))
-        {
-            return;
-        }
-    }
-
     static bool is_called = false;
 
     if (is_called == false)
@@ -51,16 +51,9 @@ void RTC_WriteReg(uint32_t regAddress, uint32_t data)
     /* Write data */
     *((volatile uint32_t *)REG_RTC_FAST_WDATA) = data;
     /* Write RTC register address. Only offset */
-    *((volatile uint32_t *)REG_RTC_FAST_ADDR) = regAddress - REG_FAST_WRITE_BASE_ADDR;
+    *((volatile uint32_t *)REG_RTC_FAST_ADDR) = offset - REG_RTC_FAST_WRITE_BASE_ADDR;
     *((volatile uint32_t *)REG_RTC_WR_STROBE) = 1;
 }
-
-/* Enable Write to CRT register */
-#define AON_WDG_EnableWriteCRT() RTC_WriteReg((uint32_t)&AON_WDG->WP - SYSTEM_REG_BASE, AON_WDG->WP | BIT0)
-
-/* Disable Write to CRT register */
-#define AON_WDG_DisableWriteCRT() RTC_WriteReg((uint32_t)&AON_WDG->WP - SYSTEM_REG_BASE, AON_WDG->WP & ~BIT0);
-
 
 void AON_WDG_Config(uint8_t reset_level, uint32_t comp, uint8_t cnt_ctl, uint8_t cnt_reload)
 {
@@ -74,7 +67,7 @@ void AON_WDG_Config(uint8_t reset_level, uint32_t comp, uint8_t cnt_ctl, uint8_t
     aon_wdg.u.CRT_BITS.CNT_RELOAD = cnt_reload;
 
     AON_WDG_EnableWriteCRT();
-    RTC_WriteReg((uint32_t)&AON_WDG->u.CRT - SYSTEM_REG_BASE, aon_wdg.u.CRT);
+    AON_WDG_WriteReg((uint32_t)&AON_WDG->u.CRT - SYSTEM_REG_BASE, aon_wdg.u.CRT);
     AON_WDG_DisableWriteCRT();
 }
 
@@ -86,7 +79,7 @@ void AON_WDG_ConfigResetLevel(uint8_t reset_level)
     aon_wdg.u.CRT_BITS.RST_LVL = reset_level;
 
     AON_WDG_EnableWriteCRT();
-    RTC_WriteReg((uint32_t)&AON_WDG->u.CRT - SYSTEM_REG_BASE, aon_wdg.u.CRT);
+    AON_WDG_WriteReg((uint32_t)&AON_WDG->u.CRT - SYSTEM_REG_BASE, aon_wdg.u.CRT);
     AON_WDG_DisableWriteCRT();
 }
 
@@ -98,7 +91,7 @@ void AON_WDG_ConfigComp(uint32_t comp)
     aon_wdg.u.CRT_BITS.COMP = comp;
 
     AON_WDG_EnableWriteCRT();
-    RTC_WriteReg((uint32_t)&AON_WDG->u.CRT - SYSTEM_REG_BASE, aon_wdg.u.CRT);
+    AON_WDG_WriteReg((uint32_t)&AON_WDG->u.CRT - SYSTEM_REG_BASE, aon_wdg.u.CRT);
     AON_WDG_DisableWriteCRT();
 }
 
@@ -110,7 +103,7 @@ void AON_WDG_ConfigCntCtl(uint8_t cnt_ctl)
     aon_wdg.u.CRT_BITS.CNT_CTL = cnt_ctl;
 
     AON_WDG_EnableWriteCRT();
-    RTC_WriteReg((uint32_t)&AON_WDG->u.CRT - SYSTEM_REG_BASE, aon_wdg.u.CRT);
+    AON_WDG_WriteReg((uint32_t)&AON_WDG->u.CRT - SYSTEM_REG_BASE, aon_wdg.u.CRT);
     AON_WDG_DisableWriteCRT();
 }
 
@@ -122,7 +115,7 @@ void AON_WDG_ConfigCntReload(uint8_t cnt_reload)
     aon_wdg.u.CRT_BITS.CNT_RELOAD = cnt_reload;
 
     AON_WDG_EnableWriteCRT();
-    RTC_WriteReg((uint32_t)&AON_WDG->u.CRT - SYSTEM_REG_BASE, aon_wdg.u.CRT);
+    AON_WDG_WriteReg((uint32_t)&AON_WDG->u.CRT - SYSTEM_REG_BASE, aon_wdg.u.CRT);
     AON_WDG_DisableWriteCRT();
 }
 
@@ -134,7 +127,7 @@ void AON_WDG_Enable(void)
     aon_wdg.u.CRT_BITS.EN = 1;
 
     AON_WDG_EnableWriteCRT();
-    RTC_WriteReg((uint32_t)&AON_WDG->u.CRT - SYSTEM_REG_BASE, aon_wdg.u.CRT);
+    AON_WDG_WriteReg((uint32_t)&AON_WDG->u.CRT - SYSTEM_REG_BASE, aon_wdg.u.CRT);
     AON_WDG_DisableWriteCRT();
 }
 
@@ -146,14 +139,14 @@ void AON_WDG_Disable(void)
     aon_wdg.u.CRT_BITS.EN = 2;
 
     AON_WDG_EnableWriteCRT();
-    RTC_WriteReg((uint32_t)&AON_WDG->u.CRT - SYSTEM_REG_BASE, aon_wdg.u.CRT);
+    AON_WDG_WriteReg((uint32_t)&AON_WDG->u.CRT - SYSTEM_REG_BASE, aon_wdg.u.CRT);
     AON_WDG_DisableWriteCRT();
 }
 
 void AON_WDG_Restart(void)
 {
-    RTC_WriteReg((uint32_t)&AON_WDG->CNT_CLR, 1);
-    RTC_WriteReg((uint32_t)&AON_WDG->CNT_CLR, 0);
+    AON_WDG_WriteReg((uint32_t)&AON_WDG->CNT_CLR, 1);
+    AON_WDG_WriteReg((uint32_t)&AON_WDG->CNT_CLR, 0);
 }
 
 void AON_WDG_SystemReset(void)

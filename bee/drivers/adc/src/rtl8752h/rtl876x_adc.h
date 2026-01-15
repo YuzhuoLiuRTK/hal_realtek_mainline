@@ -37,15 +37,9 @@ extern "C" {
  *============================================================================*/
 #include "rtl876x.h"
 #include "rtl876x_alias.h"
+#include "platform_utils.h"
 #include "adc_lib.h"
 #include "trace.h"
-
-extern void (*platform_delay_ms)(uint32_t t);
-
-typedef struct
-{
-    uint32_t adc_reg[16];
-} ADCStoreReg_TypeDef;
 
 /*============================================================================*
  *                         Types
@@ -817,12 +811,12 @@ void ADC_SchTableConfig(ADC_TypeDef *ADCx, uint16_t Index, uint8_t adcMode);
  * void adc_demo(void)
  * {
  *   uint16_t bit_map = 0x03;
- *   ADC_BitMapConfig(ADC, bit_map, ENABLE);
+ *   ADC_BitMapConfig(ADC, bit_map);
  * }
  * \endcode
  *
  */
-void ADC_BitMapConfig(ADC_TypeDef *ADCx, uint16_t bitMap, FunctionalState NewState);
+void ADC_BitMapConfig(ADC_TypeDef *ADCx, uint16_t bitMap);
 
 /**
  * rtl876x_adc.h
