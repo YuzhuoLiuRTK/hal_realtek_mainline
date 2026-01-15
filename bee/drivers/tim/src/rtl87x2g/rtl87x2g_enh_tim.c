@@ -1,10 +1,6 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
+*********************************************************************************************************
+*               Copyright(c) 2024, Realtek Semiconductor Corporation. All rights reserved.
 **********************************************************************************************************
 * \file     rtl87x2g_enh_tim.c
 * \brief    This file provides all the ENHTIM firmware internal functions.
@@ -210,72 +206,105 @@ void ENHTIM_PWMSrcSelect(ENHTIM_TypeDef *ENHTIMx, ENHTIMPWMDZRef_TypeDef PWMSrcS
 }
 #endif
 
+
 void ENHTIM_DLPSEnter(void *PeriReg, void *StoreBuf)
 {
-    ENHTIM_TypeDef *ENH_TIMx = (ENHTIM_TypeDef *)PeriReg;
     ENHTIMStoreReg_Typedef *store_buf = (ENHTIMStoreReg_Typedef *)StoreBuf;
 
     RCC_PeriphClockCmd(APBPeriph_ENHTIMER, APBPeriph_ENHTIMER_CLOCK, ENABLE);
 
-    store_buf->enhtim_reg[18] = PERIBLKCTRL_PERI_CLK->u_344.REG_ENHTIMER_1_0_CLOCK_CTRL;
-    store_buf->enhtim_reg[19] = PERIBLKCTRL_PERI_CLK->u_348.REG_ENHTIMER_3_2_CLOCK_CTRL;
+    store_buf->enhtim_reg[29] = PERIBLKCTRL_PERI_CLK->u_344.REG_ENHTIMER_1_0_CLOCK_CTRL;
+    store_buf->enhtim_reg[30] = PERIBLKCTRL_PERI_CLK->u_348.REG_ENHTIMER_3_2_CLOCK_CTRL;
 
-    store_buf->enhtim_reg[0] = ENH_TIMx->ENHTIM_CONFIGURE;
-    store_buf->enhtim_reg[1] = ENH_TIMx->ENHTIM_MAX_CNT;
-    store_buf->enhtim_reg[2] = ENH_TIMx->ENHTIM_CCR;
-    store_buf->enhtim_reg[3] = ENH_TIMx->ENHTIM_CCR_FIFO_ENTRY;
+    store_buf->enhtim_reg[0] = ENH_TIM0->ENHTIM_CONFIGURE;
+    store_buf->enhtim_reg[1] = ENH_TIM0->ENHTIM_MAX_CNT;
+    store_buf->enhtim_reg[2] = ENH_TIM0->ENHTIM_CCR;
+    store_buf->enhtim_reg[3] = ENH_TIM0->ENHTIM_CCR_FIFO_ENTRY;
 
-    store_buf->enhtim_reg[4] = ENH_TIM_SHARE->ENHTIM_FIFO_CLR;
-    store_buf->enhtim_reg[5] = ENH_TIM_SHARE->ENHTIM_CONTROL;
-    store_buf->enhtim_reg[6] = ENH_TIM_SHARE->ENHTIM_INT_CONTROL;
-    store_buf->enhtim_reg[7] = ENH_TIM_SHARE->ENHTIM_LATCH_INT_CONTROL_0;
-    store_buf->enhtim_reg[8] = ENH_TIM_SHARE->ENHTIM_LATCH_INT_CONTROL_2;
+    store_buf->enhtim_reg[4] = ENH_TIM1->ENHTIM_CONFIGURE;
+    store_buf->enhtim_reg[5] = ENH_TIM1->ENHTIM_MAX_CNT;
+    store_buf->enhtim_reg[6] = ENH_TIM1->ENHTIM_CCR;
+    store_buf->enhtim_reg[7] = ENH_TIM1->ENHTIM_CCR_FIFO_ENTRY;
 
-    store_buf->enhtim_reg[9] = REG_ENHTIMER_0_LATCH_TRIG_CFG;
-    store_buf->enhtim_reg[10] = REG_ENHTIMER_1_LATCH_TRIG_CFG;
-    store_buf->enhtim_reg[11] = REG_ENHTIMER_2_LATCH_TRIG_CFG;
-    store_buf->enhtim_reg[12] = REG_ENHTIMER_3_LATCH_TRIG_CFG;
-    store_buf->enhtim_reg[13] = REG_BT_GPIO_TRIG_ENHTIMER_CTRL;
-    store_buf->enhtim_reg[14] = REG_BT_TX_ON_TRIG_ENHTIMER_CTRL;
-    store_buf->enhtim_reg[15] = REG_BT_ACC_HIT_TRIG_ENHTIMER_CTRL;
-    store_buf->enhtim_reg[16] = REG_ENHTIMER_ONESHOT;
+    store_buf->enhtim_reg[8]  = ENH_TIM2->ENHTIM_CONFIGURE;
+    store_buf->enhtim_reg[9]  = ENH_TIM2->ENHTIM_MAX_CNT;
+    store_buf->enhtim_reg[10] = ENH_TIM2->ENHTIM_CCR;
+    store_buf->enhtim_reg[11] = ENH_TIM2->ENHTIM_CCR_FIFO_ENTRY;
 
-    store_buf->enhtim_reg[17] = ((ENHPWM_TypeDef *)((uint32_t)ENHANCED_PWM0_REG_BASE +
-                                                    4 * (ENH_TIMx - ENH_TIM0) / sizeof(ENHTIM_TypeDef)))->ENHTIMER_PWM_CFG;
+    store_buf->enhtim_reg[12] = ENH_TIM3->ENHTIM_CONFIGURE;
+    store_buf->enhtim_reg[13] = ENH_TIM3->ENHTIM_MAX_CNT;
+    store_buf->enhtim_reg[14] = ENH_TIM3->ENHTIM_CCR;
+    store_buf->enhtim_reg[15] = ENH_TIM3->ENHTIM_CCR_FIFO_ENTRY;
+
+    store_buf->enhtim_reg[16] = ENH_TIM_SHARE->ENHTIM_FIFO_CLR;
+    store_buf->enhtim_reg[17] = ENH_TIM_SHARE->ENHTIM_CONTROL;
+    store_buf->enhtim_reg[18] = ENH_TIM_SHARE->ENHTIM_INT_CONTROL;
+    store_buf->enhtim_reg[19] = ENH_TIM_SHARE->ENHTIM_LATCH_INT_CONTROL_0;
+    store_buf->enhtim_reg[20] = ENH_TIM_SHARE->ENHTIM_LATCH_INT_CONTROL_2;
+
+    store_buf->enhtim_reg[21] = REG_ENHTIMER_0_LATCH_TRIG_CFG;
+    store_buf->enhtim_reg[22] = REG_ENHTIMER_1_LATCH_TRIG_CFG;
+    store_buf->enhtim_reg[23] = REG_ENHTIMER_2_LATCH_TRIG_CFG;
+    store_buf->enhtim_reg[24] = REG_ENHTIMER_3_LATCH_TRIG_CFG;
+    store_buf->enhtim_reg[25] = REG_BT_GPIO_TRIG_ENHTIMER_CTRL;
+    store_buf->enhtim_reg[26] = REG_BT_TX_ON_TRIG_ENHTIMER_CTRL;
+    store_buf->enhtim_reg[27] = REG_BT_ACC_HIT_TRIG_ENHTIMER_CTRL;
+    store_buf->enhtim_reg[28] = REG_ENHTIMER_ONESHOT;
+
+    store_buf->enhpwm_reg[0] = ENH_TIM0_PWM->ENHTIMER_PWM_CFG;
+    store_buf->enhpwm_reg[1] = ENH_TIM1_PWM->ENHTIMER_PWM_CFG;
+    store_buf->enhpwm_reg[2] = ENH_TIM2_PWM->ENHTIMER_PWM_CFG;
+    store_buf->enhpwm_reg[3] = ENH_TIM3_PWM->ENHTIMER_PWM_CFG;
 }
 
 void ENHTIM_DLPSExit(void *PeriReg, void *StoreBuf)
 {
-    ENHTIM_TypeDef *ENH_TIMx = (ENHTIM_TypeDef *)PeriReg;
     ENHTIMStoreReg_Typedef *store_buf = (ENHTIMStoreReg_Typedef *)StoreBuf;
 
     /* Enable timer IP clock and function */
     RCC_PeriphClockCmd(APBPeriph_ENHTIMER, APBPeriph_ENHTIMER_CLOCK, ENABLE);
-    PERIBLKCTRL_PERI_CLK->u_344.REG_ENHTIMER_1_0_CLOCK_CTRL = store_buf->enhtim_reg[18];
-    PERIBLKCTRL_PERI_CLK->u_348.REG_ENHTIMER_3_2_CLOCK_CTRL = store_buf->enhtim_reg[19];
+    PERIBLKCTRL_PERI_CLK->u_344.REG_ENHTIMER_1_0_CLOCK_CTRL = store_buf->enhtim_reg[29];
+    PERIBLKCTRL_PERI_CLK->u_348.REG_ENHTIMER_3_2_CLOCK_CTRL = store_buf->enhtim_reg[30];
 
-    ENH_TIMx->ENHTIM_CONFIGURE      = store_buf->enhtim_reg[0];
-    ENH_TIMx->ENHTIM_MAX_CNT        = store_buf->enhtim_reg[1];
-    ENH_TIMx->ENHTIM_CCR            = store_buf->enhtim_reg[2];
-    ENH_TIMx->ENHTIM_CCR_FIFO_ENTRY = store_buf->enhtim_reg[3];
+    ENH_TIM0->ENHTIM_CONFIGURE      = store_buf->enhtim_reg[0];
+    ENH_TIM0->ENHTIM_MAX_CNT        = store_buf->enhtim_reg[1];
+    ENH_TIM0->ENHTIM_CCR            = store_buf->enhtim_reg[2];
+    ENH_TIM0->ENHTIM_CCR_FIFO_ENTRY = store_buf->enhtim_reg[3];
 
-    ENH_TIM_SHARE->ENHTIM_FIFO_CLR            = store_buf->enhtim_reg[4];
-    ENH_TIM_SHARE->ENHTIM_CONTROL             = store_buf->enhtim_reg[5] ;
-    ENH_TIM_SHARE->ENHTIM_INT_CONTROL         = store_buf->enhtim_reg[6];
-    ENH_TIM_SHARE->ENHTIM_LATCH_INT_CONTROL_0 = store_buf->enhtim_reg[7];
-    ENH_TIM_SHARE->ENHTIM_LATCH_INT_CONTROL_2 = store_buf->enhtim_reg[8];
+    ENH_TIM1->ENHTIM_CONFIGURE      = store_buf->enhtim_reg[4];
+    ENH_TIM1->ENHTIM_MAX_CNT        = store_buf->enhtim_reg[5];
+    ENH_TIM1->ENHTIM_CCR            = store_buf->enhtim_reg[6];
+    ENH_TIM1->ENHTIM_CCR_FIFO_ENTRY = store_buf->enhtim_reg[7];
 
-    REG_ENHTIMER_0_LATCH_TRIG_CFG     =  store_buf->enhtim_reg[9];
-    REG_ENHTIMER_1_LATCH_TRIG_CFG     =  store_buf->enhtim_reg[10];
-    REG_ENHTIMER_2_LATCH_TRIG_CFG     =  store_buf->enhtim_reg[11];
-    REG_ENHTIMER_3_LATCH_TRIG_CFG     =  store_buf->enhtim_reg[12];
-    REG_BT_GPIO_TRIG_ENHTIMER_CTRL    =  store_buf->enhtim_reg[13];
-    REG_BT_TX_ON_TRIG_ENHTIMER_CTRL   =  store_buf->enhtim_reg[14];
-    REG_BT_ACC_HIT_TRIG_ENHTIMER_CTRL =  store_buf->enhtim_reg[15];
-    REG_ENHTIMER_ONESHOT              =  store_buf->enhtim_reg[16];
+    ENH_TIM2->ENHTIM_CONFIGURE      = store_buf->enhtim_reg[8];
+    ENH_TIM2->ENHTIM_MAX_CNT        = store_buf->enhtim_reg[9];
+    ENH_TIM2->ENHTIM_CCR            = store_buf->enhtim_reg[10];
+    ENH_TIM2->ENHTIM_CCR_FIFO_ENTRY = store_buf->enhtim_reg[11];
 
-    ((ENHPWM_TypeDef *)((uint32_t)ENHANCED_PWM0_REG_BASE +
-                        4 * (ENH_TIMx - ENH_TIM0) / sizeof(ENHTIM_TypeDef)))->ENHTIMER_PWM_CFG = store_buf->enhtim_reg[17];
+    ENH_TIM3->ENHTIM_CONFIGURE      = store_buf->enhtim_reg[12];
+    ENH_TIM3->ENHTIM_MAX_CNT        = store_buf->enhtim_reg[13];
+    ENH_TIM3->ENHTIM_CCR            = store_buf->enhtim_reg[14];
+    ENH_TIM3->ENHTIM_CCR_FIFO_ENTRY = store_buf->enhtim_reg[15];
+
+    ENH_TIM_SHARE->ENHTIM_FIFO_CLR            = store_buf->enhtim_reg[16];
+    ENH_TIM_SHARE->ENHTIM_CONTROL             = store_buf->enhtim_reg[17] ;
+    ENH_TIM_SHARE->ENHTIM_INT_CONTROL         = store_buf->enhtim_reg[18];
+    ENH_TIM_SHARE->ENHTIM_LATCH_INT_CONTROL_0 = store_buf->enhtim_reg[19];
+    ENH_TIM_SHARE->ENHTIM_LATCH_INT_CONTROL_2 = store_buf->enhtim_reg[20];
+
+    REG_ENHTIMER_0_LATCH_TRIG_CFG     =  store_buf->enhtim_reg[21];
+    REG_ENHTIMER_1_LATCH_TRIG_CFG     =  store_buf->enhtim_reg[22];
+    REG_ENHTIMER_2_LATCH_TRIG_CFG     =  store_buf->enhtim_reg[23];
+    REG_ENHTIMER_3_LATCH_TRIG_CFG     =  store_buf->enhtim_reg[24];
+    REG_BT_GPIO_TRIG_ENHTIMER_CTRL    =  store_buf->enhtim_reg[25];
+    REG_BT_TX_ON_TRIG_ENHTIMER_CTRL   =  store_buf->enhtim_reg[26];
+    REG_BT_ACC_HIT_TRIG_ENHTIMER_CTRL =  store_buf->enhtim_reg[27];
+    REG_ENHTIMER_ONESHOT              =  store_buf->enhtim_reg[28];
+
+    ENH_TIM0_PWM->ENHTIMER_PWM_CFG = store_buf->enhpwm_reg[0];
+    ENH_TIM1_PWM->ENHTIMER_PWM_CFG = store_buf->enhpwm_reg[1];
+    ENH_TIM2_PWM->ENHTIMER_PWM_CFG = store_buf->enhpwm_reg[2];
+    ENH_TIM3_PWM->ENHTIMER_PWM_CFG = store_buf->enhpwm_reg[3];
 }
 
 /******************* (C) COPYRIGHT 2024 Realtek Semiconductor Corporation *****END OF FILE****/

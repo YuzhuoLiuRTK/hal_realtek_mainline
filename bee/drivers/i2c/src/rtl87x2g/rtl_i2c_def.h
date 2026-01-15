@@ -1,10 +1,6 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
+*********************************************************************************************************
+*               Copyright(c) 2023, Realtek Semiconductor Corporation. All rights reserved.
 *********************************************************************************************************
 * \file     rtl_i2c_def.h
 * \brief    I2C related definitions for RTL87x2G
@@ -150,7 +146,7 @@ typedef struct
  *============================================================================*/
 typedef struct
 {
-    uint32_t i2c_reg[20];
+    uint32_t i2c_reg[18];
 } I2CStoreReg_Typedef;
 
 /*============================================================================*

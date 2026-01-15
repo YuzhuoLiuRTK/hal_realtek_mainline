@@ -1,10 +1,6 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
+*********************************************************************************************************
+*               Copyright(c) 2023, Realtek Semiconductor Corporation. All rights reserved.
 *********************************************************************************************************
 * \file     rtl_nvic.h
 * \brief    The header file of NVIC driver.
@@ -57,11 +53,13 @@ extern "C" {
 
 typedef struct
 {
-    int NVIC_IRQChannel;                    /*!< Specifies the IRQ channel.
-                                                 This parameter can be a value of \ref IRQn_Type and \ref GPIO_IRQn. */
-    uint32_t NVIC_IRQChannelPriority;       /*!< Specifies the priority for the IRQ channel.
+    int NVIC_IRQChannel;                    /*!< Specify the IRQ channel.
+                                                 This parameter can be a value of \ref IRQn_Type */
+
+    uint32_t NVIC_IRQChannelPriority;       /*!< Specify the priority for the IRQ channel.
                                                  This parameter can be a value between 0 and x as described in the table.*/
-    FunctionalState NVIC_IRQChannelCmd;     /*!< Specifies the IRQ channel to be enabled or disabled.*/
+
+    FunctionalState NVIC_IRQChannelCmd;     /*!< Specify the IRQ channel to be enabled or disabled.*/
 } NVIC_InitTypeDef;
 
 /** End of NVIC_Exported_Types
@@ -77,13 +75,10 @@ typedef struct
   */
 
 /**
- * \brief   Initializes the NVIC peripheral according to the specified
+ * \brief   Initialize the NVIC peripheral according to the specified
  *          parameters in NVIC_InitStruct.
  *
- * \param[in]   NVIC_InitStruct: Pointer to a NVIC_InitTypeDef structure that contains
- *              the configuration information for the specified NVIC peripheral.
- *
- * \return  None.
+ * \param[in] NVIC_InitStruct  Pointer to a NVIC_InitTypeDef structure which will be initialized.
  *
  * <b>Example usage</b>
  * \code{.c}

@@ -1,10 +1,6 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
+*********************************************************************************************************
+*               Copyright(c) 2023, Realtek Semiconductor Corporation. All rights reserved.
 **********************************************************************************************************
 * \file     rtl87x2g_uart.c
 * \brief    This file provides all the UART firmware internal functions.
@@ -141,6 +137,7 @@ void UART_ClkDivConfig(UART_TypeDef *UARTx, UARTClockDiv_TypeDef ClockDiv)
     return;
 }
 
+
 void UART_DLPSEnter(void *PeriReg, void *StoreBuf)
 {
     UART_TypeDef *UARTx = (UART_TypeDef *)PeriReg;
@@ -196,6 +193,7 @@ void UART_DLPSEnter(void *PeriReg, void *StoreBuf)
 
     return;
 }
+
 
 void UART_DLPSExit(void *PeriReg, void *StoreBuf)
 {

@@ -1,10 +1,6 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
+*********************************************************************************************************
+*               Copyright(c) 2023, Realtek Semiconductor Corporation. All rights reserved.
 *********************************************************************************************************
 * \file     rtl_gpio.c
 * \brief    This file provides all the GPIO firmware functions.
@@ -492,32 +488,6 @@ void GPIO_SetPolarity(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin,
                      GPIO_Pin, int_type);
 #endif
 }
-
-GPIOITPolarity_TypeDef GPIO_GetPolarity(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin)
-{
-    /* Check the parameters */
-    assert_param(IS_GET_GPIO_PIN(GPIO_Pin));
-
-    uint32_t GPIO_Pin_Swap =
-#if (GPIO_SUPPORT_SWAP_DEB_PINBIT == 1)
-        GPIO_SwapDebPinBit(GPIOx, GPIO_Pin);
-#else
-        GPIO_Pin;
-#endif
-
-    return GPIOx->GPIO_EXT_DEB_POL_CTL & GPIO_Pin_Swap ? GPIO_INT_POLARITY_ACTIVE_HIGH :
-           GPIO_INT_POLARITY_ACTIVE_LOW;
-
-}
-
-GPIOITTrigger_TypeDef GPIO_GetTrigger(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin)
-{
-    /* Check the parameters */
-    assert_param(IS_GET_GPIO_PIN(GPIO_Pin));
-
-    return GPIOx->GPIO_INT_LV & GPIO_Pin ? GPIO_INT_TRIGGER_EDGE : GPIO_INT_TRIGGER_LEVEL;
-}
-
 
 /******************* (C) COPYRIGHT 2023 Realtek Semiconductor Corporation *****END OF FILE****/
 

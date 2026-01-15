@@ -1,10 +1,6 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
+*********************************************************************************************************
+*               Copyright(c) 2025, Realtek Semiconductor Corporation. All rights reserved.
 *********************************************************************************************************
 * \file     rtl_tim.h
 * \brief    The header file of the peripheral TIMER driver.
@@ -615,9 +611,6 @@ void TIM_PWMChangeDZClockSrc(PWM_TypeDef *PWMx, PWMDZClockSrc_TypeDef PWM_Deazon
  */
 void TIM_ClkConfig(TIM_TypeDef *TIMx, TIMClockSrc_TypeDef ClockSrc,
                    TIMClockDiv_TypeDef ClockDiv);
-
-#define TIM_GetCurrentControl(TIMx)      (((TIM_TypeDef *)(TIMx))->TIMER_CONTROLREG)
-#define TIM_GetCurrentLoadCnt(TIMx)      (((TIM_TypeDef *)(TIMx))->TIMER_LOADCOUNT)
 
 /**
  * \brief  Get the specified TIMx clock configuration.

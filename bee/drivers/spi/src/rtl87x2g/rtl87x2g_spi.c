@@ -1,10 +1,6 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
+*********************************************************************************************************
+*               Copyright(c) 2023, Realtek Semiconductor Corporation. All rights reserved.
 **********************************************************************************************************
 * \file     rtl87x2g_spi.c
 * \brief    This file provides all the SPI firmware internal functions.
@@ -172,6 +168,7 @@ void SPI_ConfigAPHBridge(SPI_TypeDef *SPIx)
     }
 }
 
+
 void SPI_DLPSEnter(void *PeriReg, void *StoreBuf)
 {
     SPI_TypeDef *SPIx = (SPI_TypeDef *)PeriReg;
@@ -203,6 +200,7 @@ void SPI_DLPSEnter(void *PeriReg, void *StoreBuf)
     store_buf->spi_reg[10] = SPIx->SPI_DMARDLR;         /*!< 0x54 */
     store_buf->spi_reg[11] = SPIx->SPI_M_RSDR;          /*!< 0xF0 */
 }
+
 
 void SPI_DLPSExit(void *PeriReg, void *StoreBuf)
 {

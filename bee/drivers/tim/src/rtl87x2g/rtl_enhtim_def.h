@@ -1,10 +1,6 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
+**********************************************************************************************************
+*               Copyright(c) 2023, Realtek Semiconductor Corporation. All rights reserved.
 **********************************************************************************************************
 * @file     rtl_enhtim_def.h
 * @brief    ENH_TIM related definitions for RTL87x2G
@@ -174,13 +170,15 @@ typedef struct
 #define REG_BT_TX_ON_TRIG_ENHTIMER_CTRL    *((volatile uint32_t *)0x400030D4UL)
 #define REG_BT_ACC_HIT_TRIG_ENHTIMER_CTRL  *((volatile uint32_t *)0x400030D8UL)
 #define REG_ENHTIMER_ONESHOT               *((volatile uint32_t *)REG_ENHTIMER_ONESHOT_CFG)
-
+#define ENHTIM_GetCurrentControl(ENHTIMx)   (((ENHTIM_TypeDef *)(ENHTIMx))->ENHTIM_CONFIGURE)
+#define ENHTIM_GetCurrentMAXCNT(ENHTIMx)    (((ENHTIM_TypeDef *)(ENHTIMx))->ENHTIM_MAX_CNT)
 /*============================================================================*
  *                         ENHTIM Private Types
  *============================================================================*/
 typedef struct
 {
-    uint32_t enhtim_reg[20];
+    uint32_t enhtim_reg[31];
+    uint32_t enhpwm_reg[4];
 } ENHTIMStoreReg_Typedef;
 
 /*============================================================================*

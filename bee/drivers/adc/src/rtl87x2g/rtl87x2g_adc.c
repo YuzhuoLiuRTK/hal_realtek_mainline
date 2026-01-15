@@ -1,10 +1,6 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
+*********************************************************************************************************
+*               Copyright(c) 2023, Realtek Semiconductor Corporation. All rights reserved.
 **********************************************************************************************************
 * \file     rtl87x2g_adc.c
 * \brief    This file provides all the ADC firmware internal functions.
@@ -113,6 +109,12 @@ void ADC_BypassRegConfig(uint8_t ChannelNum, FunctionalState NewState)
     }
 }
 
+/**
+  * \brief  Store ADC register values when system enter DLPS.
+  * \param  PeriReg: Specifies to select the ADC peripheral.
+  * \param  StoreBuf: Store buffer to store ADC register data.
+  * \return None.
+  */
 void ADC_DLPSEnter(void *PeriReg, void *StoreBuf)
 {
     ADCStoreReg_TypeDef *store_buf = (ADCStoreReg_TypeDef *)StoreBuf;
@@ -148,6 +150,12 @@ void ADC_DLPSEnter(void *PeriReg, void *StoreBuf)
     return;
 }
 
+/**
+  * \brief  Restore ADC register values when system enter DLPS.
+  * \param  PeriReg: Specifies to select the ADC peripheral.
+  * \param  StoreBuf: Restore buffer to restore ADC register data.
+  * \return None
+  */
 void ADC_DLPSExit(void *PeriReg, void *StoreBuf)
 {
     ADCStoreReg_TypeDef *store_buf = (ADCStoreReg_TypeDef *)StoreBuf;

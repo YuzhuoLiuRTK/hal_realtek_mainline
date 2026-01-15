@@ -1,10 +1,6 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
+*********************************************************************************************************
+*               Copyright(c) 2023, Realtek Semiconductor Corporation. All rights reserved.
 **********************************************************************************************************
 * \file     rtl_uart.c
 * \brief    This file provides all the UART firmware functions.
@@ -163,25 +159,12 @@ void UART_Init(UART_TypeDef *UARTx, UART_InitTypeDef *UART_InitStruct)
     /* Set rx idle time */
     UARTx->UART_RX_TIMEOUT = (UART_InitStruct->UART_IdleTime);
 
-    if (UART_InitStruct->UART_DmaEn == UART_DMA_ENABLE)
-    {
-        /* Config UART Tx dma parameter */
-        UART_MISCR_TypeDef uart_0x28 = {.d32 = UARTx->UART_MISCR};
-        if (UART_InitStruct->UART_TxDmaEn != DISABLE)
-        {
-            /* Mask uart TX threshold value */
-            uart_0x28.b.txdma_en = ENABLE;
-        }
-        /* Config UART Rx dma parameter */
-        if (UART_InitStruct->UART_RxDmaEn != DISABLE)
-        {
-            /* Mask uart RX threshold value */
-            uart_0x28.b.rxdma_en = ENABLE;
-        }
-        uart_0x28.b.txdma_burstsize = UART_InitStruct->UART_TxWaterLevel;
-        uart_0x28.b.rxdma_burstsize = UART_InitStruct->UART_RxWaterLevel;
-        UARTx->UART_MISCR = uart_0x28.d32;
-    }
+    UART_MISCR_TypeDef uart_0x28 = {.d32 = UARTx->UART_MISCR};
+    uart_0x28.b.txdma_en = UART_InitStruct->UART_TxDmaEn;
+    uart_0x28.b.rxdma_en = UART_InitStruct->UART_RxDmaEn;
+    uart_0x28.b.txdma_burstsize = UART_InitStruct->UART_TxWaterLevel;
+    uart_0x28.b.rxdma_burstsize = UART_InitStruct->UART_RxWaterLevel;
+    UARTx->UART_MISCR = uart_0x28.d32;
 
     return;
 }

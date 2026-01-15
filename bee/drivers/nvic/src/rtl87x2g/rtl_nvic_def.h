@@ -1,10 +1,6 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
+*********************************************************************************************************
+*               Copyright(c) 2023, Realtek Semiconductor Corporation. All rights reserved.
 *********************************************************************************************************
 * \file     rtl_nvic_def.h
 * \brief    NVIC related definitions for RTL87X2G
@@ -22,7 +18,6 @@
 #include "address_map.h"
 #include "platform_reg.h"
 #include "vector_table.h"
-#include "armv81mml_setting.h"
 
 #ifdef  __cplusplus
 extern "C" {

@@ -1,10 +1,6 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
+*********************************************************************************************************
+*               Copyright(c) 2023, Realtek Semiconductor Corporation. All rights reserved.
 **********************************************************************************************************
 * \file     rtl_gdma.c
 * \brief    This file provides all the DMA firmware functions.
@@ -98,12 +94,12 @@ void GDMA_Init(GDMA_ChannelTypeDef *GDMA_Channelx, GDMA_InitTypeDef *GDMA_InitSt
     /* ---------------- GDMA Configuration ---------------- */
     /* Clear pending interrupts of corresponding GDMA channel */
     uint32_t temp_bit = BIT(channel_num);
-    GDMAx->GDMA_CLEARTFR_L |= temp_bit;
-    GDMAx->GDMA_CLEARBLOCK_L |= temp_bit;
+    GDMAx->GDMA_CLEARTFR_L = temp_bit;
+    GDMAx->GDMA_CLEARBLOCK_L = temp_bit;
 #if (GDMA_SUPPORT_INT_HAIF_BLOCK == 1)
-    GDMAx->GDMA_CLEARBLOCK_H |= temp_bit;
+    GDMAx->GDMA_CLEARBLOCK_H = temp_bit;
 #endif
-    GDMAx->GDMA_CLEARERR_L |= temp_bit;
+    GDMAx->GDMA_CLEARERR_L = temp_bit;
 
     /* Mask pending interrupts of corresponding GDMA channel */
     temp_bit = CHANNEL_WE_BIT(channel_num);
@@ -257,12 +253,12 @@ void GDMA_Init(GDMA_ChannelTypeDef *GDMA_Channelx, GDMA_InitTypeDef *GDMA_InitSt
 
     /* Clear pending interrupts of corresponding GDMA channel */
     temp_bit = BIT(channel_num);
-    GDMAx->GDMA_CLEARTFR_L |= temp_bit;
-    GDMAx->GDMA_CLEARBLOCK_L |= temp_bit;
+    GDMAx->GDMA_CLEARTFR_L = temp_bit;
+    GDMAx->GDMA_CLEARBLOCK_L = temp_bit;
 #if (GDMA_SUPPORT_INT_HAIF_BLOCK == 1)
-    GDMAx->GDMA_CLEARBLOCK_H |= temp_bit;
+    GDMAx->GDMA_CLEARBLOCK_H = temp_bit;
 #endif
-    GDMAx->GDMA_CLEARERR_L |= temp_bit;
+    GDMAx->GDMA_CLEARERR_L = temp_bit;
 }
 
 /**
@@ -863,53 +859,6 @@ void GDMA_SetLLPMode(GDMA_ChannelTypeDef *GDMA_Channelx, uint32_t mode)
 {
     GDMA_Channelx->GDMA_CTLx_L = ((GDMA_Channelx->GDMA_CTLx_L & (~LLI_TRANSFER)) | mode);
 }
-
-void GDMA_ResetBlockTransfer(GDMA_ChannelTypeDef *GDMA_Channelx)
-{
-    /* Check the parameters */
-    assert_param(IS_GDMA_ALL_PERIPH(GDMA_Channelx));
-
-    GDMA_CFGx_L_TypeDef gdma_0x40 = {.d32 = GDMA_Channelx->GDMA_CFGx_L};
-    GDMA_CTLx_L_TypeDef gdma_0x18 = {.d32 = GDMA_Channelx->GDMA_CTLx_L};
-
-    gdma_0x18.b.llp_dst_en = 1;
-    gdma_0x18.b.llp_src_en = 1;
-    gdma_0x40.b.reload_src = 0;
-    gdma_0x40.b.reload_dst = 0;
-    GDMA_Channelx->GDMA_CTLx_L = gdma_0x18.d32;
-    GDMA_Channelx->GDMA_CFGx_L = gdma_0x40.d32;
-}
-
-ITStatus GDMA_GetErrorINTStatus(uint8_t GDMA_ChannelNum)
-{
-    /* Check the parameters */
-    assert_param(IS_GDMA_ChannelNum(GDMAx_Channel_Num));
-
-    GDMA_TypeDef *GDMAx = GDMA_GetGDMAxByCh(GDMA_ChannelNum);
-    uint8_t channel_num = GDMA_GetGDMAChannelNum(GDMA_ChannelNum);
-
-    if ((GDMAx->GDMA_STATUSERR_L & BIT(channel_num)) != (uint32_t)RESET)
-    {
-        return SET;
-    }
-    return RESET;
-}
-
-ITStatus GDMA_GetBlockINTStatus(uint8_t GDMA_ChannelNum)
-{
-    /* Check the parameters */
-    assert_param(IS_GDMA_ChannelNum(GDMAx_Channel_Num));
-
-    GDMA_TypeDef *GDMAx = GDMA_GetGDMAxByCh(GDMA_ChannelNum);
-    uint8_t channel_num = GDMA_GetGDMAChannelNum(GDMA_ChannelNum);
-
-    if ((GDMAx->GDMA_STATUSBLOCK_L & BIT(channel_num)) != (uint32_t)RESET)
-    {
-        return SET;
-    }
-    return RESET;
-}
-
 
 /******************* (C) COPYRIGHT 2023 Realtek Semiconductor Corporation *****END OF FILE****/
 

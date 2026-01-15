@@ -1,10 +1,6 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
+*********************************************************************************************************
+*               Copyright(c) 2024, Realtek Semiconductor Corporation. All rights reserved.
 *********************************************************************************************************
 * \file     rtl_keyscan.h
 * \brief    The header file of the peripheral KEYSCAN driver.
@@ -721,8 +717,6 @@ FlagStatus KeyScan_GetFlagState(KEYSCAN_TypeDef *KeyScan, uint32_t KeyScan_FLAG)
  */
 uint16_t KeyScan_ReadFifoData(KEYSCAN_TypeDef *KeyScan);
 
-#define KeyScan_SetPreGuadTime(KeyScan, time) \
-    ((KEYSCAN_TypeDef *)(keyscan))->KEYSCAN_CLK_DIV = (((KEYSCAN_TypeDef *)(keyscan))->KEYSCAN_CLK_DIV & ~(0x7 << 26)) | (time << 26)
 
 #if (KEYSCAN_SUPPORT_RAP_FUNCTION == 1)
 

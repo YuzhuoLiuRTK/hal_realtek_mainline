@@ -1,10 +1,6 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
+*********************************************************************************************************
+*               Copyright(c) 2023, Realtek Semiconductor Corporation. All rights reserved.
 **********************************************************************************************************
 * \file     rtl87x2g_i2c.c
 * \brief    This file provides all the GPIO firmware internal functions.
@@ -116,6 +112,12 @@ void I2C_ClkDivConfig(I2C_TypeDef *I2Cx, I2CClockDiv_TypeDef ClockDiv)
     return;
 }
 
+/**
+  * \brief  Store I2C register values when system enter DLPS.
+  * \param  PeriReg: Specifies to select the I2C peripheral.
+  * \param  StoreBuf: Store buffer to store I2C register data.
+  * \return None.
+  */
 void I2C_DLPSEnter(void *PeriReg, void *StoreBuf)
 {
     I2C_TypeDef *I2Cx = (I2C_TypeDef *)PeriReg;
@@ -148,19 +150,25 @@ void I2C_DLPSEnter(void *PeriReg, void *StoreBuf)
     store_buf->i2c_reg[6] = I2Cx->IC_FS_SCL_HCNT;         /*!< 0x1C */
     store_buf->i2c_reg[7] = I2Cx->IC_FS_SCL_LCNT;         /*!< 0x20 */
 
-    store_buf->i2c_reg[10] = I2Cx->IC_INTR_MASK;           /*!< 0x30 */
-    store_buf->i2c_reg[11] = I2Cx->IC_RX_TL;               /*!< 0x38 */
-    store_buf->i2c_reg[12] = I2Cx->IC_TX_TL;              /*!< 0x3C */
-    store_buf->i2c_reg[13] = I2Cx->IC_ENABLE;             /*!< 0x6C */
-    store_buf->i2c_reg[14] = I2Cx->IC_SDA_HOLD;           /*!< 0x7C */
-    store_buf->i2c_reg[15] = I2Cx->IC_SLV_DATA_NACK_ONLY; /*!< 0x84 */
-    store_buf->i2c_reg[16] = I2Cx->IC_DMA_CR;             /*!< 0x88 */
-    store_buf->i2c_reg[17] = I2Cx->IC_DMA_TDLR;           /*!< 0x8C */
-    store_buf->i2c_reg[18] = I2Cx->IC_DMA_RDLR;           /*!< 0x90 */
+    store_buf->i2c_reg[8] = I2Cx->IC_INTR_MASK;           /*!< 0x30 */
+    store_buf->i2c_reg[9] = I2Cx->IC_RX_TL;               /*!< 0x38 */
+    store_buf->i2c_reg[10] = I2Cx->IC_TX_TL;              /*!< 0x3C */
+    store_buf->i2c_reg[11] = I2Cx->IC_ENABLE;             /*!< 0x6C */
+    store_buf->i2c_reg[12] = I2Cx->IC_SDA_HOLD;           /*!< 0x7C */
+    store_buf->i2c_reg[13] = I2Cx->IC_SLV_DATA_NACK_ONLY; /*!< 0x84 */
+    store_buf->i2c_reg[14] = I2Cx->IC_DMA_CR;             /*!< 0x88 */
+    store_buf->i2c_reg[15] = I2Cx->IC_DMA_TDLR;           /*!< 0x8C */
+    store_buf->i2c_reg[16] = I2Cx->IC_DMA_RDLR;           /*!< 0x90 */
 
-    store_buf->i2c_reg[19] = I2Cx->IC_SDA_SETUP;          /*!< 0x94 */
+    store_buf->i2c_reg[17] = I2Cx->IC_SDA_SETUP;          /*!< 0x94 */
 }
 
+/**
+  * \brief  Restore I2C register values when system enter DLPS.
+  * \param  PeriReg: Specifies to select the I2C peripheral.
+  * \param  StoreBuf: Restore buffer to restore I2C register data.
+  * \return None
+  */
 void I2C_DLPSExit(void *PeriReg, void *StoreBuf)
 {
     I2C_TypeDef *I2Cx = (I2C_TypeDef *)PeriReg;
@@ -193,17 +201,17 @@ void I2C_DLPSExit(void *PeriReg, void *StoreBuf)
     I2Cx->IC_FS_SCL_HCNT = store_buf->i2c_reg[6];
     I2Cx->IC_FS_SCL_LCNT = store_buf->i2c_reg[7];
 
-    I2Cx->IC_INTR_MASK   = store_buf->i2c_reg[10];
-    I2Cx->IC_RX_TL       = store_buf->i2c_reg[11];
-    I2Cx->IC_TX_TL       = store_buf->i2c_reg[12];
-    I2Cx->IC_SDA_HOLD    = store_buf->i2c_reg[14];
-    I2Cx->IC_SLV_DATA_NACK_ONLY = store_buf->i2c_reg[15];
-    I2Cx->IC_DMA_CR      = store_buf->i2c_reg[16];
-    I2Cx->IC_DMA_TDLR    = store_buf->i2c_reg[17];
-    I2Cx->IC_DMA_RDLR    = store_buf->i2c_reg[18];
-    I2Cx->IC_SDA_SETUP   = store_buf->i2c_reg[19];
+    I2Cx->IC_INTR_MASK   = store_buf->i2c_reg[8];
+    I2Cx->IC_RX_TL       = store_buf->i2c_reg[9];
+    I2Cx->IC_RX_TL       = store_buf->i2c_reg[10];
+    I2Cx->IC_ENABLE      = store_buf->i2c_reg[11];
+    I2Cx->IC_SDA_HOLD    = store_buf->i2c_reg[12];
+    I2Cx->IC_SLV_DATA_NACK_ONLY = store_buf->i2c_reg[13];
+    I2Cx->IC_DMA_CR      = store_buf->i2c_reg[14];
+    I2Cx->IC_DMA_TDLR    = store_buf->i2c_reg[15];
+    I2Cx->IC_DMA_RDLR    = store_buf->i2c_reg[16];
 
-    I2Cx->IC_ENABLE      = store_buf->i2c_reg[13];
+    I2Cx->IC_SDA_SETUP   = store_buf->i2c_reg[17];
 }
 
 /******************* (C) COPYRIGHT 2023 Realtek Semiconductor Corporation *****END OF FILE****/

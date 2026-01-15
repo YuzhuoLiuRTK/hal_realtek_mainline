@@ -1,10 +1,6 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
+*********************************************************************************************************
+*               Copyright(c) 2016, Realtek Semiconductor Corporation. All rights reserved.
 *********************************************************************************************************
 * \file      rtl_wdt.h
 * \brief     header file of watch dog timer driver.
@@ -59,15 +55,15 @@ extern "C" {
   */
 typedef enum
 {
-    RESET_ALL = 0,               /**< Reset all. */
-    RESET_ALL_EXCEPT_AON = 1,    /**< Reset all except RTC and some AON register. */
-    INTERRUPT_CPU = 2,           /**< Interrupt CPU. */
-    WDT_MODE_NUM = 3,            /**< Interrupt CPU. */
+    RESET_ALL = 0,                //!< Reset all.
+    RESET_ALL_EXCEPT_AON = 1,     //!< Reset all except RTC and some AON register.
+    INTERRUPT_CPU = 2,            //!< Interrupt CPU.
+    WDT_MODE_NUM = 3,             //!< The maximum selectable value for WDT mode.
 } WDTMode_TypeDef;
 
 #define IS_WDT_Mode(MODE) (((MODE) == RESET_ALL) || \
                            ((MODE) == RESET_ALL_EXCEPT_AON) || \
-                           ((MODE) == INTERRUPT_CPU))
+                           ((MODE) == INTERRUPT_CPU)) //!< Check if the input parameter is valid.
 
 /** End of group WDT_Exported_Types
   * \}
@@ -81,47 +77,52 @@ typedef enum
   */
 
 /**
-  * \brief  Start WDT. This function will enable WDT clock, set and start WDT.
-  * \param  TimeMs.
-  * \param  Mode \ref WDTMode_TypeDef.
-  * \return true or false.
-  */
+ * \brief  Start WDT. This function will enable WDT clock, set and start WDT.
+ *
+ * \param[in]  TimeMs  WDT Timeout Time. Unit: ms.
+ * \param[in]  Mode    Refer to \ref WDTMode_TypeDef. If the Reset WDT operation is not performed within the Timeout period,
+ *                     the configured mode operation will be executed.
+ *
+ * \return  true or false.
+ *          - true: WDT mode set successfully, enabling the function..
+ *          - false: WDT setting failed.
+ */
 bool WDT_Start(uint32_t TimeMs, WDTMode_TypeDef Mode);
 
 /**
-  * \brief  Enable WDT.
-  * \return None.
-  */
+ * \brief  Enable WDT.
+ */
 void WDT_Enable(void);
 
 /**
-  * \brief  Disable WDT.
-  * \return None.
-  */
+ * \brief  Disable WDT.
+ */
 void WDT_Disable(void);
 
 /**
-  * \brief  Kick WDT to restart WDT.
-  * \return None.
-  */
+ * \brief  Kick WDT to restart WDT.
+ */
 void WDT_Kick(void);
 
 /**
-  * \brief  Is WDT enable.
-  * \return Is WDT enable or not
-  */
+ * \brief  Is WDT enable.
+ *
+ * \return Is WDT enable or not
+ */
 bool WDT_IsEnable(void);
 
 /**
-  * \brief  Get WDT timeout.
-  * \return WDT timeout
-  */
+ * \brief  Get WDT timeout.
+ *
+ * \return WDT timeout
+ */
 uint32_t WDT_GetTimeoutMs(void);
 
 /**
-  * \brief  Get WDT mode.
-  * \return WDT mode
-  */
+ * \brief  Get WDT mode.
+ *
+ * \return WDT mode
+ */
 WDTMode_TypeDef WDT_GetMode(void);
 
 /** End of WDT_Exported_Functions

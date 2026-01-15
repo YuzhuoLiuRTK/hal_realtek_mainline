@@ -1,10 +1,6 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
+*********************************************************************************************************
+*               Copyright(c) 2024, Realtek Semiconductor Corporation. All rights reserved.
 **********************************************************************************************************
 * \file     rtl87x2g_tim.c
 * \brief    This file provides all the TIMER firmware internal functions.
@@ -290,43 +286,94 @@ void TIM_PWMChangeDZClockSrc(PWM_TypeDef *PWMx, PWMDZClockSrc_TypeDef PWM_Deazon
 
 void TIM_DLPSEnter(void *PeriReg, void *StoreBuf)
 {
-    TIM_TypeDef *TIMx = (TIM_TypeDef *)PeriReg;
     TIMStoreReg_Typedef *store_buf = (TIMStoreReg_Typedef *)StoreBuf;
 
     /* Enable timer IP clock and function */
     RCC_PeriphClockCmd(APBPeriph_TIMER, APBPeriph_TIMER_CLOCK, ENABLE);
-    store_buf->tim_reg[0] = TIMx->TIMER_LOADCOUNT;
-    store_buf->tim_reg[1] = TIMx->TIMER_CONTROLREG;
-    store_buf->tim_reg[2] = *(volatile uint32_t *)((uint32_t)&TIMER0_LOAD_COUNT2 +
-                                                   4 * ((uint32_t)TIMx - (uint32_t)TIMER_0_REG_BASE) / sizeof(TIM_TypeDef));
+    store_buf->tim_reg[24] = PERIBLKCTRL_PERI_CLK->u_328.REG_TIMER_0_CLOCK_CTRL;
+    store_buf->tim_reg[25] = PERIBLKCTRL_PERI_CLK->u_32C.REG_TIMER_1_CLOCK_CTRL;
+    store_buf->tim_reg[26] = PERIBLKCTRL_PERI_CLK->u_330.REG_TIMER_2_CLOCK_CTRL;
+    store_buf->tim_reg[27] = PERIBLKCTRL_PERI_CLK->u_334.REG_TIMER_3_CLOCK_CTRL;
 
-    store_buf->tim_reg[3] = PERIBLKCTRL_PERI_CLK->u_328.REG_TIMER_0_CLOCK_CTRL;
-    store_buf->tim_reg[4] = PERIBLKCTRL_PERI_CLK->u_32C.REG_TIMER_1_CLOCK_CTRL;
-    store_buf->tim_reg[5] = PERIBLKCTRL_PERI_CLK->u_330.REG_TIMER_2_CLOCK_CTRL;
-    store_buf->tim_reg[6] = PERIBLKCTRL_PERI_CLK->u_334.REG_TIMER_3_CLOCK_CTRL;
+    store_buf->tim_reg[0] = TIM0->TIMER_LOADCOUNT;
+    store_buf->tim_reg[1] = TIM0->TIMER_CONTROLREG;
+    store_buf->tim_reg[2] = TIMER0_LOAD_COUNT2;
 
-    store_buf->tim_reg[7] = PERIBLKCTRL_PERI_CLK->u_33C.REG_TIMER_PWM_WRAP_1_CFG;
+    store_buf->tim_reg[3] = TIM1->TIMER_LOADCOUNT;
+    store_buf->tim_reg[4] = TIM1->TIMER_CONTROLREG;
+    store_buf->tim_reg[5] = TIMER1_LOAD_COUNT2;
+
+    store_buf->tim_reg[6] = TIM2->TIMER_LOADCOUNT;
+    store_buf->tim_reg[7] = TIM2->TIMER_CONTROLREG;
+    store_buf->tim_reg[8] = TIMER2_LOAD_COUNT2;
+
+    store_buf->tim_reg[9]  = TIM3->TIMER_LOADCOUNT;
+    store_buf->tim_reg[10] = TIM3->TIMER_CONTROLREG;
+    store_buf->tim_reg[11] = TIMER3_LOAD_COUNT2;
+
+    store_buf->tim_reg[12] = TIM4->TIMER_LOADCOUNT;
+    store_buf->tim_reg[13] = TIM4->TIMER_CONTROLREG;
+    store_buf->tim_reg[14] = TIMER4_LOAD_COUNT2;
+
+    store_buf->tim_reg[15] = TIM5->TIMER_LOADCOUNT;
+    store_buf->tim_reg[16] = TIM5->TIMER_CONTROLREG;
+    store_buf->tim_reg[17] = TIMER5_LOAD_COUNT2;
+
+    store_buf->tim_reg[18] = TIM6->TIMER_LOADCOUNT;
+    store_buf->tim_reg[19] = TIM6->TIMER_CONTROLREG;
+    store_buf->tim_reg[20] = TIMER6_LOAD_COUNT2;
+
+    store_buf->tim_reg[21] = TIM7->TIMER_LOADCOUNT;
+    store_buf->tim_reg[22] = TIM7->TIMER_CONTROLREG;
+    store_buf->tim_reg[23] = TIMER7_LOAD_COUNT2;
+
+    store_buf->tim_reg[28] = PERIBLKCTRL_PERI_CLK->u_33C.REG_TIMER_PWM_WRAP_1_CFG;
 }
 
 void TIM_DLPSExit(void *PeriReg, void *StoreBuf)
 {
-    TIM_TypeDef *TIMx = (TIM_TypeDef *)PeriReg;
     TIMStoreReg_Typedef *store_buf = (TIMStoreReg_Typedef *)StoreBuf;
 
     /* Enable timer IP clock and function */
     RCC_PeriphClockCmd(APBPeriph_TIMER, APBPeriph_TIMER_CLOCK, ENABLE);
-    PERIBLKCTRL_PERI_CLK->u_328.REG_TIMER_0_CLOCK_CTRL = store_buf->tim_reg[3];
-    PERIBLKCTRL_PERI_CLK->u_32C.REG_TIMER_1_CLOCK_CTRL = store_buf->tim_reg[4];
-    PERIBLKCTRL_PERI_CLK->u_330.REG_TIMER_2_CLOCK_CTRL = store_buf->tim_reg[5];
-    PERIBLKCTRL_PERI_CLK->u_334.REG_TIMER_3_CLOCK_CTRL = store_buf->tim_reg[6];
+    PERIBLKCTRL_PERI_CLK->u_328.REG_TIMER_0_CLOCK_CTRL = store_buf->tim_reg[24];
+    PERIBLKCTRL_PERI_CLK->u_32C.REG_TIMER_1_CLOCK_CTRL = store_buf->tim_reg[25];
+    PERIBLKCTRL_PERI_CLK->u_330.REG_TIMER_2_CLOCK_CTRL = store_buf->tim_reg[26];
+    PERIBLKCTRL_PERI_CLK->u_334.REG_TIMER_3_CLOCK_CTRL = store_buf->tim_reg[27];
 
-    TIMx->TIMER_LOADCOUNT  = store_buf->tim_reg[0];
-    TIMx->TIMER_CONTROLREG = store_buf->tim_reg[1];
-    *(volatile uint32_t *)((uint32_t)&TIMER0_LOAD_COUNT2 +
-                           4 * ((uint32_t)TIMx - (uint32_t)TIMER_0_REG_BASE) / sizeof(TIM_TypeDef))
-        = store_buf->tim_reg[2];
+    TIM0->TIMER_LOADCOUNT  = store_buf->tim_reg[0];
+    TIM0->TIMER_CONTROLREG = store_buf->tim_reg[1];
+    TIMER0_LOAD_COUNT2     = store_buf->tim_reg[2];
 
-    PERIBLKCTRL_PERI_CLK->u_33C.REG_TIMER_PWM_WRAP_1_CFG = store_buf->tim_reg[7];
+    TIM1->TIMER_LOADCOUNT  = store_buf->tim_reg[3];
+    TIM1->TIMER_CONTROLREG = store_buf->tim_reg[4];
+    TIMER1_LOAD_COUNT2     = store_buf->tim_reg[5];
+
+    TIM2->TIMER_LOADCOUNT  = store_buf->tim_reg[6];
+    TIM2->TIMER_CONTROLREG = store_buf->tim_reg[7];
+    TIMER2_LOAD_COUNT2     = store_buf->tim_reg[8];
+
+    TIM3->TIMER_LOADCOUNT  = store_buf->tim_reg[9];
+    TIM3->TIMER_CONTROLREG = store_buf->tim_reg[10];
+    TIMER3_LOAD_COUNT2     = store_buf->tim_reg[11];
+
+    TIM4->TIMER_LOADCOUNT  = store_buf->tim_reg[12];
+    TIM4->TIMER_CONTROLREG = store_buf->tim_reg[13];
+    TIMER4_LOAD_COUNT2     = store_buf->tim_reg[14];
+
+    TIM5->TIMER_LOADCOUNT  = store_buf->tim_reg[15];
+    TIM5->TIMER_CONTROLREG = store_buf->tim_reg[16];
+    TIMER5_LOAD_COUNT2     = store_buf->tim_reg[17];
+
+    TIM6->TIMER_LOADCOUNT  = store_buf->tim_reg[18];
+    TIM6->TIMER_CONTROLREG = store_buf->tim_reg[19];
+    TIMER6_LOAD_COUNT2     = store_buf->tim_reg[20];
+
+    TIM7->TIMER_LOADCOUNT  = store_buf->tim_reg[21];
+    TIM7->TIMER_CONTROLREG = store_buf->tim_reg[22];
+    TIMER7_LOAD_COUNT2     = store_buf->tim_reg[23];
+
+    PERIBLKCTRL_PERI_CLK->u_33C.REG_TIMER_PWM_WRAP_1_CFG = store_buf->tim_reg[28];
 }
 
 /******************* (C) COPYRIGHT 2024 Realtek Semiconductor Corporation *****END OF FILE****/

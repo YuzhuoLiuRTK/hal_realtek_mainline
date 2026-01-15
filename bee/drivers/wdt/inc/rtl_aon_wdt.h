@@ -1,10 +1,6 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
+*****************************************************************************************
+*     Copyright(c) 2023, Realtek Semiconductor Corporation. All rights reserved.
 *****************************************************************************************
   * \file    rtl_aon_wdt.h
   * \brief   This file provides api of aon watch dog timer.
@@ -46,47 +42,58 @@ extern "C" {
   */
 
 /**
-  * \brief  Start AON WDT.
-  * \param  AON_WDTx \ref AON_WDT_Declaration
-  * \param  TimeMs
-  * \param  Mode \ref WDTMode_Typedef
-  * \return true or false.
-  */
+ * \brief  Start AON WDT.
+ *
+ * \param[in] AON_WDTx  Select the AON_WDT peripheral. Refer to \ref AON_WDT_Declaration.
+ * \param[in] TimeMs    AON WDT Timeout Time. Unit: ms.
+ * \param[in] Mode      Refer to \ref WDTMode_TypeDef. If the Reset AON WDT operation is not performed within the Timeout period,
+ *                       the configured mode operation will be executed.
+ *
+ * \return  true or false.
+ *          - true: AON WDT mode set successfully, enabling the function..
+ *          - false: If set to interrupt mode, it will return false.
+ */
 bool AON_WDT_Start(AON_WDT_TypeDef *AON_WDTx, uint32_t TimeMs, WDTMode_TypeDef Mode);
 
 /**
-  * \brief  Disable AON WDT.
-  * \param  AON_WDTx \ref AON_WDT_Declaration
-  * \return None.
-  */
+ * \brief  Disable AON WDT.
+ *
+ * \param[in] AON_WDTx  Select the AON_WDT peripheral. Refer to \ref AON_WDT_Declaration.
+ */
 void AON_WDT_Disable(AON_WDT_TypeDef *AON_WDTx);
 
 /**
-  * \brief  Kick AON WDT to restart WDT.
-  * \param  AON_WDTx \ref AON_WDT_Declaration
-  * \return None.
-  */
+ * \brief  Kick AON WDT to restart WDT.
+ *
+ * \param[in] AON_WDTx  Select the AON_WDT peripheral. Refer to \ref AON_WDT_Declaration
+ */
 void AON_WDT_Kick(AON_WDT_TypeDef *AON_WDTx);
 
 /**
-  * \brief  Is AON WDT enable.
-  * \param  AON_WDTx \ref AON_WDT_Declaration
-  * \return Is AON WDT enable or not
-  */
+ * \brief  Is AON WDT enable.
+ *
+ * \param[in] AON_WDTx  Select the AON_WDT peripheral. Refer to \ref AON_WDT_Declaration.
+ *
+ * \return Is AON WDT enable or not
+ */
 bool AON_WDT_IsEnable(AON_WDT_TypeDef *AON_WDTx);
 
 /**
-  * \brief  Get AON WDT timeout.
-  * \param  AON_WDTx \ref AON_WDT_Declaration
-  * \return AON WDT timeout
-  */
+ * \brief  Get AON WDT timeout.
+ *
+ * \param[in] AON_WDTx  Select the AON_WDT peripheral. Refer to \ref AON_WDT_Declaration.
+ *
+ * \return AON WDT timeout
+ */
 uint32_t AON_WDT_GetTimeoutMs(AON_WDT_TypeDef *AON_WDTx);
 
 /**
-  * \brief  Get AON WDT mode.
-  * \param  AON_WDTx \ref AON_WDT_Declaration
-  * \return AON WDT mode
-  */
+ * \brief  Get AON WDT mode.
+ *
+ * \param[in] AON_WDTx  Select the AON_WDT peripheral. Refer to \ref AON_WDT_Declaration.
+ *
+ * \return AON WDT mode
+ */
 WDTMode_TypeDef AON_WDT_GetMode(AON_WDT_TypeDef *AON_WDTx);
 
 /** End of AON_WDT_Exported_Functions

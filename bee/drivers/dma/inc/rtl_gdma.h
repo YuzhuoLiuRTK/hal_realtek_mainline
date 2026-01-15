@@ -1,10 +1,6 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
+*********************************************************************************************************
+*               Copyright(c) 2023, Realtek Semiconductor Corporation. All rights reserved.
 *********************************************************************************************************
 * \file     rtl_gdma.h
 * \brief    The header file of the peripheral GDMA driver.
@@ -1054,12 +1050,6 @@ void GDMA_SetLLPMode(GDMA_ChannelTypeDef *GDMA_Channelx, uint32_t mode);
  * \endcode
  */
 bool GDMA_SafeSuspend(GDMA_ChannelTypeDef *GDMA_Channelx);
-
-void GDMA_ResetBlockTransfer(GDMA_ChannelTypeDef *GDMA_Channelx);
-
-ITStatus GDMA_GetErrorINTStatus(uint8_t GDMA_ChannelNum);
-
-ITStatus GDMA_GetBlockINTStatus(uint8_t GDMA_ChannelNum);
 
 /** End of GDMA_Exported_Functions
   * \}

@@ -1,10 +1,6 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
- /**
+/**
+*********************************************************************************************************
+*               Copyright(c) 2023, Realtek Semiconductor Corporation. All rights reserved.
 *********************************************************************************************************
 * \file     rtl_adc.h
 * \brief    The header file of the peripheral ADC driver.
@@ -800,11 +796,11 @@ void ADC_SchIndexConfig(ADC_TypeDef *ADCx, uint8_t AdcMode, uint16_t Index);
  * void adc_demo(void)
  * {
  *     uint16_t bit_map = 0x03;
- *     ADC_BitMapConfig(ADC,bit_map,ENABLE);
+ *     ADC_BitMapConfig(ADC,bit_map);
  * }
  * \endcode
  */
-void ADC_BitMapConfig(ADC_TypeDef *ADCx, uint16_t BitMap, FunctionalState NewState);
+void ADC_BitMapConfig(ADC_TypeDef *ADCx, uint16_t BitMap);
 
 /**
  * \brief   Enbale or disable write data to FIFO.

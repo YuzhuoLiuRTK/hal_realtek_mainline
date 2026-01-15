@@ -1,10 +1,6 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
+*********************************************************************************************************
+*               Copyright(c) 2023, Realtek Semiconductor Corporation. All rights reserved.
 **********************************************************************************************************
 * \file     rtl87x2g_gpio.c
 * \brief    This file provides all the GPIO firmware internal functions.
@@ -235,6 +231,7 @@ void GPIO_ExtPolarity(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin, GPIOITPolarity_Typ
     }
 }
 
+
 void GPIO_DLPSEnter(void *PeriReg, void *StoreBuf)
 {
     GPIO_TypeDef *GPIOx = (GPIO_TypeDef *)PeriReg;
@@ -267,6 +264,7 @@ void GPIO_DLPSEnter(void *PeriReg, void *StoreBuf)
 
     return;
 }
+
 
 void GPIO_DLPSExit(void *PeriReg, void *StoreBuf)
 {

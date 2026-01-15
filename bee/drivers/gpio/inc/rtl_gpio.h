@@ -1,10 +1,6 @@
-/*
- * Copyright (c) 2026 Realtek Semiconductor Corp.
- *
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /**
+*********************************************************************************************************
+*               Copyright(c) 2023, Realtek Semiconductor Corporation. All rights reserved.
 *********************************************************************************************************
 * \file     rtl_gpio.h
 * \brief    The header file of the peripheral GPIO driver.
@@ -1084,18 +1080,6 @@ FlagStatus GPIO_GetPadStatus(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin);
  */
 void GPIO_SetPolarity(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin,
                       GPIOITPolarity_TypeDef int_type);
-
-bool GPIO_GetINTEnable(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin);
-
-#define GPIO_GetPortIntStatus(GPIOx) (((GPIO_TypeDef *)(GPIOx))->GPIO_INT_STS)
-#define GPIO_GetPortDirection(GPIOx) (((GPIO_TypeDef *)(GPIOx))->GPIO_DDR)
-#define GPIO_GetPortPolarity(GPIOx) (((GPIO_TypeDef *)(GPIOx))->GPIO_EXT_DEB_POL_CTL)
-#define GPIO_GetINTEnable(GPIOx, GPIO_Pin) \
-    (((GPIO_TypeDef *)(GPIOx))->GPIO_INT_EN & (uint32_t )(GPIO_Pin) ? true : false)
-
-GPIOITPolarity_TypeDef GPIO_GetPolarity(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin);
-
-GPIOITTrigger_TypeDef GPIO_GetTrigger(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin);
 
 #if (GPIO_SUPPORT_RAP_FUNCTION == 1)
 
