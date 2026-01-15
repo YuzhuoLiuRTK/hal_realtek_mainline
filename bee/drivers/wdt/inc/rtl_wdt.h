@@ -1,15 +1,8 @@
-/**
-*********************************************************************************************************
-*               Copyright(c) 2016, Realtek Semiconductor Corporation. All rights reserved.
-*********************************************************************************************************
-* \file      rtl_wdt.h
-* \brief     header file of watch dog timer driver.
-* \details
-* \author    renee
-* \date      2023-11-16
-* \version   v1.0
-* *********************************************************************************************************
-*/
+/*
+ * Copyright (c) 2026, Realtek Semiconductor Corporation
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
 /*============================================================================*
  *               Define to prevent recursive inclusion

@@ -1,15 +1,8 @@
-/**
-*********************************************************************************************************
-*               Copyright(c) 2023, Realtek Semiconductor Corporation. All rights reserved.
-*********************************************************************************************************
-* \file     rtl_ir_def.h
-* \brief    IR related definitions for RTL8762G
-* \details
-* \author   renee
-* \date     2023-11-15
-* \version  v1.1
-* *********************************************************************************************************
-*/
+/*
+ * Copyright (c) 2026, Realtek Semiconductor Corporation
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
 #ifndef RTL_IR_DEF_H
 #define RTL_IR_DEF_H

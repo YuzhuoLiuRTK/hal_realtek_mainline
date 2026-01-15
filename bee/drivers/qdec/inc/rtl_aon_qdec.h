@@ -1,15 +1,8 @@
-/**
-*********************************************************************************************************
-*               Copyright(c) 2023, Realtek Semiconductor Corporation. All rights reserved.
-*********************************************************************************************************
-* \file     rtl_aon_qdec.h
-* \brief    The header file of the peripheral AON_AON_QDEC driver.
-* \details  This file provides all AON_AON_QDEC firmware functions.
-* \author   Grace_yan
-* \date     2023-10-17
-* \version  v1.0
-* *********************************************************************************************************
-*/
+/*
+ * Copyright (c) 2026, Realtek Semiconductor Corporation
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
 /*============================================================================*
  *               Define to prevent recursive inclusion

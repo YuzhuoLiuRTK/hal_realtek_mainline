@@ -1,15 +1,8 @@
-/**
-*********************************************************************************************************
-*               Copyright(c) 2023, Realtek Semiconductor Corporation. All rights reserved.
-*********************************************************************************************************
-* \file     rtl_nvic.h
-* \brief    The header file of NVIC driver.
-* \details  This file provides all the NVIC firmware functions.
-* \author
-* \date
-* \version
-* *********************************************************************************************************
-*/
+/*
+ * Copyright (c) 2026, Realtek Semiconductor Corporation
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
 /*============================================================================*
  *               Define to prevent recursive inclusion

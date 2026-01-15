@@ -1,15 +1,8 @@
-/**
-*********************************************************************************************************
-*               Copyright(c) 2023, Realtek Semiconductor Corporation. All rights reserved.
-**********************************************************************************************************
-* \file     rtl_adc.c
-* \brief    This file provides all the 24BIT SDADC firmware functions.
-* \details
-* \author   ECHO
-* \date     2023-10-17
-* \version  v1.0
-*********************************************************************************************************
-*/
+/*
+ * Copyright (c) 2026, Realtek Semiconductor Corporation
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
 /*============================================================================*
  *                        Header Files

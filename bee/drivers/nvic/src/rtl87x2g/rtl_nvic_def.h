@@ -1,15 +1,8 @@
-/**
-*********************************************************************************************************
-*               Copyright(c) 2023, Realtek Semiconductor Corporation. All rights reserved.
-*********************************************************************************************************
-* \file     rtl_nvic_def.h
-* \brief    NVIC related definitions for RTL87X2G
-* \details
-* \author   renee
-* \date     2023-11-15
-* \version  v1.1
-* *********************************************************************************************************
-*/
+/*
+ * Copyright (c) 2026, Realtek Semiconductor Corporation
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
 #ifndef RTL_NVIC_DEF_H
 #define RTL_NVIC_DEF_H

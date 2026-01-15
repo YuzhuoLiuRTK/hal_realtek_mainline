@@ -1,17 +1,7 @@
-/**
-*****************************************************************************************
-*     Copyright(c) 2023, Realtek Semiconductor Corporation. All rights reserved.
-*****************************************************************************************
-  * @file    hal_wdt.h
-  * @brief   This file provides watch dog timer HAL layer api
-  * @author  renee
-  * @date    2023-11-16
-  * @version v1.0
-  * *************************************************************************************
-   * @attention
-   * <h2><center>&copy; COPYRIGHT 2023 Realtek Semiconductor Corporation</center></h2>
-   * *************************************************************************************
- * @endcode
+/*
+ * Copyright (c) 2026, Realtek Semiconductor Corporation
+ *
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 /*============================================================================*

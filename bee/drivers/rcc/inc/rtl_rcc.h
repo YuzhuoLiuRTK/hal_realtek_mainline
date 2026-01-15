@@ -1,15 +1,8 @@
-/**
-*********************************************************************************************************
-*               Copyright(c) 2023, Realtek Semiconductor Corporation. All rights reserved.
-*********************************************************************************************************
-* \file     rtl_rcc.h
-* \brief    The header file of the clock control and reset driver.
-* \details  This file provides all peripheral clock control firmware functions.
-* \author   Bert
-* \date     2024-05-08
-* \version  v0.1
-* *********************************************************************************************************
-*/
+/*
+ * Copyright (c) 2026, Realtek Semiconductor Corporation
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
 /*============================================================================*
  *               Define to prevent recursive inclusion

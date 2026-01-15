@@ -1,15 +1,8 @@
-/**
-*********************************************************************************************************
-*               Copyright(c) 2025, Realtek Semiconductor Corporation. All rights reserved.
-*********************************************************************************************************
-* \file     rtl_enh_tim.h
-* \brief    The header file of the peripheral Enhance ENHTIMER driver.
-* \details  This file provides all Enhance ENHTIMER firmware functions.
-* \author   Grace_yan
-* \date     2025-03-19
-* \version  v1.0
-* *********************************************************************************************************
-*/
+/*
+ * Copyright (c) 2026, Realtek Semiconductor Corporation
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
 /*============================================================================*
  *               Define to prevent recursive inclusion

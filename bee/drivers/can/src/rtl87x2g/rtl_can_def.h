@@ -1,14 +1,8 @@
-/**
-*****************************************************************************************
-*     Copyright(c) 2023, Realtek Semiconductor Corporation. All rights reserved.
-*****************************************************************************************
-* \file    rtl_can_def.h
-* \brief   CAN related definitions for RTL87x2G.
-* \author
-* \date    2023-11-16
-* \version v1.0
-* *************************************************************************************
-*/
+/*
+ * Copyright (c) 2026, Realtek Semiconductor Corporation
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
 #ifndef RTL_CAN_DEF_H
 #define RTL_CAN_DEF_H

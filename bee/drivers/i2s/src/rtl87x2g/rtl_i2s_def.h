@@ -1,15 +1,8 @@
-/**
-*********************************************************************************************************
-*               Copyright(c) 2023, Realtek Semiconductor Corporation. All rights reserved.
-*********************************************************************************************************
-* \file     rtl_i2s_def.h
-* \brief    I2S related definitions for RTL8762G
-* \details
-* \author   echo
-* \date     2024-04-01
-* \version  v1.2
-* *********************************************************************************************************
-*/
+/*
+ * Copyright (c) 2026, Realtek Semiconductor Corporation
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
 #ifndef RTL_I2S_DEF_H
 #define RTL_I2S_DEF_H

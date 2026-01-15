@@ -1,15 +1,8 @@
-/**
-*********************************************************************************************************
-*               Copyright(c) 2023, Realtek Semiconductor Corporation. All rights reserved.
-*********************************************************************************************************
-* \file     rtl_i2c_def.h
-* \brief    I2C related definitions for RTL87x2G
-* \details
-* \author
-* \date     2023-11-16
-* \version  v1.1
-* *********************************************************************************************************
-*/
+/*
+ * Copyright (c) 2026, Realtek Semiconductor Corporation
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
 #ifndef RTL_I2C_DEF_H
 #define RTL_I2C_DEF_H

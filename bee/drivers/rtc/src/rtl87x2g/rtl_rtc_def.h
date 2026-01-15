@@ -1,15 +1,8 @@
-/**
-*********************************************************************************************************
-*               Copyright(c) 2023, Realtek Semiconductor Corporation. All rights reserved.
-*********************************************************************************************************
-* \file     rtl_rtc_def.h
-* \brief    RTC Registers Structures Section
-* \details
-* \author   grace_yan
-* \date     2023-02-14
-* \version  v2.1.0
-* *********************************************************************************************************
-*/
+/*
+ * Copyright (c) 2026, Realtek Semiconductor Corporation
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
 #ifndef RTL_RTC_DEF_H
 #define RTL_RTC_DEF_H

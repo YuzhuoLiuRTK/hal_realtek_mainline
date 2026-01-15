@@ -1,15 +1,8 @@
-/**
-*********************************************************************************************************
-*               Copyright(c) 2023, Realtek Semiconductor Corporation. All rights reserved.
-*********************************************************************************************************
-* \file     rtl_wdt_def.h
-* \brief    WDT related definitions for RTL8762G
-* \details
-* \author   renee
-* \date     2023-11-15
-* \version  v1.1
-* *********************************************************************************************************
-*/
+/*
+ * Copyright (c) 2026, Realtek Semiconductor Corporation
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
 #ifndef RTL_WDT_DEF_H
 #define RTL_WDT_DEF_H

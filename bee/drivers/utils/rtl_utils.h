@@ -1,15 +1,8 @@
-/**
-*********************************************************************************************************
-*               Copyright(c) 2024, Realtek Semiconductor Corporation. All rights reserved.
-*********************************************************************************************************
-* @file      rtl_utils.h
-* @brief     This header file provide the basic driver utility definitions.
-* @details
-* @author
-* @date
-* @version   v1.0
-* *********************************************************************************************************
-*/
+/*
+ * Copyright (c) 2026, Realtek Semiconductor Corporation
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
 /*============================================================================*
  *                         Define to prevent recursive inclusion

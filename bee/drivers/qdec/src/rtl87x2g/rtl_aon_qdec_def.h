@@ -1,15 +1,9 @@
-/**
-*********************************************************************************************************
-*               Copyright(c) 2023, Realtek Semiconductor Corporation. All rights reserved.
-*********************************************************************************************************
-* \file     rtl_aon_qdec_def.h
-* \brief    AON QDEC Registers Structures Section
-* \details
-* \author   grace yan
-* \date     2023-02-20
-* \version  v1.1
-* *********************************************************************************************************
-*/
+/*
+ * Copyright (c) 2026, Realtek Semiconductor Corporation
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 #ifndef RTL_AON_QDEC_DEF_H
 #define RTL_AON_QDEC_DEF_H
 

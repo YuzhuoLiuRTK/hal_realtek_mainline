@@ -1,15 +1,8 @@
-/**
-*********************************************************************************************************
-*               Copyright(c) 2023, Realtek Semiconductor Corporation. All rights reserved.
-**********************************************************************************************************
-* \file     rtl87x2g_wdt.c
-* \brief    This file provides all the AON WDT firmware internal functions.
-* \details
-* \author   Bert
-* \date     2023-07-05
-* \version  v1.0
-*********************************************************************************************************
-*/
+/*
+ * Copyright (c) 2026, Realtek Semiconductor Corporation
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
 /*============================================================================*
  *                         Header Files

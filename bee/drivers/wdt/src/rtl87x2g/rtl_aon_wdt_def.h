@@ -1,15 +1,8 @@
-/**
-*********************************************************************************************************
-*               Copyright(c) 2023, Realtek Semiconductor Corporation. All rights reserved.
-*********************************************************************************************************
-* \file     rtl_aon_wdt_def.h
-* \brief    AON WDT related definitions for RTL87x2G
-* \details
-* \author   renee
-* \date     2023-11-15
-* \version  v1.1
-* *********************************************************************************************************
-*/
+/*
+ * Copyright (c) 2026, Realtek Semiconductor Corporation
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
 #ifndef RTL_AON_WDT_DEF_H
 #define RTL_AON_WDT_DEF_H

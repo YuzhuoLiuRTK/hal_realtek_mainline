@@ -1,15 +1,8 @@
-/**
-*********************************************************************************************************
-*               Copyright(c) 2023, Realtek Semiconductor Corporation. All rights reserved.
-*********************************************************************************************************
-* \file      rtl_i2s.c
-* \brief     This file provides all the I2S interface firmware functions.
-* \details
-* \author    echo gao
-* \date      2023-10-17
-* \version   v1.0
-*********************************************************************************************************
-*/
+/*
+ * Copyright (c) 2026, Realtek Semiconductor Corporation
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
 
 /*============================================================================*
  *                        Header Files
