@@ -4,5 +4,3 @@
 zephyr_library()
 
 zephyr_library_sources(rtl876x_i2c.c)
-
-zephyr_library_sources(rtl8752h_i2c.c)
