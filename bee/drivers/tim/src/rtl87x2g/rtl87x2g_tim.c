@@ -9,6 +9,7 @@
  *============================================================================*/
 #include "rtl_tim.h"
 #include "rtl_rcc.h"
+#include "app_section.h"
 
 /*============================================================================*
  *                           Public Functions
@@ -277,6 +278,7 @@ void TIM_PWMChangeDZClockSrc(PWM_TypeDef *PWMx, PWMDZClockSrc_TypeDef PWM_Deazon
     }
 }
 
+RAM_FUNCTION
 void TIM_DLPSEnter(void *PeriReg, void *StoreBuf)
 {
     TIMStoreReg_Typedef *store_buf = (TIMStoreReg_Typedef *)StoreBuf;
@@ -323,6 +325,7 @@ void TIM_DLPSEnter(void *PeriReg, void *StoreBuf)
     store_buf->tim_reg[28] = PERIBLKCTRL_PERI_CLK->u_33C.REG_TIMER_PWM_WRAP_1_CFG;
 }
 
+RAM_FUNCTION
 void TIM_DLPSExit(void *PeriReg, void *StoreBuf)
 {
     TIMStoreReg_Typedef *store_buf = (TIMStoreReg_Typedef *)StoreBuf;

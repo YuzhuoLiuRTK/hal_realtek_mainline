@@ -9,6 +9,7 @@
  *============================================================================*/
 #include "rtl_enh_tim.h"
 #include "rtl_rcc.h"
+#include "app_section.h"
 
 /*============================================================================*
  *                          Private Macros
@@ -200,6 +201,7 @@ void ENHTIM_PWMSrcSelect(ENHTIM_TypeDef *ENHTIMx, ENHTIMPWMDZRef_TypeDef PWMSrcS
 #endif
 
 
+RAM_FUNCTION
 void ENHTIM_DLPSEnter(void *PeriReg, void *StoreBuf)
 {
     ENHTIMStoreReg_Typedef *store_buf = (ENHTIMStoreReg_Typedef *)StoreBuf;
@@ -250,6 +252,7 @@ void ENHTIM_DLPSEnter(void *PeriReg, void *StoreBuf)
     store_buf->enhpwm_reg[3] = ENH_TIM3_PWM->ENHTIMER_PWM_CFG;
 }
 
+RAM_FUNCTION
 void ENHTIM_DLPSExit(void *PeriReg, void *StoreBuf)
 {
     ENHTIMStoreReg_Typedef *store_buf = (ENHTIMStoreReg_Typedef *)StoreBuf;

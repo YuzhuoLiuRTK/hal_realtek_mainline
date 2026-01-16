@@ -9,6 +9,7 @@
 
 #include "utils/rtl_utils.h"
 #include "address_map.h"
+#include "access.h"
 
 #ifdef  __cplusplus
 extern "C" {

@@ -912,7 +912,7 @@ void CAN_CLearErrorStatus(uint32_t CAN_ERR_STAT);
  * \endcode
  */
 CANError_TypeDef CAN_SetMsgBufTxMode(CANTxFrame_TypeDef *p_tx_frame_params,
-                                     const uint8_t *p_frame_data,
+                                     uint8_t *p_frame_data,
                                      uint8_t data_len);
 
 /**

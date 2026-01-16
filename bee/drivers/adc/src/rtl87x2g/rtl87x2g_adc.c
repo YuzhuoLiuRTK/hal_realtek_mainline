@@ -9,6 +9,7 @@
  *============================================================================*/
 #include "rtl_adc.h"
 #include "rtl_rcc.h"
+#include "app_section.h"
 
 /*============================================================================*
  *                          Private Macros
@@ -108,6 +109,7 @@ void ADC_BypassRegConfig(uint8_t ChannelNum, FunctionalState NewState)
   * \param  StoreBuf: Store buffer to store ADC register data.
   * \return None.
   */
+RAM_FUNCTION
 void ADC_DLPSEnter(void *PeriReg, void *StoreBuf)
 {
     ADCStoreReg_TypeDef *store_buf = (ADCStoreReg_TypeDef *)StoreBuf;
@@ -149,6 +151,7 @@ void ADC_DLPSEnter(void *PeriReg, void *StoreBuf)
   * \param  StoreBuf: Restore buffer to restore ADC register data.
   * \return None
   */
+RAM_FUNCTION
 void ADC_DLPSExit(void *PeriReg, void *StoreBuf)
 {
     ADCStoreReg_TypeDef *store_buf = (ADCStoreReg_TypeDef *)StoreBuf;

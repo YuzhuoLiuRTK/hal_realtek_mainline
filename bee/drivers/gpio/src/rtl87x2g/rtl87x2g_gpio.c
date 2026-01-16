@@ -9,6 +9,7 @@
  *============================================================================*/
 #include "rtl_gpio.h"
 #include "rtl_rcc.h"
+#include "app_section.h"
 
 /*============================================================================*
  *                        Private Defines
@@ -220,11 +221,12 @@ void GPIO_ExtPolarity(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin, GPIOITPolarity_Typ
     }
     else
     {
-        GPIOx->GPIO_EXT_DEB_POL_CTL = (GPIOx->GPIO_EXT_DEB_POL_CTL & (~GPIO_Pin)) | GPIO_Pin;
+        GPIOx->GPIO_EXT_DEB_POL_CTL = GPIOx->GPIO_EXT_DEB_POL_CTL & (~GPIO_Pin) | GPIO_Pin;
     }
 }
 
 
+RAM_FUNCTION
 void GPIO_DLPSEnter(void *PeriReg, void *StoreBuf)
 {
     GPIO_TypeDef *GPIOx = (GPIO_TypeDef *)PeriReg;
@@ -259,6 +261,7 @@ void GPIO_DLPSEnter(void *PeriReg, void *StoreBuf)
 }
 
 
+RAM_FUNCTION
 void GPIO_DLPSExit(void *PeriReg, void *StoreBuf)
 {
     GPIO_TypeDef *GPIOx = (GPIO_TypeDef *)PeriReg;

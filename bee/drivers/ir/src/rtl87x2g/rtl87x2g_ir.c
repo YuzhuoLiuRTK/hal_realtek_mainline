@@ -9,6 +9,7 @@
  *============================================================================*/
 #include "rtl_ir.h"
 #include "rtl_rcc.h"
+#include "app_section.h"
 
 /*============================================================================*
  *                           Public Functions
@@ -65,6 +66,7 @@ bool IR_ClkGet(IRClockSrc_TypeDef *ClockSrc, IRClockDiv_TypeDef *ClockDiv)
   * \param  StoreBuf: Store buffer to store IR register data.
   * \return None.
   */
+RAM_FUNCTION
 void IR_DLPSEnter(void *PeriReg, void *StoreBuf)
 {
     IRStoreReg_Typedef *store_buf = (IRStoreReg_Typedef *)StoreBuf;
@@ -85,6 +87,7 @@ void IR_DLPSEnter(void *PeriReg, void *StoreBuf)
   * \param  StoreBuf: Restore buffer to restore IR register data.
   * \return None
   */
+RAM_FUNCTION
 void IR_DLPSExit(void *PeriReg, void *StoreBuf)
 {
     IRStoreReg_Typedef *store_buf = (IRStoreReg_Typedef *)StoreBuf;

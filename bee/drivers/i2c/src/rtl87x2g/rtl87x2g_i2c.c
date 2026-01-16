@@ -9,6 +9,7 @@
  *============================================================================*/
 #include "rtl_i2c.h"
 #include "rtl_rcc.h"
+#include "app_section.h"
 
 /*============================================================================*
  *                           Public Functions
@@ -111,6 +112,7 @@ void I2C_ClkDivConfig(I2C_TypeDef *I2Cx, I2CClockDiv_TypeDef ClockDiv)
   * \param  StoreBuf: Store buffer to store I2C register data.
   * \return None.
   */
+RAM_FUNCTION
 void I2C_DLPSEnter(void *PeriReg, void *StoreBuf)
 {
     I2C_TypeDef *I2Cx = (I2C_TypeDef *)PeriReg;
@@ -162,6 +164,7 @@ void I2C_DLPSEnter(void *PeriReg, void *StoreBuf)
   * \param  StoreBuf: Restore buffer to restore I2C register data.
   * \return None
   */
+RAM_FUNCTION
 void I2C_DLPSExit(void *PeriReg, void *StoreBuf)
 {
     I2C_TypeDef *I2Cx = (I2C_TypeDef *)PeriReg;

@@ -168,6 +168,7 @@ typedef struct
 #define TIM_GetCurrentControl(TIMx)      (((TIM_TypeDef *)(TIMx))->TIMER_CONTROLREG)
 #define TIM_GetCurrentLoadCnt(TIMx)      (((TIM_TypeDef *)(TIMx))->TIMER_LOADCOUNT)
 
+
 /*============================================================================*
  *                         TIM Private Types
  *============================================================================*/

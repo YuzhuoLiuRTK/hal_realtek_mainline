@@ -8,6 +8,7 @@
  *                        Header Files
  *============================================================================*/
 #include "rtl_nvic.h"
+#include "app_section.h"
 
 /*============================================================================*
  *                           Public Functions
@@ -19,6 +20,7 @@
   *         the configuration information for the specified NVIC peripheral.
   * \return None
   */
+RAM_FUNCTION
 void NVIC_Init(NVIC_InitTypeDef *NVIC_InitStruct)
 {
     /* Check the parameters */

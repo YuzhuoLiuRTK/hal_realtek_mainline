@@ -119,9 +119,6 @@ typedef struct
 #define IS_SPI_ALL_PERIPH(PERIPH) (IS_SPIM_PERIPH(PERIPH) || \
                                    IS_SPIS_PERIPH(PERIPH))      //!< Check if the input parameter is valid.
 
-#define SPI_TX_FIFO_ADDR(SPIx)    (uint32_t)(&(((SPI_TypeDef *)(SPIx))->SPI_DR[0]))
-#define SPI_RX_FIFO_ADDR(SPIx)    (uint32_t)(&(((SPI_TypeDef *)(SPIx))->SPI_DR[0]))
-
 /** End of SPI_Declaration
   * \}
   */

@@ -9,6 +9,7 @@
  *============================================================================*/
 #include "rtl_keyscan.h"
 #include "rtl_rcc.h"
+#include "app_section.h"
 
 /*============================================================================*
  *                           Public Functions
@@ -19,6 +20,7 @@
   * \param  StoreBuf: Store buffer to store KEYSCAN register data.
   * \return None.
   */
+RAM_FUNCTION
 void KEYSCAN_DLPSEnter(void *PeriReg, void *StoreBuf)
 {
     KEYSCANStoreReg_Typedef *store_buf = (KEYSCANStoreReg_Typedef *)StoreBuf;
@@ -41,6 +43,7 @@ void KEYSCAN_DLPSEnter(void *PeriReg, void *StoreBuf)
   * \param  StoreBuf: Restore buffer to restore KEYSCAN register data.
   * \return None
   */
+RAM_FUNCTION
 void KEYSCAN_DLPSExit(void *PeriReg, void *StoreBuf)
 {
     KEYSCANStoreReg_Typedef *store_buf = (KEYSCANStoreReg_Typedef *)StoreBuf;

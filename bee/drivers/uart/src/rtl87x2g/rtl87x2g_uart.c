@@ -9,6 +9,7 @@
  *============================================================================*/
 #include "rtl_uart.h"
 #include "rtl_rcc.h"
+#include "app_section.h"
 
 /*============================================================================*
  *                           Public Functions
@@ -131,6 +132,7 @@ void UART_ClkDivConfig(UART_TypeDef *UARTx, UARTClockDiv_TypeDef ClockDiv)
 }
 
 
+RAM_FUNCTION
 void UART_DLPSEnter(void *PeriReg, void *StoreBuf)
 {
     UART_TypeDef *UARTx = (UART_TypeDef *)PeriReg;
@@ -188,6 +190,7 @@ void UART_DLPSEnter(void *PeriReg, void *StoreBuf)
 }
 
 
+RAM_FUNCTION
 void UART_DLPSExit(void *PeriReg, void *StoreBuf)
 {
     UART_TypeDef *UARTx = (UART_TypeDef *)PeriReg;
