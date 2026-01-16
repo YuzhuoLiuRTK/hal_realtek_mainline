@@ -36,6 +36,8 @@ extern void (*phy_init)(uint8_t);
 extern void (*thermal_tracking_timer_init)(void);
 extern void (*ft_paras_apply)(void);
 extern void (*si_flow_data_init)(void);
+extern void (*secure_os_func_ptr_init)(void);
+extern void (*secure_platform_func_ptr_init)(void);
 
 #ifdef __cplusplus
 }
