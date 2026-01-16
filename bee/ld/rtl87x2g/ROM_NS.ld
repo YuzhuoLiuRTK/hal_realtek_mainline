@@ -44,7 +44,9 @@ SECTIONS
     PROVIDE(ft_paras_apply = 0x0013d4e8);
     PROVIDE(get_SystemCpuClock = 0x0013d510);
     PROVIDE(get_stack_en = 0x0013d54c);
+    PROVIDE(log_buffer_init = 0x0013d5a0);
     PROVIDE(log_direct = 0x0013d5ac);
+    PROVIDE(log_gdma_init = 0x0013d5b0);
     PROVIDE(log_snoop = 0x0013d5bc);
     PROVIDE(log_timestamp_get = 0x0013d5c0);
     PROVIDE(os_lock = 0x0013d7bc);

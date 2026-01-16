@@ -7,8 +7,8 @@
 /*============================================================================*
  *                      Define to prevent recursive inclusion
  *============================================================================*/
-#ifndef SYSTEM_INIT_H
-#define SYSTEM_INIT_H
+#ifndef SYSTEM_INIT_NS_H
+#define SYSTEM_INIT_NS_H
 
 /*============================================================================*
  *                      Headers
@@ -38,10 +38,11 @@ extern void (*ft_paras_apply)(void);
 extern void (*si_flow_data_init)(void);
 extern void (*secure_os_func_ptr_init)(void);
 extern void (*secure_platform_func_ptr_init)(void);
+extern bool (*log_buffer_init)(void);
+extern void (*log_gdma_init)(void);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* SYSTEM_INIT_H */
-
+#endif /* SYSTEM_INIT_NS_H */
