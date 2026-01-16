@@ -1,4 +1,4 @@
-# Copyright (c) 2026 Realtek Semiconductor Corp.
+# Copyright (c) 2026, Realtek Semiconductor Corporation
 # SPDX-License-Identifier: Apache-2.0
 
 if(NOT DEFINED CONFIG_REALTEK_BEE_USING_RTL876X_DRIVER)
