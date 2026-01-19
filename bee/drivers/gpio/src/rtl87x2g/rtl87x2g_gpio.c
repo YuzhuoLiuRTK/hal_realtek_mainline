@@ -221,7 +221,7 @@ void GPIO_ExtPolarity(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin, GPIOITPolarity_Typ
     }
     else
     {
-        GPIOx->GPIO_EXT_DEB_POL_CTL = GPIOx->GPIO_EXT_DEB_POL_CTL & (~GPIO_Pin) | GPIO_Pin;
+        GPIOx->GPIO_EXT_DEB_POL_CTL = (GPIOx->GPIO_EXT_DEB_POL_CTL & (~GPIO_Pin)) | GPIO_Pin;
     }
 }
 
