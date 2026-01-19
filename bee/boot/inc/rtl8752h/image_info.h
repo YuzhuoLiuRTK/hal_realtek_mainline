@@ -6,6 +6,7 @@
 
 #ifndef _PATCH_HEADER_CHECK_H_
 #define _PATCH_HEADER_CHECK_H_
+
 #include <stdbool.h>
 #include <stdint.h>
 #include "rtl876x.h"

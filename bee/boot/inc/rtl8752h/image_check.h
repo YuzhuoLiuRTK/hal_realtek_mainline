@@ -6,6 +6,7 @@
 
 #ifndef _IMAGE_CHECK_H_
 #define _IMAGE_CHECK_H_
+
 #include <stdbool.h>
 #include <stdint.h>
 #include <image_header.h>

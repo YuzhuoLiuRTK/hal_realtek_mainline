@@ -10,6 +10,8 @@
 #ifndef _RTL_BOOT_RECORD_H_
 #define _RTL_BOOT_RECORD_H_
 
+#include <stdint.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -17,7 +19,6 @@ extern "C" {
 /*============================================================================*
  *                      Headers
  *============================================================================*/
-#include <stdint.h>
 
 enum STAGE_INDEXES{
 	START_PLATFORM_INIT = 1,

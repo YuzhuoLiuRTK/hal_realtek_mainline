@@ -7,12 +7,12 @@
 #ifndef __CLOCK_MANAGER_H
 #define __CLOCK_MANAGER_H
 
+#include <stdint.h>
+#include <stdbool.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#include <stdint.h>
-#include <stdbool.h>
 
 #define CLOCK_40MHZ     40000000
 #define CLOCK_30MHZ     30000000

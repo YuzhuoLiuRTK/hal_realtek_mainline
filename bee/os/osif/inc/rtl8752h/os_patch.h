@@ -3,16 +3,15 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-#ifndef _PATCH_OS_H_
-#define _PATCH_OS_H_
 
-#include <patch.h>
+#ifndef _OS_PATCH_H_
+#define _OS_PATCH_H_
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#define PATCH_CODE_EN_OS                         1
+typedef bool (*BOOL_PATCH_FUNC)();
 
 /* OSIF patch function */
 extern BOOL_PATCH_FUNC patch_osif_os_systick_handler;
@@ -71,13 +70,6 @@ extern BOOL_PATCH_FUNC patch_osif_os_mem_aligned_free;
 extern BOOL_PATCH_FUNC patch_osif_os_mem_peek;
 extern BOOL_PATCH_FUNC patch_osif_os_mem_check_heap_usage;
 
-//extern BOOL_PATCH_FUNC patch_osif_os_pool_create_intern;
-//extern BOOL_PATCH_FUNC patch_osif_os_pool_extend_intern;
-//extern BOOL_PATCH_FUNC patch_osif_os_pool_delete_intern;
-//extern BOOL_PATCH_FUNC patch_osif_os_pool_dump;
-//extern BOOL_PATCH_FUNC patch_osif_os_buffer_get_intern;
-//extern BOOL_PATCH_FUNC patch_osif_os_buffer_put_intern;
-
 extern BOOL_PATCH_FUNC patch_osif_os_queue_in;
 extern BOOL_PATCH_FUNC patch_osif_os_queue_out;
 extern BOOL_PATCH_FUNC patch_osif_os_queue_insert;
@@ -96,8 +88,9 @@ extern BOOL_PATCH_FUNC patch_osif_os_timer_number_get;
 extern BOOL_PATCH_FUNC patch_osif_os_timer_pend_function_call;
 extern BOOL_PATCH_FUNC patch_osif_os_timer_get_auto_reload;
 extern BOOL_PATCH_FUNC patch_osif_os_timer_is_timer_active;
+
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* _PATCH_OS_H_ */
+#endif /* _OS_PATCH_H_ */
