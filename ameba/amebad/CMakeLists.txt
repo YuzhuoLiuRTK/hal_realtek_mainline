@@ -1,6 +1,12 @@
 # Copyright (c) 2024 Realtek Semiconductor Corp.
 # SPDX-License-Identifier: Apache-2.0
 
+if (CONFIG_BT_COEXIST)
+  set(LIB_PATH ${ZEPHYR_CURRENT_MODULE_DIR}/zephyr/blobs/ameba/${CONFIG_SOC_SERIES}/lib/coex)
+else()
+  set(LIB_PATH ${ZEPHYR_CURRENT_MODULE_DIR}/zephyr/blobs/ameba/${CONFIG_SOC_SERIES}/lib)
+endif()
+
 zephyr_link_libraries_ifdef(CONFIG_WIFI_AMEBA
   -Wl,--start-group
   ${LIB_PATH}/lib_wifi_rtk_app.a
@@ -11,6 +17,8 @@ zephyr_link_libraries_ifdef(CONFIG_WIFI_AMEBA
   ${LIB_PATH}/lib_wpa_lite.a
   ${LIB_PATH}/lib_wifi_com_sec.a
 )
+zephyr_link_libraries_ifdef(CONFIG_BT_COEXIST ${LIB_PATH}/lib_coex.a)
+
 zephyr_compile_options(-mcmse)
 
 zephyr_include_directories(

@@ -11,5 +11,7 @@ config REALTEK_AMEBA_HAL_LIB
 
 rsource "ameba*/Kconfig"
 rsource "common/wifi/Kconfig"
+rsource "common/bluetooth/Kconfig"
+rsource "common/rtk_coex/Kconfig"
 
 endif # SOC_FAMILY_REALTEK_AMEBA
