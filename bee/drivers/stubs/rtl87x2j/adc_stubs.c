@@ -14,6 +14,11 @@
 #include <stdint.h>
 #include <adc_lib.h>
 
+bool ADC_CalibrationInit(void)
+{
+	return true;
+}
+
 float ADC_GetVoltage(const ADC_SampleMode vSampleMode, int32_t vSampleData,
 		     ADC_ErrorStatus *pErrorStatus)
 {
