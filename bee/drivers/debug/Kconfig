@@ -1,0 +1,9 @@
+# Copyright (c) 2026, Realtek Semiconductor Corporation
+# SPDX-License-Identifier: Apache-2.0
+
+config REALTEK_BEE_DEBUG
+	bool "Realtek Bee DEBUG driver"
+	default y
+	depends on SOC_SERIES_RTL87X2J
+	help
+	  This option enables the DEBUG driver for Realtek Bee.

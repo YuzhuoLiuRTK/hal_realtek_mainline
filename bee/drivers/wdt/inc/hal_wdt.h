@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2026, Realtek Semiconductor Corporation
  *
- * SPDX-License-Identifier: Apache-2.0
+ * SPDX-License-Identifier: LicenseRef-Realtek-5-Clause
  */
 
 /*============================================================================*
@@ -19,7 +19,6 @@ extern "C" {
 *============================================================================*/
 #include <stdint.h>
 #include <stdbool.h>
-#include "reset_reason.h"
 
 /** @addtogroup HAL_WDT HAL WDT
   * @brief HAL WDT function module
@@ -64,23 +63,13 @@ typedef enum
  *
  * \ingroup     HAL_WDT_Exported_Types
  */
-typedef enum
-{
-    HW_RESET                         =  0x00,   /* HW reset */
-    CORE_WDT_RESET_ALL               =  0x01,   /* CORE WDT RESET_ALL */
-    CORE_WDT_RESET_ALL_EXCEPT_AON    =  0x02,   /* CORE WDT RESET_ALL_EXCEPT_AON  */
-    LP_WDT_RESET_ALL                 =  0x03,   /* LP WDT RESET_ALL */
-    LP_WDT_RESET_ALL_EXCEPT_AON      =  0x04,   /* LP WDT RESET_ALL_EXCEPT_AON  */
-    SYSTEM_RESET_REASON              =  0x05,   /* System reset*/
-    WDT_RESET_TYPE_END               =  0xff,
-} T_WDT_RESET_TYPE;
 
 /**
  * \brief       Define the type of wdt reset callback.
  *
  * \ingroup     HAL_WDT_Exported_Types
  */
-typedef void (*P_WDT_RESET_CB)(T_WDT_MODE wdg_mode, uint8_t reset_reason);
+
 
 /** End of group HAL_WDT_Exported_Types
   * @}
@@ -241,100 +230,8 @@ T_WDT_STATUS hal_wdt_change_mode(T_WDT_MODE mode);
  */
 T_WDT_STATUS hal_wdt_kick(void);
 
-/**
- * hal_wdt.h
- *
- * \brief  Reset the mcu at specified mode.
- * \param[in] mode: wdt reset mode \ref T_WDT_MODE.
- * \param[in] function: The function that triggers reset.
- * \param[in] line: The line of function that triggers reset.
- * \return none.
- *
- * <b>Example usage</b>
- * \code{.c}
- *
- * void wdt_demo(void)
- * {
- *     chip_reset(RESET_ALL);
- * }
- * \endcode
- */
-void hal_wdt_reset(T_WDT_MODE wdt_mode, const char *function, uint32_t line);
-#define chip_reset(mode)    hal_wdt_reset(mode,  __FUNCTION__, __LINE__)
 
-/**
- * hal_wdt.h
- *
- * \brief  Register wdt reset callback.
- * \param[in] reset_callback: callback to be registered.
- * \return none.
- *
- * <b>Example usage</b>
- * \code{.c}
- *
- * void wdt_user_callback(T_WDT_MODE wdg_mode, uint8_t reset_reason)
- * {
- * }
- * void wdt_demo(void)
- * {
- *     hal_wdt_regiser_reset_callback(wdt_user_callback);
- * }
- * \endcode
- */
-void hal_wdt_regiser_reset_callback(P_WDT_RESET_CB reset_callback);
 
-/**
- * hal_wdt.h
- *
- * \brief  Reset the mcu at specified mode with reason.
- * \param[in] mode: wdt reset mode \ref T_WDT_MODE.
- * \param[in] reset_reason: reset reason.
- * \return none.
- *
- * <b>Example usage</b>
- * \code{.c}
- *
- * void wdt_demo(void)
- * {
- *     hal_wdt_reset_with_reason(RESET_ALL, 2);
- * }
- * \endcode
- */
-void hal_wdt_reset_with_reason(T_WDT_MODE wdt_mode, T_SW_RESET_REASON reset_reason);
-
-/**
- * hal_wdt.h
- *
- * \brief  Get wdt reset type.
- * \return Reset type.
- *
- * <b>Example usage</b>
- * \code{.c}
- *
- * void wdt_demo(void)
- * {
- *     uint8_t type = hal_wdt_get_reset_type();
- * }
- * \endcode
- */
-T_WDT_RESET_TYPE hal_wdt_get_reset_type(void);
-
-/**
- * hal_wdt.h
- *
- * \brief  Get wdt reset reason.
- * \return Reset reason.
- *
- * <b>Example usage</b>
- * \code{.c}
- *
- * void wdt_demo(void)
- * {
- *     uint8_t reason = hal_wdt_get_reset_reason();
- * }
- * \endcode
- */
-T_SW_RESET_REASON hal_wdt_get_reset_reason(void);
 
 #ifdef __cplusplus
 }

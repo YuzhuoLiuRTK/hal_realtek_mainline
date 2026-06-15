@@ -19,13 +19,15 @@ extern "C" {
 *============================================================================*/
 #include "utils/rtl_utils.h"
 #if defined (CONFIG_SOC_SERIES_RTL87X2G)
-#include "wdt/src/rtl87x2g/rtl_wdt_def.h"
+#include "wdt/src/device/rtl87x2g/rtl_wdt_def.h"
 #elif defined (CONFIG_SOC_SERIES_RTL87X3E)
-#include "wdt/src/rtl87x3e/rtl_wdt_def.h"
+#include "wdt/src/device/rtl87x3e/rtl_wdt_def.h"
 #elif defined (CONFIG_SOC_SERIES_RTL87X3D)
-#include "wdt/src/rtl87x3d/rtl_wdt_def.h"
-#elif defined (CONFIG_SOC_SERIES_RTL8762J)
-#include "wdt/src/rtl87x2j/rtl_wdt_def.h"
+#include "wdt/src/device/rtl87x3d/rtl_wdt_def.h"
+#elif defined (CONFIG_SOC_SERIES_RTL87X2J)
+#include "wdt/src/device/rtl87x2j/rtl_wdt_def.h"
+#elif defined (CONFIG_SOC_SERIES_RTL87X3J)
+#include "wdt/src/device/rtl87x3j/rtl_wdt_def.h"
 #endif
 
 /** \defgroup WDT         WDT
@@ -48,15 +50,15 @@ extern "C" {
   */
 typedef enum
 {
-    RESET_ALL = 0,                //!< Reset all.
-    RESET_ALL_EXCEPT_AON = 1,     //!< Reset all except RTC and some AON register.
-    INTERRUPT_CPU = 2,            //!< Interrupt CPU.
-    WDT_MODE_NUM = 3,             //!< The maximum selectable value for WDT mode.
+    RESET_ALL = 0,               /**< Reset all. */
+    RESET_ALL_EXCEPT_AON = 1,    /**< Reset all except RTC and some AON register. */
+    INTERRUPT_CPU = 2,           /**< Interrupt CPU. */
+    WDT_MODE_NUM = 3,            /**< Max number. */
 } WDTMode_TypeDef;
 
 #define IS_WDT_Mode(MODE) (((MODE) == RESET_ALL) || \
                            ((MODE) == RESET_ALL_EXCEPT_AON) || \
-                           ((MODE) == INTERRUPT_CPU)) //!< Check if the input parameter is valid.
+                           ((MODE) == INTERRUPT_CPU))
 
 /** End of group WDT_Exported_Types
   * \}
@@ -70,54 +72,113 @@ typedef enum
   */
 
 /**
- * \brief  Start WDT. This function will enable WDT clock, set and start WDT.
- *
- * \param[in]  TimeMs  WDT Timeout Time. Unit: ms.
- * \param[in]  Mode    Refer to \ref WDTMode_TypeDef. If the Reset WDT operation is not performed within the Timeout period,
- *                     the configured mode operation will be executed.
- *
- * \return  true or false.
- *          - true: WDT mode set successfully, enabling the function..
- *          - false: WDT setting failed.
- */
+  * \brief  Start WDT. This function will enable WDT clock, set and start WDT.
+  * \param  TimeMs.
+  * \param  Mode \ref WDTMode_TypeDef.
+  * \return true or false.
+  */
 bool WDT_Start(uint32_t TimeMs, WDTMode_TypeDef Mode);
 
 /**
- * \brief  Enable WDT.
- */
+  * \brief  Enable WDT.
+  * \return None.
+  */
 void WDT_Enable(void);
 
 /**
- * \brief  Disable WDT.
- */
+  * \brief  Disable WDT.
+  * \return None.
+  */
 void WDT_Disable(void);
 
 /**
- * \brief  Kick WDT to restart WDT.
- */
+  * \brief  Kick WDT to restart WDT.
+  * \return None.
+  */
 void WDT_Kick(void);
 
 /**
- * \brief  Is WDT enable.
- *
- * \return Is WDT enable or not
- */
+  * \brief  Is WDT enable.
+  * \return Is WDT enable or not
+  */
 bool WDT_IsEnable(void);
 
 /**
- * \brief  Get WDT timeout.
- *
- * \return WDT timeout
- */
+  * \brief  Get WDT timeout.
+  * \return WDT timeout
+  */
 uint32_t WDT_GetTimeoutMs(void);
 
 /**
- * \brief  Get WDT mode.
- *
- * \return WDT mode
- */
+  * \brief  Get WDT mode.
+  * \return WDT mode
+  */
 WDTMode_TypeDef WDT_GetMode(void);
 
+#if (WDT_SUPPORT_AUTO_CLOCK == 1)
+void WDT_ClockAutoModeCmd(FunctionalState Newstate);
+#endif
+
+#if (WDT_SUPPORT_GET_CURRENT_COUNTER == 1)
+/**
+  * \brief  Get WDT current count.
+  * \return Current count
+  */
+uint32_t WDT_GetCurrentCount(void);
+#endif
+
+/**
+  * \brief  Clear WDT interrupt pending bit.
+  * \return None
+  */
+void WDT_ClearINTPendingBit(void);
+
+#if (WDT_SUPPORT_CNT_LIMIT2 == 1)
+/**
+  * \brief  Set WDT reset time.
+  * \param  TimeMs.
+  * \return True or false.
+  */
+bool WDT_SetResetTime(uint32_t TimeMs);
+
+/**
+  * \brief  Get reset time(ms).
+  * \return Reset time.
+  */
+uint32_t WDT_GetResetTimeMs(void);
+
+/**
+  * \brief  Start WDT with interrupt time and reset time.
+  * \param  TimeMs.
+  * \param  Mode \ref WDTMode_TypeDef.
+  * \return true or false.
+  */
+bool WDT_StartWithResetTime(uint32_t InterruptTimeMs, uint32_t ResetTimeMs, WDTMode_TypeDef Mode);
+#endif
+
+#if (WDT_SUPPORT_RECORD_TIMEOUT == 1)
+/**
+  * \brief  Get last WDT timeout mode.
+  * \return Timeout mode \ref WDTMode_TypeDef.
+  */
+WDTMode_TypeDef WDT_GetLastTimeoutMode(void);
+
+/**
+  * \brief  Clear last WDT timeout mode.
+  */
+void WDT_ClearLastTimeoutMode(void);
+
+/**
+  * \brief  Get WDT timeout flag.
+  * \return true: WDT timeout, false: WDT not timeout.
+  */
+bool WDT_GetTimeoutFlag(void);
+
+/**
+  * \brief  Clear WDT timeout flag.
+  */
+void WDT_ClearTimeoutFlag(void);
+#endif
 /** End of WDT_Exported_Functions
   * \}
   */
