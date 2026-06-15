@@ -56,15 +56,6 @@ extern "C" {
     */
 
 /**
- * @brief Generate random number given max number allowed
- * @param max   to specify max number that allowed
- * @return random number
- */
-
-extern uint32_t platform_random(uint32_t max);
-
-
-/**
  * @brief Busy delay for specified millisecond
  * @param t   to specify t milliseconds to delay
  * @return none

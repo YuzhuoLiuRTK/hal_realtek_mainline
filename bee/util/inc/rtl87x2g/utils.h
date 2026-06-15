@@ -176,14 +176,6 @@ void update_cpu_tick_to_us(uint32_t cpu_freq);
 
 #define IS_USE_VHCI (get_stack_en())
 
-/**
- * @brief Generate random number given max number allowed
- * @param max   to specify max number that allowed
- * @return random number
- */
-
-uint32_t platform_random(uint32_t max);
-
 /** End of PLATFORM_UTILS_Exported_Functions
   * @}
   */
@@ -197,4 +189,3 @@ uint32_t platform_random(uint32_t max);
 #endif
 
 #endif
-

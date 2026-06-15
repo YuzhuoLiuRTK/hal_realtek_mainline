@@ -59,14 +59,6 @@ typedef enum
     * @{
     */
 
-/**
- * @brief Generate random number given max number allowed
- * @param max   to specify max number that allowed
- * @return random number
- */
-
-uint32_t platform_random(uint32_t max);
-
 void deinit_swd_pinmux(void);
 
 void setup_non_secure_nvic(void);
@@ -104,4 +96,3 @@ uint32_t get_extra_occd_size(void);
 #endif
 
 #endif
-
