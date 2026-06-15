@@ -8,7 +8,7 @@
                 {
                     "id": 0,
                     "address": "0x2000000",
-                    "name": "bootloader_MP_sdk_0.0.0.3_aca08d52-f6beaf230c7ed2f077dfa11b28ecf16b.bin",
+                    "name": "bootloader_MP_sdk_0.0.0.3_5d9f33fa-9307be087ac1fd74cf2b18d6e32a95e4.bin",
                     "enable": "1"
                 },
                 {
@@ -20,7 +20,7 @@
                 {
                     "id": 1,
                     "address": "0x2013000",
-                    "name": "sys_patch_MP_sdk_0.0.0.0_16104e62-0fd3734794b4c23ccf7a3aca34aed9eb.bin",
+                    "name": "sys_patch_MP_sdk_0.0.0.0_16104e62-18075d3d7e9409d1c10a7a6978bdc064.bin",
                     "enable": "1"
                 },
                 {
@@ -32,7 +32,7 @@
                 {
                     "id": 3,
                     "address": "0x2019000",
-                    "name": "lowerstack_MP_100_3.0.0.117_fd76f38d-3c96b69e1a1b5aa68e415ac1793fa3a7.bin",
+                    "name": "lowerstack_MP_100_0.0.0.14_7c40e9ca-39408ea927dd3aa546073ab67f84fa52.bin",
                     "enable": "1"
                 }
             ]
