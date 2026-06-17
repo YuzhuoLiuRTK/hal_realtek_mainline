@@ -124,4 +124,5 @@ SECTIONS
     PROVIDE(os_interface = 0x20002a18);
     PROVIDE(os_pm_feature_cfg = 0x20002b38);
     PROVIDE(patch_os_timer_max_num_get = 0x20002cac);
+    PROVIDE(ft_otp_ram = 0x20002804);
 }
