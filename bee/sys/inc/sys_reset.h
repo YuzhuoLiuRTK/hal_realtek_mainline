@@ -53,8 +53,61 @@ extern "C" {
 #define    RESET_REASON_BT_IMG_MISMATCH             0x19
 #define    RESET_REASON_ZEPHYR                      0x1A
 
+/*
+ * Keep RTL87x2G reset reason definitions aligned with the reset reason values
+ * stored by the RTL87x2G ROM and platform code.
+ */
+#if defined(CONFIG_SOC_SERIES_RTL87X2G)
+#undef RESET_REASON_WDG_TIMEOUT
+#undef RESET_REASON_PASSWORD_DEBUG
+#undef RESET_REASON_CHIP_RESET
+#undef RESET_REASON_ENTER_FT_MODE
+#undef RESET_REASON_SWITCH_TO_HCI_MODE
+#undef RESET_REASON_SWITCH_TO_OTA_MODE
+#undef RESET_REASON_DFU_TIMEOUT
+#undef RESET_REASON_DFU_LINK_LOST
+#undef RESET_REASON_DFU_UPDATE_IMG_FAIL
+#undef RESET_REASON_DFU_UPDATE_COMP_IMG
+#undef RESET_REASON_DFU_ACTIVE_RESET
+#undef RESET_REASON_DFU_FAIL_RESET
+#undef RESET_REASON_FEATURE_CHECK_FAIL
+#undef RESET_REASON_FLASH_LAYOUT_OVERFLOW
+#undef RESET_REASON_POWER_DOWN_RESET
+#undef RESET_REASON_FLASH_IOCTL
+#undef RESET_REASON_ZEPHYR
+
+#define    RESET_REASON_WDT_TIMEOUT                 0x1
+#define    RESET_REASON_FLASH_IOCTL                 0x6
+#define    RESET_REASON_LOWER_STACK                 0x7
+#define    RESET_REASON_PASSWORD_DEBUG              0x8
+#define    RESET_REASON_ENTER_FT_MODE               0x9
+#define    RESET_REASON_SWITCH_TO_HCI_MODE          0xA
+#define    RESET_REASON_SWITCH_TO_OTA_MODE          0xB
+#define    RESET_REASON_DFU_FW_RESET                0xC
+#define    RESET_REASON_DFU_UPDATE_IMG_FAIL         0xE
+#define    RESET_REASON_DFU_DISCONN_RSP             0xF
+#define    RESET_REASON_DFU_DISCONN_IND             0x10
+#define    RESET_REASON_ROM_DFU_OPCODE_SYSTEM_RESET 0x11
+#define    RESET_REASON_DATATRANS_PATCH_ACTIVE      0x12
+#define    RESET_REASON_DATATRANS_SYSTEM_RESET      0x13
+#define    RESET_REASON_MP_RESET                    0x14
+#define    RESET_REASON_FEATURE_CHECK_FAIL          0x15
+#define    RESET_REASON_FLASH_LAYOUT_OVERFLOW       0x16
+#define    RESET_REASON_DFU_UPDATE_COMPRESSED_IMG   0x17
+#define    RESET_REASON_BRANCH_TO_NS_FAIL           0x18
+#define    RESET_REASON_BRANCH_TO_S_FAIL            0x19
+#define    RESET_REASON_DLPS                        0x1A
+#define    RESET_REASON_POWER_DOWN                  0x1B
+#define    RESET_REASON_ZEPHYR                      0x1C
+#endif
+
 /* Customized reset reasons start from 0x80 */
 #define    RESET_REASON_APP_START                   0x80
+#define    SW_RESET_APP_END                         0xFF
+
+#if defined(CONFIG_SOC_SERIES_RTL87X2G)
+typedef uint32_t T_SW_RESET_REASON;
+#endif
 
 /* Global variable holding the last reset reason */
 extern uint32_t sys_reset_reason;
