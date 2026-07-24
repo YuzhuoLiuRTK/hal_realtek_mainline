@@ -115,14 +115,15 @@ SECTIONS
     PROVIDE(pck600_system_set_dynamic_power_policy = 0x20002160);
     PROVIDE(phy_init = 0x200021f0);
     PROVIDE(platform_pm_init = 0x200022b4);
+    PROVIDE(pmu_get_va18_tune = 0x20002374);
     PROVIDE(power_manager_init = 0x200023a0);
     PROVIDE(set_active_mode_clk_src = 0x20002498);
     PROVIDE(thermal_meter_init = 0x200024dc);
     PROVIDE(thermal_tracking_init = 0x200024e8);
     PROVIDE(wakeup_init = 0x200024fc);
+    PROVIDE(ft_otp_ram = 0x20002804);
     PROVIDE(lowerstack_SystemCall_in_platform = 0x20002a0c);
     PROVIDE(os_interface = 0x20002a18);
     PROVIDE(os_pm_feature_cfg = 0x20002b38);
     PROVIDE(patch_os_timer_max_num_get = 0x20002cac);
-    PROVIDE(ft_otp_ram = 0x20002804);
 }

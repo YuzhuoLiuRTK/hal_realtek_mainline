@@ -7,8 +7,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "rtl876x_rcc.h"
 #include "rtl876x_codec.h"
-#include "platform_utils.h"
-#include "platform_utils.h"
+#include "utils.h"
 #include "app_section.h"
 
 /**

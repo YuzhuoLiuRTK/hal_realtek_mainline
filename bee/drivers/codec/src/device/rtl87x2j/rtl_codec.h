@@ -19,9 +19,9 @@ extern "C" {
  *============================================================================*/
 #include "utils/rtl_utils.h"
 #if defined (CONFIG_SOC_SERIES_RTL87X2G)
-#include "codec/src/rtl87x2g/rtl_codec_def.h"
+#include "codec/src/device/rtl87x2g/rtl_codec_def.h"
 #elif defined (CONFIG_SOC_SERIES_RTL87X2J)
-#include "codec/src/rtl87x2j/rtl_codec_def.h"
+#include "codec/src/device/rtl87x2j/rtl_codec_def.h"
 #endif
 
 /** \defgroup CODEC       CODEC
