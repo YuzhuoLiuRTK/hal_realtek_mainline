@@ -223,7 +223,7 @@ void Pad_Config(uint8_t                 Pin_Num,
 {
     uint32_t reg_value_high_low = Pin_Num % 2;
     uint32_t reg_addr = PAD_REG_BASE + PINADDR_TABLE[Pin_Num / 2];
-    uint32_t reg_value;
+    uint32_t reg_value_raw, reg_value;
     bool P40_gate_offset = 0;
 
     if (!IS_PIN_NUMBER(Pin_Num))
@@ -245,7 +245,7 @@ void Pad_Config(uint8_t                 Pin_Num,
         P40_gate_offset = 1;
     }
 
-    reg_value = pad_aon_read(reg_addr);
+    reg_value_raw = pad_aon_read(reg_addr);
 
     if (reg_value_high_low)
     {
@@ -254,11 +254,12 @@ void Pad_Config(uint8_t                 Pin_Num,
            DCUR  WKP   WKE   PULR  1111
            PULD  PULE  OUTE  OUTV  0000
          Clear reg value first. */
-        reg_value &= 0xFCF0FFFF;
+        reg_value = (reg_value_raw & 0xFCF0FFFF) | SHDN << 16;
 
         /* Power on first */
-        reg_value |= SHDN << 16;
-        pad_aon_write(reg_addr, reg_value);
+        if (!(reg_value_raw & (SHDN << 16))) {
+            pad_aon_write(reg_addr, reg_value);
+        }
 
         if (AON_PAD_Mode)
         {
@@ -303,11 +304,12 @@ void Pad_Config(uint8_t                 Pin_Num,
            DCUR  WKP   WKE   PULR  1111
            PULD  PULE  OUTE  OUTV  0000
          Clear reg value first. */
-        reg_value &= 0xFFFFFCF0;
+        reg_value = (reg_value_raw & 0xFFFFFCF0) | SHDN;
 
         /* Power on first */
-        reg_value |= SHDN;
-        pad_aon_write(reg_addr, reg_value);
+        if (!(reg_value_raw & SHDN)) {
+            pad_aon_write(reg_addr, reg_value);
+        }
 
         if (AON_PAD_Mode)
         {
