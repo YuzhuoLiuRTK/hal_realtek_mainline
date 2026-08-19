@@ -104,6 +104,12 @@ config WRAP_REALTEK_BEE_PINMUX
 	depends on HAL_REALTEK_BEE_PINMUX
 	select REALTEK_BEE_PINMUX
 
+config WRAP_REALTEK_BEE_PWM
+	bool
+	default y
+	depends on HAL_REALTEK_BEE_PWM
+	select REALTEK_BEE_PWM
+
 config WRAP_REALTEK_BEE_AON_QDEC
 	bool
 	default y
