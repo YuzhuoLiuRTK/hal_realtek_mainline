@@ -18,6 +18,7 @@ orsource "mac_802154/Kconfig"
 orsource "pinmux/Kconfig"
 orsource "pwm/Kconfig"
 orsource "qdec/Kconfig"
+orsource "rap/Kconfig"
 orsource "rcc/Kconfig"
 orsource "rtc/Kconfig"
 orsource "sdhc/Kconfig"
@@ -127,6 +128,12 @@ config WRAP_REALTEK_BEE_LPQDEC
 	default y
 	depends on HAL_REALTEK_BEE_LPQDEC
 	select REALTEK_BEE_LPQDEC
+
+config WRAP_REALTEK_BEE_RAP
+	bool
+	default y
+	depends on HAL_REALTEK_BEE_RAP
+	select REALTEK_BEE_RAP
 
 config WRAP_REALTEK_BEE_RCC
 	bool
