@@ -3,6 +3,10 @@ SECTIONS
     PROVIDE(Peripheral_Handler = 0x00003705);
     PROVIDE(WDG_Enable = 0x000040b1);
     PROVIDE(flash_nor_set_all_info = 0x0000aa79);
+    PROVIDE(hw_aes_decrypt128 = 0x0000cd31);
+    PROVIDE(hw_aes_decrypt256 = 0x0000cd4d);
+    PROVIDE(hw_aes_encrypt128 = 0x0000d025);
+    PROVIDE(hw_aes_encrypt256 = 0x0000d041);
     PROVIDE(swap_buf = 0x0001776f);
     PROVIDE(get_occd_addr = 0x0001bf89);
     PROVIDE(get_occd_size = 0x0001bf91);
@@ -25,6 +29,8 @@ SECTIONS
     PROVIDE(flash_nor_set_seq_trans_enable = 0x0001c061);
     PROVIDE(flash_nor_set_addr_mode = 0x0001c069);
     PROVIDE(flash_nor_get_id = 0x0001c071);
+    PROVIDE(flash_nor_ioctl_internal = 0x0001c089);
+    PROVIDE(flash_nor_ioctl_get_buf_info = 0x0001c091);
     PROVIDE(flash_nor_cmd_list_init_nsc = 0x0001c0a9);
     PROVIDE(flash_nor_init_bp_lv_nsc = 0x0001c0b1);
     PROVIDE(update_cpu_tick_to_us_nsc = 0x0001c169);
