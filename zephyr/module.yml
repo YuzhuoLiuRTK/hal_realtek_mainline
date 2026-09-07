@@ -535,6 +535,13 @@ blobs:
     license-path: LICENSE
     url: https://github.com/rtkconnectivity/rtl87x2g_sdk/raw/refs/heads/main/bsp/driver/driver_lib/lib/rtl87x2g/gcc/librtl87x2g_can.a
     description: "Precompiled CAN library for RTL87X2G."
+  - path: bee/drivers/rtl87x2g/sd/librtl87x2g_sd.a
+    sha256: a4f0b6398af0138fe4983696394f11a8a6ec7c3a95f9f4b5eb6de4207e937918
+    type: lib
+    version: '0.0'
+    license-path: LICENSE
+    url: https://github.com/rtkconnectivity/rtl87x2g_sdk/raw/refs/heads/main/subsys/sd/lib/gcc/libsd.a
+    description: "Precompiled SD library for RTL87X2G."
   - path: bee/drivers/rtl87x2g/usb/librtl87x2g_usb.a
     sha256: 5adb02e8063e9d1405d54235fef64e3211e3c1fe092a7d2d2a92f1884f1d9365
     type: lib
