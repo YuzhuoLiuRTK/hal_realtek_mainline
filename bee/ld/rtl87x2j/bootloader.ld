@@ -3,6 +3,10 @@ SECTIONS
     PROVIDE(srand_bl = 0x020005ed);
     PROVIDE(GTC_CounterToUs = 0x020010ed);
     PROVIDE(GTC_UsToCounter = 0x0200112d);
+    PROVIDE(get_clock_mux_config = 0x20001e30);
+    PROVIDE(clock_set_unit_cfg_rate = 0x2000201c);
+    PROVIDE(unit_clock_freq = 0x20002d68);
+    PROVIDE(count_clk_by_div = 0x020054a1);
     PROVIDE(eflash_erase = 0x02005fe5);
     PROVIDE(eflash_read = 0x02006021);
     PROVIDE(eflash_write = 0x02006063);

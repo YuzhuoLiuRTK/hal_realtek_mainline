@@ -32,6 +32,7 @@ SECTIONS
     PROVIDE(reverse_bits_in_word = 0x000034e5);
     PROVIDE(saturate_by_boundary = 0x0000387d);
     PROVIDE(swap_buf = 0x00003a71);
+    PROVIDE(syscall_platform = 0x00003bb9);
     PROVIDE(tick_32000_to_us = 0x00003bdd);
     PROVIDE(tick_32768_to_us = 0x00003bff);
     PROVIDE(true_function = 0x00003c71);
