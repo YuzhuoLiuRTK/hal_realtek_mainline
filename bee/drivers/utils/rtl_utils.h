@@ -42,8 +42,8 @@ extern "C" {
  */
 typedef enum
 {
-    RESET = 0,      //!< Define the constant RESET and assign it the value 0.
-    SET = !RESET    //!< Define the constant SET and assign it the value 1.
+    RESET = 0,
+    SET = !RESET
 } FlagStatus, ITStatus;
 
 /** End of ITStatus
@@ -57,11 +57,11 @@ typedef enum
  */
 typedef enum
 {
-    DISABLE = 0,         //!< Define the constant DISABLE and assign it the value 0.
-    ENABLE = !DISABLE    //!< Define the constant ENABLE and assign it the value 1.
+    DISABLE = 0,
+    ENABLE = !DISABLE
 } FunctionalState;
 
-#define IS_FUNCTIONAL_STATE(STATE) (((STATE) == DISABLE) || ((STATE) == ENABLE)) //!< Check if the input parameter is valid.
+#define IS_FUNCTIONAL_STATE(STATE) (((STATE) == DISABLE) || ((STATE) == ENABLE))
 
 /** End of FunctionalState
   * \}
@@ -88,7 +88,7 @@ typedef enum
   * \param  expr: If expr is false, it calls assert_failed function which reports
   *         the name of the source file and the source line number of the call
   *         that failed. If expr is true, it returns no value.
-  *
+  * \retval None
   */
 #ifdef USE_FULL_ASSERT
 #define assert_param(expr) ((expr) ? (void)0 : io_assert_failed((uint8_t *)__FILE__, __LINE__))
@@ -109,4 +109,5 @@ void io_assert_failed(uint8_t *file, uint32_t line);
 #endif
 
 #endif /* RTL_UTILS_H */
+
 

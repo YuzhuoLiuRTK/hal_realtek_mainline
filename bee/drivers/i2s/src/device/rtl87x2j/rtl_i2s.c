@@ -28,9 +28,8 @@ void I2S_Init(I2S_TypeDef *I2Sx, I2S_InitTypeDef *I2S_InitStruct)
     assert_param(IS_I2S_DEVICE_MODE(I2S_InitStruct->I2S_DeviceMode));
     assert_param(IS_I2S_CHANNEL_TYPE(I2S_InitStruct->I2S_ChannelType));
     assert_param(IS_I2S_DATA_FORMAT(I2S_InitStruct->I2S_DataFormat));
-    assert_param(IS_I2S_DATA_WIDTH(I2S_InitStruct->I2S_DataWidth));
-    assert_param(IS_I2S_MCLK_OUTPUT_TYPE(I2S_InitStruct->I2S_MClockOutput));
-    assert_param(IS_I2S_DMA_CMD(I2S_InitStruct->I2S_DMACmd));
+    assert_param(IS_I2S_WIDTH(I2S_InitStruct->I2S_DataWidth));
+    assert_param(IS_I2S_MCLK_OUTPUT(I2S_InitStruct->I2S_MClockOutput));
 
     I2S_CTRL_TypeDef i2s_reg_0x04 = {.d32 = I2Sx->I2S_CTRL};
     I2S_FIFO_EN_CLK_CON_TypeDef i2s_reg_0x08 = {.d32 = I2Sx->I2S_FIFO_EN_CLK_CON};

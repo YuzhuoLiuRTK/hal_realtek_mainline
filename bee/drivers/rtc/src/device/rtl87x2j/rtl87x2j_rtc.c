@@ -83,5 +83,30 @@ void RTC_CompAutoReloadCmd(RTCCompIndex_TypeDef index, FunctionalState NewState)
     RTC_WRITE(RTC_RELOAD_CTRL, rtc_0x34.d32);
 }
 
+/**
+  * \brief  Check whether the auto-reload function of the specified comparator is enabled.
+  * \param  index: The comparator number, can be RTC_COMP0 ~ RTC_COMP3.
+  * \return true if auto-reload is enabled, false otherwise.
+  */
+bool RTC_IsCompAutoReloadEnable(RTCCompIndex_TypeDef index)
+{
+    RTC_RELOAD_CTRL_TypeDef rtc_0x34 = {.d32 = RTC->RTC_RELOAD_CTRL};
+
+    return (rtc_0x34.d32 & BIT(index)) != 0;
+}
+
+/**
+  * \brief  Check whether the NVIC interrupt of the specified comparator is enabled.
+  * \param  index: The comparator number, can be RTC_COMP0 ~ RTC_COMP3.
+  * \return true if the comparator NVIC interrupt is enabled, false otherwise.
+  */
+bool RTC_IsCompINTEnable(RTCCompIndex_TypeDef index)
+{
+    /* rtc_cmp0_nv_ie ~ rtc_cmp3_nv_ie occupy bits [19:16] of RTC_CR0 */
+    RTC_CR0_TypeDef rtc_0x00 = {.d32 = RTC->RTC_CR0};
+
+    return (rtc_0x00.d32 & BIT(16 + index)) != 0;
+}
+
 
 

@@ -20,21 +20,6 @@ extern "C" {
 /*============================================================================*
  *                          RTC Defines
  *============================================================================*/
-/** \defgroup RTC         RTC
-  * \brief
-  * \{
-  */
-
-/** \defgroup RTC_Exported_Constants RTC Exported Constants
-  * \brief
-  * \{
-  */
-
-/**
- * \defgroup RTC_Defines RTC Defines
- * \{
- * \ingroup  RTC_Exported_Constants
- */
 #define RTC_SUPPORT_CLOCK_IN_FROM_OUTSIDE_PAD          (1)
 #define RTC_SUPPORT_CLOCK_OUT_TO_OUTSIDE_PAD           (0)
 #define RTC_SUPPORT_WAKEUP_MORE_SOURCE                 (1) /*Support TICK OVERFLOW PRECOMP PRECOMP_COMP3*/
@@ -42,18 +27,6 @@ extern "C" {
 #define RTC_SUPPORT_COMPARE_AUTO_RELOAD                (1)
 #define RTC_SUPPORT_RAP_FUNCTION                       (1)
 #define RTC_SUPPORT_RESET_REGISTER_TO_DEFAULT          (1)
-
-/** End of RTC_Defines
-  * \}
-  */
-
-/** End of RTC_Exported_Constants
-  * \}
-  */
-
-/** End of RTC
-  * \}
-  */
 
 /*============================================================================*
  *                          RTC Registers Memory Map
@@ -86,8 +59,15 @@ typedef struct
 /*============================================================================*
  *                          RTC Declaration
  *============================================================================*/
+/** @defgroup RTC_DECLARATION RTC Declaration
+  * @{
+  * @ingroup  RTC_Exported_Constants
+  */
+
 #define RTC_REG_BASE       (SYSON_BASE + AON_REG_RTC_CR0)
 #define RTC                ((RTC_TypeDef *) RTC_REG_BASE)
+
+/** @} */ /* End of group RTC_DECLARATION */
 
 /*============================================================================*
  *                          RTC Registers and Field Descriptions
@@ -520,20 +500,10 @@ typedef union
 /*============================================================================*
  *                          RTC Constants
  *============================================================================*/
-/** \defgroup RTC        RTC
-  * \brief
-  * \{
-  */
-
-/** \defgroup RTC_Exported_Constants RTC Exported Constants
-  * \brief
-  * \{
-  */
-
 /**
- * \defgroup    RTC_CLOCK_IN RTC CLOCK IN
- * \{
- * \ingroup     RTC_Exported_Constants
+ * @defgroup RTC_CLOCK_IN RTC CLOCK IN
+ * @{
+ * @ingroup  RTC_Exported_Constants
  */
 
 typedef enum
@@ -544,18 +514,17 @@ typedef enum
     RTC_CLOCK_IN_MAX = RTC_CLOCK_IN_DISABLE,
 } RTCClockIn_TypeDef;
 
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define RTC_CLOCK_IN         (RTC_CLOCK_OUT_DISABLE | \
                               RTC_CLOCK_OUT_P5_1 | \
                               RTC_CLOCK_OUT_P2_1)
 
-/** End of RTC_CLOCK_IN
-  * \}
-  */
+/** @} */ /* End of group RTC_CLOCK_IN */
 
 /**
- * \defgroup    RTC_CLOCK_OUT RTC CLOCK OUT
- * \{
- * \ingroup     RTC_Exported_Constants
+ * @defgroup RTC_CLOCK_OUT RTC CLOCK OUT
+ * @{
+ * @ingroup  RTC_Exported_Constants
  */
 
 typedef enum
@@ -566,28 +535,17 @@ typedef enum
     RTC_CLOCK_OUT_P0_3_XTAL,
 } RTCClockOut_TypeDef;
 
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define RTC_CLOCK_OUT         (RTC_CLOCK_OUT_P0_1_OSC | \
                                RTC_CLOCK_OUT_P0_1_XTAL | \
-                               RTC_CLOCK_OUT_P0_3_OSC \
+                               RTC_CLOCK_OUT_P0_3_OSC | \
                                RTC_CLOCK_OUT_P0_3_XTAL)
 
-/** End of RTC_CLOCK_OUT
-  * \}
-  */
-
-/** End of RTC_Exported_Constants
-  * \}
-  */
+/** @} */ /* End of group RTC_CLOCK_OUT */
 
 /*============================================================================*
  *                         RTC Wrappers
  *============================================================================*/
-
-/**
- * \brief    RTC Macro Wrapper
- *
- * \ingroup  RTC_Exported_Constants
- */
 #define RTC_WRITE(reg, value)         \
     do {                              \
         RTC->reg = (value);           \
@@ -598,10 +556,6 @@ typedef enum
         RTC->reg = (value);           \
         platform_delay_us(63);        \
     } while (0)
-
-/** End of RTC
-  * \}
-  */
 
 
 #ifdef  __cplusplus

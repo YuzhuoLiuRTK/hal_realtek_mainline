@@ -18,25 +18,11 @@ extern "C" {
 /*============================================================================*
  *                          ADC Defines
  *============================================================================*/
-/** \defgroup ADC         ADC
-  * \brief
-  * \{
-  */
-
-/** \defgroup ADC_Exported_Constants ADC Exported Constants
-  * \brief
-  * \{
-  */
-
-/**
- * \defgroup ADC_Defines ADC Defines
- * \{
- * \ingroup  ADC_Exported_Constants
- */
 #define CHIP_ADC_CHANNEL_NUM                           (8)
 #define CHIP_ADC_SCHEDULE_NUM                          (16)
 #define CHIP_ADC_MODE_OFFSET                           (3)
 #define ADC_SUPPORT_DMA_EN                             (1)
+#define ADC_SUPPORT_SPI_ACCESS                         (0)
 #define ADC_SUPPORT_INT_FIFO_FULL                      (1)
 #define ADC_SUPPORT_VADPIN_MODE                        (0)
 #define ADC_SUPPORT_DATAMINUS                          (0)
@@ -55,17 +41,18 @@ extern "C" {
 #define ADC_SUPPORT_GET_FT_ADC_PARA                    (1)
 #define ADC_SUPPORT_EXT_DIFFERENTIAL_MODE              (1)
 //#define ADC_POWER_MODE_CTRL_EN                      (0)  //if you need to configure the power mode, you can predefine this macro in the project settings.
-/** End of ADC_Defines
-  * \}
-  */
 
-/** End of ADC_Exported_Constants
-  * \}
-  */
+/*============================================================================*
+ *                          HAL ADC Defines
+ *============================================================================*/
+#define HAL_ADC_SUPPORT_TIMER_TRIGGER                  (0)
+#define HAL_ADC_SUPPORT_CONTINUOUS_MODE                (1)
+#define HAL_ADC_SUPPORT_CPU_MODE                       (0)
+#define HAL_ADC_SUPPORT_CLIPPING                       (1)
+#define HAL_ADC_SUPPORT_BYPASS_CONFIG                  (1)
+#define HAL_ADC_SUPPORT_HW_AVERAGE_CONFIG              (1)
+#define HAL_ADC_SUPPORT_MODE_CONFIG                    (1)
 
-/** End of ADC
-  * \}
-  */
 /*============================================================================*
  *                          ADC Registers Memory Map
  *============================================================================*/
@@ -128,24 +115,17 @@ typedef struct
 /*============================================================================*
  *                          ADC Declaration
  *============================================================================*/
+/** @defgroup ADC_DECLARATION ADC Declaration
+  * @{
+  * @ingroup  ADC_Exported_Constants
+  */
+
 #define ADC                     ((ADC_TypeDef *) AUX_ADC_BASE)
 
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_ADC_PERIPH(PERIPH)   ((PERIPH) == ADC)
 
-/** \defgroup ADC_Convert_Time LPC Convert Time
-  * \{
-  * \ingroup  ADC_Exported_Constants
-  */
-
-#define ADC_CONVERT_TIME \
-    ADC_CONVERT_TIME_600NS =          0x0, \
-                                      ADC_CONVERT_TIME_800NS =          0x1, \
-                                                                        ADC_CONVERT_TIME_1000NS =         0x2, \
-                                                                                ADC_CONVERT_TIME_1200NS =         0x3
-
-/** End of ADC_Convert_Time
-  * \}
-  */
+/** @} */ /* End of group ADC_DECLARATION */
 
 /*============================================================================*
  *                          ADC Private Types
@@ -458,25 +438,13 @@ typedef union
     } b;
 } REG0X_AUX_TypeDef;
 
-
-
 /*============================================================================*
  *                          ADC MODE Wrappers
  *============================================================================*/
-/** \defgroup ADC        ADC
-  * \brief
-  * \{
-  */
-
-/** \defgroup ADC_Exported_Constants ADC Exported Constants
-  * \brief
-  * \{
-  */
-
 /**
- * \defgroup ADC_Constant_Private ADC Constant Private
- * \{
- * \ingroup  ADC_Exported_Constants
+ * @defgroup ADC_CONSTANT_PRIVATE ADC Constant Private
+ * @{
+ * @ingroup  ADC_Exported_Constants
  */
 #define ADC_MODE_SINGLE_ENDED_VALUE     0x1
 #define ADC_MODE_DIFFERENTIAL_VALUE     0x2
@@ -491,11 +459,12 @@ typedef union
 
 #define  ADC_DATA_LATCH_DELAY           0x2
 
+/** @} */ /* End of group ADC_CONSTANT_PRIVATE */
 
 /**
- * \defgroup    ADC_Sample_Mode ADC Sample Mode
- * \{
- * \ingroup     ADC_Exported_Constants
+ * @defgroup ADC_SAMPLE_MODE ADC Sample Mode
+ * @{
+ * @ingroup  ADC_Exported_Constants
  */
 typedef enum
 {
@@ -506,14 +475,12 @@ typedef enum
     ADC_SAMPLE_INT_VBAT_MODE = 5,
 } ADCSampleMode_TypeDef;
 
-/** End of ADC_Sample_Mode
-  * \}
-  */
+/** @} */ /* End of group ADC_SAMPLE_MODE */
 
 /**
- * \defgroup    ADC_Status ADC Status
- * \{
- * \ingroup     ADC_Exported_Constants
+ * @defgroup ADC_STATUS ADC Status
+ * @{
+ * @ingroup  ADC_Exported_Constants
  */
 typedef enum
 {
@@ -521,21 +488,20 @@ typedef enum
     ADC_ERROR_PARAMETER = -1,
 } ADCStatus_TypeDef;
 
-/** End of ADC_Status
-  * \}
+/** @} */ /* End of group ADC_STATUS */
+
+/** @defgroup ADC_CONVERT_TIME ADC Convert Time
+  * @{
+  * @ingroup  ADC_Exported_Constants
   */
 
-/** End of ADC_Constant_Private
-  * \}
-  */
+#define ADC_CONVERT_TIME \
+    ADC_CONVERT_TIME_600NS =          0x0, \
+                                      ADC_CONVERT_TIME_800NS =          0x1, \
+                                                                        ADC_CONVERT_TIME_1000NS =         0x2, \
+                                                                                ADC_CONVERT_TIME_1200NS =         0x3
 
-/** End of ADC_Exported_Constants
-  * \}
-  */
-
-/** End of ADC
-  * \}
-  */
+/** @} */ /* End of group ADC_CONVERT_TIME */
 
 #ifdef  __cplusplus
 }

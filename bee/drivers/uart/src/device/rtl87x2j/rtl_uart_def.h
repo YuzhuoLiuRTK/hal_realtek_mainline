@@ -18,21 +18,7 @@ extern "C" {
 /*============================================================================*
  *                          UART Defines
  *============================================================================*/
-/** \defgroup UART        UART
-  * \brief
-  * \{
-  */
 
-/** \defgroup UART_Exported_Constants UART Exported Constants
-  * \brief
-  * \{
-  */
-
-/**
- * \defgroup UART_Defines UART Defines
- * \{
- * \ingroup  UART_Exported_Constants
- */
 #define CHIP_UART_NUM                       (4)
 #define UART_SUPPORT_TX_DONE                (1)
 #define UART_SUPPORT_TX_THRESHOLD           (1)
@@ -40,18 +26,6 @@ extern "C" {
 #define UART_SUPPORT_HALF_WORD              (0)
 #define UART_SUPPORT_CLEAR_TX_FIFO          (1)
 #define UART_SUPPORT_AUTO_CLOCK             (1)
-
-/** End of UART_Defines
-  * \}
-  */
-
-/** End of UART_Exported_Constants
-  * \}
-  */
-
-/** End of UART
-  * \}
-  */
 
 /*============================================================================*
  *                          UART Registers Memory Map
@@ -86,19 +60,9 @@ typedef struct
 /*============================================================================*
  *                          UART Declaration
  *============================================================================*/
-/** \defgroup UART        UART
-  * \brief
-  * \{
-  */
-
-/** \defgroup UART_Exported_Constants UART Exported Constants
-  * \brief
-  * \{
-  */
-
-/** \defgroup UART_Declaration UART Declaration
-  * \{
-  * \ingroup  UART_Exported_Constants
+/** @defgroup UART_DECLARATION UART Declaration
+  * @{
+  * @ingroup  UART_Exported_Constants
   */
 
 #define UART0                   ((UART_TypeDef *) UART0_BASE)
@@ -106,22 +70,13 @@ typedef struct
 #define UART2                   ((UART_TypeDef *) UART2_BASE)
 #define UART3                   ((UART_TypeDef *) UART3_BASE)
 
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_UART_PERIPH(PERIPH)  (((PERIPH) == UART0) || \
                                  ((PERIPH) == UART1) || \
                                  ((PERIPH) == UART2) || \
                                  ((PERIPH) == UART3))
 
-/** End of UART_Declaration
-  * \}
-  */
-
-/** End of UART_Exported_Constants
-  * \}
-  */
-
-/** End of UART
-  * \}
-  */
+/** @} */ /* End of group UART_DECLARATION */
 
 /*============================================================================*
  *                          UART Private Types
@@ -655,37 +610,25 @@ typedef union
 /*============================================================================*
  *                          UART TYPE/API Wrappers
  *============================================================================*/
-/** \defgroup UART        UART
-  * \brief
-  * \{
-  */
-
-
-/** \defgroup UART_Exported_Constants UART Exported Constants
-  * \brief
-  * \{
-  */
-
 /**
- * \defgroup    UART_Clock_Source UART Clock Source
- * \{
- * \ingroup     UART_Exported_Constants
+ * @defgroup    UART_CLOCK_SOURCE UART Clock Source
+ * @{
+ * @ingroup     UART_Exported_Constants
  */
 typedef enum
 {
     UART_CLOCK_SRC_40M = 0x0,
 } UARTClockSrc_TypeDef;
 
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_UART_CLOCK_SRC(CLOCK)     (((CLOCK) == UART_CLOCK_SRC_40M))
 
-/** End of UART_Clock_Source
-  * \}
-  */
+/** @} */ /* End of group UART_CLOCK_SOURCE */
 
 /**
- * \defgroup    UART_Clock_Divider UART Clock Divider
- * \{
- * \ingroup     UART_Exported_Constants
+ * @defgroup    UART_CLOCK_DIVIDER UART Clock Divider
+ * @{
+ * @ingroup     UART_Exported_Constants
  */
 typedef enum
 {
@@ -699,6 +642,7 @@ typedef enum
     UART_CLOCK_DIV_64 = 0x7,
 } UARTClockDiv_TypeDef;
 
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_UART_CLOCK_DIV(DIV) (((DIV) == UART_CLOCK_DIV_1) || \
                                 ((DIV) == UART_CLOCK_DIV_2) || \
                                 ((DIV) == UART_CLOCK_DIV_4) || \
@@ -708,17 +652,7 @@ typedef enum
                                 ((DIV) == UART_CLOCK_DIV_40) || \
                                 ((DIV) == UART_CLOCK_DIV_64))
 
-/** End of UART_Clock_Divider
-  * \}
-  */
-
-/** End of UART_Exported_Constants
-  * \}
-  */
-
-/** End of UART
-  * \}
-  */
+/** @} */ /* End of group UART_CLOCK_DIVIDER */
 
 #ifdef  __cplusplus
 }

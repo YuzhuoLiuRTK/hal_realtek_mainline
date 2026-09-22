@@ -54,6 +54,17 @@ const uint32_t gpio_deb_table[13][4] =
 /*============================================================================*
  *                           Public Functions
  *============================================================================*/
+/**
+ * @brief Remap a GPIO pin mask to its external-debounce bit position.
+ * @note  On GPIOA the debounce hardware does not use the same bit order as the
+ *        GPIO pins, so the pin mask must be swapped before indexing the
+ *        debounce control registers. GPIOB needs no remapping.
+ *
+ * @param GPIOx     Specifies the GPIO port. Refer to @ref GPIO_DECLARATION.
+ * @param GPIO_Pin  Specifies the GPIO pins to be configured. Refer to @ref GPIO_PINS_DEFINE.
+ *
+ * @return The pin mask remapped to debounce bit positions.
+ */
 uint32_t GPIO_SwapDebPinBit(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin)
 {
     uint32_t deb_bit = GPIO_Pin;
@@ -79,67 +90,11 @@ uint32_t GPIO_SwapDebPinBit(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin)
 }
 
 /**
-  * \brief  Get GPIO GROUP through the given pad.
-  * \param  Pin_num: Pin number to be configured. \ref Pin_Number
-  * \return GPIOx: Select the GPIO peripheral. \ref GPIO_Declaration
-  */
-GPIO_TypeDef *GPIO_GetPort(uint8_t Pin_num)
-{
-    /* Check the parameters */
-    assert_param(IS_PIN_NUM(Pin_num));
-
-    uint8_t gpio_number = gpio_mapping_table[Pin_num];
-
-    if (gpio_number <= 31)
-    {
-        return GPIOA;
-    }
-    else if (gpio_number <= 63)
-    {
-        return GPIOB;
-    }
-    else
-    {
-        return 0;
-    }
-}
-
-/**
-  * \brief  Get the GPIO_Pin(GPIO0~GPIO31) through the given PAD num.
-  * \param  Pin_num: Pin number to be configured. \ref Pin_Number
-  * \return GPIOx(x is 0~31) value.
-  */
-uint32_t GPIO_GetPinBit(uint8_t Pin_num)
-{
-    /* Check the parameters */
-    assert_param(IS_PIN_NUM(Pin_num));
-
-    uint8_t gpio_number = gpio_mapping_table[Pin_num];
-
-    return BIT((gpio_number) & 0x1F);
-}
-
-
-/**
-  * \brief  Get GPIO value (GPIOA0 ~ GPIOB31) through the given pad.
-  * \param  Pin_num: Pin number to be configured. \ref Pin_Number
-  * \return GPIO value (GPIOA0 ~ GPIOB31).
-  */
-uint8_t GPIO_GetNum(uint8_t Pin_num)
-{
-    /* Check the parameters */
-    assert_param(IS_PIN_NUM(Pin_num));
-
-    return gpio_mapping_table[Pin_num];
-}
-
-/**
-  * \brief  Enable GPIO external debounce clock.
-  * \param  GPIOx: Select the GPIO peripheral. \ref GPIO_Declaration
-  * \param  GPIO_Pin: GPIO_Pin can be 0 to 31.
-  * \param  NewState: Disable or enable gpio debounce clock.
-  * \return None.
-  */
+ * @brief Enable or disable the debounce function and clock of the specified GPIO pin.
+ * @param GPIOx     Specifies the GPIO port. Refer to @ref GPIO_DECLARATION.
+ * @param GPIO_Pin  Specifies the GPIO pins to be configured. Refer to @ref GPIO_PINS_DEFINE.
+ * @param NewState  Enable or disable GPIO debounce function and clock.
+ */
 void GPIO_ExtDebCmd(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin, FunctionalState NewState)
 {
     uint8_t GPIO_Port_Offset = GPIOx == GPIOA ? 0 : 8;
@@ -180,14 +135,19 @@ void GPIO_ExtDebCmd(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin, FunctionalState NewS
 }
 
 /**
-  * \brief  Set GPIO debounce parameters.
-  * \param  GPIOx: Select the GPIO peripheral. \ref GPIO_Declaration
-  * \param  GPIO_Pin: GPIO_Pin can be 0 to 31.
-  * \param  GPIO_DebClockSrc: select debounce count clk source, can be S11 or 32KHz.
-  * \param  GPIO_DebClockDiv: divider selection.
-  * \param  GPIO_DebCountLimit: debounce time can be calculated by count limit.
-  * \return None.
-  */
+ * @brief Set the GPIO debounce parameters of the specified GPIO pin.
+ * @param GPIOx               Specifies the GPIO port. Refer to @ref GPIO_DECLARATION.
+ * @param GPIO_Pin            Specifies the GPIO pins to be configured. Refer to @ref GPIO_PINS_DEFINE.
+ * @param GPIO_DebClockSrc    Specifies the GPIO debounce clock source. Refer to @ref GPIO_DEBOUNCE_SOURCE.
+ * @param GPIO_DebClockDiv    Specifies the GPIO debounce clock divider. Refer to @ref GPIO_DEBOUNCE_DIVIDE.
+ * @param GPIO_DebCountLimit  Specifies the debounce count limit.
+ *                            This parameter valid value range is from 0 to 255.
+
+ *                            This value is used to configure the GPIO debounce time, which is calculated as:
+ *                            T_debounce = 2 * T2 + (CountLimit + 1) * T2,
+ *                            where T2 is the debounce clock period after division, given by:
+ *                            T2 = (1 / GPIO_DebClockSrc) * GPIO_DebClockDiv.
+ */
 void GPIO_ExtDebUpdate(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin,
                        GPIODebClockSrc_TypeDef GPIO_DebClockSrc,
                        GPIODebClockDiv_TypeDef GPIO_DebClockDiv,
@@ -215,6 +175,67 @@ void GPIO_ExtDebUpdate(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin,
     }
 }
 
+/**
+ * @brief Get the GPIO port through the given PAD.
+ * @param Pin_num  Specifies the pin number to be configured. Refer to @ref Pin_Number.
+ * @return The GPIO port (e.g. GPIOA, GPIOB). Refer to @ref GPIO_DECLARATION.
+ */
+GPIO_TypeDef *GPIO_GetPort(uint8_t Pin_num)
+{
+    /* Check the parameters */
+    assert_param(IS_PIN_NUM(Pin_num));
+
+    uint8_t gpio_number = gpio_mapping_table[Pin_num];
+
+    if (gpio_number <= 31)
+    {
+        return GPIOA;
+    }
+    else if (gpio_number <= 63)
+    {
+        return GPIOB;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+/**
+ * @brief Get the GPIO pin bit through the given PAD.
+ * @param Pin_num  Specifies the pin number to be configured. Refer to @ref Pin_Number.
+ * @return The GPIO pin bit (e.g. GPIO_Pin_0). Refer to @ref GPIO_PINS_DEFINE.
+ */
+uint32_t GPIO_GetPinBit(uint8_t Pin_num)
+{
+    /* Check the parameters */
+    assert_param(IS_PIN_NUM(Pin_num));
+
+    uint8_t gpio_number = gpio_mapping_table[Pin_num];
+
+    return BIT((gpio_number) & 0x1F);
+}
+
+
+/**
+ * @brief Get the GPIO number through the given PAD.
+ * @param Pin_num  Specifies the pin number to be configured. Refer to @ref Pin_Number.
+ * @return The GPIO number (e.g. GPIOA0, GPIOA1). Refer to @ref GPIO_NUMBER.
+ */
+uint8_t GPIO_GetNum(uint8_t Pin_num)
+{
+    /* Check the parameters */
+    assert_param(IS_PIN_NUM(Pin_num));
+
+    return gpio_mapping_table[Pin_num];
+}
+
+/**
+ * @brief Set the interrupt/debounce polarity for the specified GPIO pin.
+ * @param GPIOx     Specifies the GPIO port. Refer to @ref GPIO_DECLARATION.
+ * @param GPIO_Pin  Specifies the GPIO pins to be configured. Refer to @ref GPIO_PINS_DEFINE.
+ * @param Polarity  Specifies the GPIO polarity. Refer to @ref GPIO_POLARITY.
+ */
 void GPIO_ExtPolarity(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin, GPIOPolarity_TypeDef Polarity)
 {
     bool isRAPEnabled = ((GPIOx->GPIO_RAP_CTL & GPIO_Pin) == GPIO_Pin);
@@ -237,6 +258,11 @@ void GPIO_ExtPolarity(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin, GPIOPolarity_TypeD
     }
 }
 
+/**
+ * @brief Enable or disable GPIO clock auto mode of the specified GPIO port.
+ * @param GPIOx     Specifies the GPIO port. Refer to @ref GPIO_DECLARATION.
+ * @param Newstate  Enable or disable the clock auto mode.
+ */
 void GPIO_ClockAutoModeCmd(GPIO_TypeDef *GPIOx, FunctionalState Newstate)
 {
     if (Newstate == ENABLE)
@@ -251,6 +277,13 @@ void GPIO_ClockAutoModeCmd(GPIO_TypeDef *GPIOx, FunctionalState Newstate)
     return;
 }
 
+/**
+ * @brief Convert a debounce time in microseconds into the count limit and
+ *        clock divider settings used by the debounce hardware.
+ * @param time_us                Desired debounce time, in microseconds.
+ * @param GPIO_DebounceCntLimit  The computed debounce count limit.
+ * @param GPIO_DebounceSrcDiv    The computed debounce clock divider.
+ */
 void GPIO_DebounceTimeUs(uint32_t time_us, uint8_t *GPIO_DebounceCntLimit,
                          uint8_t *GPIO_DebounceSrcDiv)
 {
@@ -279,11 +312,22 @@ static struct
     IRQ_Fun gpio_callback[64];
 } gpio_isr;
 
+/**
+ * @brief Register a per-pin interrupt callback into the GPIO ISR table.
+ * @param irqn         GPIO interrupt number; its low 8 bits select the
+ *                     entry (0 to 63) in the callback table.
+ * @param isr_handler  Callback to invoke when the corresponding pin
+ *                     interrupt fires.
+ */
 static void GPIO_ISRUpdate(uint32_t irqn, IRQ_Fun isr_handler)
 {
     gpio_isr.gpio_callback[irqn & 0xFF] = isr_handler;
 }
 
+/**
+ * @brief Dispatch GPIOA pin interrupts to their registered callbacks.
+ * @param mask  Bit mask selecting which GPIOA pins (0 to 31) to service.
+ */
 void GPIOA_Handler(uint32_t mask)
 {
     uint32_t real_interrupt_status = GPIOA->GPIO_INT_RAW_STS & mask ;
@@ -298,6 +342,10 @@ void GPIOA_Handler(uint32_t mask)
     }
 }
 
+/**
+ * @brief Dispatch GPIOB pin interrupts to their registered callbacks.
+ * @param mask  Bit mask selecting which GPIOB pins (0 to 31) to service.
+ */
 void GPIOB_Handler(uint32_t mask)
 {
     uint32_t real_interrupt_status = GPIOB->GPIO_INT_RAW_STS & mask;
@@ -312,46 +360,73 @@ void GPIOB_Handler(uint32_t mask)
     }
 }
 
+/**
+ * @brief Interrupt vector entry for GPIOA pins 0 to 7.
+ */
 void GPIO0_7_ISR(void)
 {
     GPIOA_Handler(0xFF);
 }
 
+/**
+ * @brief Interrupt vector entry for GPIOA pins 8 to 15.
+ */
 void GPIO8_15_ISR(void)
 {
     GPIOA_Handler(0xFF00);
 }
 
+/**
+ * @brief Interrupt vector entry for GPIOA pins 16 to 23.
+ */
 void GPIO16_23_ISR(void)
 {
     GPIOA_Handler(0xFF0000);
 }
 
+/**
+ * @brief Interrupt vector entry for GPIOA pins 24 to 31.
+ */
 void GPIO24_31_ISR(void)
 {
     GPIOA_Handler(0xFF000000);
 }
 
+/**
+ * @brief Interrupt vector entry for GPIOB pins 0 to 7 (table entries 32 to 39).
+ */
 void GPIO32_39_ISR(void)
 {
     GPIOB_Handler(0xFF);
 }
 
+/**
+ * @brief Interrupt vector entry for GPIOB pins 8 to 15 (table entries 40 to 47).
+ */
 void GPIO40_47_ISR(void)
 {
     GPIOB_Handler(0xFF00);
 }
 
+/**
+ * @brief Interrupt vector entry for GPIOB pins 16 to 23 (table entries 48 to 55).
+ */
 void GPIO48_55_ISR(void)
 {
     GPIOB_Handler(0xFF0000);
 }
 
+/**
+ * @brief Interrupt vector entry for GPIOB pins 24 to 31 (table entries 56 to 63).
+ */
 void GPIO56_63_ISR(void)
 {
     GPIOB_Handler(0xFF000000);
 }
 
+/**
+ * @brief Install the GPIO interrupt service routines into the RAM vector table.
+ */
 void GPIO_IRQInit(void)
 {
     ram_vector_table_register(GPIOA0_7_IRQn, GPIO_ISRUpdate);

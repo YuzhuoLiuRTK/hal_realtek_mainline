@@ -20,9 +20,7 @@ extern bool GRTC_IsSupportRAPComp(GRTCCompIndex_TypeDef Index);
  *                           Public Functions
  *============================================================================*/
 /**
-  * \brief  Reset all registers of GRTC.
-  * \param  None
-  * \return None
+  * @brief  Reset all registers of GRTC.
   */
 void GRTC_DeInit(void)
 {
@@ -37,19 +35,19 @@ void GRTC_DeInit(void)
 }
 
 /**
-  * \brief  Enable or disable the specified GRTC interrupt.
-  * \param  GRTC_INT: specifies the GRTC interrupt source to be enabled or disabled.
+  * @brief  Enable or disable the specified GRTC interrupt.
+  * @param  GRTC_INT: Specifies the GRTC interrupt source which to be enabled or disabled.
   *         This parameter can be any combination of the following values:
-  *         \arg GRTC_INT_COMP0: compare 0 interrupt source
-  *         \arg GRTC_INT_COMP1: compare 1 interrupt source
-  *         \arg GRTC_INT_COMP2: compare 2 interrupt source
-  *         \arg GRTC_INT_COMP3: compare 3 interrupt source
-  *         \arg GRTC_INT_COMP4: compare 4 interrupt source
-  *         \arg GRTC_INT_COMP5: compare 5 interrupt source
-  *         \arg GRTC_INT_COMP6: compare 6 interrupt source
-  *         \arg GRTC_INT_COMP7: compare 7 interrupt source
-  * \param  NewState: New state of the specified GRTC interrupt.
-  * \return None.
+  *         @arg GRTC_INT_COMP0: compare 0 interrupt source
+  *         @arg GRTC_INT_COMP1: compare 1 interrupt source
+  *         @arg GRTC_INT_COMP2: compare 2 interrupt source
+  *         @arg GRTC_INT_COMP3: compare 3 interrupt source
+  *         @arg GRTC_INT_COMP4: compare 4 interrupt source
+  *         @arg GRTC_INT_COMP5: compare 5 interrupt source
+  *         @arg GRTC_INT_COMP6: compare 6 interrupt source
+  *         @arg GRTC_INT_COMP7: compare 7 interrupt source
+  * @param  NewState: New state of the specified GRTC interrupt.
+  *         This parameter can be: ENABLE or DISABLE.
   */
 void GRTC_INTConfig(uint32_t GRTC_INT, FunctionalState NewState)
 {
@@ -68,18 +66,20 @@ void GRTC_INTConfig(uint32_t GRTC_INT, FunctionalState NewState)
 }
 
 /**
-  * \brief  Checks whether the specified GRTC interrupt is set or not.
-  * \param  GRTC_INT: specifies the GRTC interrupt source to be enabled or disabled.
+  * @brief  Get the specified GRTC interrupt status.
+  * @param  GRTC_INT: specifies the GRTC interrupt source to be enabled or disabled.
   *         This parameter can be any combination of the following values:
-  *         \arg GRTC_INT_COMP0: compare 0 interrupt source
-  *         \arg GRTC_INT_COMP1: compare 1 interrupt source
-  *         \arg GRTC_INT_COMP2: compare 2 interrupt source
-  *         \arg GRTC_INT_COMP3: compare 3 interrupt source
-  *         \arg GRTC_INT_COMP4: compare 4 interrupt source
-  *         \arg GRTC_INT_COMP5: compare 5 interrupt source
-  *         \arg GRTC_INT_COMP6: compare 6 interrupt source
-  *         \arg GRTC_INT_COMP7: compare 7 interrupt source
-  * \return The new state of GRTC_INT (SET or RESET).
+  *         @arg GRTC_INT_COMP0: compare 0 interrupt source
+  *         @arg GRTC_INT_COMP1: compare 1 interrupt source
+  *         @arg GRTC_INT_COMP2: compare 2 interrupt source
+  *         @arg GRTC_INT_COMP3: compare 3 interrupt source
+  *         @arg GRTC_INT_COMP4: compare 4 interrupt source
+  *         @arg GRTC_INT_COMP5: compare 5 interrupt source
+  *         @arg GRTC_INT_COMP6: compare 6 interrupt source
+  *         @arg GRTC_INT_COMP7: compare 7 interrupt source
+  * @return The new state of GRTC_INT.
+  * @retval SET    The GRTC interrupt has occurred.
+  * @retval RESET  The GRTC interrupt has not occurred.
   */
 ITStatus GRTC_GetINTStatus(uint32_t GRTC_INT)
 {
@@ -94,18 +94,17 @@ ITStatus GRTC_GetINTStatus(uint32_t GRTC_INT)
 }
 
 /**
-  * \brief  Clear the interrupt pending bits of GRTC.
-  * \param  GRTC_INT: specifies the GRTC interrupt flag to clear.
+  * @brief  Clear the interrupt pending bit of GRTC.
+  * @param  GRTC_INT: specifies the GRTC interrupt flag to clear.
   *         This parameter can be any combination of the following values:
-  *         \arg GRTC_INT_COMP0: compare 0 interrupt source
-  *         \arg GRTC_INT_COMP1: compare 1 interrupt source
-  *         \arg GRTC_INT_COMP2: compare 2 interrupt source
-  *         \arg GRTC_INT_COMP3: compare 3 interrupt source
-  *         \arg GRTC_INT_COMP4: compare 4 interrupt source
-  *         \arg GRTC_INT_COMP5: compare 5 interrupt source
-  *         \arg GRTC_INT_COMP6: compare 6 interrupt source
-  *         \arg GRTC_INT_COMP7: compare 7 interrupt source
-  * \return None
+  *         @arg GRTC_INT_COMP0: compare 0 interrupt source
+  *         @arg GRTC_INT_COMP1: compare 1 interrupt source
+  *         @arg GRTC_INT_COMP2: compare 2 interrupt source
+  *         @arg GRTC_INT_COMP3: compare 3 interrupt source
+  *         @arg GRTC_INT_COMP4: compare 4 interrupt source
+  *         @arg GRTC_INT_COMP5: compare 5 interrupt source
+  *         @arg GRTC_INT_COMP6: compare 6 interrupt source
+  *         @arg GRTC_INT_COMP7: compare 7 interrupt source
   */
 void GRTC_ClearINTPendingBit(uint32_t GRTC_INT)
 {
@@ -119,9 +118,11 @@ void GRTC_ClearINTPendingBit(uint32_t GRTC_INT)
 
 #if (GRTC_SUPPORT_ERROR_INTERRUPT == 1)
 /**
-  * \brief  Checks whether the specified GRTC error interrupt is set or not.
-  * \param  Index: The comparator number which can be 0 ~ 7.
-  * \return The new state of GRTC error interrupt (SET or RESET).
+  * @brief  Get the specified GRTC error interrupt status.
+  * @param  Index: The comparator number which can be 0 ~ 7.
+  * @return The new state of GRTC error interrupt.
+  * @retval SET    The GRTC error interrupt has occurred.
+  * @retval RESET  The GRTC error interrupt has not occurred.
   */
 ITStatus GRTC_GetErrorINTStatus(GRTCCompIndex_TypeDef Index)
 {
@@ -136,9 +137,8 @@ ITStatus GRTC_GetErrorINTStatus(GRTCCompIndex_TypeDef Index)
 }
 
 /**
-  * \brief  Clear the error interrupt pending bits of GRTC.
-  * \param  Index: The comparator number which can be 0 ~ 7.
-  * \return None
+  * @brief  Clear the error interrupt pending bit of GRTC.
+  * @param  Index: The comparator number which can be 0 ~ 7.
   */
 void GRTC_ClearErrorINTPendingBit(GRTCCompIndex_TypeDef Index)
 {
@@ -150,10 +150,9 @@ void GRTC_ClearErrorINTPendingBit(GRTCCompIndex_TypeDef Index)
 #endif
 
 /**
-  * \brief  Set GRTC comparator value.
-  * \param  Index: The comparator number which can be 0 ~ 7.
-  * \param  Value: The comparator value.
-  * \return None
+  * @brief  Set GRTC comparator value.
+  * @param  Index: The comparator number which can be 0 ~ 7.
+  * @param  Value: The comparator value.
   */
 void GRTC_SetCompValue(GRTCCompIndex_TypeDef Index, uint32_t Value)
 {
@@ -164,9 +163,9 @@ void GRTC_SetCompValue(GRTCCompIndex_TypeDef Index, uint32_t Value)
 }
 
 /**
-  * \brief  Get GRTC comparator value.
-  * \param  Index: The comparator number.
-  * \return The comparator value.
+  * @brief  Get GRTC comparator value.
+  * @param  Index: The comparator number.
+  * @return The comparator value.
   */
 uint32_t GRTC_GetCompValue(GRTCCompIndex_TypeDef Index)
 {
@@ -177,13 +176,12 @@ uint32_t GRTC_GetCompValue(GRTCCompIndex_TypeDef Index)
 }
 
 /**
-  * \brief  Enable or Disable the GRTC comparator reload function.
-  * \param  Index: The comparator number which can be 0 ~ 7.
-  * \param  NewState: new state of GRTC peripheral.
+  * @brief  Enable or Disable the GRTC comparator reload function.
+  * @param  Index: The comparator number which can be 0 ~ 7.
+  * @param  NewState: new state of GRTC peripheral.
   *         This parameter can be the following values:
-  *         \arg ENABLE: start GRTC.
-  *         \arg DISABLE: stop GRTC.
-  * \return None
+  *         @arg ENABLE: start GRTC.
+  *         @arg DISABLE: stop GRTC.
   */
 void GRTC_CompReloadCmd(GRTCCompIndex_TypeDef Index, FunctionalState NewState)
 {
@@ -202,10 +200,9 @@ void GRTC_CompReloadCmd(GRTCCompIndex_TypeDef Index, FunctionalState NewState)
 }
 
 /**
-  * \brief  Set GRTC comparator reload value.
-  * \param  Index: The comparator number which can be 0 ~ 7.
-  * \param  Value: The comparator reload value.
-  * \return None
+  * @brief  Set GRTC comparator reload value.
+  * @param  Index: The comparator number which can be 0 ~ 7.
+  * @param  Value: The comparator reload value.
   */
 void GRTC_SetCompReloadValue(GRTCCompIndex_TypeDef Index, uint32_t Value)
 {
@@ -216,9 +213,9 @@ void GRTC_SetCompReloadValue(GRTCCompIndex_TypeDef Index, uint32_t Value)
 }
 
 /**
-  * \brief  Get GRTC comparator reload value.
-  * \param  Index: The comparator number.
-  * \return The comparator reload value.
+  * @brief  Get GRTC comparator reload value.
+  * @param  Index: The comparator number.
+  * @return The comparator reload value.
   */
 uint32_t GRTC_GetCompReloadValue(GRTCCompIndex_TypeDef Index)
 {
@@ -229,13 +226,12 @@ uint32_t GRTC_GetCompReloadValue(GRTCCompIndex_TypeDef Index)
 }
 
 /**
-  * \brief  Enable or Disable the GRTC function of sleep control.
-  * \param  Index: The comparator number which can be 0 ~ 7.
-  * \param  NewState: new state of GRTC peripheral.
+  * @brief  Enable or Disable the GRTC function of sleep control.
+  * @param  Index: The comparator number which can be 0 ~ 7.
+  * @param  NewState: new state of GRTC peripheral.
   *         This parameter can be the following values:
-  *         \arg ENABLE: start GRTC.
-  *         \arg DISABLE: stop GRTC.
-  * \return None
+  *         @arg ENABLE: start GRTC.
+  *         @arg DISABLE: stop GRTC.
   */
 void GRTC_SleepCmd(GRTCCompIndex_TypeDef Index, FunctionalState NewState)
 {
@@ -254,9 +250,9 @@ void GRTC_SleepCmd(GRTCCompIndex_TypeDef Index, FunctionalState NewState)
 }
 
 /**
-  * \brief  Get GRTC sleep counter.
-  * \param  Index: The comparator number which can be 0 ~ 7.
-  * \return The sleep counter.
+  * @brief  Get GRTC sleep counter.
+  * @param  Index: The comparator number which can be 0 ~ 7.
+  * @return The sleep counter.
   */
 uint32_t GRTC_GetSleepCounter(GRTCCompIndex_TypeDef Index)
 {
@@ -270,6 +266,17 @@ uint32_t GRTC_GetSleepCounter(GRTCCompIndex_TypeDef Index)
  *                        RAP Functions
  *============================================================================*/
 #if (GRTC_SUPPORT_RAP_FUNCTION == 1)
+/**
+  * @brief  Enable or Disable the GRTC RAP mode function.
+  * @param  Index: The comparator number which can be 0 ~ 7.
+  * @param  NewState: new state of GRTC peripheral.
+  *         This parameter can be the following values:
+  *         @arg ENABLE: start GRTC.
+  *         @arg DISABLE: stop GRTC.
+  * @return The result of config GRTC RAP mode function.
+  * @retval true  Config GRTC RAP mode function success.
+  * @retval false The GRTC comp is not support RAP mode.
+  */
 bool GRTC_RAPModeCmd(GRTCCompIndex_TypeDef Index, FunctionalState NewState)
 {
     if (GRTC_IsSupportRAPComp(Index) == 0)
@@ -289,6 +296,13 @@ bool GRTC_RAPModeCmd(GRTCCompIndex_TypeDef Index, FunctionalState NewState)
     return true;
 }
 
+/**
+  * @brief  Trigger a GRTC task.
+  * @param  Action: The task to be triggered.
+  * @return The result of trigger a GRTC task.
+  * @retval true  Config trigger a GRTC task success.
+  * @retval false The GRTC comp is not support to trigger a GRTC task.
+  */
 bool GRTC_ActionTrigger(GRTCCompIndex_TypeDef Index, uint32_t Action)
 {
     if (GRTC_IsSupportRAPComp(Index) == 0)
@@ -303,6 +317,14 @@ bool GRTC_ActionTrigger(GRTCCompIndex_TypeDef Index, uint32_t Action)
 #endif
 
 #if (GRTC_SUPPORT_FORCE_QACTIVE == 1)
+/**
+  * @brief  Enable or Disable the GRTC force qactive function.
+  * @param  Index: The comparator number which can be 0 ~ 7.
+  * @param  NewState: new state of GRTC peripheral.
+  *         This parameter can be the following values:
+  *         @arg ENABLE: Enable GRTC force qactive function.
+  *         @arg DISABLE: Disable GRTC force qactive function.
+  */
 void GRTC_ForceQactiveCmd(GRTCCompIndex_TypeDef Index, FunctionalState NewState)
 {
     /* Check the parameters */

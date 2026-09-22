@@ -12,13 +12,17 @@ extern "C" {
 #endif
 
 #include "utils/rtl_utils.h"
-#if defined (CONFIG_SOC_SERIES_RTL87X2J)
-#include "spi3w/src/device/rtl87x2j/rtl_spi3w_def.h"
+#if defined (CONFIG_SOC_SERIES_RTL87X2G)
+#include "SPI3W/src/device/rtl87x2g/rtl_spi3w_def.h"
+#elif defined (CONFIG_SOC_SERIES_RTL87X3D)
+#include "SPI3W/src/device/rtl87x3d/rtl_spi3w_def.h"
+#elif defined (CONFIG_SOC_SERIES_RTL87X2J)
+#include "SPI3W/src/device/rtl87x2j/rtl_spi3w_def.h"
 #endif
 
 /**
- * @defgroup SPI3W SPI3W
- * @ingroup PERIPH_DRIVER
+ * @defgroup SPI3W_DRIVER DRIVER
+ * @ingroup SPI3W
  * @brief Serial Peripheral Interface 3-Wire (SPI3W) driver.
  * @{
  */
@@ -609,7 +613,7 @@ void SPI3W_SetDataOutPADPull(SPI3W_DataOutPull_TypeDef OutPull);
 
 /** @} */ /* End of group SPI3W_Exported_Functions */
 
-/** @} */ /* End of group SPI3W */
+/** @} */ /* End of group SPI3W_DRIVER */
 
 #ifdef __cplusplus
 }

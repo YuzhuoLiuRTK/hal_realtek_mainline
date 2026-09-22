@@ -19,21 +19,6 @@ extern "C" {
 /*============================================================================*
  *                          SPI Defines
  *============================================================================*/
-/** \defgroup SPI         SPI
-  * \brief
-  * \{
-  */
-
-/** \defgroup SPI_Exported_Constants SPI Exported Constants
-  * \brief
-  * \{
-  */
-
-/**
- * \defgroup SPI_Defines SPI Defines
- * \{
- * \ingroup  SPI_Exported_Constants
- */
 #define SPI_TX_FIFO_SIZE                               (16)
 #define SPI_RX_FIFO_SIZE                               (16)
 #define SPI0_SLAVE_TX_FIFO_SIZE                        (32)
@@ -53,17 +38,6 @@ extern "C" {
 
 #define SPI_DFS_BIT_FIELD                              dfs
 #define SPI_IN_SLAVE_MODE(SPIx)                       ((SPIx == SPI0) && (PCC_REG_READ_BITFIELD(PCC_REG_SPI0, PON_SPI0_MST) == 0))
-/** End of SPI_Defines
-  * \}
-  */
-
-/** End of SPI_Exported_Constants
-  * \}
-  */
-
-/** End of SPI
-  * \}
-  */
 
 /*============================================================================*
  *                         SPI Registers Memory Map
@@ -120,20 +94,11 @@ typedef struct
 /*============================================================================*
  *                         SPI Declaration
  *============================================================================*/
-/** \defgroup SPI         SPI
-  * \brief
-  * \{
-  */
-
-/** \defgroup SPI_Exported_Constants SPI Exported Constants
-  * \brief
-  * \{
-  */
-
-/** \defgroup SPI_Declaration SPI Declaration
-  * \brief
-  * \{
-  */
+/**
+ * @defgroup SPI_DECLARATION SPI Declaration
+ * @{
+ * @ingroup  SPI_Exported_Constants
+ */
 
 #define SPI0                      ((SPI_TypeDef *) SPI0_BASE)
 #define SPI1                      ((SPI_TypeDef *) SPI1_BASE)
@@ -141,34 +106,22 @@ typedef struct
 #define SPI0_HS                   ((SPI_TypeDef *) SPI0_HS_BASE)
 #define SPI1_HS                   ((SPI_TypeDef *) SPI1_HS_BASE)
 
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_SPIM_PERIPH(PERIPH)    (((PERIPH) == SPI0) || \
                                    ((PERIPH) == SPI1) || \
                                    ((PERIPH) == SPI2) || \
                                    ((PERIPH) == SPI0_HS) || \
                                    ((PERIPH) == SPI1_HS))
 
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_SPI_ALL_PERIPH(PERIPH) (IS_SPIM_PERIPH(PERIPH) || \
                                    IS_SPIS_PERIPH(PERIPH))
 
-/** End of SPI_Declaration
-  * \}
-  */
-
-/** End of SPI_Exported_Constants
-  * \}
-  */
-
-/** End of SPI
-  * \}
-  */
+/** @} */ /* End of group SPI_DECLARATION */
 
 /*============================================================================*
  *                         SPI Private Types
  *============================================================================*/
-typedef struct
-{
-    uint32_t spi_reg[12];
-} SPIStoreReg_Typedef;
 
 /*============================================================================*
  *                         SPI Registers and Field Descriptions
@@ -706,32 +659,32 @@ typedef union
 
 
 /* 0x50
-   3:0     R/W    dmatdl              4'b0
-   31:4    R      reserved50_31_4     28'h0
+   4:0     R/W    dmatdl              5'b0
+   31:5    R      reserved50_31_5     27'h0
 */
 typedef union
 {
     uint32_t d32;
     struct
     {
-        uint32_t dmatdl: 4;
-        const uint32_t reserved_0: 28;
+        uint32_t dmatdl: 5;
+        const uint32_t reserved_0: 27;
     } b;
 } SPI_DMATDLR_TypeDef;
 
 
 
 /* 0x54
-   3:0     R/W    dmardl              4'b0
-   31:4    R      reserved54_31_4     28'h0
+   4:0     R/W    dmardl              5'b0
+   31:5    R      reserved54_31_5     27'h0
 */
 typedef union
 {
     uint32_t d32;
     struct
     {
-        uint32_t dmardl: 4;
-        const uint32_t reserved_0: 28;
+        uint32_t dmardl: 5;
+        const uint32_t reserved_0: 27;
     } b;
 } SPI_DMARDLR_TypeDef;
 
@@ -1156,57 +1109,47 @@ typedef union
 /*============================================================================*
  *                         SPI Constant
  *============================================================================*/
-/** \defgroup SPI         SPI
-  * \brief
-  * \{
-  */
-
-/** \defgroup SPI_Exported_Constants SPI Exported Constants
-  * \brief
-  * \{
-  */
-
 /**
- * \defgroup    SPI_Clock_Source SPI Clock Source
- * \{
- * \ingroup     SPI_Exported_Constants
+ * @defgroup SPI_CLOCK_SOURCE SPI Clock Source
+ * @{
+ * @ingroup  SPI_Exported_Constants
  */
 typedef enum
 {
-    SPI_CLOCK_SRC_40M = 0x0,
-    SPI_CLOCK_SRC_80M = 0x1,
+    SPI_CLOCK_SRC_40M = 0x0, /**< SPI clock source is 40MHz. */
+    SPI_CLOCK_SRC_80M = 0x1, /**< SPI clock source is 80MHz. */
 } SPIClockSrc_TypeDef;
 
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_SPI_CLOCK_SRC(CLOCK)     (((CLOCK) == SPI_CLOCK_SRC_40M) || \
                                      ((CLOCK) == SPI_CLOCK_SRC_80M))
 
-/** End of SPI_Clock_Source
-  * \}
-  */
+/** @} */ /* End of group SPI_CLOCK_SOURCE */
 
 /**
- * \defgroup    SPI_Clock_Divider SPI Clock Divider
- * \{
- * \ingroup     SPI_Exported_Constants
+ * @defgroup SPI_CLOCK_DIVIDER SPI Clock Divider
+ * @{
+ * @ingroup  SPI_Exported_Constants
  *
- * \note        SPI2 Clock divider only support:
- *              SPI_CLOCK_DIV_1
- *              SPI_CLOCK_DIV_2
- *              SPI_CLOCK_DIV_4
- *              SPI_CLOCK_DIV_8
+ * @note SPI2 clock divider only supports:
+ *       - SPI_CLOCK_DIV_1
+ *       - SPI_CLOCK_DIV_2
+ *       - SPI_CLOCK_DIV_4
+ *       - SPI_CLOCK_DIV_8
  */
 typedef enum
 {
-    SPI_CLOCK_DIV_1 = 0x0,
-    SPI_CLOCK_DIV_2 = 0x1,
-    SPI_CLOCK_DIV_4 = 0x2,
-    SPI_CLOCK_DIV_8 = 0x3,
-    SPI_CLOCK_DIV_16 = 0x4,
-    SPI_CLOCK_DIV_32 = 0x5,
-    SPI_CLOCK_DIV_40 = 0x6,
-    SPI_CLOCK_DIV_64 = 0x7,
+    SPI_CLOCK_DIV_1  = 0x0, /**< SPI clock divided by 1. */
+    SPI_CLOCK_DIV_2  = 0x1, /**< SPI clock divided by 2. */
+    SPI_CLOCK_DIV_4  = 0x2, /**< SPI clock divided by 4. */
+    SPI_CLOCK_DIV_8  = 0x3, /**< SPI clock divided by 8. */
+    SPI_CLOCK_DIV_16 = 0x4, /**< SPI clock divided by 16. */
+    SPI_CLOCK_DIV_32 = 0x5, /**< SPI clock divided by 32. */
+    SPI_CLOCK_DIV_40 = 0x6, /**< SPI clock divided by 40. */
+    SPI_CLOCK_DIV_64 = 0x7, /**< SPI clock divided by 64. */
 } SPIClockDiv_TypeDef;
 
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_SPI_CLOCK_DIV(DIV) (((DIV) == SPI_CLOCK_DIV_1) || \
                                ((DIV) == SPI_CLOCK_DIV_2) || \
                                ((DIV) == SPI_CLOCK_DIV_4) || \
@@ -1216,28 +1159,11 @@ typedef enum
                                ((DIV) == SPI_CLOCK_DIV_40) || \
                                ((DIV) == SPI_CLOCK_DIV_64))
 
-/** End of SPI_Clock_Divider
-  * \}
-  */
+/** @} */ /* End of group SPI_CLOCK_DIVIDER */
 
-/**
- * \defgroup SPI_Constant_Private SPI Constant Private
- * \{
- * \ingroup  SPI_Exported_Constants
- */
+/** @cond private */
 #define SPI_NDF                         SPI_RXNDF
-
-/** End of SPI_Constant_Private
-  * \}
-  */
-
-/** End of SPI_Exported_Constants
-  * \}
-  */
-
-/** End of SPI
-  * \}
-  */
+/** @endcond */
 
 #ifdef  __cplusplus
 }

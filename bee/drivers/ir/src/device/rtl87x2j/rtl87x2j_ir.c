@@ -20,11 +20,10 @@
  *                           Public Functions
  *============================================================================*/
 /**
-  * \brief  IR clock config.
-  * \param  ClockSrc: specifies the clock source to gates its clock.\ref IR_Source_Clock
-  * \param  ClockDiv: specifies the clock divide to gates its clock.
-  * \return None
-  */
+ * @brief Configure the IR clock source and divider.
+ * @param ClockSrc  Specifies the IR clock source, refer to @ref IR_CLOCK_SOURCE.
+ * @param ClockDiv  Specifies the IR clock divider, refer to @ref IR_CLOCK_DIVIDER.
+ */
 void IR_SetClock(IRClockSrc_TypeDef ClockSrc, IRClockDiv_TypeDef ClockDiv)
 {
     PCC_REG_UPDATE(PCC_REG_IR,
@@ -33,12 +32,18 @@ void IR_SetClock(IRClockSrc_TypeDef ClockSrc, IRClockDiv_TypeDef ClockDiv)
     return;
 }
 
-void IR_ClockAutoModeCmd(FunctionalState Newstate)
+/**
+ * @brief Enable or disable the IR clock auto mode.
+ * @param NewState New state of the IR clock auto mode.
+ *        - ENABLE: Enable the IR clock auto mode.
+ *        - DISABLE: Disable the IR clock auto mode.
+ */
+void IR_ClockAutoModeCmd(FunctionalState NewState)
 {
     /* Check the parameters */
     assert_param(IS_FUNCTIONAL_STATE(NewState));
 
-    if (Newstate == ENABLE)
+    if (NewState == ENABLE)
     {
         // ir qactive auto gating
         PCC_REG_WRITE_BITFIELD(PCC_REG_PERION_CLK_REG4X, FORCE_QACTIVE_IRRC, 0);
@@ -53,57 +58,3 @@ void IR_ClockAutoModeCmd(FunctionalState Newstate)
 
     return;
 }
-
-/**
-  * \brief  Store IR register values when system enter DLPS.
-  * \param  PeriReg: Specifies to select the IR peripheral.
-  * \param  StoreBuf: Store buffer to store IR register data.
-  * \return None.
-  */
-void IR_DLPSEnter(void *PeriReg, void *StoreBuf)
-{
-//    IRStoreReg_Typedef *store_buf = (IRStoreReg_Typedef *)StoreBuf;
-
-//    RCC_PeriphClockCmd(APBPeriph_IR, APBPeriph_IR_CLOCK, ENABLE);
-
-//    store_buf->ir_reg[0] = IR->IR_CLK_DIV;
-//    store_buf->ir_reg[1] = IR->IR_TX_CONFIG;
-//    store_buf->ir_reg[2] = IR->IR_RX_CONFIG;
-//    store_buf->ir_reg[3] = IR->IR_RX_CNT_INT_SEL;
-
-    return;
-}
-
-/**
-  * \brief  Restore IR register values when system enter DLPS.
-  * \param  PeriReg: Specifies to select the IR peripheral.
-  * \param  StoreBuf: Restore buffer to restore IR register data.
-  * \return None
-  */
-void IR_DLPSExit(void *PeriReg, void *StoreBuf)
-{
-//    IRStoreReg_Typedef *store_buf = (IRStoreReg_Typedef *)StoreBuf;
-
-//    RCC_PeriphClockCmd(APBPeriph_IR, APBPeriph_IR_CLOCK, ENABLE);
-
-//    IR->IR_CLK_DIV = store_buf->ir_reg[0];
-//    if (store_buf->ir_reg[1] & BIT31)
-//    {
-//        /* RX MODE */
-//        IR->IR_TX_CONFIG  = store_buf->ir_reg[1];
-//        IR->IR_RX_CONFIG  = store_buf->ir_reg[2];
-//        IR->IR_RX_CNT_INT_SEL  = store_buf->ir_reg[3];
-//    }
-//    else
-//    {
-//        /* TX MODE */
-//        IR->IR_TX_CONFIG  = store_buf->ir_reg[1];
-//        /* If IR TX mode is idle, must write one data firstly */
-//        IR->IR_TX_FIFO = 0;
-//    }
-
-    return;
-}
-
-
-

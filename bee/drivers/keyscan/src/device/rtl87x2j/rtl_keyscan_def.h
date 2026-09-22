@@ -16,67 +16,59 @@ extern "C" {
 /*============================================================================*
  *                         KEYSCAN Defines
  *============================================================================*/
-/** \defgroup KEYSCAN         KEYSCAN
-  * \brief
-  * \{
-  */
-
-/** \defgroup KEYSCAN_Exported_Constants KEYSCAN Exported Constants
-  * \brief
-  * \{
-  */
-
-/**
- * \defgroup KEYSCAN_Defines KEYSCAN Defines
- * \{
- * \ingroup  KEYSCAN_Exported_Constants
- */
 #define KEYSCAN_SUPPORT_COLUNM_LEVEL_CONFIGURE (1)
 #define KEYSCAN_SUPPORT_ROW_LEVEL_CONFIGURE    (1)
 #define KEYSCAN_SUPPORT_RAP_FUNCTION           (1)
 #define KEYSCAN_SUPPORT_AUTO_CLOCK             (1)
 
+#define KEYSCAN_FIFO_DEPTH                     (108)
 
-/** End of KEYSCAN_Defines
-  * \}
-  */
+#define KEYSCAN_MAX_ROW_NUM                    (18)   /*!< Max matrix rows. */
+#define KEYSCAN_MAX_COL_NUM                    (20)   /*!< Max matrix columns. */
 
-/** End of KEYSCAN_Exported_Constants
-  * \}
-  */
-
-/** End of KEYSCAN
-  * \}
-  */
+/* FIFO entry layout: col occupies the low KEYSCAN_FIFO_COL_BITS bits, row
+ * occupies the next KEYSCAN_FIFO_ROW_BITS bits (matches keyscan_col_num/
+ * keyscan_row_num register field widths). */
+#define KEYSCAN_FIFO_COL_BITS                  5
+#define KEYSCAN_FIFO_ROW_BITS                  5
 
 /*============================================================================*
  *                          KEYSCAN Registers Memory Map
  *============================================================================*/
 typedef struct
 {
-    __IO uint32_t KEYSCAN_CLK_DIV;              /*!< 0x00 */
-    __IO uint32_t KEYSCAN_CONFIG1;              /*!< 0x04 */
-    __IO uint32_t KEYSCAN_CONFIG2;              /*!< 0x08 */
-    __IO uint32_t KEYSCAN_COLUMN_CONFIG;        /*!< 0x0C */
-    __IO uint32_t KEYSCAN_ROW_CONFIG;           /*!< 0x10 */
-    __I  uint32_t KEYSCAN_FIFO_ENTRY;           /*!< 0x14 */
-    __IO uint32_t KEYSCAN_INT_MASK;             /*!< 0x18 */
-    __IO uint32_t KEYSCAN_INT_CLR;              /*!< 0x1C */
-    __I  uint32_t KEYSCAN_INT_STS;              /*!< 0x20 */
-    __I  uint32_t RSVD0[3];                     /*!< 0x24 - 0x2C */
-    __I  uint32_t KEYSCAN_DBG1;                 /*!< 0x30 */
-    __IO uint32_t KEYSCAN_DBG2;                 /*!< 0x34 */
-    __IO uint32_t KEYSCAN_TASK_CTRL;            /*!< 0x38 */
-    __IO uint32_t KEYSCAN_QACTIVE_CTRL;         /*!< 0x3C */
-    __IO uint32_t KEYSCAN_CONFIG3;              /*!< 0x40 */
+    __IO uint32_t KEYSCAN_CLK_DIV;              /**< 0x00 */
+    __IO uint32_t KEYSCAN_CONFIG1;              /**< 0x04 */
+    __IO uint32_t KEYSCAN_CONFIG2;              /**< 0x08 */
+    __IO uint32_t KEYSCAN_COLUMN_CONFIG;        /**< 0x0C */
+    __IO uint32_t KEYSCAN_ROW_CONFIG;           /**< 0x10 */
+    __I  uint32_t KEYSCAN_FIFO_ENTRY;           /**< 0x14 */
+    __IO uint32_t KEYSCAN_INT_MASK;             /**< 0x18 */
+    __IO uint32_t KEYSCAN_INT_CLR;              /**< 0x1C */
+    __I  uint32_t KEYSCAN_INT_STS;              /**< 0x20 */
+    __I  uint32_t RSVD0[3];                     /**< 0x24 - 0x2C */
+    __I  uint32_t KEYSCAN_DBG1;                 /**< 0x30 */
+    __IO uint32_t KEYSCAN_DBG2;                 /**< 0x34 */
+    __IO uint32_t KEYSCAN_TASK_CTRL;            /**< 0x38 */
+    __IO uint32_t KEYSCAN_QACTIVE_CTRL;         /**< 0x3C */
+    __IO uint32_t KEYSCAN_CONFIG3;              /**< 0x40 */
 } KEYSCAN_TypeDef;
 
 /*============================================================================*
  *                          KEYSCAN Declaration
  *============================================================================*/
-#define KEYSCAN                     ((KEYSCAN_TypeDef *) KEY_SCAN_BASE)
+/**
+ * @defgroup KEYSCAN_DECLARATION KEYSCAN Declaration
+ * @{
+ * @ingroup  KEYSCAN_Exported_Constants
+ */
 
-#define IS_KeyScan_PERIPH(PERIPH)   ((PERIPH) == KEYSCAN)
+#define KEYSCAN                     ((KEYSCAN_TypeDef *) KEY_SCAN_BASE)   /**< KEYSCAN peripheral instance. */
+
+/** @brief Check if the input parameter is valid. @hideinitializer */
+#define IS_KEYSCAN_PERIPH(PERIPH)   ((PERIPH) == KEYSCAN)
+
+/** @} */ /* End of group KEYSCAN_DECLARATION */
 
 /*============================================================================*
  *                          KEYSCAN Private Types

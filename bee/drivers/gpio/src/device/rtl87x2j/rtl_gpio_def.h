@@ -18,39 +18,14 @@ extern "C" {
 /*============================================================================*
  *                          GPIO Defines
  *============================================================================*/
-/** \defgroup GPIO        GPIO
-  * \brief
-  * \{
-  */
 
-/** \defgroup GPIO_Exported_Constants GPIO Exported Constants
-  * \brief
-  * \{
-  */
-
-/**
- * \defgroup GPIO_Defines GPIO Defines
- * \{
- * \ingroup  GPIO_Exported_Constants
- */
 #define GPIO_SUPPORT_SET_CONTROL_MODE                  (0)
 #define GPIO_SUPPORT_LS_SYNC                           (0)
 #define GPIO_SUPPORT_BOTHEDGE                          (1)
 #define GPIO_SUPPORT_RAP_FUNCTION                      (1)
 #define GPIO_SUPPORT_AUTO_CLOCK                        (1)
 #define GPIO_SUPPORT_OUTPUT_MODE_SELECT                (1)
-
-/** End of GPIO_Defines
-  * \}
-  */
-
-/** End of GPIO_Exported_Constants
-  * \}
-  */
-
-/** End of GPIO
-  * \}
-  */
+#define GPIO_SUPPORT_HW_RETENTION                      (1)
 
 /*============================================================================*
  *                          GPIO Registers Memory Map
@@ -90,19 +65,9 @@ typedef struct
 /*============================================================================*
  *                          GPIO Declaration
  *============================================================================*/
-/** \defgroup GPIO        GPIO
-  * \brief
-  * \{
-  */
-
-/** \defgroup GPIO_Exported_Constants GPIO Exported Constants
-  * \brief
-  * \{
-  */
-
-/** \defgroup GPIO_Declaration GPIO Declaration
-  * \brief
-  * \{
+/** @defgroup GPIO_DECLARATION GPIO Declaration
+  * @{
+  * @ingroup  GPIO_Exported_Constants
   */
 #define GPIOA_REG_BASE     (GPIO0_BASE)
 #define GPIOB_REG_BASE     (GPIO0_BASE + 0x800)
@@ -111,13 +76,11 @@ typedef struct
 #define GPIOA              ((GPIO_TypeDef *) GPIOA_REG_BASE)
 #define GPIOB              ((GPIO_TypeDef *) GPIOB_REG_BASE)
 
-/** End of GPIO_Declaration
-  * \}
-  */
+/** @} */ /* End of group GPIO_DECLARATION */
 
-/** \defgroup GPIO_IRQn GPIO IRQn
-  * \brief
-  * \{
+/** @defgroup GPIO_IRQN GPIO IRQn
+  * @{
+  * @ingroup  GPIO_Exported_Constants
   */
 #ifdef GPIOA
 #define GPIOA0_IRQn         SUB_IRQ_DEF(GPIOA0_7_IRQn, 0)
@@ -180,17 +143,7 @@ typedef struct
 #define GPIOB23_IRQn        SUB_IRQ_DEF(GPIOA48_55_IRQn, 55)
 #endif
 
-/** End of GPIO_IRQn
-  * \}
-  */
-
-/** End of GPIO_Exported_Constants
-  * \}
-  */
-
-/** End of GPIO
-  * \}
-  */
+/** @} */ /* End of group GPIO_IRQN */
 
 /*============================================================================*
  *                          GPIO Private Types
@@ -510,49 +463,38 @@ typedef union
 /*============================================================================*
  *                          GPIO Constants
  *============================================================================*/
-/** \defgroup GPIO        GPIO
-  * \brief
-  * \{
-  */
-
-/** \defgroup GPIO_Exported_Constants GPIO Exported Constants
-  * \brief
-  * \{
-  */
-
-
 /**
- * \defgroup    GPIO_Debounce_Source GPIO Debounce Dource
- * \{
- * \ingroup     GPIO_Exported_Constants
+ * @defgroup    GPIO_DEBOUNCE_SOURCE GPIO Debounce Source
+ * @{
+ * @ingroup     GPIO_Exported_Constants
  */
 typedef enum
 {
-    GPIO_DEB_CLOCK_SRC_32K = 0x0, /**< debounce clock source 32KHz. */
+    GPIO_DEB_CLOCK_SRC_32K = 0x0, /**< GPIO debounce clock source 32KHz. */
 } GPIODebClockSrc_TypeDef;
 
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_GPIO_DEBOUNCE_CLOCK_SRC(SRC) (((SRC) == GPIO_DEB_CLOCK_SRC_32K))
 
-/** End of GPIO_Debounce_Source
-  * \}
-  */
+/** @} */ /* End of group GPIO_DEBOUNCE_SOURCE */
 
 /**
- * \defgroup    GPIO_Debounce_Divide GPIO Debounce Divide
- * \{
- * \ingroup     GPIO_Exported_Constants
+ * @defgroup    GPIO_DEBOUNCE_DIVIDE GPIO Debounce Divide
+ * @{
+ * @ingroup     GPIO_Exported_Constants
  */
 typedef enum
 {
-    GPIO_DEB_CLOCK_DIV_1   = 0x0, /**< debounce clock divider 1. */
-    GPIO_DEB_CLOCK_DIV_2   = 0x1, /**< debounce clock divider 2. */
-    GPIO_DEB_CLOCK_DIV_4   = 0x2, /**< debounce clock divider 4. */
-    GPIO_DEB_CLOCK_DIV_8   = 0x3, /**< debounce clock divider 8. */
-    GPIO_DEB_CLOCK_DIV_16  = 0x4, /**< debounce clock divider 16. */
-    GPIO_DEB_CLOCK_DIV_32  = 0x5, /**< debounce clock divider 32. */
-    GPIO_DEB_CLOCK_DIV_64  = 0x6, /**< debounce clock divider 64. */
+    GPIO_DEB_CLOCK_DIV_1   = 0x0, /**< GPIO debounce clock divider 1. */
+    GPIO_DEB_CLOCK_DIV_2   = 0x1, /**< GPIO debounce clock divider 2. */
+    GPIO_DEB_CLOCK_DIV_4   = 0x2, /**< GPIO debounce clock divider 4. */
+    GPIO_DEB_CLOCK_DIV_8   = 0x3, /**< GPIO debounce clock divider 8. */
+    GPIO_DEB_CLOCK_DIV_16  = 0x4, /**< GPIO debounce clock divider 16. */
+    GPIO_DEB_CLOCK_DIV_32  = 0x5, /**< GPIO debounce clock divider 32. */
+    GPIO_DEB_CLOCK_DIV_64  = 0x6, /**< GPIO debounce clock divider 64. */
 } GPIODebClockDiv_TypeDef;
 
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_GPIO_DEBOUNCE_CLOCK_DIV(DIV) (((DIV) == GPIO_DEB_CLOCK_DIV_1) || \
                                          ((DIV) == GPIO_DEB_CLOCK_DIV_2) || \
                                          ((DIV) == GPIO_DEB_CLOCK_DIV_4) || \
@@ -561,67 +503,17 @@ typedef enum
                                          ((DIV) == GPIO_DEB_CLOCK_DIV_32) || \
                                          ((DIV) == GPIO_DEB_CLOCK_DIV_64))
 
-/** End of GPIO_Debounce_Divide
-  * \}
-  */
+/** @} */ /* End of group GPIO_DEBOUNCE_DIVIDE */
 
 /**
- * \defgroup GPIO_Constant_Private GPIO Constant Private
- * \{
- * \ingroup  GPIO_Exported_Constants
+ * @defgroup GPIO_CONSTANT_PRIVATE GPIO Constant Private
+ * @{
+ * @ingroup  GPIO_Exported_Constants
  */
 
 #define GPIO_DEFAULT_DEB_CLOCK_SRC      GPIO_DEB_CLOCK_SRC_32K
-/**
- * \brief    GPIO API Wrapper
- *
- * \ingroup  GPIO_Exported_Constants
- */
-#define GPIO_DBClkCmd           GPIO_ExtDebCmd
-#define GPIO_SetDebounceTime    GPIO_ExtDebUpdate
-#define GPIO_SetITPolarity      GPIO_SetPolarity
 
-#define GPIOIT_LevelType            GPIOTrigger_TypeDef
-#define GPIOIT_PolarityType         GPIOPolarity_TypeDef
-#define GPIOIT_DebounceType         GPIODebounce_TypeDef
-#define GPIO_PinBit                 GPIO_Pin
-#define GPIO_Mode                   GPIO_Dir
-#define GPIO_Mode_IN                GPIO_DIR_IN
-#define GPIO_Mode_OUT               GPIO_DIR_OUT
-#define GPIOMode_TypeDef            GPIODir_TypeDef
-#define GPIO_INT_Trigger_LEVEL      GPIO_TRIGGER_LEVEL
-#define GPIO_INT_Trigger_EDGE       GPIO_TRIGGER_EDGE
-
-#define GPIOx_DeInit                GPIO_DeInit
-#define GPIOx_Init                  GPIO_Init
-#define GPIOx_INTConfig             GPIO_INTConfig
-#define GPIOx_ClearINTPendingBit    GPIO_ClearINTPendingBit
-#define GPIOx_MaskINTConfig         GPIO_MaskINTConfig
-#define GPIOx_ReadInputDataBit      GPIO_ReadInputDataBit
-#define GPIOx_ReadInputData         GPIO_ReadInputData
-#define GPIOx_ReadOutputDataBit     GPIO_ReadOutputDataBit
-#define GPIOx_ReadOutputData        GPIO_ReadOutputData
-#define GPIOx_SetBits               GPIO_SetBits
-#define GPIOx_ResetBits             GPIO_ResetBits
-#define GPIOx_WriteBit              GPIO_WriteBit
-#define GPIOx_Write                 GPIO_Write
-#define GPIOx_GetINTStatus          GPIO_GetINTStatus
-#define GPIOx_ModeSet               GPIO_SetDirection
-#define GPIOx_ChangePolarity        GPIO_SetPolarity
-#define GPIOx_IntPolaritySet        GPIO_SetPolarity
-#define GPIO_GetPin                 GPIO_GetPinBit
-#define GPIO_ModeSet                GPIO_SetDirection
-/** End of GPIO_Constant_Private
-  * \}
-  */
-
-/** End of GPIO_Exported_Constants
-  * \}
-  */
-
-/** End of GPIO
-  * \}
-  */
+/** @} */ /* End of group GPIO_CONSTANT_PRIVATE */
 
 #ifdef  __cplusplus
 }

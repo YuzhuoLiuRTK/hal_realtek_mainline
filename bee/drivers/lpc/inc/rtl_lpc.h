@@ -12,13 +12,19 @@ extern "C" {
 #endif
 
 #include "utils/rtl_utils.h"
-#if defined (CONFIG_SOC_SERIES_RTL87X2J)
+#if defined (CONFIG_SOC_SERIES_RTL87X2G)
+#include "lpc/src/device/rtl87x2g/rtl_lpc_def.h"
+#elif defined (CONFIG_SOC_SERIES_RTL87X2J)
 #include "lpc/src/device/rtl87x2j/rtl_lpc_def.h"
+#elif defined (CONFIG_SOC_SERIES_RTL87X3J)
+#include "lpc/src/device/rtl87x3j/rtl_lpc_def.h"
+#elif defined (CONFIG_SOC_SERIES_RTL87X3K)
+#include "lpc/src/device/rtl87x3k/rtl_lpc_def.h"
 #endif
 
 /**
- * @defgroup LPC LPC
- * @ingroup PERIPH_DRIVER
+ * @defgroup LPC_DRIVER DRIVER
+ * @ingroup LPC
  * @brief Low Power Comparator (LPC) driver.
  * @{
  */
@@ -719,7 +725,7 @@ void LPC_ClockAutoModeCmd(LPC_TypeDef *LPCx, FunctionalState ENABLE);
 
 /** @} */ /* End of group LPC_Exported_Functions */
 
-/** @} */ /* End of group LPC */
+/** @} */ /* End of group LPC_DRIVER */
 
 #ifdef __cplusplus
 }

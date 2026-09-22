@@ -4,26 +4,18 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/*============================================================================*
- *                           Header Files
- *============================================================================*/
 #include "rtl_codec.h"
 #include "rtl_rcc.h"
 #include "utils.h"
-/*============================================================================*
- *                           Private Macros
- *============================================================================*/
+
 #define AUXADC_AON_REG0X1B90              ((AON_NS_REG0X_LDO_TYPE *)0x40001B90UL)
 #define LPC_AON_AUXADC                    ((AON_NS_REG0X_SD_TYPE *)0x40001B98UL)
 #define PERI_ON_ADC_CLOCK_CTRL             *((volatile uint32_t *)0x4000231CUL)
-/*============================================================================*
- *                           Public Functions
- *============================================================================*/
-/**
-  * \brief  Initialize the CODEC analog registers in AON area.
-  * \param  None.
-  * \return None
-  */
+
+#define CODEC_CLOCK_AUTO_MODE_CONFIG_AUTOMATIC   (0x00)  /* Hardware auto-controls PCLK/SCLK qactive */
+#define CODEC_CLOCK_AUTO_MODE_CONFIG_ALWAYSRUN   (0x0F)  /* Manual control: PCLK/SCLK qactive always active */
+
+/** @brief Initialize the CODEC analog registers in AON area. */
 void CODEC_AnalogCircuitInit(void)
 {
     /*Added to stabilize the power supply!*/
@@ -53,11 +45,7 @@ void CODEC_AnalogCircuitInit(void)
 
 }
 
-/**
-  * \brief  Deinitialize the CODEC analog registers in AON area.
-  * \param  None.
-  * \return None
-  */
+/** @brief Deinitialize the CODEC analog registers in AON area. */
 static void CODEC_POF(void)
 {
     AUDIO_CLOCK_CONTROL_2_TypeDef codec_0x10C = {.d32 = CODEC->AUDIO_CLOCK_CONTROL_2};
@@ -85,10 +73,9 @@ static void CODEC_POF(void)
 }
 
 /**
-  * \brief  Deinitializes the CODEC peripheral registers to their default reset values(turn off CODEC clock).
-  * \param  CODECx: selected CODEC peripheral.
-  * \return None
-  */
+ * @brief Deinitializes the CODEC peripheral registers to their default reset values (turn off CODEC clock).
+ * @param[in] CODECx Selected CODEC peripheral.
+ */
 void CODEC_DeInit(CODEC_TypeDef *CODECx)
 {
     /* Check the parameters */
@@ -100,13 +87,12 @@ void CODEC_DeInit(CODEC_TypeDef *CODECx)
 }
 
 /**
-  * \brief Initializes the CODEC peripheral according to the specified
-  *   parameters in the CODEC_InitStruct
-  * \param  CODECx: selected CODEC peripheral.
-  * \param  CODEC_InitStruct: pointer to a CODEC_InitTypeDef structure that
-  *   contains the configuration information for the specified CODEC peripheral
-  * \return None
-  */
+ * @brief Initializes the CODEC peripheral according to the specified
+ *        parameters in the CODEC_InitStruct.
+ * @param[in] CODECx           Selected CODEC peripheral.
+ * @param[in] CODEC_InitStruct Pointer to a CODEC_InitTypeDef structure that
+ *                             contains the configuration information for the specified CODEC peripheral.
+ */
 void CODEC_Init(CODEC_TypeDef *CODECx, CODEC_InitTypeDef *CODEC_InitStruct)
 {
     /* Check the parameters */
@@ -138,19 +124,19 @@ void CODEC_Init(CODEC_TypeDef *CODECx, CODEC_InitTypeDef *CODEC_InitStruct)
     REG8X_CODEC_ANA_TypeDef codec_0x010 = {.d32 = CODEC_ANA->REG8X_CODEC_ANA};
     codec_0x010.b.ldo318_aud_tune = pmu_get_va18_tune();
     CODEC_ANA->REG8X_CODEC_ANA = codec_0x010.d32;
-    
+
     ADC_0_CONTROL_0_TypeDef codec_0x120 = {.d32 = CODEC->ADC_0_CONTROL_0};
     codec_0x120.b.adc_0_admic_sel = CODEC_InitStruct->CODEC_Ch0Mic;
     CODEC->ADC_0_CONTROL_0 =  codec_0x120.d32;
 
-    AUDIO_PON_POF_TypeDef  codec_0x020 =  {.d32 = CODEC_ANA->AUDIO_PON_POF}; 
-    
+    AUDIO_PON_POF_TypeDef  codec_0x020 =  {.d32 = CODEC_ANA->AUDIO_PON_POF};
+
     codec_0x020.b.pon_st1_delay_sel = 0x2;
     codec_0x020.b.pon_st2_delay_sel = 0x0;
     codec_0x020.b.pon_st3_delay_sel = 0x2;
-    
+
     CODEC_ANA->AUDIO_PON_POF =  codec_0x020.d32;
-    
+
     /*Analog performance dependency*/
     REG6X_CODEC_ANA_TypeDef codec_0x006 = {.d32 = CODEC_ANA->REG6X_CODEC_ANA};
 
@@ -230,14 +216,13 @@ void CODEC_Init(CODEC_TypeDef *CODECx, CODEC_InitTypeDef *CODEC_InitStruct)
 }
 
 /**
-  * \brief Initializes the CODEC EQ module according to the specified
-  *   parameters in the CODEC_EQInitStruct
-  * \param  CODEC_EQx: the selected CODEC EQ channel.
-  *   which can be CODEC_CH0_EQ1~CODEC_CH0_EQ5, or CODEC_CH1_EQ1~CODEC_CH1_EQ5.
-  * \param  CODEC_EQInitStruct: pointer to a CODEC_EQInitTypeDef structure that
-  *   contains the configuration information for the specified CODEC EQ channel
-  * \return None
-  */
+ * @brief Initializes the CODEC EQ module according to the specified
+ *        parameters in the CODEC_EQInitStruct.
+ * @param[in] CODEC_EQx          The selected CODEC EQ channel,
+ *                               which can be CODEC_CH0_EQ1~CODEC_CH0_EQ5, or CODEC_CH1_EQ1~CODEC_CH1_EQ5.
+ * @param[in] CODEC_EQInitStruct Pointer to a CODEC_EQInitTypeDef structure that
+ *                               contains the configuration information for the specified CODEC EQ channel.
+ */
 void CODEC_EQInit(CODEC_EQTypeDef *CODEC_EQx, CODEC_EQInitTypeDef *CODEC_EQInitStruct)
 {
     uint32_t bit_pos = 0;
@@ -264,10 +249,9 @@ void CODEC_EQInit(CODEC_EQTypeDef *CODEC_EQx, CODEC_EQInitTypeDef *CODEC_EQInitS
 }
 
 /**
-  * \brief  Fills each CODEC_InitStruct member with its default value.
-  * \param  CODEC_InitStruct: pointer to an CODEC_InitTypeDef structure which will be initialized.
-  * \return None
-  */
+ * @brief Fills each CODEC_InitStruct member with its default value.
+ * @param[in] CODEC_InitStruct Pointer to a CODEC_InitTypeDef structure which will be initialized.
+ */
 void CODEC_StructInit(CODEC_InitTypeDef *CODEC_InitStruct)
 {
     /* Basic parameters section */
@@ -292,14 +276,13 @@ void CODEC_StructInit(CODEC_InitTypeDef *CODEC_InitStruct)
 
 
 /**
-  * \brief  Fills each CODEC_EQInitStruct member with its default value.
-  * \param  CODEC_EQInitStruct: pointer to an CODEC_EQInitTypeDef structure which will be initialized.
-  * \return None
-  */
+ * @brief Fills each CODEC_EQInitStruct member with its default value.
+ * @param[in] CODEC_EQInitStruct Pointer to a CODEC_EQInitTypeDef structure which will be initialized.
+ */
 void CODEC_EQStructInit(CODEC_EQInitTypeDef *CODEC_EQInitStruct)
 {
     CODEC_EQInitStruct->CODEC_EQChCmd   = DISABLE;
-    /*!< The following all parameters can be 0 to 0x7FFFF, whose physical meaning represents a range of -8 to 7.99 */
+    /* The following parameters can be 0 to 0x7FFFF, whose physical meaning represents a range of -8 to 7.99. */
     CODEC_EQInitStruct->CODEC_EQCoefH0  = 0;
     CODEC_EQInitStruct->CODEC_EQCoefB1  = 0;
     CODEC_EQInitStruct->CODEC_EQCoefB2  = 0;
@@ -308,16 +291,15 @@ void CODEC_EQStructInit(CODEC_EQInitTypeDef *CODEC_EQInitStruct)
 }
 
 /**
-  * \brief  Enable or disable the specified CODEC interrupts.
-  * \param  CODEC: selected CODEC peripheral.
-  * \param  CODEC_INT: specifies the CODEC interrupts sources to be enable or disable.
-  *         This parameter can be the following values:
-  *         \arg CODEC_INT_POF_READY: CODEC power off ready interrupt.
-  *         \arg CODEC_INT_PON_READY: CODEC power on ready interrupt.
-  * \param  NewState: new state of the specified CODEC interrupts.
-  *   This parameter can be: ENABLE or DISABLE.
-  * \return None
-  */
+ * @brief Enable or disable the specified CODEC interrupts.
+ * @param[in] CODECx    Selected CODEC peripheral.
+ * @param[in] CODEC_INT Specifies the CODEC interrupts sources to be enabled or disabled.
+ *                      This parameter can be the following values:
+ *                      - CODEC_INT_POF_READY: CODEC power off ready interrupt.
+ *                      - CODEC_INT_PON_READY: CODEC power on ready interrupt.
+ * @param[in] NewState  New state of the specified CODEC interrupts.
+ *                      This parameter can be: ENABLE or DISABLE.
+ */
 void CODEC_INTConfig(CODEC_TypeDef *CODECx, uint32_t CODEC_INT, FunctionalState NewState)
 {
     /* Check the parameters */
@@ -335,16 +317,15 @@ void CODEC_INTConfig(CODEC_TypeDef *CODECx, uint32_t CODEC_INT, FunctionalState 
 }
 
 /**
-  * \brief  Mask the specified CODEC interrupt
-  * \param  CODEC: selected CODEC peripheral.
-  * \param  CODEC_INT: specifies the CODEC interrupts sources to be enable or disable.
-  *         This parameter can be the following values:
-  *         \arg CODEC_INT_POF_READY: CODEC power off ready interrupt.
-  *         \arg CODEC_INT_PON_READY: CODEC power on ready interrupt.
-  * \param  NewState: new state of the specified CODEC interrupts.
-  *   This parameter can be: ENABLE or DISABLE.
-  * \return None
-  */
+ * @brief Mask the specified CODEC interrupt.
+ * @param[in] CODECx    Selected CODEC peripheral.
+ * @param[in] CODEC_INT Specifies the CODEC interrupts sources to be enabled or disabled.
+ *                      This parameter can be the following values:
+ *                      - CODEC_INT_POF_READY: CODEC power off ready interrupt.
+ *                      - CODEC_INT_PON_READY: CODEC power on ready interrupt.
+ * @param[in] NewState  New state of the specified CODEC interrupts.
+ *                      This parameter can be: ENABLE or DISABLE.
+ */
 void CODEC_MaskINTConfig(CODEC_TypeDef *CODECx, uint32_t CODEC_INT, FunctionalState NewState)
 {
     /* Check the parameters */
@@ -362,14 +343,16 @@ void CODEC_MaskINTConfig(CODEC_TypeDef *CODECx, uint32_t CODEC_INT, FunctionalSt
 }
 
 /**
-  * \brief  Get the specified CODEC flag status.
-  * \param  CODEC: selected CODEC peripheral.
-  * \param  CODEC_INT: the specified CODEC interrupt.
-  *         This parameter can be one of the following values:
-  *         \arg CODEC_INT_POF_READY: CODEC power off ready interrupt.
-  *         \arg CODEC_INT_PON_READY: CODEC power on ready interrupt.
-  * \return The new state of FLAG (SET or RESET).
-  */
+ * @brief Get the specified CODEC flag status.
+ * @param[in] CODECx    Selected CODEC peripheral.
+ * @param[in] CODEC_INT The specified CODEC interrupt.
+ *                      This parameter can be one of the following values:
+ *                      - CODEC_INT_POF_READY: CODEC power off ready interrupt.
+ *                      - CODEC_INT_PON_READY: CODEC power on ready interrupt.
+ * @return The new state of FLAG.
+ * @retval SET   The flag is set.
+ * @retval RESET The flag is not set.
+ */
 ITStatus CODEC_GetINTStatus(CODEC_TypeDef *CODECx, uint32_t CODEC_INT)
 {
     ITStatus bit_status = RESET;
@@ -387,15 +370,13 @@ ITStatus CODEC_GetINTStatus(CODEC_TypeDef *CODECx, uint32_t CODEC_INT)
 }
 
 /**
-  * \brief  Clears the CODEC interrupt pending bits.
-  * \param  CODEC: selected CODEC peripheral.
-  * \param  CODEC_CLEAR_INT: specifies the interrupt pending bit to clear.
-  *         This parameter can be any combination of the following values:
-  *         This parameter can be the following values:
-  *         \arg CODEC_INT_POF_READY: CODEC power off ready interrupt.
-  *         \arg CODEC_INT_PON_READY: CODEC power on ready interrupt.
-  * \return None
-  */
+ * @brief Clears the CODEC interrupt pending bits.
+ * @param[in] CODECx          Selected CODEC peripheral.
+ * @param[in] CODEC_CLEAR_INT Specifies the interrupt pending bit to clear.
+ *                            This parameter can be any combination of the following values:
+ *                            - CODEC_INT_POF_READY: CODEC power off ready interrupt.
+ *                            - CODEC_INT_PON_READY: CODEC power on ready interrupt.
+ */
 void CODEC_ClearINTPendingBit(CODEC_TypeDef *CODECx, uint32_t CODEC_CLEAR_INT)
 {
     /* Check the parameters */
@@ -403,12 +384,11 @@ void CODEC_ClearINTPendingBit(CODEC_TypeDef *CODECx, uint32_t CODEC_CLEAR_INT)
     CODEC_ANA->AUDIO_INT_CONTROL |= CODEC_CLEAR_INT;
 }
 /**
-  * \brief  Enable or disable mic_bias output.
-  * \param  CODECx: selected CODEC peripheral.
-  * \param  NewState: new state of MICBIAS.
-  *   This parameter can be: ENABLE or DISABLE.
-  * \return none.
-  */
+ * @brief Enable or disable MICBIAS output.
+ * @param[in] CODECx   Selected CODEC peripheral.
+ * @param[in] NewState New state of MICBIAS.
+ *                     This parameter can be: ENABLE or DISABLE.
+ */
 void CODEC_MicBiasCmd(CODEC_TypeDef *CODECx, FunctionalState NewState)
 {
     /* Check the parameters */
@@ -463,5 +443,31 @@ void CODEC_SetMicBias(CODEC_TypeDef *CODECx, uint16_t Data)
     REG4X_CODEC_ANA_TypeDef codec_0x008 = {.d32 = CODEC_ANA->REG4X_CODEC_ANA};
     codec_0x008.b.micbias_vset = Data;
     CODEC_ANA->REG4X_CODEC_ANA = codec_0x008.d32;
+}
+
+/**
+ * @brief Enable or disable the CODEC clock auto mode.
+ * @param[in] CODECx   Selected CODEC peripheral.
+ * @param[in] NewState New state of clock auto mode.
+ *                     This parameter can be: ENABLE or DISABLE.
+ *                     - ENABLE: Enable auto mode, hardware controls PCLK/SCLK qactive automatically.
+ *                     - DISABLE: Disable auto mode, PCLK/SCLK qactive is held active via manual control.
+ */
+void Codec_ClockAutoModeCmd(CODEC_TypeDef *CODECx, FunctionalState NewState)
+{
+    /* Check the parameters */
+    assert_param(IS_CODEC_PERIPH(CODECx));
+    assert_param(IS_FUNCTIONAL_STATE(NewState));
+
+    if (NewState == ENABLE)
+    {
+        CODEC_ANA->REG_AUDIO_QACTIVE_MANUAL_CONTROL = CODEC_CLOCK_AUTO_MODE_CONFIG_AUTOMATIC;
+    }
+    else
+    {
+        CODEC_ANA->REG_AUDIO_QACTIVE_MANUAL_CONTROL = CODEC_CLOCK_AUTO_MODE_CONFIG_ALWAYSRUN;
+    }
+
+    return;
 }
 

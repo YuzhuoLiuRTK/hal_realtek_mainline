@@ -17,21 +17,6 @@ extern "C" {
 /*============================================================================*
  *                         IR Defines
  *============================================================================*/
-/** \defgroup IR          IR
-  * \brief
-  * \{
-  */
-
-/** \defgroup IR_Exported_Constants IR Exported Constants
-  * \brief
-  * \{
-  */
-
-/**
- * \defgroup IR_Defines IR Defines
- * \{
- * \ingroup  IR_Exported_Constants
- */
 #define IR_SUPPORT_TX_FINISH_INTERRUPT                 (1)
 #define IR_SUPPORT_CLOCK_SOURCE_80M                    (1)
 #define IR_SUPPORT_CLOCK_SOURCE_90M                    (0)
@@ -40,18 +25,6 @@ extern "C" {
 #define IR_SUPPORT_RAP_FUNCTION                        (1)
 #define IR_SUPPORT_CLOCK_SOURCE_DIV_CONFIG             (1)
 #define IR_SUPPORT_AUTO_CLOCK                          (1)
-
-/** End of IR_Defines
-  * \}
-  */
-
-/** End of IR_Exported_Constants
-  * \}
-  */
-
-/** End of IR
-  * \}
-  */
 
 /*============================================================================*
  *                          IR Registers Memory Map
@@ -85,9 +58,17 @@ typedef struct
 /*============================================================================*
  *                          IR Declaration
  *============================================================================*/
-#define IR                      ((IR_TypeDef *) IR_RC_BASE)
+/** @defgroup IR_DECLARATION IR Declaration
+  * @{
+  * @ingroup  IR_Exported_Constants
+  */
 
+#define IR                      ((IR_TypeDef *) IR_RC_BASE)   /**< IR peripheral instance. */
+
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_IR_PERIPH(PERIPH)    ((PERIPH) == IR)
+
+/** @} */ /* End of group IR_DECLARATION */
 
 /*============================================================================*
  *                          IR Private Types
@@ -591,79 +572,60 @@ typedef union
 /*============================================================================*
  *                         Constants
  *============================================================================*/
-/** \defgroup IR          IR
-  * \brief
-  * \{
-  */
-
-/** \defgroup IR_Exported_Constants IR Exported Constants
-  * \brief
-  * \{
-  */
-
 /**
- * \defgroup    IR_Clock_Source IR Clock Source
- * \{
- * \ingroup     IR_Exported_Constants
+ * @defgroup IR_CLOCK_SOURCE IR Clock Source
+ * @{
+ * @ingroup  IR_Exported_Constants
  */
 typedef enum
 {
-    IR_CLOCK_SRC_OSC40M,
-    IR_CLOCK_SRC_XTAL40M,
-    IR_CLOCK_SRC_PPL1,
+    IR_CLOCK_SRC_OSC40M,    /**< OSC 40 MHz clock source. */
+    IR_CLOCK_SRC_XTAL40M,   /**< XTAL 40 MHz clock source. */
+    IR_CLOCK_SRC_PPL1,      /**< PLL1 clock source. */
 } IRClockSrc_TypeDef;
 
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_IR_CLOCK_SRC(CLOCK)    (((CLOCK) == IR_CLOCK_SRC_OSC40M) || \
                                    ((CLOCK) == IR_CLOCK_SRC_XTAL40M) || \
                                    ((CLOCK) == IR_CLOCK_SRC_PPL1))
 
-/** End of IR_Clock_Source
-  * \}
-  */
+/** @} */ /* End of group IR_CLOCK_SOURCE */
 
 /**
- * \defgroup    IR_Clock_Divider IR Clock Divider
- * \{
- * \ingroup     IR_Exported_Constants
+ * @defgroup IR_CLOCK_DIVIDER IR Clock Divider
+ * @{
+ * @ingroup  IR_Exported_Constants
  */
 typedef enum
 {
-    IR_CLOCK_DIV_1 = 0x0,
+    IR_CLOCK_DIV_1 = 0x0,   /**< Clock divider 1. */
 } IRClockDiv_TypeDef;
 
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_IR_CLOCK_DIV(DIV) (((DIV) == IR_CLOCK_DIV_1))
 
-/** End of IR_Clock_Divider
-  * \}
-  */
+/** @} */ /* End of group IR_CLOCK_DIVIDER */
 
 
 /**
- * \defgroup    IR_Clock IR Clock
- * \{
- * \ingroup     IR_Exported_Constants
+ * @defgroup IR_CLOCK IR Clock
+ * @{
+ * @ingroup  IR_Exported_Constants
  */
 typedef enum
 {
-    IR_CLOCK_40M = 40000000,
-    IR_CLOCK_80M = 80000000,
+    IR_CLOCK_40M = 40000000,   /**< 40 MHz IR clock. */
+    IR_CLOCK_80M = 80000000,   /**< 80 MHz IR clock. */
 } IRClock_TypeDef;
 
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_IR_CLOCK(CLOCK)     (((CLOCK) == IR_CLOCK_40M) || ((CLOCK) == IR_CLOCK_80M))
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_IR_FREQUENCY_40M(F) (((F) >= 2442) && ((F) <= 2000000))
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_IR_FREQUENCY_80M(F) (((F) >= 4882) && ((F) <= 2000000))
 
-/** End of IR_Clock
-  * \}
-  */
-
-/** End of IR_Exported_Constants
-  * \}
-  */
-
-/** End of IR
-  * \}
-  */
+/** @} */ /* End of group IR_CLOCK */
 
 #ifdef  __cplusplus
 }

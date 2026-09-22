@@ -70,12 +70,15 @@ typedef struct
 /*============================================================================*
  *                          GRTC Declaration
  *============================================================================*/
+/** @defgroup GRTC_DECLARATION GRTC Declaration
+  * @{
+  * @ingroup  GRTC_Exported_Constants
+  */
+
 #define GRTC_REG_BASE       (SYSON_BASE + AON_REG_GRTC_CTRL)
 #define GRTC                ((GRTC_TypeDef *) GRTC_REG_BASE)
 
-/*============================================================================*
- *                          GRTC Private Types
- *============================================================================*/
+/** @} */ /* End of group GRTC_DECLARATION */
 
 /*============================================================================*
  *                          GRTC Registers and Field Descriptions
@@ -705,12 +708,6 @@ typedef union
         const uint32_t grtc_comp_timeout_ov_err_clr_reserved31_8: 24;
     } b;
 } GRTC_COMP_TIMEOUT_OV_ERR_CLR_TypeDef;
-
-
-
-/*============================================================================*
- *                         GRTC Wrappers
- *============================================================================*/
 
 
 #ifdef  __cplusplus

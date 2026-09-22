@@ -21,21 +21,6 @@ extern "C" {
 /*============================================================================*
  *                          PINMUX Defines
  *============================================================================*/
-/** \defgroup PINMUX      PINMUX
-  * \brief
-  * \{
-  */
-
-/** \defgroup PINMUX_Exported_Constants PINMUX Exported Constants
-  * \brief
-  * \{
-  */
-
-/**
- * \defgroup PINMUX_Defines PINMUX Defines
- * \{
- * \ingroup  PINMUX_Exported_Constants
- */
 #define PAD_SUPPORT_CONFIG_PON_DOMAIN                  (1)
 #define PAD_SUPPORT_FUNCTION_CONFIG                    (1)
 #define PAD_SUPPORT_HIGH_SPEED_CONFIG                  (1)
@@ -53,38 +38,24 @@ extern "C" {
 #define PAD_SUPPORT_MFB_WAKEUP                         (0)
 #define PAD_SUPPORT_USB_WAKEUP                         (0)
 #define PAD_SUPPORT_LOWER_POWER_CONFIG                 (1)
-#define PAD_SUPPORT_WAKE_SUB_IRQ                       (1)
-#define PAD_SUPPORT_WKIE_DIFF_BIT                      (1)
+#define PAD_SUPPORT_WAKEUP_PAD_SUB_IRQ                 (1)
+#define PAD_SUPPORT_WAKEUP_POWER_DOWN                  (1)
 #define PAD_SUPPORT_SHIP_MODE_PAD_CONFIG               (1)
-
-/** End of PINMUX_Defines
-  * \}
-  */
-
-/** End of PINMUX_Exported_Constants
-  * \}
-  */
-
-/** End of PINMUX
-  * \}
-  */
 
 /*============================================================================*
  *                         PINMUX Registers Memory Map
  *============================================================================*/
 /**
- * \brief Pinmux Register
+ * @brief Pinmux Register
  */
-
 typedef struct                      /*!< Pinmux Structure */
 {
     __IO uint32_t CFG[(PCC_REG_PMUX_GPIO_SPIC_2 - PCC_r_PMUX_GPIO_P0_0to3 + 4) >> 2];
 } PINMUX_TypeDef;
 
 /**
- * \brief Pad Debounce Register
+ * @brief Pad Debounce Register
  */
-
 typedef struct
 {
     __IO uint32_t MUX_SEL;         /*!< 0x00 */
@@ -95,20 +66,10 @@ typedef struct
 /*============================================================================*
  *                         PINMUX Declaration
  *============================================================================*/
-/** \defgroup PINMUX      PINMUX
-  * \brief
-  * \{
-  */
-
-/** \defgroup PINMUX_Exported_Constants PINMUX Exported Constants
-  * \brief
-  * \{
-  */
-
 /**
- * \defgroup PINMUX_Declaration PINMUX Declaration
- * \{
- * \ingroup  PINMUX_Exported_Constants
+ * @defgroup PINMUX_DECLARATION PINMUX Declaration
+ * @{
+ * @ingroup  PINMUX_Exported_Constants
  */
 
 #define PAD_REG_BASE            (SYSON_BASE)
@@ -123,17 +84,7 @@ typedef struct
 #define PAD_FUNCTION           (*((volatile uint32_t *) PAD_FUNCTION_BASE))
 #define PINMUX                 ((PINMUX_TypeDef *) PINMUX_REG_BASE)
 
-/** End of PINMUX_Exported_Constants
-  * \}
-  */
-
-/** End of PINMUX_Declaration
-  * \}
-  */
-
-/** End of PINMUX
-  * \}
-  */
+/** @} */ /* End of group PINMUX_DECLARATION */
 
 /*============================================================================*
  *                         PINMUX Private Types
@@ -229,20 +180,10 @@ typedef union
 /*============================================================================*
  *                         PINMUX Constants
  *============================================================================*/
-/** \defgroup PINMUX      PINMUX
-  * \brief
-  * \{
-  */
-
-/** \defgroup PINMUX_Exported_Constants PINMUX Exported Constants
-  * \brief
-  * \{
-  */
-
 /**
- * \defgroup    PIN_Function PIN Function
- * \{
- * \ingroup     PINMUX_Exported_Constants
+ * @defgroup    PIN_FUNCTION PIN Function
+ * @{
+ * @ingroup     PINMUX_Exported_Constants
  */
 /******************* Reference: Bee5_pin_mux_20241231A-bitfile0103.xlsx *******************/
 #define IDLE_MODE                  0
@@ -377,80 +318,74 @@ typedef union
 #define KEY_ROW_16                 164
 #define KEY_ROW_17                 165
 
-/** End of PIN_Function
-  * \}
-  */
+/** @} */ /* End of group PIN_FUNCTION */
 
 /**
- * \defgroup    PAD_Function_Config PAD Function Config
- * \{
- * \ingroup     PINMUX_Exported_Constants
+ * @defgroup    PAD_FUNCTION_CONFIG PAD Function Config
+ * @{
+ * @ingroup     PINMUX_Exported_Constants
  */
 typedef enum
 {
-    LPPWM_CH0_SEL  = 0,
-    LPQDEC_LED_SEL = 1,
-    LPQDEC_PHB_SEL = 2,
-    LPQDEC_PHA_SEL = 3,
+    LPPWM_CH0_SEL  = 0, /**< Specifies the LPPWM channel 0 function. */
+    LPQDEC_LED_SEL = 1, /**< Specifies the LPQDEC LED function. */
+    LPQDEC_PHB_SEL = 2, /**< Specifies the LPQDEC phase B function. */
+    LPQDEC_PHA_SEL = 3, /**< Specifies the LPQDEC phase A function. */
 } PADFuncConfig_TypeDef;
 
-/** End of PAD_Function_Config
-  * \}
-  */
+/** @} */ /* End of group PAD_FUNCTION_CONFIG */
 
 /**
- * \defgroup    PAD_High_Speed_Config PAD High Speed Config
- * \{
- * \ingroup     PINMUX_Exported_Constants
+ * @defgroup    PAD_HIGH_SPEED_CONFIG PAD High Speed Config
+ * @{
+ * @ingroup     PINMUX_Exported_Constants
  */
 typedef enum
 {
-    PAD_HIGH_SPEED_SPI0 = 0,
-    PAD_HIGH_SPEED_SPI1 = 1,
-    PAD_HIGH_SPEED_SPI2 = 2,
+    PAD_HIGH_SPEED_SPI0 = 0, /**< The high-speed for SPI0. */
+    PAD_HIGH_SPEED_SPI1 = 1, /**< The high-speed for SPI1. */
+    PAD_HIGH_SPEED_SPI2 = 2, /**< The high-speed for SPI2. */
 } PADHSConfig_Typedef;
 
-/** End of PAD_High_Speed_Config
-  * \}
-  */
+/** @} */ /* End of group PAD_HIGH_SPEED_CONFIG */
 
 /**
- * \defgroup    PAD_Driving_Current PAD Driving Current
- * \{
- * \ingroup     PINMUX_Exported_Constants
+ * @defgroup    PAD_DRIVING_CURRENT PAD Driving Current
+ * @{
+ * @ingroup     PINMUX_Exported_Constants
  *
- * \note        Others support 4/8mA Only
- *              P2_0 ~ P2_7 support 4/8/12/16mA
- *              P0_5 P5_1 P6_1 support 8/16/28mA
+ * @note
+ *         - Special Pins: P0_5 and P6_0 support independent configuration and
+ *           can handle higher currents (8mA / 18mA / 28mA).
+ *         - Standard Pins: Most other pins support 4mA / 8mA. However, their
+ *           driving current is controlled at the **Power Group** level (Left,
+ *           Right, Bottom). Configuring one pin may affect the driving current
+ *           of other pins within the same power group.
  */
 typedef enum
 {
-    PAD_DRIVING_CURRENT_4mA,
-    PAD_DRIVING_CURRENT_8mA,
-    PAD_DRIVING_CURRENT_18mA,
-    PAD_DRIVING_CURRENT_28mA,
+    PAD_DRIVING_CURRENT_4mA,  /**< Pad driving current of 4 mA. */
+    PAD_DRIVING_CURRENT_8mA,  /**< Pad driving current of 8 mA. */
+    PAD_DRIVING_CURRENT_18mA, /**< Pad driving current of 18 mA. */
+    PAD_DRIVING_CURRENT_28mA, /**< Pad driving current of 28 mA. */
 } PADDrivingCurrent_TypeDef;
 
+/** @} */ /* End of group PAD_DRIVING_CURRENT */
 
+/**
+ * @defgroup    PAD_POWER_GROUP PAD Power Group
+ * @{
+ * @ingroup     PINMUX_Exported_Constants
+ */
 typedef enum _PIN_POWER_GROUP
 {
-    PAD_POWER_GROUP_INVALID            = 0,
-    PAD_POWER_GROUP_RIGHT              = 1,
-    PAD_POWER_GROUP_LEFT               = 2,
-    PAD_POWER_GROUP_BOTTOM             = 3,
+    PAD_POWER_GROUP_INVALID            = 0, /**< Invalid power group. */
+    PAD_POWER_GROUP_RIGHT              = 1, /**< Right power group. */
+    PAD_POWER_GROUP_LEFT               = 2, /**< Left power group. */
+    PAD_POWER_GROUP_BOTTOM             = 3, /**< Bottom power group. */
 } PADPowerGroup_TypeDef;
 
-/** End of PAD_Driving_Current
-  * \}
-  */
-
-/** End of PINMUX_Exported_Constants
-  * \}
-  */
-
-/** End of PINMUX
-  * \}
-  */
+/** @} */ /* End of group PAD_POWER_GROUP */
 
 /*============================================================================*
  *                         PINMUX Private

@@ -18,25 +18,14 @@ extern "C" {
 /*============================================================================*
  *                         DMA Defines
  *============================================================================*/
-/** \defgroup DMA        DMA
-  * \brief
-  * \{
-  */
 
-/** \defgroup DMA_Exported_Constants DMA Exported Constants
-  * \brief
-  * \{
-  */
-
-/**
- * \defgroup DMA_Defines DMA Defines
- * \{
- * \ingroup  DMA_Exported_Constants
- */
 #define CHIP_DMA_CHANNEL_NUM                        (6)
 
+#define DMA_CHANNEL_RESERVED                        (BIT5)
+#define DMA_CHANNEL_DSP_RESERVED                     (0)
+
 #define DMA_SUPPORT_GATHER_SCATTER_FUNCTION         (0)
-#define DMA_SUPPORT_INT_HAIF_BLOCK                  (0)
+#define DMA_SUPPORT_INT_HALF_BLOCK                  (0)
 #define DMA_SUPPORT_SECURE_MODE                     (0)
 #define DMA_SUPPORT_ADDRESS_DECREASE                (1)
 #define DMA_SUPPORT_OSW_OSR_CHANGE                  (0)
@@ -53,18 +42,6 @@ extern "C" {
 #define DMA_READ_REG_AFTER_CLEAR                    (0)
 #define DMA_SUPPORT_PERIPHERAL_FLOW_CONTROL         (0)
 #define DMA_SUPPORT_AUTO_SLOW_CONFIG                (0)
-
-/** End of DMA_Defines
-  * \}
-  */
-
-/** End of DMA_Exported_Constants
-  * \}
-  */
-
-/** End of DMA
-  * \}
-  */
 
 /*============================================================================*
  *                         DMA Registers Memory Map
@@ -99,8 +76,8 @@ typedef struct
     __I  uint32_t DMA_RSVD2;                   /*!< 0x2F4 */
     __I  uint32_t DMA_RSVD3;                   /*!< 0x2F8 */
     __I  uint32_t DMA_RSVD4;                   /*!< 0x2FC */
-    __I  uint32_t DMA_RSVD5;                   /*!< 0x230 */
-    __I  uint32_t DMA_RSVD6;                   /*!< 0x234 */
+    __I  uint32_t DMA_RSVD5;                   /*!< 0x300 */
+    __I  uint32_t DMA_RSVD6;                   /*!< 0x304 */
     __I  uint32_t DMA_STATUSERR_L;             /*!< 0x308 */
     __I  uint32_t DMA_RSVD7;                   /*!< 0x30C */
 
@@ -139,19 +116,9 @@ typedef struct
 /*============================================================================*
  *                         DMA Declaration
  *============================================================================*/
-/** \defgroup DMA        DMA
-  * \brief
-  * \{
-  */
-
-/** \defgroup DMA_Exported_Constants DMA Exported Constants
-  * \brief
-  * \{
-  */
-
-/** \defgroup DMA_Declaration DMA Declaration
-  * \brief
-  * \{
+/** @defgroup DMA_DECLARATION DMA Declaration
+  * @{
+  * @ingroup  DMA_Exported_Constants
   */
 
 #define DMA_CH_REG_BASE             (RXI350_CFG_BASE)
@@ -171,26 +138,17 @@ typedef struct
 #define DMA_CH4                     ((DMA_ChannelTypeDef *) DMA_CH4_BASE)
 #define DMA_CH5                     ((DMA_ChannelTypeDef *) DMA_CH5_BASE)
 
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_DMA_PERIPH(PERIPH)       (((PERIPH) == DMA_CH0) || \
                                      ((PERIPH) == DMA_CH1) || \
                                      ((PERIPH) == DMA_CH2) || \
                                      ((PERIPH) == DMA_CH3) || \
                                      ((PERIPH) == DMA_CH4) || \
                                      ((PERIPH) == DMA_CH5))
-#define IS_DMA_ALL_PERIPH(PERIPH)   (IS_DMA1_PERIPH(PERIPH))
+/** @brief Check if the input parameter is valid. @hideinitializer */
+#define IS_DMA_ALL_PERIPH(PERIPH)   (IS_DMA_PERIPH(PERIPH))
 
-/** End of DMA_Declaration
-  * \}
-  */
-
-/** End of DMA_Exported_Constants
-  * \}
-  */
-
-/** End of DMA
-  * \}
-  */
-
+/** @} */ /* End of group DMA_DECLARATION */
 
 /*============================================================================*
  *                         DMA Registers and Field Descriptions
@@ -663,20 +621,10 @@ typedef union
 /*============================================================================*
  *                         DMA Constants
  *============================================================================*/
-/** \defgroup DMA        DMA
-  * \brief
-  * \{
-  */
-
-/** \defgroup DMA_Exported_Constants DMA Exported Constants
-  * \brief
-  * \{
-  */
-
 /**
- * \defgroup    DMA_HANDSHAKE DMA HANDSHAKE
- * \{
- * \ingroup     DMA_Exported_Constants
+ * @defgroup    DMA_HANDSHAKE DMA Handshake
+ * @{
+ * @ingroup     DMA_Exported_Constants
  */
 #define DMA_HANDSHAKE_UART0_TX                                    (0)
 #define DMA_HANDSHAKE_UART0_RX                                    (1)
@@ -712,7 +660,7 @@ typedef union
 #define DMA_HANDSHAKE_TIMER1_7_TRX                                (32)
 #define DMA_HANDSHAKE_TIMER1_8_TRX                                (33)
 
-
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_DMA_TransferType(Type) (((Type) == DMA_HANDSHAKE_UART0_TX) || \
                                    ((Type) == DMA_HANDSHAKE_UART0_RX) || \
                                    ((Type) == DMA_HANDSHAKE_UART1_TX) || \
@@ -741,28 +689,17 @@ typedef union
                                    ((Type) == DMA_HANDSHAKE_SPI2_RX) || \
                                    ((Type) == DMA_HANDSHAKE_IR_TX) || \
                                    ((Type) == DMA_HANDSHAKE_IR_RX) || \
-                                   ((Type) == DMA_HANDSHAKE_CAN_RX) || \
+                                   ((Type) == DMA_HANDSHAKE_CANBUS_RX) || \
                                    ((Type) == DMA_HANDSHAKE_SHA256_TX) || \
                                    ((Type) == DMA_HANDSHAKE_TIMER1_6_TRX) || \
                                    ((Type) == DMA_HANDSHAKE_TIMER1_7_TRX) || \
                                    ((Type) == DMA_HANDSHAKE_TIMER1_8_TRX))
 
 
-/** End of DMA_HANDSHAKE
-  * \}
-  */
-
-/** End of DMA_Exported_Constants
-  * \}
-  */
-
-/** End of DMA
-  * \}
-  */
+/** @} */ /* End of group DMA_HANDSHAKE */
 
 #ifdef  __cplusplus
 }
 #endif /* __cplusplus */
 
 #endif /* RTL_DMA_DEF_H */
-

@@ -17,21 +17,6 @@ extern "C" {
 /*============================================================================*
  *                          TIMER Defines
  *============================================================================*/
-/** \defgroup TIMER      TIMER
-  * \brief
-  * \{
-  */
-
-/** \defgroup TIMER_Exported_Constants TIMER Exported Constants
-  * \brief
-  * \{
-  */
-
-/**
- * \defgroup TIMER_Defines TIMER Defines
- * \{
- * \ingroup  TIMER_Exported_Constants
- */
 /**********************************************************************************************************************
  **********************************************************************************************************************
  |             Function              | case1  case7  case6  case2  case3  case4  case5 |         TIMER Defines          |
@@ -78,17 +63,6 @@ extern "C" {
 #define TIMER_SUPPORT_RAP_FUNCTION                    (1)
 #define TIMER_SUPPORT_AUTO_CLOCK                      (1)
 
-/** End of TIMER_Defines
-  * \}
-  */
-
-/** End of TIMER_Exported_Constants
-  * \}
-  */
-
-/** End of TIMER
-  * \}
-  */
 /*============================================================================*
  *                         TIMER Registers Memory Map
  *============================================================================*/
@@ -182,20 +156,11 @@ typedef struct
 /*============================================================================*
  *                         TIMER Declaration
  *============================================================================*/
-/** \defgroup TIMER      TIMER
-  * \brief
-  * \{
-  */
-
-/** \defgroup TIMER_Exported_Constants TIMER Exported Constants
-  * \brief
-  * \{
-  */
-
-/** \defgroup TIMER_Declaration TIMER Declaration
-  * \{
-  * \ingroup  TIMER_Exported_Constants
-  */
+/**
+ * @defgroup TIMER_DECLARATION TIMER Declaration
+ * @{
+ * @ingroup  TIMER_Exported_Constants
+ */
 
 #define TIMER0_SHARE                 ((TIMER_ShareTypeDef *) (TIMER0_BASE + 0xA00))
 #define TIMER1_SHARE                 ((TIMER_ShareTypeDef *) (TIMER1_BASE + 0xA00))
@@ -210,6 +175,7 @@ typedef struct
 #define TIMER0_CH0                     ((TIMER_TypeDef *) TIMER0_CH0_REG_BASE)
 #define TIMER0_CH1                     ((TIMER_TypeDef *) TIMER0_CH1_REG_BASE)
 
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_TIMER0_PERIPH(PERIPH)       (((PERIPH) == TIMER0_CH0) || \
                                         ((PERIPH) == TIMER0_CH1))
 
@@ -236,6 +202,7 @@ typedef struct
 #define TIMER1_CH7                     ((TIMER_TypeDef *) TIMER1_CH7_REG_BASE)
 #define TIMER1_CH8                     ((TIMER_TypeDef *) TIMER1_CH8_REG_BASE)
 
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_TIMER1_PERIPH(PERIPH)       (((PERIPH) == TIMER1_CH0) || \
                                         ((PERIPH) == TIMER1_CH1) || \
                                         ((PERIPH) == TIMER1_CH2) || \
@@ -253,37 +220,28 @@ typedef struct
 
 #define TIMER2_CH0                     ((TIMER_TypeDef *) TIMER2_REG_BASE)
 
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_TIMER2_PERIPH(PERIPH)       (((PERIPH) == TIMER2_CH0))
 
 
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_TIMER_ALL_PERIPH(PERIPH)    (IS_TIMER0_PERIPH(PERIPH) || \
                                         IS_TIMER1_PERIPH(PERIPH) || \
                                         IS_TIMER2_PERIPH(PERIPH))
 
-/** End of TIMER_Declaration
-  * \}
-  */
+/** @} */ /* End of group TIMER_DECLARATION */
 
-/** \defgroup TIMER_IRQn TIMER IRQn
-  * \{
-  * \ingroup  TIMER_Exported_Constants
-  */
+/**
+ * @defgroup TIMER_IRQN TIMER IRQn
+ * @{
+ * @ingroup  TIMER_Exported_Constants
+ */
 #ifdef IS_TIMER0_PERIPH
 #define TIMER0_CH0_IRQn                SUB_IRQ_DEF(TIMER0_CH0_CH1_IRQn, 0)
 #define TIMER0_CH1_IRQn                SUB_IRQ_DEF(TIMER0_CH0_CH1_IRQn, 1)
 #endif
 
-/** End of GPIO_IRQn
-  * \}
-  */
-
-/** End of TIMER_Exported_Constants
-  * \}
-  */
-
-/** End of TIMER
-  * \}
-  */
+/** @} */ /* End of group TIMER_IRQN */
 
 /*============================================================================*
  *                         TIMER Private Defines
@@ -3880,20 +3838,10 @@ typedef union
 /*============================================================================*
  *                          TIMER Constants
  *============================================================================*/
-/** \defgroup TIMER         TIMER
-  * \brief
-  * \{
-  */
-
-/** \defgroup TIMER_Exported_Constants TIMER Exported Constants
-  * \brief
-  * \{
-  */
-
 /**
- * \defgroup    TIMER_CASE TIMER CASE
- * \{
- * \ingroup     TIMER_Exported_Constants
+ * @defgroup TIMER_CASE TIMER CASE
+ * @{
+ * @ingroup  TIMER_Exported_Constants
  */
 typedef enum
 {
@@ -3905,30 +3853,27 @@ typedef enum
     TIMER_CASE4 = 6,
     TIMER_CASE5 = 7,
 } TIMERCASE_TypeDef;
-/** End of TIMER_CASE
-  * \}
-  */
+/** @} */ /* End of group TIMER_CASE */
 
 /**
- * \defgroup    TIMER_Clock_Source TIMER Clock Source
- * \{
- * \ingroup     TIMER_Exported_Constants
+ * @defgroup TIMER_CLOCK_SOURCE TIMER Clock Source
+ * @{
+ * @ingroup  TIMER_Exported_Constants
  */
 typedef enum
 {
     TIMER_CLOCK_SRC_40M = 0,
 } TIMERClockSrc_TypeDef;
 
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_TIMER_CLOCK_SRC(CLOCK)     (((CLOCK) == TIMER_CLOCK_SRC_40M))
 
-/** End of TIMER_Clock_Source
-  * \}
-  */
+/** @} */ /* End of group TIMER_CLOCK_SOURCE */
 
 /**
- * \defgroup    TIMER_Clock_Divider TIMER Clock Divider
- * \{
- * \ingroup     TIMER_Exported_Constants
+ * @defgroup TIMER_CLOCK_DIVIDER TIMER Clock Divider
+ * @{
+ * @ingroup  TIMER_Exported_Constants
  */
 typedef enum
 {
@@ -3942,6 +3887,7 @@ typedef enum
     TIMER_CLOCK_DIV_64 = 0x7,
 } TIMERClockDiv_TypeDef;
 
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_TIMER_CLOCK_DIV(DIV) (((DIV) == TIMER_CLOCK_DIV_1) || \
                                  ((DIV) == TIMER_CLOCK_DIV_2) || \
                                  ((DIV) == TIMER_CLOCK_DIV_4) || \
@@ -3951,14 +3897,12 @@ typedef enum
                                  ((DIV) == TIMER_CLOCK_DIV_40) || \
                                  ((DIV) == TIMER_CLOCK_DIV_64))
 
-/** End of TIMER_Clock_Divider
-  * \}
-  */
+/** @} */ /* End of group TIMER_CLOCK_DIVIDER */
 
 /**
- * \defgroup    PWM_DZ_Clock_Divider PWM DZ Clock Divider
- * \{
- * \ingroup     TIMER_Exported_Constants
+ * @defgroup PWM_DZ_CLOCK_DIVIDER PWM DZ Clock Divider
+ * @{
+ * @ingroup  TIMER_Exported_Constants
  */
 typedef enum
 {
@@ -3972,6 +3916,7 @@ typedef enum
     PWM_DZ_CLOCK_DIV_64 = 0x7,
 } PWMDZClockDiv_TypeDef;
 
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_PWM_DZ_CLOCK_DIV(DIV) (((DIV) == PWM_DZ_CLOCK_DIV_1) || \
                                   ((DIV) == PWM_DZ_CLOCK_DIV_2) || \
                                   ((DIV) == PWM_DZ_CLOCK_DIV_4) || \
@@ -3981,14 +3926,12 @@ typedef enum
                                   ((DIV) == PWM_DZ_CLOCK_DIV_40) || \
                                   ((DIV) == PWM_DZ_CLOCK_DIV_64))
 
-/** End of PWM_DZ_Clock_Divider
-  * \}
-  */
+/** @} */ /* End of group PWM_DZ_CLOCK_DIVIDER */
 
 /**
- * \defgroup    PWM_DeadZone_Clock_Source PWM DeadZone Clock Source
- * \{
- * \ingroup     TIMER_Exported_Constants
+ * @defgroup PWM_DEADZONE_CLOCK_SOURCE PWM DeadZone Clock Source
+ * @{
+ * @ingroup  TIMER_Exported_Constants
  */
 typedef enum
 {
@@ -3996,25 +3939,15 @@ typedef enum
     PWM_DZ_CLOCK_SRC_32K   = 0x1,
 } PWMDZClockSrc_TypeDef;
 
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_PWM_DEADZONE_CLOCK_SRC(CLOCK) (((CLOCK) == PWM_DZ_CLOCK_SRC_TIMER) || \
                                           ((CLOCK) == PWM_DZ_CLOCK_SRC_32K))
 
-/** End of PWM_DeadZone_Clock_Source
-  * \}
-  */
-
-/** End of TIMER_Exported_Constants
-  * \}
-  */
-
-/** End of TIMER
-  * \}
-  */
+/** @} */ /* End of group PWM_DEADZONE_CLOCK_SOURCE */
 
 #ifdef  __cplusplus
 }
 #endif /* __cplusplus */
 
 #endif /* RTL_TIMER_DEF_H */
-
 

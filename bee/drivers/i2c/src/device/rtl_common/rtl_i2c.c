@@ -52,10 +52,10 @@ extern uint8_t I2C_GetIndex(I2C_TypeDef *I2Cx);
  *                           Public Functions
  *============================================================================*/
 /**
-  * \brief  Deinitializes the I2Cx peripheral registers to their default reset values.
-  * \param  I2Cx: Select the I2C peripheral. \ref I2C_Declaration
-  * \return None
-  */
+ * @brief Deinitialize the I2Cx peripheral registers to their default reset values.
+ *
+ * @param[in] I2Cx  Select the I2C peripheral, refer to @ref I2C_DECLARATION.
+ */
 void I2C_DeInit(I2C_TypeDef *I2Cx)
 {
     /* Check the parameters */
@@ -93,18 +93,18 @@ void I2C_DeInit(I2C_TypeDef *I2Cx)
 }
 
 /**
-  * \brief  Initializes the I2Cx peripheral according to the specified
-  *         parameters in the I2C_InitStruct.
-  * \param  I2Cx: Select the I2C peripheral. \ref I2C_Declaration
-  * \param  I2C_InitStruct: Pointer to a I2C_InitTypeDef structure that
-  *         contains the configuration information for the specified I2C peripheral.
-  * \return None
-  */
+ * @brief Initialize the I2Cx peripheral according to the specified parameters in the I2C_InitStruct.
+ *
+ * @param[in] I2Cx            Select the I2C peripheral, refer to @ref I2C_DECLARATION.
+ * @param[in] I2C_InitStruct  Pointer to an I2C_InitTypeDef structure that contains the configuration information for the I2C peripheral.
+ */
 void I2C_Init(I2C_TypeDef *I2Cx, I2C_InitTypeDef *I2C_InitStruct)
 {
     /* Check the parameters */
     assert_param(IS_I2C_ALL_PERIPH(I2Cx));
     assert_param(IS_I2C_CLOCK_SPEED(I2C_InitStruct->I2C_ClockSpeed));
+    assert_param(IS_I2C_DEVICE_MODE(I2C_InitStruct->I2C_DeviceMode));
+    assert_param(IS_I2C_ADDRESS_MODE(I2C_InitStruct->I2C_AddressMode));
 
     /* Disable I2C device before change configuration */
     IC_ENABLE_TypeDef i2c_0x6c = {.d32 = I2Cx->IC_ENABLE};
@@ -220,10 +220,10 @@ void I2C_Init(I2C_TypeDef *I2Cx, I2C_InitTypeDef *I2C_InitStruct)
 }
 
 /**
-  * \brief  Fills each I2C_InitStruct member with its default value.
-  * \param  I2C_InitStruct : pointer to a I2C_InitTypeDef structure which will be initialized.
-  * \return None
-  */
+ * @brief Fill each I2C_InitStruct member with its default value.
+ *
+ * @param[in] I2C_InitStruct  Pointer to a I2C_InitTypeDef structure which will be initialized.
+ */
 void I2C_StructInit(I2C_InitTypeDef *I2C_InitStruct)
 {
     /* I2C source clock is 40MHz, depending on clock divider */
@@ -257,12 +257,12 @@ void I2C_StructInit(I2C_InitTypeDef *I2C_InitStruct)
 }
 
 /**
-  * \brief  Enables or disables the specified I2C peripheral.
-  * \param  I2Cx: Select the I2C peripheral. \ref I2C_Declaration
-  * \param  NewState: New state of the I2Cx peripheral.
-  *         This parameter can be: ENABLE or DISABLE.
-  * \return None
-  */
+ * @brief Enable or disable the specified I2C peripheral.
+ *
+ * @param[in] I2Cx      Select the I2C peripheral, refer to @ref I2C_DECLARATION.
+ * @param[in] NewState  New state of the I2Cx peripheral.
+ *                      This parameter can be: ENABLE or DISABLE.
+ */
 void I2C_Cmd(I2C_TypeDef *I2Cx, FunctionalState NewState)
 {
     /* Check the parameters */
@@ -277,10 +277,20 @@ void I2C_Cmd(I2C_TypeDef *I2Cx, FunctionalState NewState)
 
 
 /**
-  * \brief  Checks whether the last I2Cx abort status.
-  * \param  I2Cx: Select the I2C peripheral. \ref I2C_Declaration
-  * \return I2C_Status: The status of I2Cx. \ref I2C_Status
-  */
+ * @brief Check if I2C has an abort status.
+ *
+ * @param[in] I2Cx  Select the I2C peripheral, refer to @ref I2C_DECLARATION.
+ *
+ * @return The status of I2Cx, refer to @ref I2C_STATUS.
+ * @retval I2C_SUCCESS              I2C transfer success.
+ * @retval I2C_ARB_LOST             Master or slave transmitter has lost arbitration.
+ * @retval I2C_ABRT_MASTER_DIS      Master operation initiated with the master mode disabled.
+ * @retval I2C_ABRT_TXDATA_NOACK    Transmitted data byte was not acknowledged by the slave.
+ * @retval I2C_ABRT_10ADDR2_NOACK   Second byte of the 10-bit address was not acknowledged by any slave.
+ * @retval I2C_ABRT_10ADDR1_NOACK   First byte of the 10-bit address was not acknowledged by any slave.
+ * @retval I2C_ABRT_7B_ADDR_NOACK   7-bit address was not acknowledged by any slave.
+ * @retval I2C_ERR_TIMEOUT          I2C transfer timeout error.
+ */
 I2C_Status I2C_CheckAbortStatus(I2C_TypeDef *I2Cx)
 {
     uint32_t abort_status = 0;
@@ -332,34 +342,37 @@ I2C_Status I2C_CheckAbortStatus(I2C_TypeDef *I2Cx)
 }
 
 /**
-  * \brief Mask the specified I2C interrupt.
-  * \param  I2Cx: Select the I2C peripheral. \ref I2C_Declaration
-  * \param  I2C_INT: This parameter can be one of the following values:
-  *         \arg I2C_INT_MST_ON_HOLD: Indicates whether a master is holding the bus.
-  *         \arg I2C_INT_GEN_CALL: Set only when a General Call address is received and it is acknowledged.
-  *         \arg I2C_INT_START_DET: Indicates whether a START or RESTART condition has occurred on the I2C
-  *              interface regardless of whether I2C is operating in slave or master mode.
-  *         \arg I2C_INT_STOP_DET: Indicates whether a STOP condition has occurred on the I2C interface regardless
-  *              of whether I2C is operating in slave or master mode
-  *         \arg I2C_INT_ACTIVITY: This bit captures I2C activity and stays set until it is cleared.
-  *         \arg I2C_INT_RX_DONE: When the I2C is acting as a slave-transmitter, this bit is set to 1 if the
-  *              master does not acknowledge a transmitted byte. This occurs on the last byte of
-  *              the transmission, indicating that the transmission is done.
-  *         \arg I2C_INT_TX_ABRT: This bit indicates if I2C as an I2C transmitter, is unable to complete the
-  *              intended actions on the contents of the transmit FIFO.
-  *         \arg I2C_INT_RD_REQ: This bit is set to 1 when acting as a slave and another I2C master
-  *              is attempting to read data.
-  *         \arg I2C_INT_TX_EMPTY: This bit is set to 1 when the transmit buffer is at or below the threshold value set
-  *              in the IC_TX_TL register.
-  *         \arg I2C_INT_TX_OVER: Set during transmit if the transmit buffer is filled to IC_TX_BUFFER_DEPTH and
-  *              the processor attempts to issue another I2C command.
-  *         \arg I2C_INT_RX_FULL: Set when the receive buffer reaches or goes above the RX_TL threshold in the
-  *              IC_RX_TL register
-  *         \arg I2C_INT_RX_OVER: Set if the receive buffer is completely filled to IC_RX_BUFFER_DEPTH and an
-  *              additional byte is received from an external I2C device.
-  *         \arg I2C_INT_RX_UNDER: Set if the processor attempts to read the receive buffer when it is empty by reading.
-  * \return None.
-  */
+ * @brief Configure the specified I2C interrupt.
+ *
+ * @param[in] I2Cx      Select the I2C peripheral, refer to @ref I2C_DECLARATION.
+ * @param[in] I2C_IT    This parameter can be one of the following values, refer to @ref I2C_INTERRUPTS.
+ *                      - I2C_INT_MST_ON_HOLD: When master Tx FIFO is empty and no stop bit command is issued, master will hold the SCL low.
+ *                      - I2C_INT_GEN_CALL: Set only when a general call address is received and it is acknowledged.
+ *                      - I2C_INT_START_DET: Indicates whether a START or RESTART condition has occurred on the I2C
+ *                           interface regardless of whether I2C is operating in slave or master mode.
+ *                      - I2C_INT_STOP_DET: Indicates whether a STOP condition has occurred on the I2C interface
+ *                           regardless of whether I2C is operating in slave or master mode.
+ *                      - I2C_INT_ACTIVITY: This bit captures I2C activity and stays set until it is cleared.
+ *                      - I2C_INT_RX_DONE: When the I2C is acting as a slave-transmitter, this bit is set to 1 if the
+ *                           master does not acknowledge a transmitted byte. This occurs on the last byte of the
+ *                           transmission, indicating that the transmission is done.
+ *                      - I2C_INT_TX_ABRT: This bit indicates if I2C as an I2C transmitter, is unable to complete the
+ *                           intended actions on the contents of the transmit FIFO.
+ *                      - I2C_INT_RD_REQ: This bit is set to 1 when acting as a slave and another I2C master is
+ *                           attempting to read data.
+ *                      - I2C_INT_TX_EMPTY: This bit is set to 1 when the transmit buffer is at or below the threshold value.
+ *                      - I2C_INT_TX_OVER: Set during transmit if the transmit buffer is filled to Tx FIFO depth and
+ *                           the processor attempts to issue another I2C command.
+ *                      - I2C_INT_RX_FULL: Set when the receive buffer reaches or goes above the RX_TL threshold in the
+ *                           IC_RX_TL register.
+ *                      - I2C_INT_RX_OVER: Set if the receive buffer is completely filled to Rx FIFO depth and an
+ *                           additional byte is received from an external I2C device.
+ *                      - I2C_INT_RX_UNDER: Set if the processor attempts to read the receive buffer when it is empty by reading.
+ * @param[in] NewState  Enable or disable the specified I2C interrupt.
+ *                      This parameter can be one of the following values:
+ *                      - ENABLE: Enable the specified I2C interrupt.
+ *                      - DISABLE: Disable the specified I2C interrupt.
+ */
 void I2C_INTConfig(I2C_TypeDef *I2Cx, uint16_t I2C_INT, FunctionalState NewState)
 {
     /* Check the parameters */
@@ -380,33 +393,32 @@ void I2C_INTConfig(I2C_TypeDef *I2Cx, uint16_t I2C_INT, FunctionalState NewState
 }
 
 /**
-  * \brief clear the specified I2C interrupt.
-  * \param  I2Cx: Select the I2C peripheral. \ref I2C_Declaration
-  * \param  I2C_INT: This parameter can be one of the following values:
-  *         \arg I2C_INT_GEN_CALL: Set only when a General Call address is received and it is acknowledged.
-  *         \arg I2C_INT_START_DET: Indicates whether a START or RESTART condition has occurred on the I2C
-  *              interface regardless of whether I2C is operating in slave or master mode.
-  *         \arg I2C_INT_STOP_DET: Indicates whether a STOP condition has occurred on the I2C interface regardless
-  *              of whether I2C is operating in slave or master mode
-  *         \arg I2C_INT_ACTIVITY: This bit captures I2C activity and stays set until it is cleared.
-  *         \arg I2C_INT_RX_DONE: When the I2C is acting as a slave-transmitter, this bit is set to 1 if the
-  *              master does not acknowledge a transmitted byte. This occurs on the last byte of
-  *              the transmission, indicating that the transmission is done.
-  *         \arg I2C_INT_TX_ABRT: This bit indicates if I2C as an I2C transmitter, is unable to complete the
-  *              intended actions on the contents of the transmit FIFO.
-  *         \arg I2C_INT_RD_REQ: This bit is set to 1 when acting as a slave and another I2C master
-  *              is attempting to read data.
-  *         \arg I2C_INT_TX_EMPTY: This bit is set to 1 when the transmit buffer is at or below the threshold value set
-  *              in the IC_TX_TL register.
-  *         \arg I2C_INT_TX_OVER: Set during transmit if the transmit buffer is filled to IC_TX_BUFFER_DEPTH and
-  *              the processor attempts to issue another I2C command.
-  *         \arg I2C_INT_RX_FULL: Set when the receive buffer reaches or goes above the RX_TL threshold in the
-  *              IC_RX_TL register
-  *         \arg I2C_INT_RX_OVER: Set if the receive buffer is completely filled to IC_RX_BUFFER_DEPTH and an
-  *              additional byte is received from an external I2C device.
-  *         \arg I2C_INT_RX_UNDER: Set if the processor attempts to read the receive buffer when it is empty by reading.
-  * \return None.
-  */
+ * @brief Clear the specified I2C interrupt pending bit.
+ *
+ * @param[in] I2Cx    Select the I2C peripheral, refer to @ref I2C_DECLARATION.
+ * @param[in] I2C_IT  This parameter can be one of the following values, refer to @ref I2C_INTERRUPTS.
+ *                    - I2C_INT_GEN_CALL: Set only when a general call address is received and it is acknowledged.
+ *                    - I2C_INT_START_DET: Indicates whether a START or RESTART condition has occurred on the I2C
+ *                      interface regardless of whether I2C is operating in slave or master mode.
+ *                    - I2C_INT_STOP_DET: Indicates whether a STOP condition has occurred on the I2C interface regardless
+ *                      of whether I2C is operating in slave or master mode.
+ *                    - I2C_INT_ACTIVITY: This bit captures I2C activity and stays set until it is cleared.
+ *                    - I2C_INT_RX_DONE: When the I2C is acting as a slave-transmitter, this bit is set to 1 if the
+ *                      master does not acknowledge a transmitted byte. This occurs on the last byte of the
+ *                      transmission, indicating that the transmission is done.
+ *                    - I2C_INT_TX_ABRT: This bit indicates if I2C as an I2C transmitter, is unable to complete the
+ *                      intended actions on the contents of the transmit FIFO.
+ *                    - I2C_INT_RD_REQ: This bit is set to 1 when acting as a slave and another I2C master is
+ *                      attempting to read data.
+ *                    - I2C_INT_TX_EMPTY: This bit is set to 1 when the transmit buffer is at or below the threshold value.
+ *                    - I2C_INT_TX_OVER: Set during transmit if the transmit buffer is filled to Tx FIFO depth and
+ *                      the processor attempts to issue another I2C command.
+ *                    - I2C_INT_RX_FULL: Set when the receive buffer reaches or goes above the RX_TL threshold in the
+ *                      IC_RX_TL register.
+ *                    - I2C_INT_RX_OVER: Set if the receive buffer is completely filled to Rx FIFO depth and an
+ *                      additional byte is received from an external I2C device.
+ *                    - I2C_INT_RX_UNDER: Set if the processor attempts to read the receive buffer when it is empty by reading.
+ */
 void I2C_ClearINTPendingBit(I2C_TypeDef *I2Cx, uint16_t I2C_IT)
 {
     /* Check the parameters */
@@ -473,10 +485,10 @@ void I2C_ClearINTPendingBit(I2C_TypeDef *I2Cx, uint16_t I2C_IT)
 }
 
 /**
- * \brief   Set slave device address.
- * \param   I2Cx: Select the I2C peripheral. \ref I2C_Declaration
- * \param   Address: Specifies the slave address which will be transmitte.
- * \return  None.
+ * @brief Set slave device address.
+ *
+ * @param[in] I2Cx     Select the I2C peripheral, refer to @ref I2C_DECLARATION.
+ * @param[in] Address  Specifies the target address in master mode, or the device's own address in slave mode.
  */
 void I2C_SetSlaveAddress(I2C_TypeDef *I2Cx, uint16_t Address)
 {
@@ -490,24 +502,24 @@ void I2C_SetSlaveAddress(I2C_TypeDef *I2Cx, uint16_t Address)
 }
 
 /**
- * \brief   Write command through the I2Cx peripheral.
- * \param   I2Cx: Select the I2C peripheral. \ref I2C_Declaration
- * \param   command: Command of write or read.
- *          \arg I2C_READ_CMD: Read command. Data which want to transmit can be 0 in this situation.
- *          \arg I2C_WRITE_CMD: Write command.
- * \param   data: Data which to be transmitted.
- * \param   StopState: Whether send stop signal.
- *          \arg ENABLE: Send stop signal.
- *          \arg DISABLE: Do not send stop signal.
- * \return  None.
+ * @brief Write command through the I2Cx peripheral.
+ *
+ * @param[in] I2Cx       Select the I2C peripheral, refer to @ref I2C_DECLARATION.
+ * @param[in] command    Command of write or read.
+ *                       - I2C_READ_CMD: Read command. Data to be transmitted can be 0 in this situation.
+ *                       - I2C_WRITE_CMD: Write command.
+ * @param[in] data       Data to be transmitted.
+ * @param[in] StopState  Whether to send a stop signal.
+ *                       - ENABLE: Send stop signal.
+ *                       - DISABLE: Do not send stop signal.
  */
-void I2C_SendCmd(I2C_TypeDef *I2Cx, I2CSendCommend_TypeDef command, uint8_t data,
+void I2C_SendCmd(I2C_TypeDef *I2Cx, I2CSendCommand_TypeDef command, uint8_t data,
                  FunctionalState StopState)
 {
     /* Check the parameters */
     assert_param(IS_I2C_ALL_PERIPH(I2Cx));
     assert_param(IS_I2C_CMD(command));
-    assert_param(IS_I2C_STOP(StopState));
+    assert_param(IS_FUNCTIONAL_STATE(StopState));
 
     IC_DATA_CMD_TypeDef i2c_0x10 = {.d32 = 0};
     i2c_0x10.d32 = 0;
@@ -518,9 +530,11 @@ void I2C_SendCmd(I2C_TypeDef *I2Cx, I2CSendCommend_TypeDef command, uint8_t data
 }
 
 /**
- * \brief   Received data by the I2Cx peripheral.
- * \param   I2Cx: Select the I2C peripheral. \ref I2C_Declaration
- * \return  Return the most recent received data.
+ * @brief Receive data by the I2Cx peripheral.
+ *
+ * @param[in] I2Cx  Select the I2C peripheral, refer to @ref I2C_DECLARATION.
+ *
+ * @return The most recent received data.
  */
 uint8_t I2C_ReceiveData(I2C_TypeDef *I2Cx)
 {
@@ -532,9 +546,11 @@ uint8_t I2C_ReceiveData(I2C_TypeDef *I2Cx)
 }
 
 /**
- * \brief   Get data length in Rx FIFO of the I2Cx peripheral.
- * \param   I2Cx: Select the I2C peripheral. \ref I2C_Declaration
- * \return  Current data number in Rx FIFO.
+ * @brief Get data length in Rx FIFO of the I2Cx peripheral.
+ *
+ * @param[in] I2Cx  Select the I2C peripheral, refer to @ref I2C_DECLARATION.
+ *
+ * @return Current data number in Rx FIFO.
  */
 uint8_t I2C_GetRxFIFOLen(I2C_TypeDef *I2Cx)
 {
@@ -545,9 +561,11 @@ uint8_t I2C_GetRxFIFOLen(I2C_TypeDef *I2Cx)
 }
 
 /**
- * \brief   Get data length in Tx FIFO of the I2Cx peripheral.
- * \param   I2Cx: Select the I2C peripheral. \ref I2C_Declaration
- * \return  Current data number in Tx FIFO.
+ * @brief Get data length in Tx FIFO of the I2Cx peripheral.
+ *
+ * @param[in] I2Cx  Select the I2C peripheral, refer to @ref I2C_DECLARATION.
+ *
+ * @return Current data number in Tx FIFO.
  */
 uint8_t I2C_GetTxFIFOLen(I2C_TypeDef *I2Cx)
 {
@@ -558,9 +576,9 @@ uint8_t I2C_GetTxFIFOLen(I2C_TypeDef *I2Cx)
 }
 
 /**
- * \brief   Clear all I2C interrupt.
- * \param   I2Cx: Select the I2C peripheral. \ref I2C_Declaration
- * \return  None.
+ * @brief Clear all I2C interrupt.
+ *
+ * @param[in] I2Cx  Select the I2C peripheral, refer to @ref I2C_DECLARATION.
  */
 void I2C_ClearAllINT(I2C_TypeDef *I2Cx)
 {
@@ -571,21 +589,26 @@ void I2C_ClearAllINT(I2C_TypeDef *I2Cx)
 }
 
 /**
- * \brief   Check whether the specified I2C flag is set.
- * \param   I2Cx: Select the I2C peripheral. \ref I2C_Declaration
- * \param   I2C_FLAG: Specifies the flag to check.
- *          This parameter can be one of the following values:
- *          \arg I2C_FLAG_SLV_HOLD_RX_FIFO_FULL: The BUS Hold in Slave mode due to the Rx FIFO being Full and an additional byte being received.
- *          \arg I2C_FLAG_SLV_HOLD_TX_FIFO_EMPTY: The BUS Hold in Slave mode for the Read request when the Tx FIFO is empty.
- *          \arg I2C_FLAG_MST_HOLD_RX_FIFO_FULL: The BUS Hold in Master mode due to Rx FIFO is full and additional byte has been received.
- *          \arg I2C_FLAG_MST_HOLD_TX_FIFO_EMPTY: The BUS hold when the master holds the bus because of the Tx FIFO being empty.
- *          \arg I2C_FLAG_SLV_ACTIVITY: Slave FSM activity status.
- *          \arg I2C_FLAG_MST_ACTIVITY: Master FSM activity status.
- *          \arg I2C_FLAG_RFF: Receive FIFO completely full.
- *          \arg I2C_FLAG_RFNE: Receive FIFO not empty.
- *          \arg I2C_FLAG_TFE: Transmit FIFO completely empty.
- *          \arg I2C_FLAG_TFNF: Transmit FIFO not full.
- *          \arg I2C_FLAG_ACTIVITY: I2C activity status.
+ * @brief Check whether the specified I2C flag is set.
+ *
+ * @param[in] I2Cx      Select the I2C peripheral, refer to @ref I2C_DECLARATION.
+ * @param[in] I2C_FLAG  Specify the flag to check.
+ *                      This parameter can be one of the following values, refer to @ref I2C_FLAGS.
+ *                      - I2C_FLAG_SLV_HOLD_RX_FIFO_FULL: The BUS hold in slave mode due to the Rx FIFO being full and an additional byte being received.
+ *                      - I2C_FLAG_SLV_HOLD_TX_FIFO_EMPTY: The BUS hold in slave mode for the read request when the Tx FIFO is empty.
+ *                      - I2C_FLAG_MST_HOLD_RX_FIFO_FULL: The BUS hold in master mode due to Rx FIFO is full and additional byte has been received.
+ *                      - I2C_FLAG_MST_HOLD_TX_FIFO_EMPTY: The BUS hold when the master holds the bus because of the Tx FIFO being empty.
+ *                      - I2C_FLAG_SLV_ACTIVITY: Slave FSM activity status.
+ *                      - I2C_FLAG_MST_ACTIVITY: Master FSM activity status.
+ *                      - I2C_FLAG_RFF: Receive FIFO completely full.
+ *                      - I2C_FLAG_RFNE: Receive FIFO not empty.
+ *                      - I2C_FLAG_TFE: Transmit FIFO completely empty.
+ *                      - I2C_FLAG_TFNF: Transmit FIFO not full.
+ *                      - I2C_FLAG_ACTIVITY: I2C activity status.
+ *
+ * @return The status of I2C flag (SET or RESET).
+ * @retval SET    The specified I2C flag is set.
+ * @retval RESET  The specified I2C flag is reset.
  */
 FlagStatus I2C_GetFlagState(I2C_TypeDef *I2Cx, uint32_t I2C_FLAG)
 {
@@ -606,29 +629,31 @@ FlagStatus I2C_GetFlagState(I2C_TypeDef *I2Cx, uint32_t I2C_FLAG)
 }
 
 /**
- * \brief   Check whether the last I2Cx event is equal to the one passed as parameter.
- * \param   I2Cx: Select the I2C peripheral. \ref I2C_Declaration
- * \param   I2C_EVENT: specifies the event to be checked about I2C Transmit Abort Status Register.
- *          This parameter can be one of the following values:
- *          \arg ABRT_SLVRD_INTX: When the processor side responds to a slave mode request for data to be transmitted to a remote master and user send read command.
- *          \arg ABRT_SLV_ARBLOST: Slave lost the bus while transmitting data to a remote master.
- *          \arg ABRT_SLVFLUSH_TXFIFO: Slave has received a read command and some data exists in the TX FIFO so the slave issues a TX_ABRT interrupt to flush old data in TX FIFO.
- *          \arg ARB_LOST: Master has lost arbitration or the slave transmitter has lost arbitration.
- *          \arg ABRT_MASTER_DIS: User tries to initiate a Master operation with the Master mode disabled
- *          \arg ABRT_10B_RD_NORSTRT: The restart is disabled and the master sends a read command in 10-bit addressing mode.
- *          \arg ABRT_SBYTE_NORSTRT: The restart is disabled and the user is trying to send a START Byte.
- *          \arg ABRT_HS_NORSTRT: The restart is disabled and the user is trying to use the master to transfer data in High Speed mode.
- *          \arg ABRT_SBYTE_ACKDET: Master has sent a START Byte and the START Byte was acknowledged (wrong behavior).
- *          \arg ABRT_HS_ACKDET: Master is in High Speed mode and the High Speed Master code was acknowledged (wrong behavior).
- *          \arg ABRT_GCALL_READ: Sent a General Call but the user programmed the byte following the General Call to be a read from the bus.
- *          \arg ABRT_GCALL_NOACK: Sent a General Call and no slave on the bus acknowledged the General Call.
- *          \arg ABRT_TXDATA_NOACK: Master sent data byte(s) following the address, it did not receive an acknowledge from the remote slave.
- *          \arg ABRT_10ADDR2_NOACK: Master is in 10-bit address mode and the second address byte of the 10-bit address was not acknowledged by any slave.
- *          \arg ABRT_10ADDR1_NOACK: Master is in 10-bit address mode and the first 10-bit address byte was not acknowledged by any slave.
- *          \arg ABRT_7B_ADDR_NOACK: Master is in 7-bit addressing mode and th address sent was not acknowledged by any slave.
- * \return  An ErrorStatus enumeration value.
- *          \retval  SUCCESS: Last event is equal to the I2C_EVENT.
- *          \retval  ERROR: Last event is different from the I2C_EVENT.
+ * @brief Check whether the last I2Cx event is equal to the one passed as parameter.
+ *
+ * @param[in] I2Cx       Select the I2C peripheral, refer to @ref I2C_DECLARATION.
+ * @param[in] I2C_EVENT  Specify the event to be checked about I2C transmit abort status.
+ *                       This parameter can be one of the following values, refer to @ref I2C_TRANSMIT_ABORT_SOURCE.
+ *                       - ABRT_SLVRD_INTX: When the processor side responds to a slave mode request for data to be transmitted to a remote master and user send read command.
+ *                       - ABRT_SLV_ARBLOST: Slave lost the bus while transmitting data to a remote master.
+ *                       - ABRT_SLVFLUSH_TXFIFO: Slave has received a read command and some data exists in the Tx FIFO so the slave issues an I2C_INT_TX_ABRT interrupt to flush old data in Tx FIFO.
+ *                       - ARB_LOST: Master has lost arbitration or the slave transmitter has lost arbitration.
+ *                       - ABRT_MASTER_DIS: User tries to initiate a master operation with the master mode disabled.
+ *                       - ABRT_10B_RD_NORSTRT: The restart is disabled and the master sends a read command in 10-bit address mode.
+ *                       - ABRT_SBYTE_NORSTRT: The restart is disabled and the user is trying to send a START byte.
+ *                       - ABRT_HS_NORSTRT: The restart is disabled and the user is trying to use the master to transfer data in High Speed mode.
+ *                       - ABRT_SBYTE_ACKDET: Master has sent a START byte and the START byte was acknowledged (wrong behavior).
+ *                       - ABRT_HS_ACKDET: Master is in High Speed mode and the High Speed master code was acknowledged (wrong behavior).
+ *                       - ABRT_GCALL_READ: Sent a general call but the user programmed the byte following the general call to be a read from the bus.
+ *                       - ABRT_GCALL_NOACK: Sent a general call and no slave on the bus acknowledged the general call.
+ *                       - ABRT_TXDATA_NOACK: Master sent data byte(s) following the address, it did not receive an acknowledge from the remote slave.
+ *                       - ABRT_10ADDR2_NOACK: Master is in 10-bit address mode and the second address byte of the 10-bit address was not acknowledged by any slave.
+ *                       - ABRT_10ADDR1_NOACK: Master is in 10-bit address mode and the first 10-bit address byte was not acknowledged by any slave.
+ *                       - ABRT_7B_ADDR_NOACK: Master is in 7-bit address mode and the address sent was not acknowledged by any slave.
+ *
+ * @return The status of I2C event (SET or RESET).
+ * @retval SET    The last I2C event matches the specified event.
+ * @retval RESET  The last I2C event does not match the specified event.
  */
 FlagStatus I2C_CheckEvent(I2C_TypeDef *I2Cx, uint32_t I2C_EVENT)
 {
@@ -649,33 +674,36 @@ FlagStatus I2C_CheckEvent(I2C_TypeDef *I2Cx, uint32_t I2C_EVENT)
 }
 
 /**
- * \brief   Get the specified I2C interrupt status.
- * \param   I2Cx: Select the I2C peripheral. \ref I2C_Declaration
- * \param   I2C_IT: This parameter can be one of the following values:
- *          \arg I2C_INT_MST_ON_HOLD: Indicates whether a master is holding the bus.
- *          \arg I2C_INT_GEN_CALL: Set only when a General Call address is received and it is acknowledged.
- *          \arg I2C_INT_START_DET: Indicates whether a START or RESTART condition has occurred on the I2C
- *               interface regardless of whether DW_apb_i2c is operating in slave or master mode.
- *          \arg I2C_INT_STOP_DET: Indicates whether a STOP condition has occurred on the I2C interface regardless
- *               of whether DW_apb_i2c is operating in slave or master mode
- *          \arg I2C_INT_ACTIVITY: This bit captures DW_apb_i2c activity and stays set until it is cleared.
- *          \arg I2C_INT_RX_DONE: When the DW_apb_i2c is acting as a slave-transmitter, this bit is set to 1 if the
- *               master does not acknowledge a transmitted byte. This occurs on the last byte of
- *               the transmission, indicating that the transmission is done.
- *          \arg I2C_INT_TX_ABRT: This bit indicates if DW_apb_i2c, as an I2C transmitter, is unable to complete the
- *               intended actions on the contents of the transmit FIFO.
- *          \arg I2C_INT_RD_REQ: This bit is set to 1 when acting as a slave and another I2C master
- *               is attempting to read data.
- *          \arg I2C_INT_TX_EMPTY: This bit is set to 1 when the transmit buffer is at or below the threshold value set
- *               in the IC_TX_TL register.
- *          \arg I2C_INT_TX_OVER: Set during transmit if the transmit buffer is filled to IC_TX_BUFFER_DEPTH and
- *               the processor attempts to issue another I2C command.
- *          \arg I2C_INT_RX_FULL: Set when the receive buffer reaches or goes above the RX_TL threshold in the
- *               IC_RX_TL register
- *          \arg I2C_INT_RX_OVER: Set if the receive buffer is completely filled to IC_RX_BUFFER_DEPTH and an
- *               additional byte is received from an external I2C device.
- *          \arg I2C_INT_RX_UNDER: Set if the processor attempts to read the receive buffer when it is empty by reading.
- * \return  The new state of I2C_IT (SET or RESET).
+ * @brief Get the specified I2C interrupt status.
+ *
+ * @param[in] I2Cx    Select the I2C peripheral, refer to @ref I2C_DECLARATION.
+ * @param[in] I2C_IT  This parameter can be one of the following values, refer to @ref I2C_INTERRUPTS.
+ *                    - I2C_INT_MST_ON_HOLD: When master Tx FIFO is empty and no stop bit command is issued, master will hold the SCL low.
+ *                    - I2C_INT_GEN_CALL: Set only when a general call address is received and it is acknowledged.
+ *                    - I2C_INT_START_DET: Indicates whether a START or RESTART condition has occurred on the I2C
+ *                         interface regardless of whether I2C is operating in slave or master mode.
+ *                    - I2C_INT_STOP_DET: Indicates whether a STOP condition has occurred on the I2C interface regardless
+ *                         of whether I2C is operating in slave or master mode.
+ *                    - I2C_INT_ACTIVITY: This bit captures I2C activity and stays set until it is cleared.
+ *                    - I2C_INT_RX_DONE: When the I2C is acting as a slave-transmitter, this bit is set to 1 if the
+ *                         master does not acknowledge a transmitted byte. This occurs on the last byte of
+ *                         the transmission, indicating that the transmission is done.
+ *                    - I2C_INT_TX_ABRT: This bit indicates if I2C, as an I2C transmitter, is unable to complete the
+ *                         intended actions on the contents of the transmit FIFO.
+ *                    - I2C_INT_RD_REQ: This bit is set to 1 when acting as a slave and another I2C master
+ *                         is attempting to read data.
+ *                    - I2C_INT_TX_EMPTY: This bit is set to 1 when the transmit buffer is at or below the threshold value.
+ *                    - I2C_INT_TX_OVER: Set during transmit if the transmit buffer is filled to Tx FIFO depth and
+ *                         the processor attempts to issue another I2C command.
+ *                    - I2C_INT_RX_FULL: Set when the receive buffer reaches or goes above the RX_TL threshold in the
+ *                         IC_RX_TL register.
+ *                    - I2C_INT_RX_OVER: Set if the receive buffer is completely filled to Rx FIFO depth and an
+ *                         additional byte is received from an external I2C device.
+ *                    - I2C_INT_RX_UNDER: Set if the processor attempts to read the receive buffer when it is empty by reading.
+ *
+ * @return The status of I2C interrupt (SET or RESET).
+ * @retval SET    The specified I2C interrupt is set.
+ * @retval RESET  The specified I2C interrupt is reset.
  */
 ITStatus I2C_GetINTStatus(I2C_TypeDef *I2Cx, uint32_t I2C_IT)
 {
@@ -695,15 +723,15 @@ ITStatus I2C_GetINTStatus(I2C_TypeDef *I2Cx, uint32_t I2C_IT)
 }
 
 /**
- * \brief   Enable or disable the I2Cx DMA interface.
- * \param   I2Cx: Select the I2C peripheral. \ref I2C_Declaration
- * \param   I2C_DMAReq: Specifies the I2C DMA transfer request to be enabled or disabled.
- *          This parameter can be one of the following values:
- *          \arg I2C_DMAReq_Tx: Tx buffer DMA transfer request.
- *          \arg I2C_DMAReq_Rx: Rx buffer DMA transfer request.
- * \param   NewState: New state of the selected I2C DMA transfer request.
- *          This parameter can be: ENABLE or DISABLE.
- * \return None.
+ * @brief Enable or disable the I2Cx DMA interface.
+ *
+ * @param[in] I2Cx         Select the I2C peripheral, refer to @ref I2C_DECLARATION.
+ * @param[in] I2C_DMAReq   Specify the I2C DMA transfer request to be enabled or disabled.
+ *                         This parameter can be one of the following values, refer to @ref I2C_DMA_REQUESTS.
+ *                         - I2C_DMA_REQ_TX: DMA transfer sending request.
+ *                         - I2C_DMA_REQ_RX: DMA transfer receiving request.
+ * @param[in] NewState     New state of the selected I2C DMA transfer request.
+ *                         This parameter can be: ENABLE or DISABLE.
  */
 void I2C_DMACmd(I2C_TypeDef *I2Cx, I2CDMARequests_TypeDef I2C_DMAReq,
                 FunctionalState NewState)
@@ -726,13 +754,18 @@ void I2C_DMACmd(I2C_TypeDef *I2Cx, I2CDMARequests_TypeDef I2C_DMAReq,
 }
 
 /**
-  * \brief  Set Clock Speed through the I2Cx peripheral.
-  * \param  I2Cx: Select the I2C peripheral. \ref I2C_Declaration
-  * \param  I2C_ClockSpeed: CLock speed.
-  * \return None
-  */
+ * @brief Set the I2C clock speed, the function needs to be called when I2C disabled.
+ *
+ * @param[in] I2Cx            Select the I2C peripheral, refer to @ref I2C_DECLARATION.
+ * @param[in] I2C_ClockSpeed  Specifies the I2C clock speed.
+ *                          This parameter must be set to a value lower than or equal to 1000000.
+ */
 void I2C_SetClockSpeed(I2C_TypeDef *I2Cx, uint32_t I2C_ClockSpeed)
 {
+    /* Check the parameters */
+    assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+    assert_param(IS_I2C_CLOCK_SPEED(I2C_ClockSpeed));
+
     uint32_t I2CSrcClk = 0;
     uint32_t tick_clksrc_ns = 0;
     uint32_t allowedSpeed = 0;
@@ -883,16 +916,34 @@ void I2C_SetClockSpeed(I2C_TypeDef *I2Cx, uint32_t I2C_ClockSpeed)
 }
 
 #if (I2C_SUPPORT_WRAPPER_MODE == 1)
+/**
+ * @brief Enable or disable the I2C wrapper mode.
+ *
+ * @param[in] I2Cx      Select the I2C peripheral, refer to @ref I2C_DECLARATION.
+ * @param[in] NewState  New state of the wrapper mode.
+ *                      This parameter can be: ENABLE or DISABLE.
+ */
 void I2C_WrapperModeCmd(I2C_TypeDef *I2Cx, FunctionalState NewState)
 {
     /* Check the parameters */
     assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+    assert_param(IS_FUNCTIONAL_STATE(NewState));
 
     WRAP_CR_TypeDef i2c_0x10c = {.d32 = I2Cx->WRAP_CR};
     i2c_0x10c.b.wrapper_clk_en = NewState;
     I2Cx->WRAP_CR = i2c_0x10c.d32;
 }
 
+/**
+ * @brief Set the I2C wrapper transfer mode.
+ *
+ * @param[in] I2Cx  Select the I2C peripheral, refer to @ref I2C_DECLARATION.
+ * @param[in] mode  Transfer mode to set. Refer to @ref I2C_WRAPPER_TRANS_MODE.
+ *
+ * @return The status of set transfer mode.
+ * @retval true   Set successfully.
+ * @retval false  Set failed.
+ */
 bool I2C_WrapperSetTransMode(I2C_TypeDef *I2Cx, uint32_t mode)
 {
     /* Check the parameters */
@@ -904,6 +955,13 @@ bool I2C_WrapperSetTransMode(I2C_TypeDef *I2Cx, uint32_t mode)
     return i2c_0x10c.b.wrapper_busy;
 }
 
+/**
+ * @brief Set the I2C wrapper write data number.
+ *
+ * @param[in] I2Cx  Select the I2C peripheral, refer to @ref I2C_DECLARATION.
+ * @param[in] num   Number of bytes to write.
+ *                  This parameter must be set to a value between 1 and 24.
+ */
 void I2C_WrapperSetWriteNum(I2C_TypeDef *I2Cx, uint8_t num)
 {
     /* num should be less than 24 */
@@ -913,6 +971,13 @@ void I2C_WrapperSetWriteNum(I2C_TypeDef *I2Cx, uint8_t num)
     I2Cx->RAP_WCMD_NUM = num - 1;
 }
 
+/**
+ * @brief Set the I2C wrapper write data.
+ *
+ * @param[in] I2Cx  Select the I2C peripheral, refer to @ref I2C_DECLARATION.
+ * @param[in] buf   Pointer to the data buffer to be written.
+ * @param[in] num   Number of bytes in the data buffer.
+ */
 void I2C_WrapperSetWriteData(I2C_TypeDef *I2Cx, const uint8_t *buf, uint8_t num)
 {
     /* num should be less than 24 */
@@ -925,6 +990,13 @@ void I2C_WrapperSetWriteData(I2C_TypeDef *I2Cx, const uint8_t *buf, uint8_t num)
     }
 }
 
+/**
+ * @brief Get data length in Tx FIFO via wrapper mode.
+ *
+ * @param[in] I2Cx  Select the I2C peripheral, refer to @ref I2C_DECLARATION.
+ *
+ * @return Current data number in Tx FIFO.
+ */
 uint8_t I2C_WrapperGetTxFIFOLen(I2C_TypeDef *I2Cx)
 {
     /* Check the parameters */
@@ -934,6 +1006,11 @@ uint8_t I2C_WrapperGetTxFIFOLen(I2C_TypeDef *I2Cx)
     return i2c_0x114.b.wrap_buf_amount;
 }
 
+/**
+ * @brief Clear the I2C wrapper Tx FIFO.
+ *
+ * @param[in] I2Cx  Select the I2C peripheral, refer to @ref I2C_DECLARATION.
+ */
 void I2C_WrapperClearTxFIFO(I2C_TypeDef *I2Cx)
 {
     /* Check the parameters */
@@ -944,6 +1021,12 @@ void I2C_WrapperClearTxFIFO(I2C_TypeDef *I2Cx)
     I2Cx->RAP_BUF_CR = i2c_0x114.d32;
 }
 
+/**
+ * @brief Set the I2C wrapper read data number.
+ *
+ * @param[in] I2Cx  Select the I2C peripheral, refer to @ref I2C_DECLARATION.
+ * @param[in] num   Number of bytes to read.
+ */
 void I2C_WrapperSetReadNum(I2C_TypeDef *I2Cx, uint16_t num)
 {
     /* Check the parameters */
@@ -952,6 +1035,13 @@ void I2C_WrapperSetReadNum(I2C_TypeDef *I2Cx, uint16_t num)
     I2Cx->RAP_RCMD_NUM = num - 1;
 }
 
+/**
+ * @brief Receive data via wrapper mode.
+ *
+ * @param[in] I2Cx  Select the I2C peripheral, refer to @ref I2C_DECLARATION.
+ *
+ * @return The received data.
+ */
 uint8_t I2C_WrapperReceiveData(I2C_TypeDef *I2Cx)
 {
     /* Check the parameters */
@@ -961,6 +1051,13 @@ uint8_t I2C_WrapperReceiveData(I2C_TypeDef *I2Cx)
     return I2C_ReceiveData(I2Cx);
 }
 
+/**
+ * @brief Get data length in Rx FIFO via wrapper mode.
+ *
+ * @param[in] I2Cx  Select the I2C peripheral, refer to @ref I2C_DECLARATION.
+ *
+ * @return Current data number in Rx FIFO.
+ */
 uint8_t I2C_WrapperGetRxFIFOLen(I2C_TypeDef *I2Cx)
 {
     /* Check the parameters */
@@ -969,6 +1066,11 @@ uint8_t I2C_WrapperGetRxFIFOLen(I2C_TypeDef *I2Cx)
     return I2C_GetRxFIFOLen(I2Cx);
 }
 
+/**
+ * @brief Start I2C wrapper transfer.
+ *
+ * @param[in] I2Cx  Select the I2C peripheral, refer to @ref I2C_DECLARATION.
+ */
 void I2C_WrapperTransStart(I2C_TypeDef *I2Cx)
 {
     /* Check the parameters */
@@ -979,6 +1081,15 @@ void I2C_WrapperTransStart(I2C_TypeDef *I2Cx)
     I2Cx->WRAP_CR = i2c_0x10c.d32;
 }
 
+/**
+ * @brief Check whether I2C wrapper mode is busy.
+ *
+ * @param[in] I2Cx  Select the I2C peripheral, refer to @ref I2C_DECLARATION.
+ *
+ * @return The status of busy.
+ * @retval true   Busy.
+ * @retval false  Not busy.
+ */
 bool I2C_WrapperBusyCheck(I2C_TypeDef *I2Cx)
 {
     /* Check the parameters */
@@ -990,20 +1101,35 @@ bool I2C_WrapperBusyCheck(I2C_TypeDef *I2Cx)
 #endif
 
 #if (I2C_SUPPORT_RAP_FUNCTION == 1)
+/**
+ * @brief Enable or disable the I2C RAP mode.
+ *
+ * @param[in] I2Cx      Select the I2C peripheral, refer to @ref I2C_DECLARATION.
+ * @param[in] NewState  New state of the RAP mode.
+ *                      This parameter can be: ENABLE or DISABLE.
+ */
 void I2C_RAPModeCmd(I2C_TypeDef *I2Cx, FunctionalState NewState)
 {
     /* Check the parameters */
     assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+    assert_param(IS_FUNCTIONAL_STATE(NewState));
 
     WRAP_CR_TypeDef i2c_0x10c = {.d32 = I2Cx->WRAP_CR};
     i2c_0x10c.b.rap_mode = NewState;
     I2Cx->WRAP_CR = i2c_0x10c.d32;
 }
 
+/**
+ * @brief Trigger the specified I2C action.
+ *
+ * @param[in] I2Cx    Select the I2C peripheral, refer to @ref I2C_DECLARATION.
+ * @param[in] Action  Action to be triggered. Refer to @ref I2C_ACTION.
+ */
 void I2C_ActionTrigger(I2C_TypeDef *I2Cx, uint32_t Action)
 {
     /* Check the parameters */
     assert_param(IS_I2C_ALL_PERIPH(I2Cx));
+    assert_param(IS_I2C_ACTION(Action));
 
     I2Cx->RAP_TASK |= BIT(Action);
 }

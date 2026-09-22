@@ -18,6 +18,20 @@ extern "C" {
 /*============================================================================*
  *                          LPPWM Defines
  *============================================================================*/
+/**
+ * \defgroup LPPWM_Defines LPPWM Defines
+ * \{
+ * \ingroup  LPPWM_Exported_Constants
+ */
+
+#define LPPWM_SUPPORT_GPIO_SELECT                       (0)
+#define LPPWM_SUPPORT_QACTIVE_CTRL                      (1)
+
+/** Both period registers are 16 bit wide. */
+#define LPPWM_PERIOD_MAX                                (0xFFFFUL)
+
+
+/** \} */
 
 /*============================================================================*
  *                          LPPWM Registers Memory Map
@@ -35,14 +49,19 @@ typedef struct
 /*============================================================================*
  *                          LPPWM Declaration
  *============================================================================*/
+/**
+ * @defgroup LPPWM_DECLARATION LPPWM Declaration
+ * @{
+ * @ingroup  LPPWM_Exported_Constants
+ */
+
 #define LPPWM_REG_BASE           (SYSON_BASE + AON_REG_LPPWM_CH0_CTL)
 #define LPPWM                    ((LPPWM_TypeDef *) LPPWM_REG_BASE)
 
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_LPPWM_PERIPH(PERIPH)  ((PERIPH) == LPPWM)
 
-/*============================================================================*
- *                          LPPWM Private Types
- *============================================================================*/
+/** @} */ /* End of group LPPWM_DECLARATION */
 
 /*============================================================================*
  *                          LPPWM Registers and Field Descriptions

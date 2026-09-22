@@ -30,12 +30,11 @@ static const uint32_t uart_baudrate_table[] =
  *                           Public Functions
  *============================================================================*/
 /**
-  * @brief  TX data to tx FIFO.
-  * @param  UARTx: selected UART peripheral.
-  * @param  data: buffer to be written to Tx FIFO.
-  * @param  len: len of data to be written.
-  * @return None
-  */
+ * @brief Send a specified length of data over UART.
+ * @param UARTx  Specifies the UART peripheral. Refer to @ref UART_DECLARATION.
+ * @param InBuf  Pointer to the buffer to send.
+ * @param Count  Numbers of byte to send.
+ */
 void UART_TxData(UART_TypeDef *UARTx, const uint8_t *InBuf, uint16_t Count)
 {
     uint32_t blkcount  = Count / UART_TX_FIFO_SIZE;
@@ -59,13 +58,9 @@ void UART_TxData(UART_TypeDef *UARTx, const uint8_t *InBuf, uint16_t Count)
 }
 
 /**
- * \brief   UART one wire config.
- * \param   UARTx: Select the UART peripheral. \ref UART_Declaration
- * \param   NewState: UART one wire config is set or not.
- *          This parameter can be one of the following values:
- *          \arg true: UART one wire config is set.
- *          \arg false: UART one wire config is unset.
- * \return  None.
+ * @brief Enable or disable the one wire mode of the specified UART peripheral.
+ * @param UARTx     Specifies the UART peripheral. Refer to @ref UART_DECLARATION.
+ * @param NewState  Enable or disable the one wire mode of the specified UART peripheral.
  */
 void UART_OneWireConfig(UART_TypeDef *UARTx, FunctionalState NewState)
 {
@@ -84,11 +79,11 @@ void UART_OneWireConfig(UART_TypeDef *UARTx, FunctionalState NewState)
 }
 
 /**
-  * \brief  UART clock divider config.
-  * \param  UARTx: Select the UART peripheral. \ref UART_Declaration
-  * \param  ClockDiv: specifies the APB peripheral to gates its clock. \ref Clock_Divider
-  * \return None
-  */
+ * @brief Set the clock source and divider of the specified UART peripheral.
+ * @param UARTx     Specifies the UART peripheral. Refer to @ref UART_DECLARATION.
+ * @param ClockSrc  Specifies the UART clock source. Refer to @ref UART_CLOCK_SOURCE.
+ * @param ClockDiv  Specifies the UART clock divider. Refer to @ref UART_CLOCK_DIVIDER.
+ */
 void UART_SetClock(UART_TypeDef *UARTx, uint16_t ClockSrc, uint16_t ClockDiv)
 {
     assert_param(IS_UART_DIV(ClockDiv));
@@ -131,6 +126,16 @@ void UART_SetClock(UART_TypeDef *UARTx, uint16_t ClockSrc, uint16_t ClockDiv)
     return;
 }
 
+/**
+ * @brief Enable or disable UART clock auto mode of the specified UART peripheral.
+ * @param UARTx     Specifies the UART peripheral. Refer to @ref UART_DECLARATION.
+ * @param Newstate  Enable or disable UART clock auto mode of the specified UART peripheral.
+ *                  This parameter can be one of the following values:
+ *                  - ENABLE: Enable UART clock auto mode which means the UART clock will be activated when
+ *                    detected a start bit of the received data and goes idle when no more data is received
+ *                    for the duration specified by @ref UART_AutoModeTime.
+ *                  - DISABLE: Disable UART clock auto mode which means the UART clock will always be active.
+ */
 void UART_ClockAutoModeCmd(UART_TypeDef *UARTx, FunctionalState Newstate)
 {
     /* Check the parameters */
@@ -268,25 +273,42 @@ static uint32_t UART_CalcBaudSettings(uint32_t baudrate, uint8_t frame_len,
     return err_x10000;
 }
 
-uint32_t UART_GetBaudSettings(uint32_t baudrate,
-                              uint8_t data_width, uint8_t parity, uint8_t stop_bits,
+/**
+ * @brief Get the UART baudrate settings (div, ovsr, adj) for the specified baudrate and data format.
+ * @param Baudrate    Target baud rate.
+ *                    - If the value is less than @ref UART_BAUD_RATE_MAXIMUM,
+ *                      it is treated as an index into @ref uart_baudrate_table.
+ *                    - Otherwise it is treated as a raw baud rate value (in bps).
+ * @param DataWidth   UART data width. Refer to @ref UART_WORD_LENGTH.
+ * @param Parity      UART parity. Refer to @ref UART_PARITY.
+ * @param StopBits    UART stop bits. Refer to @ref UART_STOP_BITS.
+ * @param div         Pointer to the calculated divisor.
+ * @param ovsr        Pointer to the calculated oversampling ratio.
+ * @param adj         Pointer to the calculated fractional adjustment mask.
+ * @return The relative baud rate error, expressed in units of 1/10000
+ *         (i.e. returned value of 100 means 1.00% error).
+ *         - 0 indicates a perfect match (no error).
+ *         - 10000 (default) indicates that no valid setting was found.
+ */
+uint32_t UART_GetBaudSettings(uint32_t Baudrate,
+                              uint8_t DataWidth, uint8_t Parity, uint8_t StopBits,
                               uint16_t *div, uint16_t *ovsr, uint16_t *adj)
 {
     uint32_t target_baudrate = 115200;
 
-    if ((uint32_t)baudrate < UART_BAUD_RATE_MAXIMUM)
+    if ((uint32_t)Baudrate < UART_BAUD_RATE_MAXIMUM)
     {
-        target_baudrate = uart_baudrate_table[baudrate];
+        target_baudrate = uart_baudrate_table[Baudrate];
     }
     else
     {
-        target_baudrate = baudrate;
+        target_baudrate = Baudrate;
     }
 
     uint8_t frame_len = 1 +
-                        (uint8_t)(data_width == UART_WORD_LENGTH_7BIT ? 7 : 8) +
-                        (uint8_t)(parity == UART_PARITY_NO_PARTY ? 0 : 1) +
-                        (uint8_t)(stop_bits == UART_STOP_BITS_1 ? 1 : 2);
+                        (uint8_t)(DataWidth == UART_WORD_LENGTH_7BIT ? 7 : 8) +
+                        (uint8_t)(Parity == UART_PARITY_NO_PARTY ? 0 : 1) +
+                        (uint8_t)(StopBits == UART_STOP_BITS_1 ? 1 : 2);
 
     return UART_CalcBaudSettings(target_baudrate, frame_len, div, ovsr, adj);
 }

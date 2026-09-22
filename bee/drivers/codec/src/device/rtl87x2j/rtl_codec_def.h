@@ -18,85 +18,69 @@ extern "C" {
 /*============================================================================*
  *                          CODEC Defines
  *============================================================================*/
-/** \defgroup CODEC         CODEC
-  * \brief
-  * \{
-  */
-
-/** \defgroup CODEC_Exported_Constants I2S Exported Constants
-  * \brief
-  * \{
-  */
-
-/**
- * \defgroup CODEC_Defines I2S Defines
- * \{
- * \ingroup  CODEC_Exported_Constants
- */
 #define CODEC_SUPPORT_INT                (1)
-/** End of CODEC_Defines
-  * \}
-  */
-
-/** End of CODEC_Exported_Constants
-  * \}
-  */
-
-/** End of CODEC
-  * \}
-  */
 
 /*============================================================================*
  *                         CODEC Registers Memory Map
  *============================================================================*/
-typedef struct                  /*!< CODEC_ANA Structure */
+/** @brief CODEC ANA register structure. */
+typedef struct
 {
-    __IO uint32_t REG0X_CODEC_ANA;              /*!< 0x00 */
-    __IO uint32_t REG2X_CODEC_ANA;              /*!< 0x04 */
-    __IO uint32_t REG4X_CODEC_ANA;              /*!< 0x08 */
-    __IO uint32_t REG6X_CODEC_ANA;              /*!< 0x0C */
-    __IO uint32_t REG8X_CODEC_ANA;              /*!< 0x10 */
-    __IO uint32_t RESERVED_0;                   /*!< 0x14 */
-    __IO uint32_t RESERVED_1;                   /*!< 0x18 */
-    __IO uint32_t RESERVED_2;                   /*!< 0x1C */
-    __IO uint32_t AUDIO_PON_POF;                /*!< 0x20 */
-    __IO uint32_t AUDIO_INT_CONTROL;            /*!< 0x24 */
+    __IO uint32_t REG0X_CODEC_ANA;              /**< 0x00. */
+    __IO uint32_t REG2X_CODEC_ANA;              /**< 0x04. */
+    __IO uint32_t REG4X_CODEC_ANA;              /**< 0x08. */
+    __IO uint32_t REG6X_CODEC_ANA;              /**< 0x0C. */
+    __IO uint32_t REG8X_CODEC_ANA;              /**< 0x10. */
+    __IO uint32_t RESERVED_0;                   /**< 0x14. */
+    __IO uint32_t RESERVED_1;                   /**< 0x18. */
+    __IO uint32_t RESERVED_2;                   /**< 0x1C. */
+    __IO uint32_t AUDIO_PON_POF;                /**< 0x20. */
+    __IO uint32_t AUDIO_INT_CONTROL;            /**< 0x24. */
+    __IO uint32_t REG_AUDIO_QACTIVE_MANUAL_CONTROL; /**< 0x28. */
 } CODEC_ANA_TypeDef;
 
-typedef struct                  /*!< CODEC Structure */
+/** @brief CODEC register structure. */
+typedef struct
 {
-    __IO uint32_t AUDIO_CONTROL_1;              /*!< 0x100 */
-    __IO uint32_t AUDIO_ANA_CONTROL_1;          /*!< 0x104 */
-    __IO uint32_t AUDIO_CLOCK_CONTROL_1;        /*!< 0x108 */
-    __IO uint32_t AUDIO_CLOCK_CONTROL_2;        /*!< 0x10C */
-    __IO uint32_t AUDIO_CLOCK_CONTROL_3;        /*!< 0x110 */
-    __IO uint32_t RESERVED_0;                   /*!< 0x114 */
-    __IO uint32_t RESERVED_1;                   /*!< 0x118 */
-    __IO uint32_t I2S_0_CONTROL_0;              /*!< 0x11C */
-    __IO uint32_t ADC_0_CONTROL_0;              /*!< 0x120 */
-    __IO uint32_t ADC_0_CONTROL_1;              /*!< 0x124 */
+    __IO uint32_t AUDIO_CONTROL_1;              /**< 0x100. */
+    __IO uint32_t AUDIO_ANA_CONTROL_1;          /**< 0x104. */
+    __IO uint32_t AUDIO_CLOCK_CONTROL_1;        /**< 0x108. */
+    __IO uint32_t AUDIO_CLOCK_CONTROL_2;        /**< 0x10C. */
+    __IO uint32_t AUDIO_CLOCK_CONTROL_3;        /**< 0x110. */
+    __IO uint32_t RESERVED_0;                   /**< 0x114. */
+    __IO uint32_t RESERVED_1;                   /**< 0x118. */
+    __IO uint32_t I2S_0_CONTROL_0;              /**< 0x11C. */
+    __IO uint32_t ADC_0_CONTROL_0;              /**< 0x120. */
+    __IO uint32_t ADC_0_CONTROL_1;              /**< 0x124. */
 } CODEC_TypeDef;
 
 
+/** @brief CODEC EQ channel register structure. */
 typedef struct
 {
-    __IO uint32_t EQ_H0;                 /*!< 0x40 */
-    __IO uint32_t EQ_B1;                 /*!< 0x44 */
-    __IO uint32_t EQ_B2;                 /*!< 0x48 */
-    __IO uint32_t EQ_A1;                 /*!< 0x4C */
-    __IO uint32_t EQ_A2;                 /*!< 0x50 */
+    __IO uint32_t EQ_H0;                 /**< 0x40. */
+    __IO uint32_t EQ_B1;                 /**< 0x44. */
+    __IO uint32_t EQ_B2;                 /**< 0x48. */
+    __IO uint32_t EQ_A1;                 /**< 0x4C. */
+    __IO uint32_t EQ_A2;                 /**< 0x50. */
 } CODEC_EQTypeDef;
 
 /*============================================================================*
  *                          CODEC Declaration
  *============================================================================*/
+/** @defgroup CODEC_DECLARATION CODEC Declaration
+  * @{
+  * @ingroup  CODEC_Exported_Constants
+  */
+
 #define CODEC       ((CODEC_TypeDef     *)(SPI_CODEC_BASE +0x100) )
 #define CODEC_ANA   ((CODEC_ANA_TypeDef *)(SPI_CODEC_BASE ))
+
+/** @} */ /* End of group CODEC_DECLARATION */
 
 /*============================================================================*
  *                          CODEC Private Types
  *============================================================================*/
-
 #define CODEC_ADC_CH0_CR_REG_BASE        0x40026200UL
 #define CODEC_ADC_CH0_EQ0_REG_BASE       0x40026204UL
 #define CODEC_ADC_CH0_EQ1_REG_BASE       0x40026218UL
@@ -111,7 +95,6 @@ typedef struct
 #define CODEC_ADC_CH0_EQ2                ((CODEC_EQTypeDef*) CODEC_ADC_CH0_EQ2_REG_BASE)
 #define CODEC_ADC_CH0_EQ3                ((CODEC_EQTypeDef*) CODEC_ADC_CH0_EQ3_REG_BASE)
 #define CODEC_ADC_CH0_EQ4                ((CODEC_EQTypeDef*) CODEC_ADC_CH0_EQ4_REG_BASE)
-
 
 /*============================================================================*
  *                          CODEC Registers and Field Descriptions
@@ -247,8 +230,6 @@ typedef union
 } REG8X_CODEC_ANA_TypeDef;
 
 
-
-
 /* 0x20
    0       R/W    audio_pon_en            1'b0
    1       R/W    audio_pof_en            1'b0
@@ -321,6 +302,27 @@ typedef union
         const uint32_t reserved_18: 14;
     } b;
 } AUDIO_INT_CONTROL_TypeDef;
+
+
+/* 0x28
+   [0]    R/W    1'b0    audio_sclk_qactive_man_data    AUDIO_SCLK_QACTIVE_MAN_DATA    SCLK qactive manual control
+   [1]    R/W    1'b0    audio_sclk_qactive_man_en      AUDIO_SCLK_QACTIVE_MAN_EN      SCLK qactive manual control enable
+   [2]    R/W    1'b0    audio_pclk_qactive_man_data    AUDIO_PCLK_QACTIVE_MAN_DATA    pclk qactive manual control
+   [3]    R/W    1'b0    audio_pclk_qactive_man_en      AUDIO_PCLK_QACTIVE_MAN_EN      PCLK qactive manual control enable
+   [31:4] R      28'h0   reserved4                      RESERVED4
+*/
+typedef union
+{
+    uint32_t d32;
+    struct
+    {
+        uint32_t audio_sclk_qactive_man_data: 1;
+        uint32_t audio_sclk_qactive_man_en: 1;
+        uint32_t audio_pclk_qactive_man_data: 1;
+        uint32_t audio_pclk_qactive_man_en: 1;
+        const uint32_t reserved_0: 28;
+    } b;
+} REG_AUDIO_QACTIVE_MANUAL_CONTROL_TypeDef;
 
 
 /* 0x100

@@ -46,10 +46,8 @@ extern void DMA_CheckDataSizeAndMsize(DMA_ChannelTypeDef *DMA_Channelx,
  *                           Public Functions
  *============================================================================*/
 /**
-  * \brief  Deinitializes the DMA registers to their default reset values.
-  * \param  None
-  * \return None
-  */
+ * @brief Deinitialize the DMA registers to their default reset values.
+ */
 void DMA_DeInit(void)
 {
     /* Disable DMA clock */
@@ -65,13 +63,10 @@ void DMA_DeInit(void)
 }
 
 /**
-  * \brief  Initializes the DMA Channelx according to the specified
-  *         parameters in the DMA_InitStruct.
-  * \param  DMA_Channelx: Select the DMA peripheral. \ref DMA_Declaration
-  * \param  DMA_InitStruct: pointer to a DMA_InitTypeDef structure that
-  *         contains the configuration information for the specified DMA Channel.
-  * \return None.
-  */
+ * @brief Initialize the DMA Channelx according to the specified parameters in the DMA_InitStruct.
+ * @param DMA_Channelx    Specifies the DMA channel. Refer to @ref DMA_DECLARATION.
+ * @param DMA_InitStruct  Pointer to a DMA_InitTypeDef structure which will be initialized.
+ */
 void DMA_Init(DMA_ChannelTypeDef *DMA_Channelx, DMA_InitTypeDef *DMA_InitStruct)
 {
     /* Check the parameters */
@@ -105,7 +100,7 @@ void DMA_Init(DMA_ChannelTypeDef *DMA_Channelx, DMA_InitTypeDef *DMA_InitStruct)
     DMAx->DMA_CLEARTFR_H = temp_bit;
 #endif
     DMAx->DMA_CLEARBLOCK_L = temp_bit;
-#if (DMA_SUPPORT_INT_HAIF_BLOCK == 1)
+#if (DMA_SUPPORT_INT_HALF_BLOCK == 1)
     DMAx->DMA_CLEARBLOCK_H = temp_bit;
 #endif
     DMAx->DMA_CLEARERR_L = temp_bit;
@@ -117,7 +112,7 @@ void DMA_Init(DMA_ChannelTypeDef *DMA_Channelx, DMA_InitTypeDef *DMA_InitStruct)
     DMAx->DMA_MASKTFR_H = temp_bit;
 #endif
     DMAx->DMA_MASKBLOCK_L = temp_bit;
-#if (DMA_SUPPORT_INT_HAIF_BLOCK == 1)
+#if (DMA_SUPPORT_INT_HALF_BLOCK == 1)
     DMAx->DMA_MASKBLOCK_H = temp_bit;
 #endif
     DMAx->DMA_MASKERR_L = temp_bit;
@@ -290,18 +285,16 @@ void DMA_Init(DMA_ChannelTypeDef *DMA_Channelx, DMA_InitTypeDef *DMA_InitStruct)
     DMAx->DMA_CLEARTFR_H = temp_bit;
 #endif
     DMAx->DMA_CLEARBLOCK_L = temp_bit;
-#if (DMA_SUPPORT_INT_HAIF_BLOCK == 1)
+#if (DMA_SUPPORT_INT_HALF_BLOCK == 1)
     DMAx->DMA_CLEARBLOCK_H = temp_bit;
 #endif
     DMAx->DMA_CLEARERR_L = temp_bit;
 }
 
 /**
-  * \brief  Fills each DMA_InitStruct member with its default value.
-  * \param  DMA_InitStruct: pointer to a DMA_InitTypeDef structure which will
-  *         be initialized.
-  * \return None.
-  */
+ * @brief Fill each DMA_InitStruct member with its default value.
+ * @param DMA_InitStruct  Pointer to a DMA_InitTypeDef structure which will be initialized.
+ */
 void DMA_StructInit(DMA_InitTypeDef *DMA_InitStruct)
 {
     /*-------------- Reset DMA init structure parameters values ------------------*/
@@ -350,12 +343,13 @@ void DMA_StructInit(DMA_InitTypeDef *DMA_InitStruct)
 }
 
 /**
-  * \brief  Enables or disables the specified DMA Channelx.
-  * \param  DMA_ChannelNum: Select the DMA channel number. \ref DMA_CHANNEL_NUM
-  * \param  NewState: new state of the DMA Channelx.
-  *         This parameter can be: ENABLE or DISABLE.
-  * \return None.
-  */
+ * @brief Enable or disable the specified DMA channel.
+ * @param DMA_ChannelNum  Specifies the DMA channel number. Refer to @ref DMA_CHANNEL_NUM.
+ * @param NewState        New state of the specified DMA channel.
+ *                        This parameter can be one of the following values:
+ *                        - ENABLE: Enable the specified DMA channel.
+ *                        - DISABLE: Disable the specified DMA channel.
+ */
 void DMA_Cmd(uint8_t DMA_ChannelNum, FunctionalState NewState)
 {
     /* Check the parameters */
@@ -419,23 +413,25 @@ void DMA_Cmd(uint8_t DMA_ChannelNum, FunctionalState NewState)
 }
 
 /**
-  * \brief  Enables or disables the specified DMA Channelx interrupts.
-  * \param  DMA_ChannelNum: Select the DMA channel number. \ref DMA_CHANNEL_NUM
-  * \param  DMA_IT: specifies the DMA interrupts sources to be enabled or disabled.
-  *         This parameter can be any combination of the following values:
-  *         \arg DMA_INT_TRANSFER:  Transfer complete interrupt unmask
-  *         \arg DMA_INT_BLOCK:  Block transfer interrupt unmask
-  *         \arg DMA_INT_ERROR :  Transfer error interrupt unmask
-  *         \arg DMA_INT_HALF_BLOCK: Half Block transfer interrupt unmask
-  * \param  NewState: new state of the specified DMA interrupts.
-  *         This parameter can be: ENABLE or DISABLE.
-  * \return None.
-  */
-void DMA_INTConfig(uint8_t DMA_ChannelNum, uint32_t DMA_IT, FunctionalState NewState)
+ * @brief Enable or disable the specified DMA channel interrupt source.
+ * @param DMA_ChannelNum  Specifies the DMA channel number. Refer to @ref DMA_CHANNEL_NUM.
+ * @param DMA_INT         Specifies the DMA interrupt source to be enabled or disabled.
+ *                        This parameter can be any combination of the following values. Refer to @ref DMA_INTERRUPTS.
+ *                        - DMA_INT_TRANSFER: Transfer complete interrupt source.
+ *                        - DMA_INT_BLOCK: Block transfer interrupt source.
+ *                        - DMA_INT_ERROR: Transfer error interrupt source.
+ *                        - DMA_INT_HALF_BLOCK: Half block transfer interrupt source.
+ *                        - DMA_INT_BLOCK_COUNTER: Block counter interrupt source.
+ * @param NewState        New state of the specified DMA channel interrupt source.
+ *                        This parameter can be one of the following values:
+ *                        - ENABLE: Enable the specified DMA channel interrupt source.
+ *                        - DISABLE: Disable the specified DMA channel interrupt source.
+ */
+void DMA_INTConfig(uint8_t DMA_ChannelNum, uint32_t DMA_INT, FunctionalState NewState)
 {
     /* Check the parameters */
     assert_param(IS_DMAx_ChannelNum(DMA_ChannelNum));
-    assert_param(IS_DMA_CONFIG_IT(DMA_IT));
+    assert_param(IS_DMA_CONFIG_IT(DMA_INT));
     assert_param(IS_FUNCTIONAL_STATE(NewState));
 
     DMA_TypeDef *DMAx = DMA_GetDMAxByCh(DMA_ChannelNum);
@@ -454,37 +450,39 @@ void DMA_INTConfig(uint8_t DMA_ChannelNum, uint32_t DMA_IT, FunctionalState NewS
         temp_bit = CHANNEL_WE_BIT(channel_num);
     }
 
-    if (DMA_IT & DMA_INT_TRANSFER)
+    if (DMA_INT & DMA_INT_TRANSFER)
     {
         DMAx->DMA_MASKTFR_L = temp_bit;
     }
 #if (DMA_SUPPORT_BLOCK_COUNTER == 1)
-    if ((DMA_IT & DMA_INT_BLOCK_COUNTER) && DMA_IsSupportBlockCounterChannel(DMA_Channelx))
+    if ((DMA_INT & DMA_INT_BLOCK_COUNTER) && DMA_IsSupportBlockCounterChannel(DMA_Channelx))
     {
         DMAx->DMA_MASKTFR_H = temp_bit;
     }
 #endif
-    if (DMA_IT & DMA_INT_BLOCK)
+    if (DMA_INT & DMA_INT_BLOCK)
     {
         DMAx->DMA_MASKBLOCK_L = temp_bit;
     }
-#if (DMA_SUPPORT_INT_HAIF_BLOCK == 1)
-    if ((DMA_IT & DMA_INT_HALF_BLOCK) && DMA_IsHalfBlcokChannel(DMAx))
+#if (DMA_SUPPORT_INT_HALF_BLOCK == 1)
+    if ((DMA_INT & DMA_INT_HALF_BLOCK) && DMA_IsHalfBlcokChannel(DMAx))
     {
         DMAx->DMA_MASKBLOCK_H = temp_bit;
     }
 #endif
-    if (DMA_IT & DMA_INT_ERROR)
+    if (DMA_INT & DMA_INT_ERROR)
     {
         DMAx->DMA_MASKERR_L = temp_bit;
     }
 }
 
 /**
-  * \brief  Check whether DMA Channel transfer interrupt is set.
-  * \param  DMA_ChannelNum: Select the DMA channel number. \ref DMA_CHANNEL_NUM
-  * \return Transfer interrupt status, SET or RESET.
-  */
+ * @brief Get the transfer complete interrupt status of the specified DMA channel.
+ * @param DMA_ChannelNum  Specifies the DMA channel number. Refer to @ref DMA_CHANNEL_NUM.
+ * @return The transfer complete interrupt status of the specified DMA channel.
+ *         - SET: The transfer complete interrupt status is set.
+ *         - RESET: The transfer complete interrupt status is reset.
+ */
 ITStatus DMA_GetTransferINTStatus(uint8_t DMA_ChannelNum)
 {
     /* Check the parameters */
@@ -501,18 +499,20 @@ ITStatus DMA_GetTransferINTStatus(uint8_t DMA_ChannelNum)
 }
 
 /**
-  * \brief  Check whether DMA Channel block interrupt is set.
-  * \param  DMA_ChannelNum: Select the DMA channel number. \ref DMA_CHANNEL_NUM.
-  * \param  DMA_IT: specifies the DMA interrupts status to get.
-  *         This parameter can be any combination of the following values:
-  *         \arg DMA_INT_TRANSFER:  Transfer complete interrupt status.
-  *         \arg DMA_INT_BLOCK:  Block transfer interrupt status.
-  *         \arg DMA_INT_ERROR :  Transfer error interrupt status.
-  *         \arg DMA_INT_HALF_BLOCK: Half Block transfer interrupt status.
-  *         \arg DMA_INT_BLOCK_COUNTER: Block counter interrupt status.
-  * \return Block interrupt status, SET or RESET.
-  */
-ITStatus DMA_GetINTStatus(uint8_t DMA_ChannelNum, uint32_t DMA_IT)
+ * @brief Get the specified interrupt status of the specified DMA channel.
+ * @param DMA_ChannelNum  Specifies the DMA channel number. Refer to @ref DMA_CHANNEL_NUM.
+ * @param DMA_INT         Specifies the DMA interrupt status to get.
+ *                        This parameter can be any combination of the following values. Refer to @ref DMA_INTERRUPTS.
+ *                        - DMA_INT_TRANSFER: Transfer complete interrupt status.
+ *                        - DMA_INT_BLOCK: Block transfer interrupt status.
+ *                        - DMA_INT_ERROR: Transfer error interrupt status.
+ *                        - DMA_INT_HALF_BLOCK: Half block transfer interrupt status.
+ *                        - DMA_INT_BLOCK_COUNTER: Block counter interrupt status.
+ * @return The specified interrupt status of the specified DMA channel.
+ *         - SET: The specified interrupt status is set.
+ *         - RESET: The specified interrupt status is reset.
+ */
+ITStatus DMA_GetINTStatus(uint8_t DMA_ChannelNum, uint32_t DMA_INT)
 {
     /* Check the parameters */
     assert_param(IS_DMA_ChannelNum(DMAx_Channel_Num));
@@ -520,7 +520,7 @@ ITStatus DMA_GetINTStatus(uint8_t DMA_ChannelNum, uint32_t DMA_IT)
     DMA_TypeDef *DMAx = DMA_GetDMAxByCh(DMA_ChannelNum);
     uint8_t channel_num = DMA_GetDMAChNumByCh(DMA_ChannelNum);
 
-    if (DMA_IT & DMA_INT_TRANSFER)
+    if (DMA_INT & DMA_INT_TRANSFER)
     {
         if ((DMAx->DMA_STATUSTFR_L & BIT(channel_num)) != (uint32_t)RESET)
         {
@@ -530,7 +530,7 @@ ITStatus DMA_GetINTStatus(uint8_t DMA_ChannelNum, uint32_t DMA_IT)
 
 #if (DMA_SUPPORT_BLOCK_COUNTER == 1)
     DMA_ChannelTypeDef *DMA_Channelx = DMA_GetDMAChannelx(DMA_ChannelNum);
-    if ((DMA_IT & DMA_INT_BLOCK_COUNTER) && DMA_IsSupportBlockCounterChannel(DMA_Channelx))
+    if ((DMA_INT & DMA_INT_BLOCK_COUNTER) && DMA_IsSupportBlockCounterChannel(DMA_Channelx))
     {
         if ((DMAx->DMA_STATUSTFR_H & BIT(channel_num)) != (uint32_t)RESET)
         {
@@ -539,7 +539,7 @@ ITStatus DMA_GetINTStatus(uint8_t DMA_ChannelNum, uint32_t DMA_IT)
     }
 #endif
 
-    if (DMA_IT & DMA_INT_BLOCK)
+    if (DMA_INT & DMA_INT_BLOCK)
     {
         if ((DMAx->DMA_STATUSBLOCK_L & BIT(channel_num)) != (uint32_t)RESET)
         {
@@ -547,8 +547,8 @@ ITStatus DMA_GetINTStatus(uint8_t DMA_ChannelNum, uint32_t DMA_IT)
         }
     }
 
-#if (DMA_SUPPORT_INT_HAIF_BLOCK == 1)
-    if ((DMA_IT & DMA_INT_HALF_BLOCK) && DMA_IsHalfBlcokChannel(DMAx))
+#if (DMA_SUPPORT_INT_HALF_BLOCK == 1)
+    if ((DMA_INT & DMA_INT_HALF_BLOCK) && DMA_IsHalfBlcokChannel(DMAx))
     {
         if ((DMAx->DMA_STATUSBLOCK_H & BIT(channel_num)) != (uint32_t)RESET)
         {
@@ -557,7 +557,7 @@ ITStatus DMA_GetINTStatus(uint8_t DMA_ChannelNum, uint32_t DMA_IT)
     }
 #endif
 
-    if (DMA_IT & DMA_INT_ERROR)
+    if (DMA_INT & DMA_INT_ERROR)
     {
         if ((DMAx->DMA_STATUSERR_L & BIT(channel_num)) != (uint32_t)RESET)
         {
@@ -569,24 +569,21 @@ ITStatus DMA_GetINTStatus(uint8_t DMA_ChannelNum, uint32_t DMA_IT)
 }
 
 /**
-  * \brief  Clear the specified DMA Channelx interrupts.
-  * \param  DMA_ChannelNum: Select the DMA channel number. \ref DMA_CHANNEL_NUM
-  * \param  DMA_IT: specifies the DMA interrupts sources to be enabled
-  *         or disabled.
-  *         This parameter can be any combination of the following values:
-  *         \arg DMA_INT_TRANSFER:  clear transfer complete interrupt.
-  *         \arg DMA_INT_BLOCK:  clear Block transfer interrupt.
-  *         \arg DMA_INT_ERROR  :  clear Transfer error interrupt.
-  *         \arg DMA_INT_HALF_BLOCK:  clear Half Block transfer interrupt.
-  * \param  NewState: new state of the specified DMA interrupts.
-  *         This parameter can be: ENABLE or DISABLE.
-  * \return None.
-  */
-void DMA_ClearINTPendingBit(uint8_t DMA_ChannelNum, uint32_t DMA_IT)
+ * @brief Clear the specified interrupt pending bit of the specified DMA channel.
+ * @param DMA_ChannelNum  Specifies the DMA channel number. Refer to @ref DMA_CHANNEL_NUM.
+ * @param DMA_INT         Specifies the DMA interrupt source to be cleared.
+ *                        This parameter can be any combination of the following values. Refer to @ref DMA_INTERRUPTS.
+ *                        - DMA_INT_TRANSFER: Transfer complete interrupt source.
+ *                        - DMA_INT_BLOCK: Block transfer interrupt source.
+ *                        - DMA_INT_ERROR: Transfer error interrupt source.
+ *                        - DMA_INT_HALF_BLOCK: Half block transfer interrupt source.
+ *                        - DMA_INT_BLOCK_COUNTER: Block counter interrupt source.
+ */
+void DMA_ClearINTPendingBit(uint8_t DMA_ChannelNum, uint32_t DMA_INT)
 {
     /* Check the parameters */
     assert_param(IS_DMAx_ChannelNum(DMAx_ChannelNum));
-    assert_param(IS_DMA_CONFIG_IT(DMA_IT));
+    assert_param(IS_DMA_CONFIG_IT(DMA_INT));
 
     DMA_TypeDef *DMAx = DMA_GetDMAxByCh(DMA_ChannelNum);
     uint8_t channel_num = DMA_GetDMAChNumByCh(DMA_ChannelNum);
@@ -594,7 +591,7 @@ void DMA_ClearINTPendingBit(uint8_t DMA_ChannelNum, uint32_t DMA_IT)
     uint32_t temp_bit = BIT(channel_num);
 
     /* clear the selected DMA interrupts */
-    if (DMA_IT & DMA_INT_TRANSFER)
+    if (DMA_INT & DMA_INT_TRANSFER)
     {
         DMAx->DMA_CLEARTFR_L = temp_bit;
 #if (DMA_READ_REG_AFTER_CLEAR == 1)
@@ -602,7 +599,7 @@ void DMA_ClearINTPendingBit(uint8_t DMA_ChannelNum, uint32_t DMA_IT)
 #endif
     }
 #if (DMA_SUPPORT_BLOCK_COUNTER == 1)
-    if ((DMA_IT & DMA_INT_BLOCK_COUNTER) && DMA_IsSupportBlockCounterChannel(DMA_Channelx))
+    if ((DMA_INT & DMA_INT_BLOCK_COUNTER) && DMA_IsSupportBlockCounterChannel(DMA_Channelx))
     {
         DMAx->DMA_CLEARTFR_H = temp_bit;
 #if (DMA_READ_REG_AFTER_CLEAR == 1)
@@ -610,15 +607,15 @@ void DMA_ClearINTPendingBit(uint8_t DMA_ChannelNum, uint32_t DMA_IT)
 #endif
     }
 #endif
-    if (DMA_IT & DMA_INT_BLOCK)
+    if (DMA_INT & DMA_INT_BLOCK)
     {
         DMAx->DMA_CLEARBLOCK_L = temp_bit;
 #if (DMA_READ_REG_AFTER_CLEAR == 1)
         DMAx->DMA_CLEARBLOCK_L;
 #endif
     }
-#if (DMA_SUPPORT_INT_HAIF_BLOCK == 1)
-    if ((DMA_IT & DMA_INT_HALF_BLOCK) && DMA_IsHalfBlcokChannel(DMAx))
+#if (DMA_SUPPORT_INT_HALF_BLOCK == 1)
+    if ((DMA_INT & DMA_INT_HALF_BLOCK) && DMA_IsHalfBlcokChannel(DMAx))
     {
         DMAx->DMA_CLEARBLOCK_H = temp_bit;
 #if (DMA_READ_REG_AFTER_CLEAR == 1)
@@ -626,7 +623,7 @@ void DMA_ClearINTPendingBit(uint8_t DMA_ChannelNum, uint32_t DMA_IT)
 #endif
     }
 #endif
-    if (DMA_IT & DMA_INT_ERROR)
+    if (DMA_INT & DMA_INT_ERROR)
     {
         DMAx->DMA_CLEARERR_L = temp_bit;
 #if (DMA_READ_REG_AFTER_CLEAR == 1)
@@ -636,10 +633,9 @@ void DMA_ClearINTPendingBit(uint8_t DMA_ChannelNum, uint32_t DMA_IT)
 }
 
 /**
-  * \brief  Clear DMAx Channelx all type interrupt.
-  * \param  DMA_ChannelNum: Select the DMA channel number. \ref DMA_CHANNEL_NUM
-  * \return None.
-  */
+ * @brief Clear all interrupt pending bits of the specified DMA channel.
+ * @param DMA_ChannelNum  Specifies the DMA channel number. Refer to @ref DMA_CHANNEL_NUM.
+ */
 void DMA_ClearAllTypeINT(uint8_t DMA_ChannelNum)
 {
     /* Check the parameters */
@@ -655,7 +651,7 @@ void DMA_ClearAllTypeINT(uint8_t DMA_ChannelNum)
     DMAx->DMA_CLEARTFR_H = temp_bit;
 #endif
     DMAx->DMA_CLEARBLOCK_L = temp_bit;
-#if (DMA_SUPPORT_INT_HAIF_BLOCK == 1)
+#if (DMA_SUPPORT_INT_HALF_BLOCK == 1)
     DMAx->DMA_CLEARBLOCK_H = temp_bit;
 #endif
     DMAx->DMA_CLEARERR_L = temp_bit;
@@ -666,11 +662,12 @@ void DMA_ClearAllTypeINT(uint8_t DMA_ChannelNum)
 }
 
 /**
-  * \brief  Get selected DMA channel status.
-  * \param  DMA_ChannelNum: Select the DMA channel number. \ref DMA_CHANNEL_NUM
-  * \return DMA channel status: can be SET or RESET.
-  * \return None.
-  */
+ * @brief Get the channel status of the specified DMA channel.
+ * @param DMA_ChannelNum  Specifies the DMA channel number. Refer to @ref DMA_CHANNEL_NUM.
+ * @return The channel status of the specified DMA channel.
+ *         - SET: The DMA channel is in use.
+ *         - RESET: The DMA channel is not in use.
+ */
 FlagStatus DMA_GetChannelStatus(uint8_t DMA_ChannelNum)
 {
     /* Check the parameters */
@@ -687,9 +684,13 @@ FlagStatus DMA_GetChannelStatus(uint8_t DMA_ChannelNum)
 }
 
 /**
- * \brief  Check DMA FIFO status.
- * \param  DMA_Channelx: Select the DMA peripheral. \ref DMA_Declaration
- * \return DMA FIFO status.
+ * @brief Get the FIFO status of the specified DMA channel.
+ * @param DMA_Channelx  Specifies the DMA channel. Refer to @ref DMA_DECLARATION.
+ * @return The FIFO status of the specified DMA channel.
+ *         - SET: The DMA FIFO is empty.
+ *         - RESET: The DMA FIFO is not empty.
+ * @note  The SET state indicates the FIFO is empty, which is typically used to
+ *        confirm that all data has been flushed after a suspend operation.
  */
 FlagStatus DMA_GetFIFOStatus(DMA_ChannelTypeDef *DMA_Channelx)
 {
@@ -707,9 +708,9 @@ FlagStatus DMA_GetFIFOStatus(DMA_ChannelTypeDef *DMA_Channelx)
 }
 
 /**
- * \brief  Check DMA suspend command status.
- * \param  DMA_Channelx: Select the DMA peripheral. \ref DMA_Declaration
- * \return DMA suspend command status.
+ * @brief Check DMA suspend command status.
+ * @param DMA_Channelx  Select the DMA peripheral. Refer to @ref DMA_Declaration.
+ * @return DMA suspend command status.
  */
 FlagStatus DMA_GetSuspendCmdStatus(DMA_ChannelTypeDef *DMA_Channelx)
 {
@@ -724,9 +725,9 @@ FlagStatus DMA_GetSuspendCmdStatus(DMA_ChannelTypeDef *DMA_Channelx)
 }
 
 /**
- * \brief  Check DMA suspend channel status.
- * \param  DMA_Channelx: Select the DMA peripheral. \ref DMA_Declaration
- * \return DMA suspend channel status.
+ * @brief Check DMA suspend channel status.
+ * @param DMA_Channelx  Select the DMA peripheral. Refer to @ref DMA_Declaration.
+ * @return DMA suspend channel status.
  */
 FlagStatus DMA_GetSuspendChannelStatus(DMA_ChannelTypeDef *DMA_Channelx)
 {
@@ -741,10 +742,14 @@ FlagStatus DMA_GetSuspendChannelStatus(DMA_ChannelTypeDef *DMA_Channelx)
 }
 
 /**
- * \brief  Suspend DMA transmission from the source.
-  * \param  DMA_Channelx: Select the DMA peripheral. \ref DMA_Declaration
- * \param  NewState: New state of the DMAx Channelx.
- * \return None.
+ * @brief Enable or disable to suspend transmission of the specified DMA channel.
+ * @param DMA_Channelx  Specifies the DMA channel. Refer to @ref DMA_DECLARATION.
+ * @param NewState      New state of the suspend operation.
+ *                      This parameter can be one of the following values:
+ *                      - ENABLE: Suspend transmission of the specified DMA channel.
+ *                      - DISABLE: Resume transmission of the specified DMA channel.
+ * @note  To prevent data loss, it is necessary to check whether the FIFO data transmission is completed
+ *        after suspend, by checking whether the DMA FIFO is empty.
  */
 void DMA_SuspendCmd(DMA_ChannelTypeDef *DMA_Channelx, FunctionalState NewState)
 {
@@ -765,10 +770,14 @@ void DMA_SuspendCmd(DMA_ChannelTypeDef *DMA_Channelx, FunctionalState NewState)
 }
 
 /**
-  * \brief  Suspend DMA transmission safe from the source.Please check DMA FIFO empty to guarnatee without losing data.
-  * \param  DMA_Channelx: Select the DMA peripheral. \ref DMA_Declaration
-  * \return true: suspend success, false: suspend failed
-  */
+ * @brief Suspend transmission safely of the specified DMA channel.
+ * @param DMA_Channelx  Specifies the DMA channel. Refer to @ref DMA_DECLARATION.
+ * @return The result of the safe suspend operation.
+ *         - true: Suspend DMA transmission successfully.
+ *         - false: Suspend DMA transmission failed.
+ * @note  To prevent data loss, it is necessary to check whether the FIFO data transmission is completed
+ *        after suspend, by checking whether the DMA FIFO is empty.
+ */
 bool DMA_SafeSuspend(DMA_ChannelTypeDef *DMA_Channelx)
 {
     /* Check the parameters */
@@ -812,10 +821,9 @@ bool DMA_SafeSuspend(DMA_ChannelTypeDef *DMA_Channelx)
 }
 
 /**
- * \brief  Set DMA transmission source address.
-  * \param  DMA_Channelx: Select the DMA peripheral. \ref DMA_Declaration
- * \param  Address: Source address.
- * \return None.
+ * @brief Set the source address of the specified DMA channel.
+ * @param DMA_Channelx  Specifies the DMA channel. Refer to @ref DMA_DECLARATION.
+ * @param Address       Source address.
  */
 void DMA_SetSourceAddress(DMA_ChannelTypeDef *DMA_Channelx, uint32_t Address)
 {
@@ -826,10 +834,9 @@ void DMA_SetSourceAddress(DMA_ChannelTypeDef *DMA_Channelx, uint32_t Address)
 }
 
 /**
- * \brief  Set DMA transmission destination address.
-  * \param  DMA_Channelx: Select the DMA peripheral. \ref DMA_Declaration
- * \param  Address: Destination address.
- * \return None.
+ * @brief Set the destination address of the specified DMA channel.
+ * @param DMA_Channelx  Specifies the DMA channel. Refer to @ref DMA_DECLARATION.
+ * @param Address       Destination address.
  */
 void DMA_SetDestinationAddress(DMA_ChannelTypeDef *DMA_Channelx,
                                uint32_t Address)
@@ -841,10 +848,9 @@ void DMA_SetDestinationAddress(DMA_ChannelTypeDef *DMA_Channelx,
 }
 
 /**
- * \brief  Set DMA LLP stucture address.
-  * \param  DMA_Channelx: Select the DMA peripheral. \ref DMA_Declaration
- * \param  Address: LLP stucture address.
- * \return None.
+ * @brief Set the LLP structure address of the specified DMA channel.
+ * @param DMA_Channelx  Specifies the DMA channel. Refer to @ref DMA_DECLARATION.
+ * @param Address       LLP structure address.
  */
 void DMA_SetLLPAddress(DMA_ChannelTypeDef *DMA_Channelx, uint32_t Address)
 {
@@ -855,24 +861,23 @@ void DMA_SetLLPAddress(DMA_ChannelTypeDef *DMA_Channelx, uint32_t Address)
 }
 
 /**
- * \brief  Set DMA buffer size.
-  * \param  DMA_Channelx: Select the DMA peripheral. \ref DMA_Declaration
- * \param  buffer_size: Set DMA_BufferSize, max 65535.
- * \return None.
+ * @brief Set the transfer size of the specified DMA channel.
+ * @param DMA_Channelx  Specifies the DMA channel. Refer to @ref DMA_DECLARATION.
+ * @param BufferSize    Specifies the transfer size, which is the number of single transactions in one block.
  */
-void DMA_SetBufferSize(DMA_ChannelTypeDef *DMA_Channelx, uint32_t buffer_size)
+void DMA_SetBufferSize(DMA_ChannelTypeDef *DMA_Channelx, uint32_t BufferSize)
 {
     /* Check the parameters */
     assert_param(IS_DMA_ALL_PERIPH(DMA_Channelx));
 
     /* Configure high 32 bit of CTL register */
-    DMA_Channelx->DMA_CTLx_H = buffer_size;
+    DMA_Channelx->DMA_CTLx_H = BufferSize;
 }
 
 /**
- * \brief  Get DMA source address.
-  * \param  DMA_Channelx: Select the DMA peripheral. \ref DMA_Declaration
- * \return Source address.
+ * @brief Get the source transfer address of the specified DMA channel.
+ * @param DMA_Channelx  Specifies the DMA channel. Refer to @ref DMA_DECLARATION.
+ * @return Source transfer address.
  */
 uint32_t DMA_GetSrcTransferAddress(DMA_ChannelTypeDef *DMA_Channelx)
 {
@@ -883,9 +888,9 @@ uint32_t DMA_GetSrcTransferAddress(DMA_ChannelTypeDef *DMA_Channelx)
 }
 
 /**
- * \brief  Get DMA destination address.
-  * \param  DMA_Channelx: Select the DMA peripheral. \ref DMA_Declaration
- * \return Destination address.
+ * @brief Get the destination transfer address of the specified DMA channel.
+ * @param DMA_Channelx  Specifies the DMA channel. Refer to @ref DMA_DECLARATION.
+ * @return Destination transfer address.
  */
 uint32_t DMA_GetDstTransferAddress(DMA_ChannelTypeDef *DMA_Channelx)
 {
@@ -896,9 +901,35 @@ uint32_t DMA_GetDstTransferAddress(DMA_ChannelTypeDef *DMA_Channelx)
 }
 
 /**
- * \brief  Get DMA transfer data length.
-  * \param  DMA_Channelx: Select the DMA peripheral. \ref DMA_Declaration
- * \return DMA transfer data length.
+ * @brief  Get current source address of the specified DMA channel.
+ * @param  DMA_Channelx: Select the DMA peripheral. \ref DMA_Declaration
+ * @return Current source address.
+ */
+uint32_t DMA_GetCurrSrcAddr(DMA_ChannelTypeDef *DMA_Channelx)
+{
+    /* Check the parameters */
+    assert_param(IS_DMA_ALL_PERIPH(DMA_Channelx));
+
+    return DMA_Channelx->DMA_CURR_SARx;
+}
+
+/**
+ * @brief  Get current destination address of the specified DMA channel.
+ * @param  DMA_Channelx: Select the DMA peripheral. \ref DMA_Declaration
+ * @return Current destination address.
+ */
+uint32_t DMA_GetCurrDstAddr(DMA_ChannelTypeDef *DMA_Channelx)
+{
+    /* Check the parameters */
+    assert_param(IS_DMA_ALL_PERIPH(DMA_Channelx));
+
+    return DMA_Channelx->DMA_CURR_DARx;
+}
+
+/**
+ * @brief Get the transfer data length of the specified DMA channel.
+ * @param DMA_Channelx  Specifies the DMA channel. Refer to @ref DMA_DECLARATION.
+ * @return DMA transfer data length.
  */
 uint16_t DMA_GetTransferLen(DMA_ChannelTypeDef *DMA_Channelx)
 {
@@ -909,24 +940,24 @@ uint16_t DMA_GetTransferLen(DMA_ChannelTypeDef *DMA_Channelx)
 }
 
 /**
- * \brief  Update DMA LLP mode in multi-block.
-  * \param  DMA_Channelx: Select the DMA peripheral. \ref DMA_Declaration
- * \param  DMA LLP mode
- * \return None.
+ * @brief Update the LLP mode of the specified DMA channel in multi-block transfer.
+ * @param DMA_Channelx  Specifies the DMA channel. Refer to @ref DMA_DECLARATION.
+ * @param Mode          Specifies the DMA LLP mode. Refer to @ref DMA_MULTI_BLOCK_MODE.
  */
-void DMA_SetLLPMode(DMA_ChannelTypeDef *DMA_Channelx, uint32_t mode)
+void DMA_SetLLPMode(DMA_ChannelTypeDef *DMA_Channelx, uint32_t Mode)
 {
-    DMA_Channelx->DMA_CTLx_L = ((DMA_Channelx->DMA_CTLx_L & (~LLI_TRANSFER)) | mode);
+    DMA_Channelx->DMA_CTLx_L = ((DMA_Channelx->DMA_CTLx_L & (~LLI_TRANSFER)) | Mode);
 }
 
 #if (DMA_SUPPORT_SECURE_MODE == 1)
 /**
-  * \brief  Enable or disable the specified DMA channel secure functions.
-  * \param  DMA_ChannelNum: Select the DMA channel number. \ref DMA_CHANNEL_NUM
-  * \param  NewState: Specifies the DMA channel secure function to be enabled or disabled.
-  *         This parameter can be: ENABLE or DISABLE.
-  * \return None.
-  */
+ * @brief Enable or disable the secure function of the specified DMA channel.
+ * @param DMA_Channelx  Specifies the DMA channel. Refer to @ref DMA_DECLARATION.
+ * @param NewState      New state of the DMA channel secure function.
+ *                      This parameter can be one of the following values:
+ *                      - ENABLE: Enable the secure function of the specified DMA channel.
+ *                      - DISABLE: Disable the secure function of the specified DMA channel.
+ */
 void DMA_SecureCmd(DMA_ChannelTypeDef *DMA_Channelx, FunctionalState NewState)
 {
     /* Check the parameters */
@@ -940,12 +971,11 @@ void DMA_SecureCmd(DMA_ChannelTypeDef *DMA_Channelx, FunctionalState NewState)
 
 #if (DMA_SUPPORT_OSW_OSR_CHANGE == 1)
 /**
-  * \brief  Set DMA OSW.
-  * \param  DMA_ChannelNum: Select the DMA channel number. \ref DMA_CHANNEL_NUM
-  * \param  osw_count: outstanding write count.
-  * \return None.
-  */
-void DMA_SetOSW(uint8_t DMA_ChannelNum, uint8_t osw_count)
+ * @brief Set the outstanding write count (OSW) of the specified DMA channel.
+ * @param DMA_ChannelNum  Specifies the DMA channel number. Refer to @ref DMA_CHANNEL_NUM.
+ * @param OswCount        Outstanding write count.
+ */
+void DMA_SetOSW(uint8_t DMA_ChannelNum, uint8_t OswCount)
 {
     /* Check the parameters */
     assert_param(IS_DMA_ALL_PERIPH(DMA_Channelx));
@@ -953,17 +983,16 @@ void DMA_SetOSW(uint8_t DMA_ChannelNum, uint8_t osw_count)
     DMA_TypeDef *DMAx = DMA_GetDMAxByCh(DMA_ChannelNum);
 
     DMA_DMAOSNUM_L_TypeDef dma_osnum = {.d32 = DMAx->DMA_DMAOSNUM_L};
-    dma_osnum.b.osw = osw_count & 0xFF;
+    dma_osnum.b.osw = OswCount & 0xFF;
     DMAx->DMA_DMAOSNUM_L = dma_osnum.d32;
 }
 
 /**
-  * \brief  Set DMA OSR.
-  * \param  DMA_ChannelNum: Select the DMA channel number. \ref DMA_CHANNEL_NUM
-  * \param  osr_count: outstanding read count.
-  * \return None.
-  */
-void DMA_SetOSR(uint8_t DMA_ChannelNum, uint8_t osr_count)
+ * @brief Set the outstanding read count (OSR) of the specified DMA channel.
+ * @param DMA_ChannelNum  Specifies the DMA channel number. Refer to @ref DMA_CHANNEL_NUM.
+ * @param OsrCount        Outstanding read count.
+ */
+void DMA_SetOSR(uint8_t DMA_ChannelNum, uint8_t OsrCount)
 {
     /* Check the parameters */
     assert_param(IS_DMA_ALL_PERIPH(DMA_Channelx));
@@ -971,15 +1000,15 @@ void DMA_SetOSR(uint8_t DMA_ChannelNum, uint8_t osr_count)
     DMA_TypeDef *DMAx = DMA_GetDMAxByCh(DMA_ChannelNum);
 
     DMA_DMAOSNUM_L_TypeDef dma_osnum = {.d32 = DMAx->DMA_DMAOSNUM_L};
-    dma_osnum.b.osr = osr_count & 0xFF;
+    dma_osnum.b.osr = OsrCount & 0xFF;
     DMAx->DMA_DMAOSNUM_L = dma_osnum.d32;
 }
 
 /**
-  * \brief  Get DMA OSW.
-  * \param  DMA_ChannelNum: Select the DMA channel number. \ref DMA_CHANNEL_NUM
-  * \return osw_count: outstanding write count.
-  */
+ * @brief Get the outstanding write count (OSW) of the specified DMA channel.
+ * @param DMA_ChannelNum  Specifies the DMA channel number. Refer to @ref DMA_CHANNEL_NUM.
+ * @return Outstanding write count.
+ */
 uint8_t DMA_GetOSWCount(uint8_t DMA_ChannelNum)
 {
     /* Check the parameters */
@@ -993,10 +1022,10 @@ uint8_t DMA_GetOSWCount(uint8_t DMA_ChannelNum)
 }
 
 /**
-  * \brief  Get DMA OSR.
-  * \param  DMA_ChannelNum: Select the DMA channel number. \ref DMA_CHANNEL_NUM
-  * \return osr_count: outstanding read count.
-  */
+ * @brief Get the outstanding read count (OSR) of the specified DMA channel.
+ * @param DMA_ChannelNum  Specifies the DMA channel number. Refer to @ref DMA_CHANNEL_NUM.
+ * @return Outstanding read count.
+ */
 uint8_t DMA_GetOSRCount(uint8_t DMA_ChannelNum)
 {
     /* Check the parameters */
@@ -1012,11 +1041,13 @@ uint8_t DMA_GetOSRCount(uint8_t DMA_ChannelNum)
 
 #if (DMA_SUPPORT_CONTINUOUS_BLOCK_ADDRESS == 1)
 /**
-  * \brief  Continous source address.
-  * \param  DMA_ChannelNum: Select the DMA channel number. \ref DMA_CHANNEL_NUM
-  * \param  osw_count: outstanding write count.
-  * \return None.
-  */
+ * @brief Enable or disable the continuous source address function between single-block interrupts.
+ * @param DMA_Channelx  Specifies the DMA channel. Refer to @ref DMA_DECLARATION.
+ * @param NewState      New state of the continuous source address function.
+ *                      This parameter can be one of the following values:
+ *                      - ENABLE: Enable the continuous source address function.
+ *                      - DISABLE: Disable the continuous source address function.
+ */
 void DMA_ContSarCmd(DMA_ChannelTypeDef *DMA_Channelx, FunctionalState NewState)
 {
     /* Check the parameters */
@@ -1032,6 +1063,14 @@ void DMA_ContSarCmd(DMA_ChannelTypeDef *DMA_Channelx, FunctionalState NewState)
     DMA_Channelx->DMA_CFGx_H = dma_cfgxh.d32;
 }
 
+/**
+ * @brief Enable or disable the continuous destination address function between single-block interrupts.
+ * @param DMA_Channelx  Specifies the DMA channel. Refer to @ref DMA_DECLARATION.
+ * @param NewState      New state of the continuous destination address function.
+ *                      This parameter can be one of the following values:
+ *                      - ENABLE: Enable the continuous destination address function.
+ *                      - DISABLE: Disable the continuous destination address function.
+ */
 void DMA_ContDarCmd(DMA_ChannelTypeDef *DMA_Channelx, FunctionalState NewState)
 {
     /* Check the parameters */
@@ -1049,7 +1088,13 @@ void DMA_ContDarCmd(DMA_ChannelTypeDef *DMA_Channelx, FunctionalState NewState)
 #endif
 
 #if (DMA_SUPPORT_BLOCK_COUNTER == 1)
-void DMA_SetBlockCounter(DMA_ChannelTypeDef *DMA_Channelx, uint32_t block_counter)
+/**
+ * @brief Set the block counter of the specified DMA channel.
+ * @param DMA_Channelx  Specifies the DMA channel. Refer to @ref DMA_DECLARATION.
+ * @param BlockCounter  Block counter value. The block counter is decremented by 1 after each block
+ *                      transfer completes and saturates at 0.
+ */
+void DMA_SetBlockCounter(DMA_ChannelTypeDef *DMA_Channelx, uint32_t BlockCounter)
 {
     /* Check the parameters */
     assert_param(IS_DMA_ALL_PERIPH(DMA_Channelx));
@@ -1059,12 +1104,23 @@ void DMA_SetBlockCounter(DMA_ChannelTypeDef *DMA_Channelx, uint32_t block_counte
         return;
     }
 
-    DMA_Channelx->DMA_BLK_COUNTER_REGx = block_counter;
+    DMA_Channelx->DMA_BLK_COUNTER_REGx = BlockCounter;
 }
 #endif
 
 #if (DMA_SUPPORT_RAP_FUNCTION == 1)
 
+/**
+ * @brief Enable or disable the RAP mode of the specified DMA channel.
+ * @param DMA_Channelx  Specifies the DMA channel. Refer to @ref DMA_DECLARATION.
+ * @param NewState      New state of the DMA RAP mode.
+ *                      This parameter can be one of the following values:
+ *                      - ENABLE: Enable the DMA RAP mode.
+ *                      - DISABLE: Disable the DMA RAP mode.
+ * @return The result of the RAP mode command.
+ *         - true: RAP mode command success.
+ *         - false: RAP mode command failed.
+ */
 bool DMA_RAPModeCmd(DMA_ChannelTypeDef *DMA_Channelx, FunctionalState NewState)
 {
     /* Check the parameters */

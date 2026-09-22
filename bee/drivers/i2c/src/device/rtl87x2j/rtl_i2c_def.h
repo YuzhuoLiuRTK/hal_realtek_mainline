@@ -17,21 +17,6 @@ extern "C" {
 /*============================================================================*
  *                          I2C Defines
  *============================================================================*/
-/** \defgroup I2C         I2C
-  * \brief
-  * \{
-  */
-
-/** \defgroup I2C_Exported_Constants I2C Exported Constants
-  * \brief
-  * \{
-  */
-
-/**
- * \defgroup I2C_Defines I2C Defines
- * \{
- * \ingroup  I2C_Exported_Constants
- */
 #define CHIP_I2C_NUMBER                                (2)
 #define I2C_TX_FIFO_SIZE                               (24)
 #define I2C_RX_FIFO_SIZE                               (24)
@@ -39,18 +24,6 @@ extern "C" {
 #define I2C_SUPPORT_WRAPPER_MODE                       (1)
 #define I2C_SUPPORT_RAP_FUNCTION                       (1)
 #define I2C_SUPPORT_AUTO_CLOCK                         (1)
-
-/** End of I2C_Defines
-  * \}
-  */
-
-/** End of I2C_Exported_Constants
-  * \}
-  */
-
-/** End of I2C
-  * \}
-  */
 
 /*============================================================================*
  *                          I2C Registers Memory Map
@@ -111,46 +84,24 @@ typedef struct
 /*============================================================================*
  *                          I2C Declaration
  *============================================================================*/
-/** \defgroup I2C         I2C
- * \brief
- * \{
+/**
+ * @defgroup I2C_DECLARATION I2C Declaration
+ * @{
+ * @ingroup  I2C_Exported_Constants
  */
 
-/** \defgroup I2C_Exported_Constants I2C Exported Constants
-  * \brief
-  * \{
-  */
+#define I2C0               ((I2C_TypeDef *) I2C0_BASE)  /**< I2C0 peripheral base pointer. */
+#define I2C1               ((I2C_TypeDef *) I2C1_BASE)  /**< I2C1 peripheral base pointer. */
 
-/** \defgroup I2C_Declaration I2C Declaration
-  * \{
-  * \ingroup  I2C_Exported_Constants
-  */
-
-#define I2C0               ((I2C_TypeDef *) I2C0_BASE)
-#define I2C1               ((I2C_TypeDef *) I2C1_BASE)
-
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_I2C_ALL_PERIPH(PERIPH) (((PERIPH) == I2C0) || \
                                    ((PERIPH) == I2C1))
 
-/** End of I2C_Declaration
-  * \}
-  */
-
-/** End of I2C_Exported_Constants
-  * \}
-  */
-
-/** End of I2C
-  * \}
-  */
+/** @} */ /* End of group I2C_DECLARATION */
 
 /*============================================================================*
  *                          I2C Private Types
  *============================================================================*/
-typedef struct
-{
-    uint32_t i2c_reg[18];
-} I2CStoreReg_Typedef;
 
 /*============================================================================*
  *                          I2C Registers and Field Descriptions
@@ -1047,49 +998,39 @@ typedef union
 /*============================================================================*
  *                          I2C Constants
  *============================================================================*/
-/** \defgroup I2C         I2C
-  * \brief
-  * \{
-  */
-
-/** \defgroup I2C_Exported_Constants I2C Exported Constants
-  * \brief
-  * \{
-  */
-
 /**
- * \defgroup    I2C_Clock_Source I2C Clock Source
- * \{
- * \ingroup     I2C_Exported_Constants
+ * @defgroup I2C_CLOCK_SOURCE I2C Clock Source
+ * @{
+ * @ingroup  I2C_Exported_Constants
  */
 typedef enum
 {
-    I2C_CLOCK_SRC_40M = 0x0,
+    I2C_CLOCK_SRC_40M = 0x0,    /**< 40MHz clock source. RTL87x2J only supports 40MHz. */
 } I2CClockSrc_TypeDef;
 
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_I2C_CLOCK_SRC(CLOCK)     (((CLOCK) == I2C_CLOCK_SRC_40M))
 
-/** End of I2C_Clock_Source
-  * \}
-  */
+/** @} */ /* End of group I2C_CLOCK_SOURCE */
 
 /**
- * \defgroup    I2C_Clock_Divider I2C Clock Divider
- * \{
- * \ingroup     I2C_Exported_Constants
+ * @defgroup I2C_CLOCK_DIVIDER I2C Clock Divider
+ * @{
+ * @ingroup  I2C_Exported_Constants
  */
 typedef enum
 {
-    I2C_CLOCK_DIV_1 = 0x0,
-    I2C_CLOCK_DIV_2 = 0x1,
-    I2C_CLOCK_DIV_4 = 0x2,
-    I2C_CLOCK_DIV_8 = 0x3,
-    I2C_CLOCK_DIV_16 = 0x4,
-    I2C_CLOCK_DIV_32 = 0x5,
-    I2C_CLOCK_DIV_40 = 0x6,
-    I2C_CLOCK_DIV_64 = 0x7,
+    I2C_CLOCK_DIV_1 = 0x0,      /**< I2C clock divided by 1. */
+    I2C_CLOCK_DIV_2 = 0x1,      /**< I2C clock divided by 2. */
+    I2C_CLOCK_DIV_4 = 0x2,      /**< I2C clock divided by 4. */
+    I2C_CLOCK_DIV_8 = 0x3,      /**< I2C clock divided by 8. */
+    I2C_CLOCK_DIV_16 = 0x4,     /**< I2C clock divided by 16. */
+    I2C_CLOCK_DIV_32 = 0x5,     /**< I2C clock divided by 32. */
+    I2C_CLOCK_DIV_40 = 0x6,     /**< I2C clock divided by 40. */
+    I2C_CLOCK_DIV_64 = 0x7,     /**< I2C clock divided by 64. */
 } I2CClockDiv_TypeDef;
 
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_I2C_CLOCK_DIV(DIV) (((DIV) == I2C_CLOCK_DIV_1) || \
                                ((DIV) == I2C_CLOCK_DIV_2) || \
                                ((DIV) == I2C_CLOCK_DIV_4) || \
@@ -1099,17 +1040,7 @@ typedef enum
                                ((DIV) == I2C_CLOCK_DIV_40) || \
                                ((DIV) == I2C_CLOCK_DIV_64))
 
-/** End of I2C_Clock_Divider
-  * \}
-  */
-
-/** End of I2C_Exported_Constants
-  * \}
-  */
-
-/** End of I2C
-  * \}
-  */
+/** @} */ /* End of group I2C_CLOCK_DIVIDER */
 
 #ifdef  __cplusplus
 }

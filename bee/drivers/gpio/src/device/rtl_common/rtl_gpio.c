@@ -23,10 +23,9 @@ extern void GPIO_ExtPolarity(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin, GPIOPolarit
  *                           Public Functions
  *============================================================================*/
 /**
-  * \brief  Deinitializes the GPIO peripheral registers to their default reset values.
-  * \param  GPIOx: Select the GPIO peripheral. \ref GPIO_Declaration
-  * \return None.
-  */
+ * @brief Deinitialize the GPIO port registers to their default reset values.
+ * @param GPIOx  Specifies the GPIO port. Refer to @ref GPIO_DECLARATION.
+ */
 void GPIO_DeInit(GPIO_TypeDef *GPIOx)
 {
 #ifdef GPIOA
@@ -60,13 +59,10 @@ void GPIO_DeInit(GPIO_TypeDef *GPIOx)
 }
 
 /**
-  * \brief  Initializes the GPIO peripheral according to the specified
-  *         parameters in the GPIO_InitStruct.
-  * \param  GPIOx: Select the GPIO peripheral. \ref GPIO_Declaration
-  * \param  GPIO_InitStruct: pointer to a GPIO_InitTypeDef structure that
-  *         contains the configuration information for the specified GPIO peripheral.
-  * \return None
-  */
+ * @brief Initialize the GPIO port according to the specified parameters in the GPIO_InitStruct.
+ * @param GPIOx            Specifies the GPIO port. Refer to @ref GPIO_DECLARATION.
+ * @param GPIO_InitStruct  Pointer to a GPIO_InitTypeDef structure which will be initialized.
+ */
 void GPIO_Init(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_InitStruct)
 {
     /* Check the parameters */
@@ -75,9 +71,9 @@ void GPIO_Init(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_InitStruct)
 #if (GPIO_SUPPORT_OUTPUT_MODE_SELECT == 1)
     assert_param(IS_GPIO_OUTPUT_MODE(GPIO_InitStruct->GPIO_OutPutMode));
 #endif
-    assert_param(IS_GPIOIT_TRIGGER_TYPE(GPIO_InitStruct->GPIO_Trigger));
-    assert_param(IS_GPIOIT_POLARITY_TYPE(GPIO_InitStruct->GPIO_Polarity));
-    assert_param(IS_GPIOIT_DEBOUNCE_TYPE(GPIO_InitStruct->GPIO_DebounceEn));
+    assert_param(IS_GPIO_TRIGGER_TYPE(GPIO_InitStruct->GPIO_Trigger));
+    assert_param(IS_GPIO_POLARITY_TYPE(GPIO_InitStruct->GPIO_Polarity));
+    assert_param(IS_FUNCTIONAL_STATE(GPIO_InitStruct->GPIO_DebounceEn));
 
     /* GPIO configure */
     if (GPIO_InitStruct->GPIO_Dir == GPIO_DIR_OUT)
@@ -161,10 +157,9 @@ void GPIO_Init(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_InitStruct)
 }
 
 /**
-  * \brief  Fills each GPIO_InitStruct member with its default value.
-  * \param  GPIO_InitStruct : pointer to a GPIO_InitTypeDef structure which will be initialized.
-  * \return None
-  */
+ * @brief Fill each GPIO_InitStruct member with its default value.
+ * @param GPIO_InitStruct  Pointer to a GPIO_InitTypeDef structure which will be initialized.
+ */
 void GPIO_StructInit(GPIO_InitTypeDef *GPIO_InitStruct)
 {
     /* Reset GPIO init structure parameters values */
@@ -189,12 +184,11 @@ void GPIO_StructInit(GPIO_InitTypeDef *GPIO_InitStruct)
 }
 
 /**
-  * \brief  Enable the specified GPIO interrupt.
-  * \param  GPIOx: Select the GPIO peripheral. \ref GPIO_Declaration
-  * \param  GPIO_Pin: GPIO_Pin can be 0 to 31.
-  * \param  Enable or disable interrupt
-  * \return None
-  */
+ * @brief Enable or disable the specified GPIO pin interrupt.
+ * @param GPIOx     Specifies the GPIO port. Refer to @ref GPIO_DECLARATION.
+ * @param GPIO_Pin  Specifies the GPIO pins to be configured. Refer to @ref GPIO_PINS_DEFINE.
+ * @param NewState  Enable or disable the specified GPIO pin interrupt.
+ */
 void GPIO_INTConfig(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin, FunctionalState NewState)
 {
     /* Check the parameters */
@@ -214,11 +208,10 @@ void GPIO_INTConfig(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin, FunctionalState NewS
 }
 
 /**
-  * \brief  Clear the specified GPIO interrupt.
-  * \param  GPIOx: Select the GPIO peripheral. \ref GPIO_Declaration
-  * \param  GPIO_Pin: GPIO_Pin can be 0 to 31.
-  * \return None
-  */
+ * @brief Clear the specified GPIO pin interrupt pending bit.
+ * @param GPIOx     Specifies the GPIO port. Refer to @ref GPIO_DECLARATION.
+ * @param GPIO_Pin  Specifies the GPIO pins to be configured. Refer to @ref GPIO_PINS_DEFINE.
+ */
 void GPIO_ClearINTPendingBit(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin)
 {
     /* Check the parameters */
@@ -228,12 +221,11 @@ void GPIO_ClearINTPendingBit(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin)
 }
 
 /**
-  * \brief  Mask the specified GPIO interrupt.
-  * \param  GPIOx: Select the GPIO peripheral. \ref GPIO_Declaration
-  * \param  GPIO_Pin: GPIO_Pin can be 0 to 31.
-  * \param  NewState: Mask or unmask gpio debounce clock.
-  * \return None
-  */
+ * @brief Mask or unmask the specified GPIO pin interrupt.
+ * @param GPIOx     Specifies the GPIO port. Refer to @ref GPIO_DECLARATION.
+ * @param GPIO_Pin  Specifies the GPIO pins to be configured. Refer to @ref GPIO_PINS_DEFINE.
+ * @param NewState  Mask or unmask interrupt.
+ */
 void GPIO_MaskINTConfig(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin, FunctionalState NewState)
 {
     /* Check the parameters */
@@ -250,14 +242,193 @@ void GPIO_MaskINTConfig(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin, FunctionalState 
     }
 }
 
+/**
+ * @brief Get the specified GPIO pin interrupt status.
+ * @param GPIOx     Specifies the GPIO port. Refer to @ref GPIO_DECLARATION.
+ * @param GPIO_Pin  Specifies the GPIO pins to be read. Refer to @ref GPIO_PINS_DEFINE.
+ * @return The interrupt status of the specified GPIO pin.
+ *         - SET    The interrupt status is set.
+ *         - RESET  The interrupt status has not been set.
+ */
+ITStatus GPIO_GetINTStatus(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin)
+{
+    /* Check the parameters */
+    assert_param(IS_GET_GPIO_PIN(GPIO_Pin));
+
+    if ((GPIOx->GPIO_INT_STS & GPIO_Pin) == GPIO_Pin)
+    {
+        return SET;
+    }
+    else
+    {
+        return RESET;
+    }
+}
+
+/**
+ * @brief Read the input value of the specified GPIO pin.
+ * @param GPIOx     Specifies the GPIO port. Refer to @ref GPIO_DECLARATION.
+ * @param GPIO_Pin  Specifies the GPIO pins to be read. Refer to @ref GPIO_PINS_DEFINE.
+ * @return The input value of the specified GPIO pin.
+ */
+uint8_t GPIO_ReadInputDataBit(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin)
+{
+    /* Check the parameters */
+    assert_param(IS_GET_GPIO_PIN(GPIO_Pin));
+
+    if (GPIOx->GPIO_PAD_STATE & GPIO_Pin)
+    {
+        return SET;
+    }
+    else
+    {
+        return RESET;
+    }
+}
+
+/**
+ * @brief Read the input value of the specified GPIO port.
+ * @param GPIOx  Specifies the GPIO port. Refer to @ref GPIO_DECLARATION.
+ * @return The input value of the specified GPIO port.
+ */
+uint32_t GPIO_ReadInputData(GPIO_TypeDef *GPIOx)
+{
+    return ((uint32_t)GPIOx->GPIO_PAD_STATE);
+}
+
+/**
+ * @brief Read the output value of the specified GPIO pin.
+ * @param GPIOx     Specifies the GPIO port. Refer to @ref GPIO_DECLARATION.
+ * @param GPIO_Pin  Specifies the GPIO pins to be read. Refer to @ref GPIO_PINS_DEFINE.
+ * @return The output value of the specified GPIO pin.
+ */
+uint8_t GPIO_ReadOutputDataBit(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin)
+{
+    /* Check the parameters */
+    assert_param(IS_GET_GPIO_PIN(GPIO_Pin));
+
+    if (GPIOx->GPIO_DR & GPIO_Pin)
+    {
+        return SET;
+    }
+    else
+    {
+        return RESET;
+    }
+}
+
+/**
+ * @brief Read the output value of the specified GPIO port.
+ * @param GPIOx  Specifies the GPIO port. Refer to @ref GPIO_DECLARATION.
+ * @return The output value of the specified GPIO port.
+ */
+uint32_t GPIO_ReadOutputData(GPIO_TypeDef *GPIOx)
+{
+    return ((uint32_t)GPIOx->GPIO_DR);
+}
+
+/**
+ * @brief Set the output value of the specified GPIO pin.
+ * @param GPIOx     Specifies the GPIO port. Refer to @ref GPIO_DECLARATION.
+ * @param GPIO_Pin  Specifies the GPIO pins to be written. Refer to @ref GPIO_PINS_DEFINE.
+ */
+void GPIO_SetBits(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin)
+{
+    /* Check the parameters */
+    assert_param(IS_GPIO_PIN(GPIO_Pin));
+
+    GPIOx->GPIO_DR |= GPIO_Pin;
+}
+
+/**
+ * @brief Reset the output value of the specified GPIO pin.
+ * @param GPIOx     Specifies the GPIO port. Refer to @ref GPIO_DECLARATION.
+ * @param GPIO_Pin  Specifies the GPIO pins to be written. Refer to @ref GPIO_PINS_DEFINE.
+ */
+void GPIO_ResetBits(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin)
+{
+    /* Check the parameters */
+    assert_param(IS_GPIO_PIN(GPIO_Pin));
+
+    GPIOx->GPIO_DR &= ~(GPIO_Pin);
+}
+
+/**
+ * @brief Set or reset the output value of the specified GPIO pin.
+ * @param GPIOx     Specifies the GPIO port. Refer to @ref GPIO_DECLARATION.
+ * @param GPIO_Pin  Specifies the GPIO pins to be written. Refer to @ref GPIO_PINS_DEFINE.
+ * @param BitVal    Specifies the value of the specified GPIO pin.
+ *                   This parameter can be any value of @ref BitAction.
+ */
+void GPIO_WriteBit(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin, BitAction BitVal)
+{
+    /* Check the parameters */
+    assert_param(IS_GPIO_PIN(GPIO_Pin));
+    assert_param(IS_GPIO_BIT_ACTION(BitVal));
+
+    if (BitVal != Bit_RESET)
+    {
+        GPIOx->GPIO_DR |= GPIO_Pin;
+    }
+    else
+    {
+        GPIOx->GPIO_DR &= ~(GPIO_Pin);
+    }
+}
+
+/**
+ * @brief Set or reset the output value of the specified GPIO port.
+ * @param GPIOx    Specifies the GPIO port. Refer to @ref GPIO_DECLARATION.
+ * @param PortVal  Specifies the value of the specified GPIO port.
+ */
+void GPIO_Write(GPIO_TypeDef *GPIOx, uint32_t PortVal)
+{
+    GPIOx->GPIO_DR = PortVal;
+}
+
+/**
+ * @brief Set the GPIO direction of the specified GPIO pin.
+ * @param GPIOx     Specifies the GPIO port. Refer to @ref GPIO_DECLARATION.
+ * @param GPIO_Pin  Specifies the GPIO pins to be configured. Refer to @ref GPIO_PINS_DEFINE.
+ * @param GPIO_Dir  Specifies the GPIO direction. Refer to @ref GPIO_DIRECTION.
+ */
+void GPIO_SetDirection(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin,
+                       GPIODir_TypeDef GPIO_Dir)
+{
+    /* Check the parameters */
+    assert_param(IS_GPIO_PIN(GPIO_Pin));
+
+    if (GPIO_Dir == GPIO_DIR_OUT)
+    {
+        GPIOx->GPIO_DDR |= GPIO_Pin;
+    }
+    else
+    {
+        GPIOx->GPIO_DDR &= ~GPIO_Pin;
+    }
+}
+
+/**
+ * @brief Set the GPIO polarity of the specified GPIO pin.
+ * @param GPIOx     Specifies the GPIO port. Refer to @ref GPIO_DECLARATION.
+ * @param GPIO_Pin  Specifies the GPIO pins to be configured. Refer to @ref GPIO_PINS_DEFINE.
+ * @param Polarity  Specifies the GPIO polarity. Refer to @ref GPIO_POLARITY.
+ */
+void GPIO_SetPolarity(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin, GPIOPolarity_TypeDef Polarity)
+{
+    /* Check the parameters */
+    assert_param(IS_GPIO_POLARITY_TYPE(Polarity));
+
+    GPIO_ExtPolarity(GPIOx, GPIO_Pin, Polarity);
+}
+
 #if (GPIO_SUPPORT_OUTPUT_MODE_SELECT == 1)
 /**
-  * \brief  Set GPIO Output mode.
-  * \param  GPIOx: Select the GPIO peripheral. \ref GPIO_Declaration
-  * \param  GPIO_Pin: GPIO_Pin can be 0 to 31.
-  * \param  GPIO_OutputMode: Specifies the output mode to be set.
-  * \return None.
-  */
+ * @brief Set the GPIO output mode of the specified GPIO pin.
+ * @param GPIOx            Specifies the GPIO port. Refer to @ref GPIO_DECLARATION.
+ * @param GPIO_Pin         Specifies the GPIO pins to be configured. Refer to @ref GPIO_PINS_DEFINE.
+ * @param GPIO_OutputMode  Specifies the GPIO output mode. Refer to @ref GPIO_OUTPUT_MODE.
+ */
 void GPIO_SetOutputMode(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin,
                         GPIOOutputMode_TypeDef GPIO_OutputMode)
 {
@@ -277,179 +448,11 @@ void GPIO_SetOutputMode(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin,
 #endif
 
 /**
-  * \brief  Read the specified input port pin.
-  * \param  GPIOx: Select the GPIO peripheral. \ref GPIO_Declaration
-  * \param  GPIO_Pin: Specifies the port bit to read.
-  * \return The input port pin value.
-  */
-uint8_t GPIO_ReadInputDataBit(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin)
-{
-    /* Check the parameters */
-    assert_param(IS_GET_GPIO_PIN(GPIO_Pin));
-
-    if (GPIOx->GPIO_PAD_STATE & GPIO_Pin)
-    {
-        return SET;
-    }
-    else
-    {
-        return RESET;
-    }
-}
-
-/**
-  * \brief  Read value of all GPIO input data port.
-  * \param  GPIOx: Select the GPIO peripheral. \ref GPIO_Declaration
-  * \return GPIO input data port value.
-  */
-uint32_t GPIO_ReadInputData(GPIO_TypeDef *GPIOx)
-{
-    return ((uint32_t)GPIOx->GPIO_PAD_STATE);
-}
-
-/**
-  * \brief  Read the specified output port pin.
-  * \param  GPIOx: Select the GPIO peripheral. \ref GPIO_Declaration
-  * \param  GPIO_Pin: Specifies the port bit to read.
-  * \return The output port pin value.
-  */
-uint8_t GPIO_ReadOutputDataBit(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin)
-{
-    /* Check the parameters */
-    assert_param(IS_GET_GPIO_PIN(GPIO_Pin));
-
-    if (GPIOx->GPIO_DR & GPIO_Pin)
-    {
-        return SET;
-    }
-    else
-    {
-        return RESET;
-    }
-}
-
-/**
-  * \brief  Read value of all GPIO output data port.
-  * \param  GPIOx: Select the GPIO peripheral. \ref GPIO_Declaration
-  * \return GPIO output data port value.
-  */
-uint32_t GPIO_ReadOutputData(GPIO_TypeDef *GPIOx)
-{
-    return ((uint32_t)GPIOx->GPIO_DR);
-}
-
-/**
-  * \brief  Sets the selected data port bit.
-  * \param  GPIOx: Select the GPIO peripheral. \ref GPIO_Declaration
-  * \param  GPIO_Pin: Specifies the port bit to be written.
-  * \return None.
-  */
-void GPIO_SetBits(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin)
-{
-    /* Check the parameters */
-    assert_param(IS_GPIO_PIN(GPIO_Pin));
-
-    GPIOx->GPIO_DR |= GPIO_Pin;
-}
-
-/**
-  * \brief  Reset the selected data port bit.
-  * \param  GPIOx: Select the GPIO peripheral. \ref GPIO_Declaration
-  * \param  GPIO_Pin: Specifies the port bits to be written.
-  * \return None.
-  */
-void GPIO_ResetBits(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin)
-{
-    /* Check the parameters */
-    assert_param(IS_GPIO_PIN(GPIO_Pin));
-
-    GPIOx->GPIO_DR &= ~(GPIO_Pin);
-}
-
-/**
-  * \brief  Set or clear the selected data port bit.
-  * \param  GPIOx: Select the GPIO peripheral. \ref GPIO_Declaration
-  * \param  GPIO_Pin: Specifies the port bit to be written.
-  * \param  BitVal: specifies the value to be written to the selected bit.
-  * \return None.
-  */
-void GPIO_WriteBit(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin, BitAction BitVal)
-{
-    /* Check the parameters */
-    assert_param(IS_GPIO_PIN(GPIO_Pin));
-    assert_param(IS_GPIO_BIT_ACTION(BitVal));
-
-    if (BitVal != Bit_RESET)
-    {
-        GPIOx->GPIO_DR |= GPIO_Pin;
-    }
-    else
-    {
-        GPIOx->GPIO_DR &= ~(GPIO_Pin);
-    }
-}
-
-/**
-  * \brief  Set or clear data port.
-  * \param  GPIOx: Select the GPIO peripheral. \ref GPIO_Declaration
-  * \param  PortVal: Specifies the value to be written to the selected bit.
-  * \return None.
-  */
-void GPIO_Write(GPIO_TypeDef *GPIOx, uint32_t PortVal)
-{
-    GPIOx->GPIO_DR = PortVal;
-}
-
-
-/**
-  * \brief  Get GPIO interrupt status.
-  * \param  GPIOx: Select the GPIO peripheral. \ref GPIO_Declaration
-  * \param  GPIO_Pin: Specifies the port bit to be written.
-  * \return The new state of GPIO_INT (SET or RESET).
-  */
-ITStatus GPIO_GetINTStatus(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin)
-{
-    /* Check the parameters */
-    assert_param(IS_GET_GPIO_PIN(GPIO_Pin));
-
-    if ((GPIOx->GPIO_INT_STS & GPIO_Pin) == GPIO_Pin)
-    {
-        return SET;
-    }
-    else
-    {
-        return RESET;
-    }
-}
-
-/**
-  * \brief  Specifies the direction for the selected pins.
-  * \param  GPIOx: Select the GPIO peripheral. \ref GPIO_Declaration
-  * \param  GPIO_PinBit: Specifies the GPIO pins to be configured, please refer to "GPIO_pins_define" part.
-  * \param  GPIO_Dir: Set the GPIO direction.
-  * \return None.
-  */
-void GPIO_SetDirection(GPIO_TypeDef *GPIOx, uint32_t GPIO_PinBit,
-                       GPIODir_TypeDef GPIO_Dir)
-{
-    /* Check the parameters */
-    assert_param(IS_GPIO_PIN(GPIO_PinBit));
-
-    if (GPIO_Dir == GPIO_DIR_OUT)
-    {
-        GPIOx->GPIO_DDR |= GPIO_PinBit;
-    }
-    else
-    {
-        GPIOx->GPIO_DDR &= ~GPIO_PinBit;
-    }
-}
-
-/**
-  * \brief  Get GPIO pad status.
-  * \param  GPIO_Pin: Specifies the port bit to be written.
-  * \return The new state of GPIO_Pad (SET or RESET).
-  */
+ * @brief Get the PAD status of the specified GPIO pin.
+ * @param GPIOx     Specifies the GPIO port. Refer to @ref GPIO_DECLARATION.
+ * @param GPIO_Pin  Specifies the GPIO pins to be configured. Refer to @ref GPIO_PINS_DEFINE.
+ * @return The PAD status of the specified GPIO pin.
+ */
 FlagStatus GPIO_GetPadStatus(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin)
 {
     /* Check the parameters */
@@ -465,26 +468,17 @@ FlagStatus GPIO_GetPadStatus(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin)
     }
 }
 
-/**
-  * \brief  Set GPIO Int Polarity.
-  * \param  GPIOx: Select the GPIO peripheral. \ref GPIO_Declaration
-  * \param  GPIO_Pin: GPIO_Pin can be 0 to 31.
-  * \param  int_type: Specifies the polarity type to be set.
-  * \return None.
-  */
-void GPIO_SetPolarity(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin, GPIOPolarity_TypeDef Polarity)
-{
-    /* Check the parameters */
-    assert_param(IS_GPIO_POLARITY_TYPE(Polarity));
-
-    GPIO_ExtPolarity(GPIOx, GPIO_Pin, Polarity);
-}
-
 /*============================================================================*
  *                        RAP Functions
  *============================================================================*/
 #if (GPIO_SUPPORT_RAP_FUNCTION == 1)
 
+/**
+ * @brief Enable or disable the RAP mode of the specified GPIO pin.
+ * @param GPIOx     Specifies the GPIO port. Refer to @ref GPIO_DECLARATION.
+ * @param GPIO_Pin  Specifies the GPIO pins to be configured. Refer to @ref GPIO_PINS_DEFINE.
+ * @param NewState  Enable or disable the RAP mode.
+ */
 void GPIO_RAPModeCmd(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin, FunctionalState NewState)
 {
     /* Check the parameters */
@@ -501,6 +495,12 @@ void GPIO_RAPModeCmd(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin, FunctionalState New
     return;
 }
 
+/**
+ * @brief Trigger the GPIO action of the specified GPIO pin.
+ * @param GPIOx     Specifies the GPIO port. Refer to @ref GPIO_DECLARATION.
+ * @param GPIO_Pin  Specifies the GPIO pins to be configured. Refer to @ref GPIO_PINS_DEFINE.
+ * @param Action    Specifies the action to be triggered. Refer to @ref GPIO_ACTION.
+ */
 void GPIO_ActionTrigger(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin, uint32_t Action)
 {
     /* Check the parameters */
@@ -521,6 +521,5 @@ void GPIO_ActionTrigger(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin, uint32_t Action)
     return;
 }
 #endif
-
 
 

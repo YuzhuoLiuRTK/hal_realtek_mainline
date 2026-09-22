@@ -16,11 +16,13 @@ extern "C" {
 #include "rap/src/device/rtl87x2j/rtl_rap_def.h"
 #elif defined (CONFIG_SOC_SERIES_RTL87X3J)
 #include "rap/src/device/rtl87x3j/rtl_rap_def.h"
+#elif defined (CONFIG_SOC_SERIES_RTL87X3K)
+#include "rap/src/device/rtl87x3k/rtl_rap_def.h"
 #endif
 
 /**
- * @defgroup RAP RAP
- * @ingroup PERIPH_DRIVER
+ * @defgroup RAP_DRIVER DRIVER
+ * @ingroup RAP
  * @brief Real Autonomous Peripheral (RAP) driver.
  *
  * @details The RAP is a hardware routing engine that links peripheral Events to
@@ -536,7 +538,7 @@ uint32_t RAP_ActionEventChannelGet(uint32_t ActionEvent);
 
 /** @} */ /* End of group RAP_Exported_Functions */
 
-/** @} */ /* End of group RAP */
+/** @} */ /* End of group RAP_DRIVER */
 
 #ifdef __cplusplus
 }

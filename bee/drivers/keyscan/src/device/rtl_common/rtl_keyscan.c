@@ -20,10 +20,10 @@ extern void KEYSCAN_FIFOConfig(KEYSCAN_TypeDef *KeyScan, uint32_t FIFOTriggerLev
  *                           Public Functions
  *============================================================================*/
 /**
-  * \brief  Deinitializes the KEYSCAN peripheral registers to their default reset values(turn off keyscan clock).
-  * \param  KEYSCANx: Selected KEYSCAN peripheral.
-  * \return None
-  */
+ * @brief Deinitializes the KEYSCAN peripheral registers to their default reset values.
+ *
+ * @param[in] KEYSCANx Selected KEYSCAN peripheral.
+ */
 void KEYSCAN_DeInit(KEYSCAN_TypeDef *KEYSCANx)
 {
     /* Check the parameters */
@@ -33,25 +33,26 @@ void KEYSCAN_DeInit(KEYSCAN_TypeDef *KEYSCANx)
 }
 
 /**
-  * \brief  Initializes the KEYSCAN peripheral according to the specified
-  *         parameters in the KEYSCAN_InitStruct
-  * \param  KEYSCANx: Selected KEYSCAN peripheral.
-  * \param  KEYSCAN_InitStruct: Pointer to a KEYSCAN_InitTypeDef structure that
-  *         contains the configuration information for the specified KEYSCAN peripheral
-  * \return None
-  */
+ * @brief Initializes the KEYSCAN peripheral according to the specified
+ *        parameters in the KEYSCAN_InitStruct.
+ *
+ * @param[in] KEYSCANx Selected KEYSCAN peripheral.
+ * @param[in] KEYSCAN_InitStruct Pointer to a KEYSCAN_InitTypeDef structure that
+ *            contains the configuration information for the specified KEYSCAN peripheral.
+ */
 void KEYSCAN_Init(KEYSCAN_TypeDef *KEYSCANx, KEYSCAN_InitTypeDef *KEYSCAN_InitStruct)
 {
-    assert_param(IS_KEYSCAN_PERIPH(KEYSCAN));
-    assert_param(IS_KEYSCAN_ROW_NUM(KEYSCAN_InitStruct->rowSize));
-    assert_param(IS_KEYSCAN_COL_NUM(KEYSCAN_InitStruct->colSize));
-    assert_param(IS_KEYSCAN_DEBOUNCE_EN(KEYSCAN_InitStruct->debounceEn));
-    assert_param(IS_KEYSCAN_SCANINTERVAL_EN(KEYSCAN_InitStruct->scantimerEn));
-    assert_param(IS_KEYSCAN_RELEASE_DETECT_EN(KEYSCAN_InitStruct->detecttimerEn));
-    assert_param(IS_KEYSCAN_DETECT_MODE(KEYSCAN_InitStruct->detectMode));
-    assert_param(IS_KEYSCAN_FIFO_OVR_CTRL(KEYSCAN_InitStruct->fifoOvrCtrl));
-    assert_param(IS_KEYSCAN_SCAN_MODE(KEYSCAN_InitStruct->scanmode));
-    assert_param(IS_KEYSCAN_KEY_LIMIT(KEYSCAN_InitStruct->keylimit));
+    /* Check the parameters */
+    assert_param(IS_KEYSCAN_PERIPH(KEYSCANx));
+    assert_param(IS_KEYSCAN_ROW_NUM(KEYSCAN_InitStruct->KEYSCAN_RowSize));
+    assert_param(IS_KEYSCAN_COL_NUM(KEYSCAN_InitStruct->KEYSCAN_ColSize));
+    assert_param(IS_FUNCTIONAL_STATE(KEYSCAN_InitStruct->KEYSCAN_DebounceEn));
+    assert_param(IS_FUNCTIONAL_STATE(KEYSCAN_InitStruct->KEYSCAN_ScanTimerEn));
+    assert_param(IS_FUNCTIONAL_STATE(KEYSCAN_InitStruct->KEYSCAN_DetectTimerEn));
+    assert_param(IS_KEYSCAN_DETECT_MODE(KEYSCAN_InitStruct->KEYSCAN_DetectMode));
+    assert_param(IS_KEYSCAN_FIFO_OVFL_CTRL(KEYSCAN_InitStruct->KEYSCAN_FIFOOvflCtrl));
+    assert_param(IS_KEYSCAN_SCAN_MODE(KEYSCAN_InitStruct->KEYSCAN_ScanMode));
+    assert_param(IS_KEYSCAN_KEY_LIMIT(KEYSCAN_InitStruct->KEYSCAN_KeyLimit));
 
     /* Mask all keyscan interrupt */
     KEYSCAN->KEYSCAN_INT_MASK |= 0x1f;
@@ -86,7 +87,7 @@ void KEYSCAN_Init(KEYSCAN_TypeDef *KEYSCANx, KEYSCAN_InitTypeDef *KEYSCAN_InitSt
     keyscan_0x08.b.keyscan_fifo_ov_ctrl = KEYSCAN_InitStruct->KEYSCAN_FIFOOvflCtrl;
     KEYSCAN->KEYSCAN_CONFIG2 = keyscan_0x08.d32;
 
-    /* Config fifo threshol and key limit */
+    /* Config fifo threshold and key limit */
     KEYSCAN_FIFOConfig(KEYSCAN,
                        KEYSCAN_InitStruct->KEYSCAN_FIFOTriggerLevel,
                        KEYSCAN_InitStruct->KEYSCAN_KeyLimit);
@@ -128,10 +129,10 @@ void KEYSCAN_Init(KEYSCAN_TypeDef *KEYSCANx, KEYSCAN_InitTypeDef *KEYSCAN_InitSt
 }
 
 /**
-  * \brief  Fills each I2C_InitStruct member with its default value.
-  * \param  KEYSCAN_InitStruct: Pointer to a KEYSCAN_InitTypeDef structure which will be initialized.
-  * \return None
-  */
+ * @brief Fills each KEYSCAN_InitStruct member with its default value.
+ *
+ * @param[in] KEYSCAN_InitStruct Pointer to a KEYSCAN_InitTypeDef structure which will be initialized.
+ */
 void KEYSCAN_StructInit(KEYSCAN_InitTypeDef *KEYSCAN_InitStruct)
 {
     KEYSCAN_InitStruct->KEYSCAN_ColSize       = 2;
@@ -169,23 +170,24 @@ void KEYSCAN_StructInit(KEYSCAN_InitTypeDef *KEYSCAN_InitStruct)
 }
 
 /**
-  * \brief  Enables or disables the specified KEYSCAN interrupt.
-  * \param  KEYSCANx: Selected KEYSCAN peripheral.
-  * \param  KEYSCAN_INT: Specifies the KEYSCAN interrupts sources to be enabled or disabled.
-  *         This parameter can be any combination of the following values:
-  *         \arg KEYSCAN_INT_THRESHOLD: Kescan FIFO data over threshold interrupt.
-  *         \arg KEYSCAN_INT_OVER_READ: KEYSCAN over read interrupt.
-  *         \arg KEYSCAN_INT_SCAN_END: KEYSCAN scan end interrupt.
-  *         \arg KEYSCAN_INT_FIFO_NOT_EMPTY: KEYSCAN FIFO not empty interrupt.
-  *         \arg KEYSCAN_INT_ALL_RELEASE: KEYSCAN all key release interrupt.
-  * \param  NewState: New state of the specified KEYSCAN interrupts.
-  *         This parameter can be: ENABLE or DISABLE.
-  * \return None
-  */
+ * @brief Enables or disables the specified KEYSCAN interrupt.
+ *
+ * @param[in] KEYSCANx Selected KEYSCAN peripheral.
+ * @param[in] KEYSCAN_INT Specifies the KEYSCAN interrupts sources to be enabled or disabled.
+ *            This parameter can be any combination of the following values:
+ *            - KEYSCAN_INT_THRESHOLD: KEYSCAN FIFO data over threshold interrupt.
+ *            - KEYSCAN_INT_OVER_READ: KEYSCAN over read interrupt.
+ *            - KEYSCAN_INT_SCAN_END: KEYSCAN scan end interrupt.
+ *            - KEYSCAN_INT_FIFO_NOT_EMPTY: KEYSCAN FIFO not empty interrupt.
+ *            - KEYSCAN_INT_ALL_RELEASE: KEYSCAN all key release interrupt.
+ * @param[in] NewState New state of the specified KEYSCAN interrupts.
+ *            - ENABLE: Enable the specified KEYSCAN interrupts.
+ *            - DISABLE: Disable the specified KEYSCAN interrupts.
+ */
 void KEYSCAN_INTConfig(KEYSCAN_TypeDef *KEYSCANx, uint32_t KEYSCAN_INT, FunctionalState NewState)
 {
     /* Check the parameters */
-    assert_param(IS_KEYSCAN_PERIPH(KEYSCAN));
+    assert_param(IS_KEYSCAN_PERIPH(KEYSCANx));
     assert_param(IS_FUNCTIONAL_STATE(NewState));
     assert_param(IS_KEYSCAN_CONFIG_INT(KEYSCAN_INT));
 
@@ -202,16 +204,24 @@ void KEYSCAN_INTConfig(KEYSCAN_TypeDef *KEYSCANx, uint32_t KEYSCAN_INT, Function
 }
 
 /**
-  * \brief  Enables or disables the specified KEYSCAN interrupts mask.
-  * \param  KEYSCANx: Selected KEYSCAN peripheral.
-  * \param  NewState: New state of the specified KEYSCAN interrupts mask.
-  *         This parameter can be: ENABLE or DISABLE.
-  * \return None
-  */
+ * @brief Mask the specified KEYSCAN interrupt.
+ *
+ * @param[in] KEYSCANx Selected KEYSCAN peripheral.
+ * @param[in] KEYSCAN_INT Specifies the KEYSCAN interrupts sources to be enabled or disabled.
+ *            This parameter can be any combination of the following values:
+ *            - KEYSCAN_INT_THRESHOLD: KEYSCAN FIFO data over threshold interrupt.
+ *            - KEYSCAN_INT_OVER_READ: KEYSCAN over read interrupt.
+ *            - KEYSCAN_INT_SCAN_END: KEYSCAN scan end interrupt.
+ *            - KEYSCAN_INT_FIFO_NOT_EMPTY: KEYSCAN FIFO not empty interrupt.
+ *            - KEYSCAN_INT_ALL_RELEASE: KEYSCAN all key release interrupt.
+ * @param[in] NewState New state of the specified KEYSCAN interrupts mask.
+ *            - ENABLE: Mask the specified KEYSCAN interrupts.
+ *            - DISABLE: Unmask the specified KEYSCAN interrupts.
+ */
 void KEYSCAN_INTMask(KEYSCAN_TypeDef *KEYSCANx, uint32_t KEYSCAN_INT, FunctionalState NewState)
 {
     /* Check the parameters */
-    assert_param(IS_KEYSCAN_PERIPH(KEYSCAN));
+    assert_param(IS_KEYSCAN_PERIPH(KEYSCANx));
     assert_param(IS_FUNCTIONAL_STATE(NewState));
 
     if (NewState == ENABLE)
@@ -227,16 +237,16 @@ void KEYSCAN_INTMask(KEYSCAN_TypeDef *KEYSCANx, uint32_t KEYSCAN_INT, Functional
 }
 
 /**
-  * \brief  Read data from keyscan FIFO.
-  * \param  KEYSCANx: selected KEYSCAN peripheral.
-  * \param  outBuf: buffer to save data read from KEYSCAN FIFO.
-  * \param  count: number of data to be read.
-  * \return None
-  */
+ * @brief Read data from KEYSCAN FIFO.
+ *
+ * @param[in] KEYSCANx Selected KEYSCAN peripheral.
+ * @param[out] outBuf Buffer to save data read from KEYSCAN FIFO.
+ * @param[in] count Data length to be read.
+ */
 void KEYSCAN_Read(KEYSCAN_TypeDef *KEYSCANx, uint16_t *outBuf, uint16_t count)
 {
     /* Check the parameters */
-    assert_param(IS_KEYSCAN_PERIPH(KEYSCAN));
+    assert_param(IS_KEYSCAN_PERIPH(KEYSCANx));
 
     for (uint16_t i = 0; i < count; i++)
     {
@@ -247,16 +257,17 @@ void KEYSCAN_Read(KEYSCAN_TypeDef *KEYSCANx, uint16_t *outBuf, uint16_t count)
 }
 
 /**
-  * \brief  Enables or disables the KEYSCAN peripheral.
-  * \param  KEYSCANx: Selected KEYSCAN peripheral.
-  * \param  NewState: New state of the KEYSCAN peripheral.
-  *         This parameter can be: ENABLE or DISABLE.
-  * \return None
-  */
+ * @brief Enable or disable the KEYSCAN peripheral.
+ *
+ * @param[in] KEYSCANx Selected KEYSCAN peripheral.
+ * @param[in] NewState New state of the KEYSCAN peripheral.
+ *            - ENABLE: Enable the KEYSCAN peripheral.
+ *            - DISABLE: Disable the KEYSCAN peripheral.
+ */
 void KEYSCAN_Cmd(KEYSCAN_TypeDef *KEYSCANx, FunctionalState NewState)
 {
     /* Check the parameters */
-    assert_param(IS_KEYSCAN_PERIPH(KEYSCAN));
+    assert_param(IS_KEYSCAN_PERIPH(KEYSCANx));
     assert_param(IS_FUNCTIONAL_STATE(NewState));
 
     KEYSCAN_CONFIG2_TypeDef keyscan_0x08 = {.d32 = KEYSCAN->KEYSCAN_CONFIG2};
@@ -268,17 +279,20 @@ void KEYSCAN_Cmd(KEYSCAN_TypeDef *KEYSCANx, FunctionalState NewState)
 }
 
 /**
-  * \brief  Set filter data.
-  * \param  KEYSCANx: Selected KEYSCAN peripheral.
-  * \param  data: Config the data to be filtered.
-  *         This parameter should not be more than 9 bits
-  * \param  NewState: New state of the KEYSCAN peripheral.
-  * \return none.
-  */
+ * @brief Set filter data.
+ *
+ * @param[in] KEYSCANx Selected KEYSCAN peripheral.
+ * @param[in] data Config the data to be filtered.
+ *            This parameter should not be more than 9 bits.
+ * @param[in] NewState New state of the data filter.
+ *            - ENABLE: Enable the data filter.
+ *            - DISABLE: Disable the data filter.
+ */
 void KEYSCAN_FilterDataConfig(KEYSCAN_TypeDef *KEYSCANx, uint16_t data, FunctionalState NewState)
 {
     /* Check the parameters */
-    assert_param(IS_KEYSCAN_PERIPH(KEYSCAN));
+    assert_param(IS_KEYSCAN_PERIPH(KEYSCANx));
+    assert_param(IS_FUNCTIONAL_STATE(NewState));
 
     if (NewState == ENABLE)
     {
@@ -301,18 +315,21 @@ void KEYSCAN_FilterDataConfig(KEYSCAN_TypeDef *KEYSCANx, uint16_t data, Function
 }
 
 /**
-  * \brief  KEYSCAN debounce time config.
-  * \param  KEYSCANx: Selected KEYSCAN peripheral.
-  * \param  time: KEYSCAN hardware debounce time.
-  * \param  NewState: New state of the KEYSCAN debounce function.
-  *         This parameter can be: ENABLE or DISABLE.
-  * \return none.
-  */
+ * @brief KEYSCAN debounce time config.
+ *
+ * @param[in] KEYSCANx Selected KEYSCAN peripheral.
+ * @param[in] time KEYSCAN hardware debounce time.
+ *            Debounce time = delay clock * time.
+ *            This parameter can be a value of 0 to 0x1FF.
+ * @param[in] NewState New state of the KEYSCAN debounce function.
+ *            - ENABLE: Enable the KEYSCAN debounce function.
+ *            - DISABLE: Disable the KEYSCAN debounce function.
+ */
 void KEYSCAN_DebounceConfig(KEYSCAN_TypeDef *KEYSCANx, uint16_t time,
                             FunctionalState NewState)
 {
     /* Check the parameters */
-    assert_param(IS_KEYSCAN_PERIPH(KEYSCAN));
+    assert_param(IS_KEYSCAN_PERIPH(KEYSCANx));
     assert_param(IS_FUNCTIONAL_STATE(NewState));
 
     KEYSCAN_CONFIG1_TypeDef keyscan_0x04 = {.d32 = KEYSCAN->KEYSCAN_CONFIG1};
@@ -322,35 +339,37 @@ void KEYSCAN_DebounceConfig(KEYSCAN_TypeDef *KEYSCANx, uint16_t time,
 }
 
 /**
-  * \brief  Get KEYSCAN FIFO data num.
-  * \param  KEYSCANx: Selected KEYSCAN peripheral.
-  * \return Data length in FIFO.
-  */
+ * @brief Get KEYSCAN FIFO data num.
+ *
+ * @param[in] KEYSCANx Selected KEYSCAN peripheral.
+ *
+ * @return Data length in FIFO.
+ */
 uint16_t KEYSCAN_GetFIFODataNum(KEYSCAN_TypeDef *KEYSCANx)
 {
     /* Check the parameters */
-    assert_param(IS_KEYSCAN_PERIPH(KEYSCAN));
+    assert_param(IS_KEYSCAN_PERIPH(KEYSCANx));
 
     KEYSCAN_INT_STS_TypeDef keyscan_0x20 = {.d32 = KEYSCAN->KEYSCAN_INT_STS};
     return (uint16_t)(keyscan_0x20.b.keyscan_fifo_data_level);
 }
 
 /**
-  * \brief  Clear the KEYSCAN interrupt pending bit.
-  * \param  KEYSCANx: Selected KEYSCAN peripheral.
-  * \param  KEYSCAN_INT: Specifies the KEYSCAN interrupts sources to be enabled or disabled.
-  *         This parameter can be any combination of the following values:
-  *         \arg KEYSCAN_INT_THRESHOLD: Kescan FIFO data over threshold interrupt.
-  *         \arg KEYSCAN_INT_OVER_READ: KEYSCAN over read interrupt.
-  *         \arg KEYSCAN_INT_SCAN_END: KEYSCAN scan end interrupt.
-  *         \arg KEYSCAN_INT_FIFO_NOT_EMPTY: KEYSCAN FIFO not empty interrupt.
-  *         \arg KEYSCAN_INT_ALL_RELEASE: KEYSCAN all key release interrupt.
-  * \return none.
-  */
+ * @brief Clear the KEYSCAN interrupt pending bit.
+ *
+ * @param[in] KEYSCANx Selected KEYSCAN peripheral.
+ * @param[in] KEYSCAN_INT Specifies the interrupt pending bit to clear.
+ *            This parameter can be any combination of the following values:
+ *            - KEYSCAN_INT_THRESHOLD: KEYSCAN FIFO data over threshold interrupt.
+ *            - KEYSCAN_INT_OVER_READ: KEYSCAN over read interrupt.
+ *            - KEYSCAN_INT_SCAN_END: KEYSCAN scan end interrupt.
+ *            - KEYSCAN_INT_FIFO_NOT_EMPTY: KEYSCAN FIFO not empty interrupt.
+ *            - KEYSCAN_INT_ALL_RELEASE: KEYSCAN all key release interrupt.
+ */
 void KEYSCAN_ClearINTPendingBit(KEYSCAN_TypeDef *KEYSCANx, uint32_t KEYSCAN_INT)
 {
     /* Check the parameters */
-    assert_param(IS_KEYSCAN_PERIPH(KEYSCAN));
+    assert_param(IS_KEYSCAN_PERIPH(KEYSCANx));
     assert_param(IS_KEYSCAN_CONFIG_INT(KEYSCAN_INT));
 
     KEYSCAN->KEYSCAN_INT_CLR |= KEYSCAN_INT;
@@ -359,19 +378,19 @@ void KEYSCAN_ClearINTPendingBit(KEYSCAN_TypeDef *KEYSCANx, uint32_t KEYSCAN_INT)
 }
 
 /**
-  * \brief  Clear the specified KEYSCAN flag.
-  * \param  KEYSCANx: Selected KEYSCAN peripheral.
-  * \param  KEYSCAN_FLAG: Specifies the flag to clear.
-  *         This parameter can be any combination of the following values:
-  *         \arg KEYSCAN_FLAG_FIFOLIMIT
-  *         \arg KEYSCAN_FLAG_DATAFILTER
-  *         \arg KEYSCAN_FLAG_OVR
-  * \return none.
-  */
+ * @brief Clear the specified KEYSCAN flag.
+ *
+ * @param[in] KEYSCANx Selected KEYSCAN peripheral.
+ * @param[in] KEYSCAN_FLAG Specifies the flag to clear.
+ *            This parameter can be one of the following values:
+ *            - KEYSCAN_FLAG_FIFOLIMIT: FIFO limit status. The FIFO limit can be configured to limit the max allowable key data in one scan.
+ *            - KEYSCAN_FLAG_DATAFILTER: FIFO data filter status.
+ *            - KEYSCAN_FLAG_OVR: FIFO overflow status.
+ */
 void KEYSCAN_ClearFlags(KEYSCAN_TypeDef *KEYSCANx, uint32_t KEYSCAN_FLAG)
 {
     /* Check the parameters */
-    assert_param(IS_KEYSCAN_PERIPH(KEYSCAN));
+    assert_param(IS_KEYSCAN_PERIPH(KEYSCANx));
     assert_param(IS_KEYSCAN_CLEAR_FLAG(KEYSCAN_FLAG));
 
     KEYSCAN_INT_CLR_TypeDef keyscan_0x1c = {.d32 = KEYSCAN->KEYSCAN_INT_CLR};
@@ -393,26 +412,30 @@ void KEYSCAN_ClearFlags(KEYSCAN_TypeDef *KEYSCANx, uint32_t KEYSCAN_FLAG)
 }
 
 /**
-  * \brief  Check whether the specified KEYSCAN flag is set.
-  * \param  KEYSCANx: Selected KEYSCAN peripheral.
-  * \param  KEYSCAN_FLAG: Specifies the flag to clear.
-  *         This parameter can be any combination of the following values:
-  *         \arg KEYSCAN_FLAG_FIFOLIMIT:
-  *         \arg KEYSCAN_FLAG_THRESHOLD:
-  *         \arg KEYSCAN_FLAG_OVER_READ:
-  *         \arg KEYSCAN_FLAG_SCAN_END:
-  *         \arg KEYSCAN_FLAG_FIFO_NOT_EMPTY:
-  *         \arg KEYSCAN_FLAG_ALL_RELEASE:
-  *         \arg KEYSCAN_FLAG_DATAFILTER:
-  *         \arg KEYSCAN_FLAG_OVR:
-  *         \arg KEYSCAN_FLAG_FULL:
-  *         \arg KEYSCAN_FLAG_EMPTY:
-  * \return none.
-  */
+ * @brief Check whether the specified KEYSCAN flag is set.
+ *
+ * @param[in] KEYSCANx Selected KEYSCAN peripheral.
+ * @param[in] KEYSCAN_FLAG Specifies the flag to check.
+ *            This parameter can be one of the following values:
+ *            - KEYSCAN_FLAG_FIFOLIMIT: FIFO limit status. The FIFO limit can be configured to limit the max allowable key data in one scan.
+ *            - KEYSCAN_INT_FLAG_THRESHOLD: FIFO threshold interrupt status.
+ *            - KEYSCAN_INT_FLAG_OVER_READ: FIFO over read interrupt status.
+ *            - KEYSCAN_INT_FLAG_SCAN_END: Scan finish interrupt status.
+ *            - KEYSCAN_INT_FLAG_FIFO_NOT_EMPTY: FIFO not empty interrupt status.
+ *            - KEYSCAN_INT_FLAG_ALL_RELEASE: All release interrupt status.
+ *            - KEYSCAN_FLAG_DATAFILTER: FIFO data filter status.
+ *            - KEYSCAN_FLAG_OVR: FIFO overflow status.
+ *            - KEYSCAN_FLAG_FULL: FIFO full status.
+ *            - KEYSCAN_FLAG_EMPTY: FIFO empty status.
+ *
+ * @return The status of KEYSCAN flag (SET or RESET).
+ * @retval SET    The specified KEYSCAN flag is set.
+ * @retval RESET  The specified KEYSCAN flag is reset.
+ */
 FlagStatus KEYSCAN_GetFlagState(KEYSCAN_TypeDef *KEYSCANx, uint32_t KEYSCAN_FLAG)
 {
     /* Check the parameters */
-    assert_param(IS_KEYSCAN_PERIPH(KEYSCAN));
+    assert_param(IS_KEYSCAN_PERIPH(KEYSCANx));
     assert_param(IS_KEYSCAN_FLAG(KEYSCAN_FLAG));
 
     if ((KEYSCAN->KEYSCAN_INT_STS & KEYSCAN_FLAG) != 0)
@@ -423,33 +446,33 @@ FlagStatus KEYSCAN_GetFlagState(KEYSCAN_TypeDef *KEYSCANx, uint32_t KEYSCAN_FLAG
 }
 
 /**
-  * \brief  Read FIFO data.
-  * \param  KEYSCANx: Selected KEYSCAN peripheral.
-  * \return KEYSCAN FIFO data.
-  */
+ * @brief Read FIFO data.
+ *
+ * @param[in] KEYSCANx Selected KEYSCAN peripheral.
+ *
+ * @return KEYSCAN FIFO data.
+ */
 uint16_t KEYSCAN_ReadFIFOData(KEYSCAN_TypeDef *KEYSCANx)
 {
     /* Check the parameters */
-    assert_param(IS_KEYSCAN_PERIPH(KEYSCAN));
+    assert_param(IS_KEYSCAN_PERIPH(KEYSCANx));
 
     return (uint16_t)(KEYSCAN->KEYSCAN_FIFO_ENTRY);
 }
 
 /**
- * \brief  Set manual scan trigger mode. This function is only effective when keyscan is manual scan mode.
+ * @brief Set manual scan trigger mode. This function is only effective when keyscan is manual scan mode.
  *
- * \param[in] KEYSCANx: Selected KEYSCAN peripheral.
- * \param[in] manual_sel: Specifies the KEYSCAN manual trigger mode.
- *                        This parameter can be one of the following values:
- *                        \arg KEYSCAN_MANUAL_SEL_BIT: scan trigger by register (Call API KEYSCAN_Cmd).
- *                        \arg KEYSCAN_MANUAL_SEL_KEY: scan trigger by key.
- *
- * \return None.
- * \endcode
+ * @param[in] KEYSCANx Selected KEYSCAN peripheral.
+ * @param[in] manual_sel Specifies the KEYSCAN manual trigger mode.
+ *            This parameter can be one of the following values:
+ *            - KEYSCAN_MANUAL_SEL_BIT: Scan trigger by register (Call API KEYSCAN_Cmd).
+ *            - KEYSCAN_MANUAL_SEL_KEY: Scan trigger by key.
  */
 void KEYSCAN_SetManualSelect(KEYSCAN_TypeDef *KEYSCANx, KEYSCANManualSel_TypeDef manual_sel)
 {
-    assert_param(IS_KEYSCAN_PERIPH(KEYSCAN));
+    /* Check the parameters */
+    assert_param(IS_KEYSCAN_PERIPH(KEYSCANx));
     assert_param(IS_KEYSCAN_MANUAL_SELECT(manual_sel));
 
     KEYSCAN_CONFIG2_TypeDef keyscan_0x08 = {.d32 = KEYSCAN->KEYSCAN_CONFIG2};
@@ -464,25 +487,15 @@ void KEYSCAN_SetManualSelect(KEYSCAN_TypeDef *KEYSCANx, KEYSCANManualSel_TypeDef
 }
 
 /**
- * \brief  Set preguard time. Preguard time = preguard_cnt * scan clock.
+ * @brief Set preguard time. Preguard time = preguard_cnt * scan clock.
  *
- * \param[in] KEYSCANx: Selected KEYSCAN peripheral.
- * \param[in] preguard_cnt: Specifies the preguard count. This parameter can be configured from 0 to 7.
- *
- * \return None.
- *
- * <b>Example usage</b>
- * \code{.c}
- *
- * void keyscan_demo(void)
- * {
- *     KEYSCAN_SetPreGuardTime(KEYSCAN, 3);
- * }
- * \endcode
+ * @param[in] KEYSCANx Selected KEYSCAN peripheral.
+ * @param[in] preguard_cnt Specifies the preguard count. This parameter can be configured from 0 to 7.
  */
 void KEYSCAN_SetPreGuardTime(KEYSCAN_TypeDef *KEYSCANx, uint8_t preguard_cnt)
 {
-    assert_param(IS_KEYSCAN_PERIPH(KEYSCAN));
+    /* Check the parameters */
+    assert_param(IS_KEYSCAN_PERIPH(KEYSCANx));
 
     KEYSCAN_CLK_DIV_TypeDef keyscan_0x00 = {.d32 = KEYSCAN->KEYSCAN_CLK_DIV};
     keyscan_0x00.b.keyscan_gt_pre_sel = preguard_cnt;
@@ -490,25 +503,15 @@ void KEYSCAN_SetPreGuardTime(KEYSCAN_TypeDef *KEYSCANx, uint8_t preguard_cnt)
 }
 
 /**
- * \brief  Set postguard time. Postguard time = postguard_cnt * scan clock.
+ * @brief Set postguard time. Postguard time = postguard_cnt * scan clock.
  *
- * \param[in] KEYSCANx: Selected KEYSCAN peripheral.
- * \param[in] postguard_cnt: Specifies the postguard count. This parameter can be configured from 0 to 7.
- *
- * \return None.
- *
- * <b>Example usage</b>
- * \code{.c}
- *
- * void keyscan_demo(void)
- * {
- *     KEYSCAN_SetPostGuardTime(KEYSCAN, 3);
- * }
- * \endcode
+ * @param[in] KEYSCANx Selected KEYSCAN peripheral.
+ * @param[in] postguard_cnt Specifies the postguard count. This parameter can be configured from 0 to 7.
  */
 void KEYSCAN_SetPostGuardTime(KEYSCAN_TypeDef *KEYSCANx, uint8_t postguard_cnt)
 {
-    assert_param(IS_KEYSCAN_PERIPH(KEYSCAN));
+    /* Check the parameters */
+    assert_param(IS_KEYSCAN_PERIPH(KEYSCANx));
 
     KEYSCAN_CLK_DIV_TypeDef keyscan_0x00 = {.d32 = KEYSCAN->KEYSCAN_CLK_DIV};
     keyscan_0x00.b.keyscan_gt_post_sel = postguard_cnt;
@@ -516,10 +519,19 @@ void KEYSCAN_SetPostGuardTime(KEYSCAN_TypeDef *KEYSCANx, uint8_t postguard_cnt)
 }
 
 #if (KEYSCAN_SUPPORT_RAP_FUNCTION == 1)
+/**
+ * @brief Enable or disable the KEYSCAN RAP mode.
+ *
+ * @param[in] KEYSCANx Selected KEYSCAN peripheral.
+ * @param[in] NewState New state of the RAP mode.
+ *            - ENABLE: Enable the KEYSCAN RAP mode.
+ *            - DISABLE: Disable the KEYSCAN RAP mode.
+ */
 void KEYSCAN_RAPModeCmd(KEYSCAN_TypeDef *KEYSCANx, FunctionalState NewState)
 {
     /* Check the parameters */
-    assert_param(IS_KEYSCAN_PERIPH(KEYSCAN));
+    assert_param(IS_KEYSCAN_PERIPH(KEYSCANx));
+    assert_param(IS_FUNCTIONAL_STATE(NewState));
 
     KEYSCAN_TASK_CTRL_TypeDef keyscan_0x38 = {.d32 = KEYSCAN->KEYSCAN_TASK_CTRL};
     keyscan_0x38.b.rap_mode = NewState;
@@ -528,10 +540,18 @@ void KEYSCAN_RAPModeCmd(KEYSCAN_TypeDef *KEYSCANx, FunctionalState NewState)
     return;
 }
 
+/**
+ * @brief Trigger the specified KEYSCAN action.
+ *
+ * @param[in] KEYSCANx Selected KEYSCAN peripheral.
+ * @param[in] Action Specifies the KEYSCAN action to trigger.
+ *            This parameter can be a value of @ref KEYSCAN_ACTION.
+ */
 void KEYSCAN_ActionTrigger(KEYSCAN_TypeDef *KEYSCANx, uint32_t Action)
 {
     /* Check the parameters */
-    assert_param(IS_ADC_ALL_PERIPH(KEYSCAN));
+    assert_param(IS_KEYSCAN_PERIPH(KEYSCANx));
+    assert_param(IS_KEYSCAN_ACTION(Action));
 
     KEYSCAN_TASK_CTRL_TypeDef keyscan_0x38 = {.d32 = KEYSCAN->KEYSCAN_TASK_CTRL};
     if (Action == KEYSCAN_ACTION_MANUAL)

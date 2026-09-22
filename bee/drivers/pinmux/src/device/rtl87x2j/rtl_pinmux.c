@@ -145,11 +145,9 @@ const PINMUXIndexTable_TypeDef pinmux_index_table =
  *                        Public Functions
  *============================================================================*/
 /**
-  * \brief  Reset all pin to default value.
-  * \param  None.
-  * \note   two SWD pins will also be reset. Please use this function carefully.
-  * \return None
-  */
+ * @brief Reset the PINMUX settings to idle mode of all pins.
+ * @note  The two SWD pins will also be reset. Please use this function carefully.
+ */
 void Pinmux_Reset(void)
 {
     for (uint8_t i = 0; i < MAX_PINMUX_NUM; i++)
@@ -161,10 +159,9 @@ void Pinmux_Reset(void)
 }
 
 /**
-  * \brief  Configure the specified pin to idle mode.
-  * \param  Pin_Num: Pin number to be configured. \ref Pin_Number.
-  * \return None
-  */
+ * @brief Configure the PINMUX settings to idle mode of the specified pad.
+ * @param[in] Pin_Num  Specifies the pin number to be configured. Refer to @ref Pin_Number.
+ */
 void Pinmux_Deinit(uint8_t Pin_Num)
 {
     if (!IS_PIN_NUMBER(Pin_Num))
@@ -180,11 +177,10 @@ void Pinmux_Deinit(uint8_t Pin_Num)
 }
 
 /**
-  * \brief  Configure the specified pin to its corresponding pin function.
-  * \param  Pin_Num: Pin number to be configured. \ref Pin_Number.
-  * \param  Pin_Func: Pin function. \ref PIN_Function.
-  * \return None
-  */
+ * @brief Configure the specified pad to its corresponding peripheral function.
+ * @param[in] Pin_Num   Specifies the pin number to be configured. Refer to @ref Pin_Number.
+ * @param[in] Pin_Func  Specifies the peripheral function. Refer to @ref PIN_FUNCTION.
+ */
 void Pinmux_Config(uint8_t Pin_Num, uint32_t Pin_Func)
 {
     if (!IS_PIN_NUMBER(Pin_Num))
@@ -203,31 +199,39 @@ void Pinmux_Config(uint8_t Pin_Num, uint32_t Pin_Func)
 }
 
 /**
-  * \brief  config the corresponding pad.
-  * \param  Pin_Num: Pin number to be configured. \ref Pin_Number.
-  * \param  AON_PAD_MODE: use software mode or pinmux mode.
-  *         This parameter can be one of the following values:
-  *         \arg PAD_SW_MODE: use software mode.
-  *         \arg PAD_PINMUX_MODE: use pinmux mode.
-  * \param  AON_PAD_PwrOn: config power of pad.
-  *         This parameter can be one of the following values:
-  *         \arg PAD_NOT_PWRON: shutdown power of pad.
-  *         \arg PAD_IS_PWRON: enable power of pad.
-  * \param  AON_PAD_Pull: config pad pull mode.
-  *         This parameter can be one of the following values:
-  *         \arg PAD_PULL_NONE: no pull.
-  *         \arg PAD_PULL_UP: pull this pin up.
-  *         \arg PAD_PULL_DOWN: pull thi pin down.
-  * \param  AON_PAD_E: config pad out put function.
-  *         This parameter can be one of the following values:
-  *         \arg PAD_OUT_DISABLE: disable pin output.
-  *         \arg PAD_OUT_ENABLE: enable pad output.
-  * \param  AON_PAD_O: config pin output level.
-  *         This parameter can be one of the following values:
-  *         \arg PAD_OUT_LOW: pad output low.
-  *         \arg PAD_OUT_HIGH: pad output high.
-  * \return None
-  */
+ * @brief Configure the PAD settings to the default state of all pads.
+ */
+void Pad_AllConfigDefault(void)
+{
+    uint16_t i = 0;
+    for (i = 0; i < TOTAL_PIN_NUM; i++)
+    {
+        Pad_TableConfig(OUTPUT_VAL, i, DISABLE);
+        Pad_TableConfig(OUTPUT_EN, i, DISABLE);
+        Pad_TableConfig(PULL_EN, i, DISABLE);
+        Pad_TableConfig(PULL_DIR, i, DISABLE);
+        Pad_TableConfig(PULL_RES, i, DISABLE);
+        Pad_TableConfig(WAKEUP_EN, i, DISABLE);
+        Pad_TableConfig(WAKEUP_POL, i, DISABLE);
+        Pad_TableConfig(POWER_SHDN, i, DISABLE);
+        Pad_TableConfig(PAD_DEB, i, DISABLE);
+        Pad_TableConfig(WAKEUP_RAP, i, DISABLE);
+        Pad_TableConfig(WAKEUP_PPU, i, DISABLE);
+        Pad_TableConfig(AON_MUX, i, DISABLE);
+    }
+
+}
+
+/**
+ * @brief Configure the operation mode which includes pad mode, power mode,
+ *        pull resistor, and output behavior of a specified pad.
+ * @param[in] Pin_Num        Specifies the pin number to be configured. Refer to @ref Pin_Number.
+ * @param[in] AON_PAD_Mode   Specifies the pad mode of the specified pin. Refer to @ref PAD_MODE.
+ * @param[in] AON_PAD_PwrOn  Specifies the power mode of the specified pin. Refer to @ref PAD_POWER_MODE.
+ * @param[in] AON_PAD_Pull   Specifies the pull mode of the specified pin. Refer to @ref PAD_PULL_MODE.
+ * @param[in] AON_PAD_E      Specifies the output direction of the specified pin. Refer to @ref PAD_OUTPUT_DIRECTION.
+ * @param[in] AON_PAD_O      Specifies the output value of the specified pin. Refer to @ref PAD_OUTPUT_VALUE.
+ */
 void Pad_Config(uint8_t                Pin_Num,
                 PADMode_TypeDef        AON_PAD_Mode,
                 PADPowerMode_TypeDef   AON_PAD_PwrOn,
@@ -294,14 +298,11 @@ void Pad_Config(uint8_t                Pin_Num,
 }
 
 /**
-  * \brief  config the corresponding pad.
-  * \param  Pin_Num: Pin number to be configured. \ref Pin_Number.
-  * \param  NewState: This parameter enable or disable the the pad for auto switch.
-  *         This parameter can be the following:
-  *         \arg DISABLE: Disable the pad for auto switch function.
-  *         \arg ENABLE: Enable the pad for auto switch function.
-  * \return None
-  */
+ * @brief Enables or disables the automatic pad mode switching during DLPS entry/exit.
+ * @param[in] Pin_Num   Specifies the pin number to be configured. Refer to @ref Pin_Number.
+ * @param[in] NewState  ENABLE to allow automatic mode switching,
+ *                      DISABLE to hold the current mode/state during DLPS.
+ */
 void Pad_ModeAutoSwitchCmd(uint8_t Pin_Num, FunctionalState NewState)
 {
     volatile uint32_t *aonmux_as_register = (volatile uint32_t *)(PAD_AONMUX_AS_BASE + 4 *
@@ -320,26 +321,10 @@ void Pad_ModeAutoSwitchCmd(uint8_t Pin_Num, FunctionalState NewState)
 }
 
 /**
-  * \brief  Config the corresponding pad for low power mode.
-  * \param  Pin_Num: Pin number to be configured. \ref Pin_Number.
-  * \param  AON_PAD_PwrOn: config power of pad.
-  *         This parameter can be one of the following values:
-  *         \arg PAD_NOT_PWRON: shutdown power of pad.
-  *         \arg PAD_IS_PWRON: enable power of pad.
-  * \param  AON_PAD_Pull: config pad pull mode.
-  *         This parameter can be one of the following values:
-  *         \arg PAD_PULL_NONE: no pull.
-  *         \arg PAD_PULL_UP: pull this pin up.
-  *         \arg PAD_PULL_DOWN: pull thi pin down.
- * \param  AON_PAD_Strength: This parameter sets the strength of pull-up/pull-down resistance.
- *         This parameter can be the following:
- *         \arg PAD_WEAK_PULL: Resistance weak pull.
- *         \arg PAD_STRONG_PULL: Resistance strong pull.
- * \param  NewState: This parameter enable or disable the the pad for low power.
- *         This parameter can be the following:
- *         \arg DISABLE: Disable the pad for low power function.
- *         \arg ENABLE: Enable the pad for low power function.
- * \return None
+ * @brief  Configures the pull-up/pull-down resistor of the specified pad specifically for DLPS.
+ * @param[in] Pin_Num       Specifies the pin number to be configured. Refer to @ref Pin_Number.
+ * @param[in] AON_PAD_Pull  Specifies the desired pull state during DLPS.
+ * @param[in] NewState      ENABLE to apply this low power configuration, DISABLE to ignore it.
  */
 void Pad_LPConfig(uint8_t Pin_Num, PADPullMode_TypeDef AON_PAD_Pull, FunctionalState NewState)
 {
@@ -423,11 +408,13 @@ void Pad_LPConfig(uint8_t Pin_Num, PADPullMode_TypeDef AON_PAD_Pull, FunctionalS
 }
 
 /**
-  * \brief  Configure the pin to corresponding function.
-  * \param  Pin_Num: Pin number to be configured. \ref Pin_Number.
-  * \param  Pad_Func: Pad function. \ref Pad_Function_Config.
-  * \return None
-  */
+ * @brief Configures a specific peripheral function of a specified pad.
+ * @param[in] Pin_Num   Specifies the pin number to be configured. Refer to @ref Pin_Number.
+ * @param[in] Pad_Func  Specifies the target peripheral function. Refer to @ref PAD_FUNCTION_CONFIG.
+ * @return The execution result of configuring the pad function.
+ * @retval true   Configuration successful.
+ * @retval false  Invalid pin number. The specified Pad_Func is disabled in this case.
+ */
 bool Pad_FunctionConfig(uint8_t Pin_Num, PADFuncConfig_TypeDef Pad_Func)
 {
     if (!IS_PIN_NUMBER(Pin_Num))
@@ -456,11 +443,15 @@ bool Pad_FunctionConfig(uint8_t Pin_Num, PADFuncConfig_TypeDef Pad_Func)
 }
 
 /**
-  * \brief  Configure the pin to high speed function.
-  * \param  Pin_Num: Pin number to be configured. \ref Pin_Number.
-  * \param  Pad_Func: Pad function. \ref Pad_Function_Config.
-  * \return None
-  */
+ * @brief Enables or disables the dedicated high-speed function for specific peripherals.
+ * @param[in] Pin_Group      Pointer to an array of pins for the high-speed configuration.
+ * @param[in] Pin_GroupLen   The number of pins in the Pin_Group array.
+ * @param[in] Pad_HighSpeed  Specifies the high-speed peripheral. Refer to @ref PAD_HIGH_SPEED_CONFIG.
+ * @param[in] NewState       ENABLE or DISABLE to activate the high-speed path.
+ * @return The execution result of configuring the high-speed function.
+ * @retval true   Configuration successful.
+ * @retval false  Configuration failed.
+ */
 bool Pad_HighSpeedConfig(uint8_t *Pin_Group, uint8_t Pin_GroupLen,
                          PADHSConfig_Typedef Pad_HighSpeed, FunctionalState NewState)
 {
@@ -484,9 +475,11 @@ bool Pad_HighSpeedConfig(uint8_t *Pin_Group, uint8_t Pin_GroupLen,
 }
 
 /**
- * \brief   Get the pin name in string.
- * \param   Pin_Num: Pin number to be configured. \ref Pin_Number.
- * \return  pin name.
+ * @brief  Get the string representation of the pin name.
+ * @param[in] Pin_Num  Specifies the pin number to be configured. Refer to @ref Pin_Number.
+ * @return Pointer to a constant string containing the pin name.
+ *         - Valid string pointer (e.g., "P0_0").
+ *         - NULL: Invalid pin index.
  */
 const char *Pad_GetPinName(uint8_t Pin_Num)
 {
@@ -494,9 +487,9 @@ const char *Pad_GetPinName(uint8_t Pin_Num)
 }
 
 /**
- * \brief  Get pin power group.
- * \param  Pin_Num: Pin number to be configured. \ref Pin_Number
- * \return power group.
+ * @brief Retrieve the hardware power group for the specified pad.
+ * @param[in] Pin_Num  Specifies the pin number to be configured. Refer to @ref Pin_Number.
+ * @return The corresponding power group of the pin. Refer to @ref PAD_POWER_GROUP.
  */
 static PADPowerGroup_TypeDef Pad_GetPowerGroup(uint8_t Pin_Num)
 {
@@ -526,13 +519,9 @@ static PADPowerGroup_TypeDef Pad_GetPowerGroup(uint8_t Pin_Num)
 }
 
 /**
- * \brief  Set pin drivering current.
- * \param  Pin_Num: Pin number to be configured. \ref Pin_Number
- * \param  value: This parameter sets the pin drivering current.
- *         This parameter can be the following:
- *         \arg PAD_DRIVING_CURRENT_4mA.
- *         \arg PAD_DRIVING_CURRENT_8mA.
- * \return None.
+ * @brief Configure the driving current of the specified pad.
+ * @param[in] Pin_Num             Specifies the pin number to be configured. Refer to @ref Pin_Number.
+ * @param[in] PAD_DrivingCurrent  The desired driving current. Refer to @ref PAD_DRIVING_CURRENT.
  */
 void Pad_SetDrivingCurrent(uint8_t Pin_Num, PADDrivingCurrent_TypeDef PAD_DrivingCurrent)
 {
@@ -573,13 +562,9 @@ void Pad_SetDrivingCurrent(uint8_t Pin_Num, PADDrivingCurrent_TypeDef PAD_Drivin
 }
 
 /**
- * \brief  Set pin control mode.
- * \param  Pin_Num: Pin number to be configured. \ref Pin_Number
- * \param  value: This parameter sets the pin mode.
- *         This parameter can be the following:
- *         \arg PAD_SW_MODE: Software mode.
- *         \arg PAD_PINMUX_MODE: Default pinmux mode.
- * \return None.
+ * @brief Configure the pad control mode of the specified pad.
+ * @param[in] Pin_Num   Specifies the pin number to be configured. Refer to @ref Pin_Number.
+ * @param[in] PAD_Mode  Specifies the control mode. Refer to @ref PAD_MODE.
  */
 void Pad_SetControlMode(uint8_t Pin_Num, PADMode_TypeDef PAD_Mode)
 {
@@ -587,13 +572,9 @@ void Pad_SetControlMode(uint8_t Pin_Num, PADMode_TypeDef PAD_Mode)
 }
 
 /**
- * \brief  Enable or disable pad output mode.
- * \param  Pin_Num: Pin number to be configured. \ref Pin_Number
- * \param  value: This parameter sets whether the pin outputs the level in software mode.
- *         This parameter can be enumerated PAD_OUTPUT_ENABLE_Mod of the values:
- *         \arg PAD_OUT_DISABLE: Disable output.
- *         \arg PAD_OUT_ENABLE: Enable output.
- * \return None.
+ * @brief Enable or disable the output mode of the specified pad.
+ * @param[in] Pin_Num    Specifies the pin number to be configured. Refer to @ref Pin_Number.
+ * @param[in] PAD_OutEn  Enable or disable the output mode. Refer to @ref PAD_OUTPUT_DIRECTION.
  */
 void Pad_OutputCmd(uint8_t Pin_Num, PADOutputMode_TypeDef PAD_OutEn)
 {
@@ -601,13 +582,9 @@ void Pad_OutputCmd(uint8_t Pin_Num, PADOutputMode_TypeDef PAD_OutEn)
 }
 
 /**
- * \brief  Configure pad output level.
- * \param  Pin_Num: Pin number to be configured. \ref Pin_Number
- * \param  value: Config pin output level.
- *         This parameter can be one of the following values:
- *         \arg PAD_OUT_LOW: Pad output low.
- *         \arg PAD_OUT_HIGH: Pad output high.
- * \return None.
+ * @brief Configure the output level of the specified pad.
+ * @param[in] Pin_Num       Specifies the pin number to be configured. Refer to @ref Pin_Number.
+ * @param[in] PAD_OutValue  The desired output logic level. Refer to @ref PAD_OUTPUT_VALUE.
  */
 void Pad_SetOutputLevel(uint8_t Pin_Num, PADOutputValue_TypeDef PAD_OutValue)
 {
@@ -615,13 +592,9 @@ void Pad_SetOutputLevel(uint8_t Pin_Num, PADOutputValue_TypeDef PAD_OutValue)
 }
 
 /**
- * \brief  Enable or disable pad pull-up / pull-down resistance function.
- * \param  Pin_Num: Pin number to be configured. \ref Pin_Number
- * \param  value: This parameter enable or disable the the pad pin pull-up/pull-down function.
- *         This parameter can be the following:
- *         \arg DISABLE: Disable pad pull-up / pull-down function.
- *         \arg ENABLE: Enable  pad pull-up / pull-down function.
- * \return None.
+ * @brief Enable or disable the internal pull-up / pull-down resistor of the specified pad.
+ * @param[in] Pin_Num   Specifies the pin number to be configured. Refer to @ref Pin_Number.
+ * @param[in] NewState  Enable or disable the internal pull-up / pull-down resistor. Refer to @ref FunctionalState.
  */
 void Pad_PullCmd(uint8_t Pin_Num, FunctionalState NewState)
 {
@@ -629,13 +602,9 @@ void Pad_PullCmd(uint8_t Pin_Num, FunctionalState NewState)
 }
 
 /**
- * \brief  Pad pull-up/pull-down resistance function selection.
- * \param  Pin_Num: Pin number to be configured. \ref Pin_Number
- * \param  value: This parameter sets whether the pin pull-up or pull-down.
- *         This parameter can be the following:
- *         \arg 0: Config pad pull-up function.
- *         \arg 1: Config  pad pull-down function.
- * \return None.
+ * @brief Configure the pull mode of the specified pad.
+ * @param[in] Pin_Num       Specifies the pin number to be configured. Refer to @ref Pin_Number.
+ * @param[in] PAD_PullMode  The desired pull state. Refer to @ref PAD_PULL_MODE.
  */
 void Pad_SetPullMode(uint8_t Pin_Num, PADPullMode_TypeDef PAD_PullMode)
 {
@@ -656,13 +625,9 @@ void Pad_SetPullMode(uint8_t Pin_Num, PADPullMode_TypeDef PAD_PullMode)
 }
 
 /**
- * \brief  Configure the strength of pull-up/pull-down resistance.
- * \param  Pin_Num: Pin number to be configured. \ref Pin_Number
- * \param  value: This parameter sets the strength of pull-up/pull-down resistance.
- *         This parameter can be the following:
- *         \arg PAD_WEAK_PULL: Resistance weak pull.
- *         \arg PAD_STRONG_PULL: Resistance strong pull.
- * \return None.
+ * @brief Configure the resistance strength of the internal pull-up/pull-down.
+ * @param[in] Pin_Num               Specifies the pin number to be configured. Refer to @ref Pin_Number.
+ * @param[in] PAD_PullStrengthMode  The desired pull strength. Refer to @ref PAD_PULL_STRENGTH_MODE.
  */
 void Pad_SetPullStrength(uint8_t Pin_Num, PADPullStrengthMode_TypeDef PAD_PullStrengthMode)
 {
@@ -670,13 +635,9 @@ void Pad_SetPullStrength(uint8_t Pin_Num, PADPullStrengthMode_TypeDef PAD_PullSt
 }
 
 /**
- * \brief  Set pin power mode.
- * \param  Pin_Num: Pin number to be configured. \ref Pin_Number
- * \param  value: This parameter sets the power supply mode of the pin,
- *                and the value is enumeration PAD_PWR_Mode One of the values.
- *         \arg PAD_NOT_PWRON: Power off.
- *         \arg PAD_IS_PWRON: Power on.
- * \return None.
+ * @brief Configure the power mode of the specified pad.
+ * @param[in] Pin_Num        Specifies the pin number to be configured. Refer to @ref Pin_Number.
+ * @param[in] PAD_PowerMode  Specifies the power mode. Refer to @ref PAD_POWER_MODE.
  */
 void Pad_PowerCmd(uint8_t Pin_Num, PADPowerMode_TypeDef PAD_PowerMode)
 {

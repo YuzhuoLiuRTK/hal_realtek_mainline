@@ -70,8 +70,15 @@ typedef struct            /*!< CAN Structure */
 /*============================================================================*
  *                          CAN Declaration
  *============================================================================*/
-#define CAN0                       ((CAN_TypeDef *) CAN_BASE)
-#define CAN                         CAN0
+/** @defgroup CAN_DECLARATION CAN Declaration
+  * @{
+  * @ingroup  CAN_Exported_Constants
+  */
+
+#define CAN0                       ((CAN_TypeDef *) CAN_BASE)   /**< CAN0 peripheral instance. */
+#define CAN                         CAN0                        /**< CAN peripheral instance alias. */
+
+/** @} */ /* End of group CAN_DECLARATION */
 
 /*============================================================================*
  *                          CAN Registers and Field Descriptions
@@ -782,85 +789,109 @@ typedef struct
 /*============================================================================*
  *                          CAN TYPE/API Wrappers
  *============================================================================*/
-/** \defgroup CAN         CAN
-  * \brief
-  * \{
-  */
-
-/** \defgroup CAN_Exported_Constants CAN Exported Constants
-  * \brief
-  * \{
-  */
-
+/**
+ * @defgroup CAN_CLOCK_DIVIDER CAN Clock Divider
+ * @{
+ * @ingroup  CAN_Exported_Constants
+ */
 typedef enum
 {
-    CAN_CLOCK_DIVIDER_1 = 0,      /* 40M / 1 */
-    CAN_CLOCK_DIVIDER_2 = 1,      /* 40M / 2 */
+    CAN_CLOCK_DIVIDER_1 = 0,      /**< Clock divider: 40 MHz / 1. */
+    CAN_CLOCK_DIVIDER_2 = 1,      /**< Clock divider: 40 MHz / 2. */
 } CANClockDiv_TypeDef;
 
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_CAN_CLK_DIV(DIV)              (((DIV) == CAN_CLOCK_DIVIDER_1) || \
                                           ((DIV) == CAN_CLOCK_DIVIDER_2))
 
-typedef enum
-{
-    CAN_CLOCK_SRC_40M,
-} CANClockSrc_TypeDef;
-
-#define IS_SPI_CLK_SOURCE(PERIPH)     ((PERIPH) == CAN_CLOCK_SRC_40M)
+/** @} */ /* End of group CAN_CLOCK_DIVIDER */
 
 /**
-* \brief       To be compatible with the previous driver.
-* \defgroup    CAN_Constants_Wrapper CAN Constants Wrapper
-* \{
-* \ingroup     CAN_Exported_Constants
-*/
+ * @defgroup CAN_CONSTANTS_WRAPPER CAN Constants Wrapper
+ * @{
+ * @ingroup  CAN_Exported_Constants
+ */
 
-#define CAN_CLK_DIV_1              CAN_CLOCK_DIVIDER_1
-#define CAN_CLK_DIV_2              CAN_CLOCK_DIVIDER_2
+#define CAN_CLK_DIV_1              CAN_CLOCK_DIVIDER_1  /**< Alias for CAN_CLOCK_DIVIDER_1. */
+#define CAN_CLK_DIV_2              CAN_CLOCK_DIVIDER_2  /**< Alias for CAN_CLOCK_DIVIDER_2. */
 
-/** End of CAN Constants Wrapper
-  * \}
-  */
+/** @} */ /* End of group CAN_CONSTANTS_WRAPPER */
 
-/** End of CAN_Exported_Constants
-  * \}
-  */
-
-/** End of CAN
-  * \}
-  */
-
+/**
+ * @defgroup CAN_CLOCK_SOURCE CAN Clock Source
+ * @{
+ * @ingroup  CAN_Exported_Constants
+ */
 typedef enum
 {
-    CAN_RX_FRAME_IGNORE_IDE = 0,
-    CAN_RX_FRAME_MATCH_IDE = 1,
+    CAN_CLOCK_SRC_40M, /**< 40 MHz clock source. */
+} CANClockSrc_TypeDef;
+
+/** @brief Check if the input parameter is valid. @hideinitializer */
+#define IS_CAN_CLK_SOURCE(PERIPH)     ((PERIPH) == CAN_CLOCK_SRC_40M)
+
+/** @} */ /* End of group CAN_CLOCK_SOURCE */
+
+/**
+ * @defgroup CAN_FRAME_IDE_MASK CAN Frame IDE Mask
+ * @{
+ * @ingroup  CAN_Exported_Constants
+ */
+typedef enum
+{
+    CAN_RX_FRAME_IGNORE_IDE = 0, /**< Ignore IDE field in received frame. */
+    CAN_RX_FRAME_MATCH_IDE = 1,  /**< Match IDE field in received frame. */
 } CANFrameIDEMask_TypeDef;
 
+/** @} */ /* End of group CAN_FRAME_IDE_MASK */
+
+/**
+ * @defgroup CAN_FRAME_RTR_MASK CAN Frame RTR Mask
+ * @{
+ * @ingroup  CAN_Exported_Constants
+ */
 typedef enum
 {
-    CAN_RX_FRAME_IGNORE_RTR = 0,
-    CAN_RX_FRAME_MATCH_RTR = 1,
+    CAN_RX_FRAME_IGNORE_RTR = 0, /**< Ignore RTR field in received frame. */
+    CAN_RX_FRAME_MATCH_RTR = 1,  /**< Match RTR field in received frame. */
 } CANFrameRTRMask_TypeDef;
 
+/** @} */ /* End of group CAN_FRAME_RTR_MASK */
+
+/**
+ * @defgroup CAN_FRAME_ID_MASK CAN Frame ID Mask
+ * @{
+ * @ingroup  CAN_Exported_Constants
+ */
 typedef enum
 {
-    CAN_RX_FRAME_IGNORE_ID = 0,
-    CAN_RX_FRAME_MATCH_ALL_ID = 0x1FFFFFFFUL,
+    CAN_RX_FRAME_IGNORE_ID = 0,               /**< Ignore ID field in received frame. */
+    CAN_RX_FRAME_MATCH_ALL_ID = 0x1FFFFFFFUL, /**< Match all ID bits in received frame. */
 } CANFrameIDMask_TypeDef;
 
+/** @} */ /* End of group CAN_FRAME_ID_MASK */
+
 #if (CAN_SUPPORT_SLEEP_MODE == 1)
+/**
+ * @defgroup CAN_LOW_POWER_CLOCK_DIVIDER CAN Low Power Clock Divider
+ * @{
+ * @ingroup  CAN_Exported_Constants
+ */
 typedef enum
 {
-    CAN_LOW_CLK_DISABLE = 0,     /* Disable low power clock */
-    CAN_LOW_CLK_DIV_5 = 1,      /* 40M / 5 */
-    CAN_LOW_CLK_DIV_10 = 2,     /* 40M / 10 */
-    CAN_LOW_CLK_DIV_20 = 3,     /* 40M / 20 */
+    CAN_LOW_CLK_DISABLE = 0,    /**< Disable low power clock. */
+    CAN_LOW_CLK_DIV_5 = 1,      /**< Low power clock: 40 MHz / 5. */
+    CAN_LOW_CLK_DIV_10 = 2,     /**< Low power clock: 40 MHz / 10. */
+    CAN_LOW_CLK_DIV_20 = 3,     /**< Low power clock: 40 MHz / 20. */
 } CANLowPowerClkDIV_TypeDef;
 
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_CAN_LOWER_CLK_DIV(DIV)       (((DIV) == CAN_LOW_CLK_DISABLE) || \
                                          ((DIV) == CAN_LOW_CLK_DIV_5) || \
                                          ((DIV) == CAN_LOW_CLK_DIV_10) || \
                                          ((DIV) == CAN_LOW_CLK_DIV_20))
+
+/** @} */ /* End of group CAN_LOW_POWER_CLOCK_DIVIDER */
 #endif
 
 #define CAN_DFS_BIT_FIELD_FD_SSP_AUTO   can_reg_0x00.b.can_fd_ssp_auto
@@ -873,4 +904,3 @@ typedef enum
 #endif /* __cplusplus */
 
 #endif /* RTL_CAN_DEF_H */
-

@@ -4,9 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-/*============================================================================*
- *               Define to prevent recursive inclusion
- *============================================================================*/
 #ifndef RTL_WAKEUP_H
 #define RTL_WAKEUP_H
 
@@ -14,9 +11,6 @@
 extern "C" {
 #endif
 
-/*============================================================================*
- *                        Header Files
- *============================================================================*/
 #include "utils/rtl_utils.h"
 #if defined (CONFIG_SOC_SERIES_RTL87X2J)
 #include "pinmux/src/device/rtl87x2j/rtl_pinmux_def.h"
@@ -30,95 +24,95 @@ extern "C" {
 #elif defined (CONFIG_SOC_SERIES_RTL87X3J)
 #include "pinmux/src/device/rtl87x3j/rtl_pinmux_def.h"
 #include "pinmux/inc/rtl87x3j/pin_def.h"
+#elif defined (CONFIG_SOC_SERIES_RTL87X3K)
+#include "pinmux/src/device/rtl87x3k/rtl_pinmux_def.h"
+#include "pinmux/inc/rtl87x3k/pin_def.h"
 #endif
 
-/** \defgroup WAKEUP      WAKEUP
-  * \brief
-  * \{
-  */
 
-/*============================================================================*
- *                         Macros
- *============================================================================*/
-
-/*============================================================================*
- *                         Constants
- *============================================================================*/
-/** \defgroup WAKEUP_Exported_Constants WAKEUP Exported Constants
-  * \brief
-  * \{
-  */
 /**
- * \brief       PAD WakeUp Polarity
- *
- * \ingroup     WAKEUP_Exported_Constants
+ * @addtogroup PINMUX
+ * @brief    Pinmux and PAD driver.
+ * @{
  */
 
+/**
+ * @defgroup WAKEUP_Exported_Constants WAKEUP Exported Constants
+ * @{
+ * @ingroup  PINMUX
+ */
+
+/**
+ * @defgroup    WAKEUP_POLARITY Wakeup Polarity
+ * @{
+ * @ingroup     WAKEUP_Exported_Constants
+ */
 typedef enum
 {
-    SYSTEM_WAKEUP_POLARITY_HIGH,
-    SYSTEM_WAKEUP_POLARITY_LOW,
+    SYSTEM_WAKEUP_POLARITY_HIGH, /**< Wake up the system on a high level. */
+    SYSTEM_WAKEUP_POLARITY_LOW,  /**< Wake up the system on a low level. */
 } SystemWakeUpPolarity_TypeDef;
+
+/** @} */ /* End of group WAKEUP_POLARITY */
 
 #if (PAD_SUPPORT_ADPATER_WAKEUP == 1 | PAD_SUPPORT_MFB_WAKEUP == 1)
 /**
- * \brief       WAKEUP_ENABLE_MODE PAD WAKE UP ENABLE SET
- *
- * \ingroup     WAKEUP_Exported_Constants
+ * @defgroup    WAKEUP_ENABLE_MODE Wakeup Enable Mode
+ * @{
+ * @ingroup     WAKEUP_Exported_Constants
  */
 typedef enum
 {
-    ADP_MODE,
-    BAT_MODE,
-    MFB_MODE,
+    ADP_MODE, /**< Wake up by adapter. */
+    BAT_MODE, /**< Wake up by battery. */
+    MFB_MODE, /**< Wake up by MFB. */
 #if (PAD_SUPPORT_USB_WAKEUP == 1)
-    USB_MODE,
+    USB_MODE, /**< Wake up by USB. */
 #endif
 } SystemWakeUpMode_TypeDef;
+
+/** @} */ /* End of group WAKEUP_ENABLE_MODE */
 #endif
 
+/**
+ * @brief PAD wake-up callback function type.
+ *
+ * @param[in] context Context passed to the callback function.
+ */
 typedef void (*P_PAD_CBACK)(uint32_t context);
 
-/** End of WAKEUP_Exported_Constants
-  * \}
-  */
+/** @} */ /* End of group WAKEUP_Exported_Constants */
 
-/*============================================================================*
- *                         Functions
- *============================================================================*/
 /**
- * \brief     Enable the function of the wake-up system of the specified pin.
+ * @defgroup WAKEUP_Exported_Functions WAKEUP Exported Functions
+ * @{
+ * @ingroup  PINMUX
+ */
+
+/**
+ * @brief Enable the wake-up system function of the specified pin.
  *
- * \param[in] Pin_Num: Pin number to be configured. \ref Pin_Number.
+ * @param[in] Pin_Num           Specifies the pin number to be configured. Refer to @ref Pin_Number.
+ * @param[in] Polarity          Specifies the polarity of the wake-up system. Refer to @ref WAKEUP_POLARITY.
+ * @param[in] DebounceNewState  Enable or disable the hardware debounce function.
  *
- * \param[in] Polarity: Polarity of wake-up system.
- *            This parameter can be the following:
- *            \arg SYSTEM_WAKEUP_POLARITY_HIGH: Use high level wakeup.
- *            \arg SYSTEM_WAKEUP_POLARITY_LOW: Use low level wakeup.
- *
- * \param[in] DebounceNewState: Enable delay function.
- *            \arg DISABLE: Disable delay function.
- *            \arg ENABLE: Enable delay function.
- *            This parameter is only meaningful if PAD_SUPPORT_CFG_WAKEUP_ENABLE_WITH_DEBOUNCE is defined.
- *
- * \return    None.
+ * @note  DebounceNewState is available only when PAD_SUPPORT_WAKEUP_ENABLE_WITH_DEBOUNCE is enabled.
  *
  * <b>Example usage</b>
- * \code{.c}
- * //PM enter IO call back function.
- * void io_uart_pm_enter(void)
- * {
- *     // Switch pad to software mode
- *     Pad_SetControlMode(P2_0, PAD_SW_MODE);//tx pin
- *     Pad_SetControlMode(P2_1, PAD_SW_MODE);//rx pin
+ * @code{.c}
  *
- * #ifdef PAD_SUPPORT_WAKEUP_ENABLE_WITH_DEBOUNCE
- *     System_WakeUpPinEnable(P2_1, PAD_WAKEUP_POLARITY_LOW, DISABLE);
+ * void pm_uart_enter(void)
+ * {
+ *     Pad_SetControlMode(P0_0, PAD_SW_MODE); // TX pin.
+ *     Pad_SetControlMode(P0_1, PAD_SW_MODE); // RX pin.
+ *
+ * #if (PAD_SUPPORT_WAKEUP_ENABLE_WITH_DEBOUNCE == 1)
+ *     System_WakeUpPinEnable(P0_1, SYSTEM_WAKEUP_POLARITY_LOW, DISABLE);
  * #else
- *     System_WakeUpPinEnable(P2_1, PAD_WAKEUP_POLARITY_LOW);
+ *     System_WakeUpPinEnable(P0_1, SYSTEM_WAKEUP_POLARITY_LOW);
  * #endif
  * }
- * \endcode
+ * @endcode
  */
 #if (PAD_SUPPORT_WAKEUP_ENABLE_WITH_DEBOUNCE == 1)
 void System_WakeUpPinEnable(uint8_t Pin_Num, SystemWakeUpPolarity_TypeDef Polarity,
@@ -128,361 +122,360 @@ void System_WakeUpPinEnable(uint8_t Pin_Num, SystemWakeUpPolarity_TypeDef Polari
 #endif
 
 /**
- * \brief     Disable the function of the wake-up system of the specified pin.
+ * @brief Disable the wake-up system function of the specified pin.
  *
- * \param[in] Pin_Num: Pin number to be configured. \ref Pin_Number.
- *
- * \return    None.
+ * @param[in] Pin_Num  Specifies the pin number to be configured. Refer to @ref Pin_Number.
  *
  * <b>Example usage</b>
- * \code{.c}
- * #define UART_RX_PIN                P4_1
+ * @code{.c}
  *
- * //System interrupt handler function, for wakeup pin.
  * void System_Handler(void)
  * {
- *     if (System_WakeUpInterruptValue(UART_RX_PIN) == SET)
+ *     if (System_WakeUpInterruptValue(P0_1) == SET)
  *     {
- *         Pad_ClearWakeUpINTPendingBit(UART_RX_PIN);
- *         System_WakeUpPinDisable(UART_RX_PIN);
- *         //Add user code here.
+ *         System_WakeUpClearINTPendingBit(P0_1);
+ *         System_WakeUpPinDisable(P0_1);
  *     }
  * }
- * \endcode
+ * @endcode
  */
 void System_WakeUpPinDisable(uint8_t Pin_Num);
 
 /**
- * \brief   Get pin interrupt status.
+ * @brief Get the wake-up status of the specified pin.
  *
- * \param[in] Pin_Num: Pin number to be configured. \ref Pin_Number.
+ * @param[in] Pin_Num  Specifies the pin number to be configured. Refer to @ref Pin_Number.
  *
- * \return Interrupt status.
- *         \arg 1: Pin wake up system.
- *         \arg 0: The pin does not wake up the system.
+ * @return The wake-up status of the specified pin.
+ * @retval SET    The pin wakes up the system.
+ * @retval RESET  The pin does not wake up the system.
  *
  * <b>Example usage</b>
- * \code{.c}
- * #define UART_RX_PIN                P4_1
+ * @code{.c}
  *
- * //System interrupt handler function, for wakeup pin.
  * void System_Handler(void)
  * {
- *     if (System_WakeUpInterruptValue(UART_RX_PIN) == SET)
+ *     if (System_WakeUpInterruptValue(P0_1) == SET)
  *     {
- *         System_WakeUpClearINTPendingBit(UART_RX_PIN);
- *         //Add user code here.
+ *         System_WakeUpClearINTPendingBit(P0_1);
  *     }
  * }
- * \endcode
+ * @endcode
  */
 uint8_t System_WakeUpInterruptValue(uint8_t Pin_Num);
 
 #if (PAD_SUPPORT_WAKEUP_DEBOUNCE == 1)
 /**
- * \brief  Enable or disable wake-up debounce function.
+ * @brief Enable or disable the wake-up debounce function.
  *
- * \param[in]  Pin_Num: Pin number to be configured. \ref Pin_Number.
- * \note  Pin_Num is invalid parameter for rtl87x2g series
- *                so that any pin can be filled in.
+ * @param[in] Pin_Num   Specifies the pin number to be configured. Refer to @ref Pin_Number.
+ * @param[in] NewState  Enable or disable the wake-up debounce function.
  *
- * \param  PADWakeUpCmd_TypeDef: wake-up system enable or disable
- *         \arg PAD_WAKEUP_DISABLE: Disable wakeup.
- *         \arg PAD_WAKEUP_DISABLE: Enable wakeup.
- *
- * \return The result of the setting.
- * \retval true: Config wake up debounce success
- * \retval false:Set Config wake up debounce failed due to due to invalid pin num or this pin does not have debounce function.
+ * @return The execution result of configuring the wake-up debounce function.
+ * @retval true  The wake-up debounce is configured successfully.
  *
  * <b>Example usage</b>
- * \code{.c}
+ * @code{.c}
  *
- *void System_WakeUpPinEnable(uint8_t Pin_Num, uint8_t Polarity, FunctionalState NewState)
- *{
- *    if(Pin_Num >= MAX_PIN_NUM)
- *    {
- *        return;
- *    }
- *
- *    Pad_SetWakeUpPolarity(Pin_Num, Polarity);
- *    Pad_WakeUpDebounce_Cmd(Pin_Num, NewState);
- *    if (ENABLE == NewState)
- *    {
- *        System_WakeUpDebounceCmd(Pin_Num, ENABLE);
- *    }
- *    Pad_WakeUp_Cmd(Pin_Num, ENABLE);
- *}
- * \endcode
+ * void board_init(void)
+ * {
+ *     System_WakeUpDebounceCmd(P0_0, ENABLE);
+ * }
+ * @endcode
  */
 bool System_WakeUpDebounceCmd(uint8_t Pin_Num, FunctionalState NewState);
 
 /**
- * \brief   Config wak-up system debounce time.
+ * @brief Configure the wake-up debounce time in milliseconds.
  *
- * \param[in]  Pin_Num: Pin number to be configured. \ref Pin_Number.
- * \note  Pin_Num is invalid parameter for rtl87x2g series
- *        so that any pin can be filled in.
+ * @param[in] Pin_Num  Specifies the pin number to be configured. Refer to @ref Pin_Number.
+ * @param[in] TimeMs   Specifies the debounce time in milliseconds which range from 1 to 255 milliseconds.
  *
- * \param[in] TimeMs: Debounce time.
- *
- * \return The result of the setting.
- * \retval true: Set debounce time success
- * \retval false:Set debounce time failed due to due to invalid pin num or this pin does not have debounce function.
+ * @return The execution result of configuring the wake-up debounce time.
+ * @retval true  The wake-up debounce is configured successfully.
  *
  * <b>Example usage</b>
- * \code{.c}
+ * @code{.c}
  *
- * void board_xxx_init(void)
+ * void board_init(void)
  * {
- *     System_WakeUpDebounceTime(10);
+ *     System_WakeUpDebounceTime(P0_0, 10);
  * }
- * \endcode
+ * @endcode
  */
 bool System_WakeUpDebounceTime(uint8_t Pin_Num, uint8_t TimeMs);
 
 /**
- * \brief   Config wak-up system debounce time.
+ * @brief Configure the wake-up debounce time in microseconds.
  *
- * \param[in]  Pin_Num: Pin number to be configured. \ref Pin_Number.
- * \note  Pin_Num is invalid parameter for rtl87x2g series
- *        so that any pin can be filled in.
+ * @param[in] Pin_Num  Specifies the pin number to be configured. Refer to @ref Pin_Number.
+ * @param[in] TimeUs   Specifies the debounce time in microseconds which range from 32 to 256000
+ *                     microseconds with a step of 32 microseconds.
  *
- * \param[in] TimeUs: Debounce time.
- *
- * \return The result of the setting.
- * \retval true: Set debounce time success
- * \retval false:Set debounce time failed due to due to invalid pin num or this pin does not have debounce function.
+ * @return The execution result of configuring the wake-up debounce time.
+ * @retval true  The wake-up debounce is configured successfully.
  *
  * <b>Example usage</b>
- * \code{.c}
+ * @code{.c}
  *
- * void board_xxx_init(void)
+ * void board_init(void)
  * {
- *     System_WakeUpDebounceTimeUs(1000);
+ *     System_WakeUpDebounceTimeUs(P0_0, 1000);
  * }
- * \endcode
+ * @endcode
  */
 bool System_WakeUpDebounceTimeUs(uint8_t Pin_Num, uint32_t TimeUs);
 
 /**
- * \brief  Get debounce wake up status.
+ * @brief Get the wake-up debounce status of the specified pin.
  *
- * \param[in]  Pin_Num: Pin number to be configured. \ref Pin_Number.
- * \note  Pin_Num is invalid parameter for rtl87x2g series
- *                    so that any pin can be filled in.
+ * @param[in] Pin_Num  Specifies the pin number to be configured. Refer to @ref Pin_Number.
  *
- * \return Debounce wakeup status
- *
+ * @return The wake-up debounce status of the specified pin.
+ * @retval SET    The wake-up debounce status of the specified pin is SET.
+ * @retval RESET  The wake-up debounce status of the specified pin is RESET.
  *
  * <b>Example usage</b>
- * \code{.c}
+ * @code{.c}
  *
- * void board_xxx_init(void)
+ * void System_Handler(void)
  * {
- *     uint8_t WakeUpDebounceStatus = System_WakeUpDebounceStatus;
+ *     if (System_WakeUpDebounceStatus(P0_0) == SET)
+ *     {
+ *         System_WakeUpDebounceClear(P0_0);
+ *     }
  * }
- * \endcode
+ * @endcode
  */
-
 uint8_t System_WakeUpDebounceStatus(uint8_t Pin_Num);
 
 /**
- * \brief  Clear debounce wake up status. Call this API will clear the debunce wakeup status bit.
+ * @brief Clear the wake-up debounce status of the specified pin.
  *
- * \param[in]  Pin number to be configured. \ref Pin_Number.
- * \note  Pin_Num is invalid parameter for rtl87x2g series
- *        so that any pin can be filled in.
- *
- * \return None
- *
+ * @param[in] Pin_Num  Specifies the pin number to be configured. Refer to @ref Pin_Number.
  *
  * <b>Example usage</b>
- * \code{.c}
+ * @code{.c}
  *
- * void pm_store(void)
+ * void System_Handler(void)
  * {
- *     System_WakeUpDebounceClear(P0_0);
+ *     if (System_WakeUpDebounceStatus(P0_0) == SET)
+ *     {
+ *         System_WakeUpDebounceClear(P0_0);
+ *     }
  * }
- * \endcode
+ * @endcode
  */
 void System_WakeUpDebounceClear(uint8_t Pin_Num);
 
 #if (PAD_SUPPORT_WAKEUP_DEBOUNCE_INTERRUPT == 1)
 /**
- * \brief   Enable or disable wake-up system debounce interrupt.
+ * @brief Enable or disable the wake-up system debounce interrupt.
  *
- * \param[in]  Pin_Num: Pin number to be configured. \ref Pin_Number.
- * \note  Pin_Num is invalid parameter for rtl87x2g series
- *        so that any pin can be filled in.
+ * @note  Pin_Num is an invalid parameter for the RTL87x2G series, so any pin can be filled in.
  *
- * \param[in] NewState: Enable or disable interrupt.
+ * @param[in] Pin_Num   Specifies the pin number to be configured. Refer to @ref Pin_Number.
+ * @param[in] NewState  Enable or disable the interrupt.
+ *                      - ENABLE: Enable the interrupt.
+ *                      - DISABLE: Disable the interrupt.
  *
- * \return The result of the setting.
- * \retval true: Config interrupt success
- * \retval false: Config interrupt failed due to invalid pin num or this pin does not have debounce function.
+ * @return The result of the setting.
+ * @retval true   Configure the interrupt successfully.
+ * @retval false  Failed to configure the interrupt due to an invalid pin number or
+ *                because this pin does not have a debounce function.
  *
  * <b>Example usage</b>
- * \code{.c}
+ * @code{.c}
  *
- * void board_xxx_init(void)
+ * void board_init(void)
  * {
  *     System_WakeUpDebounceINTConfig(P0_0, ENABLE);
  * }
- * \endcode
+ * @endcode
  */
 bool System_WakeUpDebounceINTConfig(uint8_t Pin_Num, FunctionalState NewState);
 #endif
 
 #if (PAD_SUPPORT_WAKEUP_DEBOUNCE_MULTI_GROUP == 1)
+/**
+ * @brief Allocate an independent debounce group of the specified pin.
+ *
+ * @param[in] Pin_Num  Specifies the pin number to be configured. Refer to @ref Pin_Number.
+ *
+ * @return The result of the allocation.
+ * @retval true   A debounce group is allocated to the pin, or the pin already owns one.
+ * @retval false  Allocation failed because all debounce groups are already in use.
+ */
 bool System_WakeUpDebounceMultiGroupEnable(uint8_t Pin_Num);
+
+/**
+ * @brief Release the debounce group of the specified pin.
+ *
+ * @param[in] Pin_Num  Specifies the pin number to be configured. Refer to @ref Pin_Number.
+ *
+ * @return The result of the release.
+ * @retval true   The debounce group of the pin is released.
+ * @retval false  The pin is not allocated to any debounce group.
+ */
 bool System_WakeUpDebounceMultiGroupDisable(uint8_t Pin_Num);
 #endif
 #endif
 
 /**
- * \brief     Clear the interrupt pendign bit of the specified pin
+ * @brief Clear the wake-up status of the specified pin.
  *
- * \param[in] Pin_Num: Pin number to be configured. \ref Pin_Number.
- *
- * \return    None.
+ * @param[in] Pin_Num  Specifies the pin number to be configured. Refer to @ref Pin_Number.
  *
  * <b>Example usage</b>
- * \code{.c}
+ * @code{.c}
  *
- * void board_xxx_init(void)
+ * void System_Handler(void)
  * {
- *     Pad_ClearWakeUpINTPendingBit(P2_0);
+ *     if (System_WakeUpInterruptValue(P0_1) == SET)
+ *     {
+ *         System_WakeUpClearINTPendingBit(P0_1);
+ *     }
  * }
- * \endcode
+ * @endcode
  */
 void System_WakeUpClearINTPendingBit(uint8_t Pin_Num);
 
 /**
- * \brief     Clear all wake up pin interrupt pending bit.
- *
- * \param[in] Pin_Num: Pin number to be configured. \ref Pin_Number.
- *
- * \return    None.
+ * @brief Clear the wake-up status of all pins.
  *
  * <b>Example usage</b>
- * \code{.c}
+ * @code{.c}
  *
- * void board_xxx_init(void)
+ * void System_Handler(void)
  * {
- *     Pad_ClearAllWakeUpINT();
+ *     System_WakeUpClearAllINT();
  * }
- * \endcode
+ * @endcode
  */
 void System_WakeUpClearAllINT(void);
 
 #if (PAD_SUPPORT_WAKEUP_SHORT_PULSE == 1)
 /**
- * \brief  Short pulse wakeup function.
+ * @brief Enable or disable the short pulse wake-up function.
  *
- * \param[in] NewState: Enable or disable short pulse wake up.
- *            This parameter can be one of the following values:
- *            \arg ENABLE: Enable short pulse wake up.
- *            \arg DISABLE: Disable short pulse wake up.
- *
- * \return  None.
+ * @param[in] NewState  Enable or disable the short pulse wake-up function.
+ *                      - ENABLE: Enable the short pulse wake-up function.
+ *                      - DISABLE: Disable the short pulse wake-up function.
  *
  * <b>Example usage</b>
- * \code{.c}
+ * @code{.c}
  *
- * void board_xxx_init(void)
+ * void board_init(void)
  * {
- *     Pad_ShortPulseWakeUpCmd(ENABLE);
+ *     System_WakeUpShortPulseCmd(ENABLE);
  * }
- * \endcode
+ * @endcode
  */
 void System_WakeUpShortPulseCmd(FunctionalState NewState);
 #endif
 
 /**
-  * \brief  Configure wakeup PPU function for the specified pin.
-  *
-  * \param[in]  Pin_Num: The number of the pin to configure. See \ref Pin_Number.
-  * \param[in]  Polarity: Select pin wakeup polarity (high level or low level).
-  *             This parameter can be PAD_WAKEUP_POL_HIGH or PAD_WAKEUP_POL_LOW.
-  * \param[in]  NewState: Enable or disable the wakeup PPU function.
-  *             This parameter can be ENABLE or DISABLE.
-  *
-  * \return None
-  */
+ * @brief Configure the wake-up PPU function of the specified pin.
+ *
+ * @details PPU is typically responsible for managing power domains. This function enables
+ *          a specific pin to wake up the system from sleep states, meanwhile, the Core Domain
+ *          is powered up.
+ *
+ * @param[in] Pin_Num   Specifies the pin number to be configured. Refer to @ref Pin_Number.
+ * @param[in] Polarity  Specifies the pin wake-up polarity. Refer to @ref WAKEUP_POLARITY.
+ * @param[in] NewState  Enable or disable the wake-up PPU function.
+ *
+ * <b>Example usage</b>
+ * @code{.c}
+ *
+ * void board_init(void)
+ * {
+ *     System_WakeUpPPUCmd(P0_0, SYSTEM_WAKEUP_POLARITY_LOW, ENABLE);
+ * }
+ * @endcode
+ */
 void System_WakeUpPPUCmd(uint8_t Pin_Num, uint8_t Polarity, FunctionalState NewState);
 
 /**
-  * \brief  Configure wakeup RAP function for the specified pin.
-  *
-  * \param[in]  Pin_Num: The number of the pin to configure. See \ref Pin_Number.
-  * \param[in]  Polarity: Select pin wakeup polarity (high level or low level).
-  *             This parameter can be PAD_WAKEUP_POL_HIGH or PAD_WAKEUP_POL_LOW.
-  * \param[in]  NewState: Enable or disable wakeup RAP function.
-  *             This parameter can be ENABLE or DISABLE.
-  *
-  * \return None
-  */
+ * @brief Configure the wake-up RAP function of the specified pin.
+ *
+ * @param[in] Pin_Num   Specifies the pin number to be configured. Refer to @ref Pin_Number.
+ * @param[in] Polarity  Specifies the pin wake-up polarity. Refer to @ref WAKEUP_POLARITY.
+ * @param[in] NewState  Enable or disable the wake-up RAP function.
+ *
+ * <b>Example usage</b>
+ * @code{.c}
+ *
+ * void board_init(void)
+ * {
+ *     System_WakeUpRAPCmd(P0_0, SYSTEM_WAKEUP_POLARITY_LOW, ENABLE);
+ * }
+ * @endcode
+ */
 void System_WakeUpRAPCmd(uint8_t Pin_Num, uint8_t Polarity, FunctionalState NewState);
 
 /**
-  * \brief  Enable or disable the function of the wake-up system of the specified pin.
-  *
-  * \param[in] Pin_Num: Pin number to be configured. \ref Pin_Number.
-  *
-  * \param[in] NewState: Enable or disable PAD wake up.
-  *            This parameter can be one of the following values:
-  *            \arg ENABLE: Enable PAD wake up system.
-  *            \arg DISABLE: Disable PAD wake up system.
-  *
-  * \return None.
-  */
+ * @brief Enable or disable the wake-up system function of the specified pin.
+ *
+ * @param[in] Pin_Num   Specifies the pin number to be configured. Refer to @ref Pin_Number.
+ * @param[in] NewState  Enable or disable the PAD wake-up system.
+ *
+ * <b>Example usage</b>
+ * @code{.c}
+ *
+ * void board_init(void)
+ * {
+ *     System_WakeUpCmd(P0_0, ENABLE);
+ * }
+ * @endcode
+ */
 void System_WakeUpCmd(uint8_t Pin_Num, FunctionalState NewState);
 
 /**
-  * \brief Set the polarity for the function of the wake-up system of the specified pin.
-  *
-  * \param[in] Pin_Num: Pin number to be configured. \ref Pin_Number.
-  *
-  * \param[in] Polarity: Polarity of wake-up system.
-  *            This parameter can be the following:
-  *            \arg SYSTEM_WAKEUP_POLARITY_HIGH: Use high level wakeup.
-  *            \arg SYSTEM_WAKEUP_POLARITY_LOW: Use low level wakeup.
-  *
-  * \return None.
-  */
+ * @brief Set the polarity of the wake-up system function of the specified pin.
+ *
+ * @param[in] Pin_Num         Specifies the pin number to be configured. Refer to @ref Pin_Number.
+ * @param[in] WakeUpPolarity  Specifies the pin wake-up polarity. Refer to @ref WAKEUP_POLARITY.
+ *
+ * <b>Example usage</b>
+ * @code{.c}
+ *
+ * void board_init(void)
+ * {
+ *     System_SetWakeUpPinPolarity(P0_0, SYSTEM_WAKEUP_POLARITY_LOW);
+ * }
+ * @endcode
+ */
 void System_SetWakeUpPinPolarity(uint8_t Pin_Num, SystemWakeUpPolarity_TypeDef WakeUpPolarity);
 
 #if (PAD_SUPPORT_ADPATER_WAKEUP == 1 | PAD_SUPPORT_MFB_WAKEUP == 1)
 /**
- * \brief   Config the system wakeup mode.
+ * @brief Configure the system wake-up mode.
  *
- * \param[in] mode: mode of set, this parameter can reference WAKEUP_EN_MODE.
- *            This parameter can be one of the following values:
- *            \arg ADP_MODE: Wake up by adapter.
- *            \arg BAT_MODE: Wake up by battery.
- *            \arg MFB_MODE: Wake up by MFB.
- *            \arg USB_MODE: Wake up by USB.
- * \param[in] pol: polarity to wake up.
- *            This parameter can be the following:
- *            \arg POL_HIGH: Use high level wakeup.
- *            \arg POL_LOW: Use low level wakeup.
- * \param[in] NewState: Enable or disable wake up.
- *            This parameter can be one of the following values:
- *            \arg ENABLE: Enable the system wake up at specified polarity.
- *            \arg DISABLE: Disable the system wake up at specified polarity.
+ * @param[in] WakeUp_Mode     Mode to set. Refer to @ref SystemWakeUpMode_TypeDef.
+ *                            - ADP_MODE: Wake up by adapter.
+ *                            - BAT_MODE: Wake up by battery.
+ *                            - MFB_MODE: Wake up by MFB.
+ *                            - USB_MODE: Wake up by USB.
+ * @param[in] WakeUpPolarity  Polarity to wake up.
+ *                            - SYSTEM_WAKEUP_POLARITY_HIGH: Use high level wakeup.
+ *                            - SYSTEM_WAKEUP_POLARITY_LOW: Use low level wakeup.
+ * @param[in] NewState        Enable or disable the wake up.
+ *                            - ENABLE: Enable the system wake up at the specified polarity.
+ *                            - DISABLE: Disable the system wake up at the specified polarity.
  *
- * \return    Config the system wakeup mode fail or success.
- *            \arg 0   Config success.
- *            \arg 1   Config fail due to wrong mode.
+ * @return The result of configuring the system wake-up mode.
+ * @retval 0  Configuration successful.
+ * @retval 1  Configuration failed due to a wrong mode.
  *
  * <b>Example usage</b>
- * \code{.c}
+ * @code{.c}
+ *
  * void adapter_wake_up_enable(void)
  * {
- *     //adapter mode is WAKE_UP_GENERAL
- *     Pad_WakeUpCmd(ADP_MODE, POL_HIGH, ENABLE);
+ *     System_WakeUpModeCmd(ADP_MODE, SYSTEM_WAKEUP_POLARITY_HIGH, ENABLE);
  * }
- * \endcode
+ * @endcode
  */
 uint8_t System_WakeUpModeCmd(SystemWakeUpMode_TypeDef WakeUp_Mode,
                              SystemWakeUpPolarity_TypeDef WakeUpPolarity, FunctionalState NewState);
@@ -490,111 +483,141 @@ uint8_t System_WakeUpModeCmd(SystemWakeUpMode_TypeDef WakeUp_Mode,
 
 #if (PAD_SUPPORT_ADPATER_WAKEUP == 1)
 /**
- * \brief   Configure the adpater wake-up system functions in power off(shipping) mode.
+ * @brief Configure the adapter wake-up system function in power off (shipping) mode.
  *
- * \param[in] NewState: Enable or disable adpater wake up.
- *            This parameter can be one of the following values:
- *            \arg ENABLE: Enable adpater wake up system at specified polarity.
- *            \arg DISABLE: Disable adpater wake up system.
- * \param[in] pol: Polarity to wake up.
- *            This parameter can be the following:
- *            \arg POL_HIGH: Use high level wakeup.
- *            \arg POL_LOW: Use low level wakeup.
- *
- * \return None.
+ * @param[in] WakeUpPolarity  Polarity to wake up.
+ *                            - SYSTEM_WAKEUP_POLARITY_HIGH: Use high level wakeup.
+ *                            - SYSTEM_WAKEUP_POLARITY_LOW: Use low level wakeup.
+ * @param[in] NewState        Enable or disable the adapter wake up.
+ *                            - ENABLE: Enable the adapter wake-up system at the specified polarity.
+ *                            - DISABLE: Disable the adapter wake-up system.
  *
  * <b>Example usage</b>
- * \code{.c}
+ * @code{.c}
+ *
  * void adapter_wake_up_enable(void)
  * {
- *     //adapter mode is wake_up_power_off
- *     System_SetAdpWakeUpFunction(ENABLE, PAD_WAKEUP_POLARITY_HIGH);
+ *     System_WakeUpAdapterCmd(SYSTEM_WAKEUP_POLARITY_HIGH, ENABLE);
  * }
- * \endcode
+ * @endcode
  */
 void System_WakeUpAdapterCmd(SystemWakeUpPolarity_TypeDef WakeUpPolarity, FunctionalState NewState);
 #endif
 
 #if (PAD_SUPPORT_MFB_WAKEUP == 1)
 /**
- * \brief   Configure the MFB wake-up system functions in power off(shipping) mode.
+ * @brief Configure the MFB wake-up system function in power off (shipping) mode.
  *
- * \param[in] NewState: Enable or disable MFB wake up.
- *            This parameter can be one of the following values:
- *            \arg ENABLE: Enable MFB wake up system.
- *            \arg DISABLE: Disable MFB wake up system.
- *
- * \return None.
+ * @param[in] NewState  Enable or disable the MFB wake up.
+ *                      - ENABLE: Enable the MFB wake-up system.
+ *                      - DISABLE: Disable the MFB wake-up system.
  *
  * <b>Example usage</b>
- * \code{.c}
- * //io_test_set_mfb_mode is POWER_OFF_WAKEUP_TEST
+ * @code{.c}
+ *
  * void mfb_wake_up_enable(void)
  * {
- *     System_SetMFBWakeUpFunction(ENABLE);
+ *     System_WakeUpMFBCmd(ENABLE);
  * }
- * \endcode
+ * @endcode
  */
 void System_WakeUpMFBCmd(FunctionalState NewState);
 #endif
 
 #if (PAD_SUPPORT_SHIP_MODE_PAD_CONFIG == 1)
+/**
+ * @brief Enable or disable the pad pull-down function in ship mode of the specified pin.
+ *
+ * @note  Only the following pins support this function:
+ *        P0_2, P0_4, P3_2, P3_3, P4_0, P4_1, P4_2, P4_3, P6_0, SPIC_WEN and SPIC_HOLDEN.
+ *        Calling this function for any other pins will be safely ignored.
+ *
+ * @param[in] Pin_Num   Specifies the pin number to be configured. Refer to @ref Pin_Number.
+ * @param[in] NewState  Enable or disable the pad pull-down function in ship mode.
+ *
+ * <b>Example usage</b>
+ * @code{.c}
+ *
+ * void board_init(void)
+ * {
+ *     System_ShipModePadPullDownCmd(P4_0, ENABLE);
+ *     System_ShipModePadPullDownCmd(P4_1, ENABLE);
+ * }
+ * @endcode
+ */
 void System_ShipModePadPullDownCmd(uint8_t Pin_Num, FunctionalState NewState);
 #endif
 
 #if (PAD_SUPPORT_DETECT_MODE == 1)
 /**
-  * \brief  Selected the DETECT mode of PAD interrupt.
-  *
-  * \param[in]  is_ldetect: Enable or disable the LDETECT.
-  *             This parameter can be true or off.
-  *
-  * \return None
-  */
+ * @brief Select the DETECT mode of the PAD interrupt.
+ *
+ * @param[in] is_ldetect  Enable or disable the LDETECT.
+ *                        - true: Enable the LDETECT.
+ *                        - false: Disable the LDETECT.
+ */
 void System_SelectLDETECT(bool is_ldetect);
 #endif
 
-#if (PAD_SUPPORT_WKIE_DIFF_BIT == 1)
+#if (PAD_SUPPORT_WAKEUP_POWER_DOWN == 1)
 /**
-  * \brief  Configure wakeup off mode(power down) function for the specified pin.
-  * \param  Pin_Num: The number of the pin to configure. See \ref Pin_Number.
-  * \param  Polarity: Select pin wakeup polarity (high level or low level).
-  *         This parameter can be PAD_WAKEUP_POL_HIGH or PAD_WAKEUP_POL_LOW.
-  * \param  NewState: Enable or disable wakeup RAP function.
-  *         This parameter can be ENABLE or DISABLE.
-  * \return None
-  */
+ * @brief Enable or disable the wake-up Power Down (PD) function of the specified pin.
+ *
+ * @details Power Down (PD) mode disables most internal power domains. This function configures
+ *          the PAD to monitor external signals and wake up the system from this ultra-low power state.
+ *
+ * @param[in] Pin_Num   Specifies the pin number to be configured. Refer to @ref Pin_Number.
+ * @param[in] Polarity  Specifies the pin wake-up polarity. Refer to @ref WAKEUP_POLARITY.
+ * @param[in] NewState  Enable or disable the wake-up Power Down function.
+ *
+ * <b>Example usage</b>
+ * @code{.c}
+ *
+ * void board_init(void)
+ * {
+ *     System_WakeUpPDCmd(P0_0, SYSTEM_WAKEUP_POLARITY_LOW, ENABLE);
+ * }
+ * @endcode
+ */
 void System_WakeUpPDCmd(uint8_t Pin_Num, uint8_t Polarity, FunctionalState NewState);
 #endif
 
-#if (PAD_SUPPORT_WAKE_SUB_IRQ == 1)
+#if (PAD_SUPPORT_WAKEUP_PAD_SUB_IRQ == 1)
 /**
-  * \brief  Register the callback function of the wake-up system of the specified pin.
-  *
-  * \param[in] Pin_Num: Pin number to be configured. \ref Pin_Number.
-  *
-  * \param[in] Callback: Callback function.
-  *
-  * \param[in] Context: Context of the callback
-  *
-  * \return None.
-  */
+ * @brief Register or unregister the wake-up callback function of the specified pin.
+ *
+ * @note  Calls with an invalid `Pin_Num` or a pin that lacks wake-up hardware capability
+ *        will be silently ignored.
+ *
+ * @param[in] Pin_Num   Specifies the pin number to be configured. Refer to @ref Pin_Number.
+ * @param[in] Callback  Function pointer to the user callback. Pass NULL to unregister.
+ * @param[in] Context   User-defined context parameter passed to the callback function.
+ *
+ * <b>Example usage</b>
+ * @code{.c}
+ *
+ * void app_wakeup_callback(uint32_t context)
+ * {
+ *     uint8_t pin = (uint8_t)context;
+ *     APP_PRINT_INFO1("System awoken by pin: %d", pin);
+ * }
+ *
+ * void board_wakeup_init(void)
+ * {
+ *     System_WakeUpPinEnable(P0_0, SYSTEM_WAKEUP_POLARITY_LOW, ENABLE);
+ *     System_RegisterPadWakeupCallback(P0_0, app_wakeup_callback, (uint32_t)P0_0);
+ * }
+ * @endcode
+ */
 void System_RegisterPadWakeupCallback(uint8_t Pin_Num, P_PAD_CBACK Callback, uint32_t Context);
 #endif
 
-/** End of WAKEUP_Exported_Functions
-  * \}
-  */
+/** @} */ /* End of group WAKEUP_Exported_Functions */
 
-/** End of WAKEUP
-  * \}
-  */
+/** @} */ /* End of group PINMUX */
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* RTL_WAKEUP_H */
-
-
-

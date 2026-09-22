@@ -18,58 +18,16 @@ extern "C" {
 /*============================================================================*
  *                          RCC Defines
  *============================================================================*/
-/** \defgroup RCC         RCC
-  * \brief
-  * \{
-  */
-
-/** \defgroup RCC_Exported_Constants RCC Exported Constants
-  * \brief
-  * \{
-  */
-
-/**
- * \defgroup RCC_Defines RCC Defines
- * \{
- * \ingroup  RCC_Exported_Constants
- */
 #define RCC_SUPPORT_CLOCKGATECMD_API                   (0)
 #define RCC_SUPPORT_AUTO_CLOCK                         (1)
-
-/** End of RCC_Defines
-  * \}
-  */
-
-/** End of RCC_Exported_Constants
-  * \}
-  */
-
-/** End of RCC
-  * \}
-  */
-/*============================================================================*
- *                         RCC Private Defines
- *============================================================================*/
-
 
 /*============================================================================*
  *                         RCC Constants
  *============================================================================*/
-/** \defgroup RCC         RCC
-  * \brief
-  * \{
-  */
-
-/** \defgroup RCC_Exported_Constants RCC Exported Constants
-  * \brief
-  * \{
-  */
-
-
 /**
- * \defgroup    RCC_PERIPH_CLOCK RCC PERIPH CLOCK
- * \{
- * \ingroup     RCC_Exported_Constants
+ * @defgroup RCC_PERIPH_CLOCK RCC PERIPH CLOCK
+ * @{
+ * @ingroup  RCC_Exported_Constants
  */
 
 /* 32bit Encoding:    VUTSRQPO NMLKJIHG FEDCBA98 76543210
@@ -115,6 +73,7 @@ extern "C" {
 #define LPWDT_CLOCK                 ((uint32_t)((0x0B << 24) | (31)))
 #define LPC_CLOCK                   ((uint32_t)((0x0E << 24) | (31)))
 
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_PERIPH_CLOCK(CLOCK)      (((CLOCK) == WDT_CLOCK) || \
                                      ((CLOCK) == MODEMRFCPI_CLOCK) || \
                                      ((CLOCK) == DMA_CLOCK) || \
@@ -148,17 +107,7 @@ extern "C" {
                                      ((CLOCK) == LPWDT_CLOCK) || \
                                      ((CLOCK) == LPC_CLOCK))
 
-/** End of RCC_PERIPH_CLOCK
-  * \}
-  */
-
-/** End of RCC_Exported_Constants
-  * \}
-  */
-
-/** End of RCC
-  * \}
-  */
+/** @} */ /* End of group RCC_PERIPH_CLOCK */
 
 #ifdef  __cplusplus
 }

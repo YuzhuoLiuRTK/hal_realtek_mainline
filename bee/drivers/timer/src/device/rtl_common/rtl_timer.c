@@ -31,9 +31,8 @@ extern void TIMER_SetLatchDebClock(TIMER_TypeDef *TIMERx, uint16_t ClockSrc, uin
  *                           Public Functions
  *============================================================================*/
 /**
-  * \brief  Deinitializes the TIMERx peripheral registers to their default reset values.
-  * \param  TIMERx: Select the TIMER peripheral. \ref TIMER_Declaration
-  * \return None
+  * @brief  Deinitialize the TIMERx peripheral registers to their default reset values.
+  * @param  TIMERx: Select the TIMER peripheral. @ref TIMER_DECLARATION.
   */
 void TIMER_DeInit(TIMER_TypeDef *TIMERx)
 {
@@ -62,13 +61,12 @@ void TIMER_DeInit(TIMER_TypeDef *TIMERx)
 }
 
 /**
-  * \brief  Initializes the TIMERx Time Base Unit peripheral according to
-  *         the specified parameters in the TIMER_InitStruct.
-  * \param  TIMERx: Select the TIMER peripheral. \ref TIMER_Declaration
-  * \param  TIMER_InitStruct: pointer to a TIMER_TimeBaseInitTypeDef
+  * @brief  Initialize the TIMERx time base unit peripheral according to
+  *         the specified parameters in TIMER_InitStruct.
+  * @param  TIMERx: Select the TIMER peripheral. @ref TIMER_DECLARATION.
+  * @param  TIMER_InitStruct: Pointer to a TIMER_TimeBaseInitTypeDef
   *         structure that contains the configuration information for the
-  *         specified TIMER peripheral.
-  * \return None
+  *         selected TIMER peripheral.
   */
 void TIMER_TimeBaseInit(TIMER_TypeDef *TIMERx, TIMER_TimeBaseInitTypeDef *TIMER_InitStruct)
 {
@@ -248,9 +246,8 @@ void TIMER_TimeBaseInit(TIMER_TypeDef *TIMERx, TIMER_TimeBaseInitTypeDef *TIMER_
 }
 
 /**
-  * \brief  Fills each TIMER_InitStruct member with its default value.
-  * \param  TIMER_InitStruct : pointer to a TIMER_InitTypeDef structure which will be initialized.
-  * \return None
+  * @brief  Fills each TIMER_InitStruct member with its default value.
+  * @param  TIMER_InitStruct : pointer to a TIMER_TimeBaseInitTypeDef structure which will be initialized.
   */
 void TIMER_StructInit(TIMER_TimeBaseInitTypeDef *TIMER_InitStruct)
 {
@@ -311,11 +308,10 @@ void TIMER_StructInit(TIMER_TimeBaseInitTypeDef *TIMER_InitStruct)
 }
 
 /**
-  * \brief  Enables or disables the specified TIMER peripheral.
-  * \param  TIMERx: Select the TIMER peripheral. \ref TIMER_Declaration
-  * \param  NewState: new state of the TIMERx peripheral.
-  *   This parameter can be: ENABLE or DISABLE.
-  * \return None
+  * @brief  Enables or disables the specified TIMER peripheral.
+  * @param  TIMERx: Select the TIMER peripheral. @ref TIMER_DECLARATION.
+  * @param  NewState: New state of the TIMERx peripheral.
+  *            This parameter can be: ENABLE or DISABLE.
   */
 void TIMER_Cmd(TIMER_TypeDef *TIMERx, FunctionalState NewState)
 {
@@ -346,11 +342,11 @@ void TIMER_Cmd(TIMER_TypeDef *TIMERx, FunctionalState NewState)
 }
 
 /**
-  * \brief  Enables or disables the specified TIMERx interrupt.
-  * \param  TIMERx: Select the TIMER peripheral. \ref TIMER_Declaration
-  * \param  NewState: new state of the TIMERx peripheral.
-  *   This parameter can be: ENABLE or DISABLE.
-  * \return None
+  * @brief  Enables or disables the specified TIMERx interrupt.
+  * @param  TIMERx: Select the TIMER peripheral. @ref TIMER_DECLARATION.
+  * @param  TIMER_INT: Specify the TIMERx interrupt source to be enabled or disabled.
+  * @param  NewState: New state of the TIMERx interrupt.
+  *              This parameter can be: ENABLE or DISABLE.
   */
 void TIMER_INTConfig(TIMER_TypeDef *TIMERx, uint8_t TIMER_INT, FunctionalState NewState)
 {
@@ -408,9 +404,12 @@ void TIMER_INTConfig(TIMER_TypeDef *TIMERx, uint8_t TIMER_INT, FunctionalState N
 
 
 /**
- * \brief   Check whether the TIMER interrupt has occurred or not.
- * \param   TIMERx: Select the TIMER peripheral. \ref TIMER_Declaration
- * \return  The new state of the TIMER_INTR(SET or RESET).
+ * @brief   Check whether the TIMER interrupt has occurred or not.
+ * @param   TIMERx: Select the TIMER peripheral. @ref TIMER_DECLARATION.
+ * @param   TIMER_INT: Specify the TIMERx interrupt source to check.
+ * @return  The new state of the TIMER interrupt (SET or RESET).
+ * @retval SET   The TIMER interrupt has occurred.
+ * @retval RESET The TIMER interrupt has not occurred.
  */
 ITStatus TIMER_GetINTStatus(TIMER_TypeDef *TIMERx, uint8_t TIMER_INT)
 {
@@ -458,9 +457,9 @@ ITStatus TIMER_GetINTStatus(TIMER_TypeDef *TIMERx, uint8_t TIMER_INT)
 
 
 /**
- * \brief   Clear TIMER interrupt.
- * \param   TIMERx: Select the TIMER peripheral. \ref TIMER_Declaration
- * \return  None.
+ * @brief   Clear TIMER interrupt.
+ * @param   TIMERx: Select the TIMER peripheral. @ref TIMER_DECLARATION.
+ * @param   TIMER_INT: Specify the TIMERx interrupt source to clear.
  */
 void TIMER_ClearINT(TIMER_TypeDef *TIMERx, uint8_t TIMER_INT)
 {
@@ -494,10 +493,13 @@ void TIMER_ClearINT(TIMER_TypeDef *TIMERx, uint8_t TIMER_INT)
 
 #if (TIMER_SUPPORT_CCR_FIFO == 1 || TIMER_SUPPORT_LATCH_CNT_0 == 1)
 /**
-  * \brief  Check whether the specified TIMER flag is set.
-  * \param  TIMERx: Select the TIMER peripheral. \ref TIMER_Declaration
-  * \param  TIMER_FLAG: Specifies the flag to check.
-  * \return The new state of TIMER_FLAG (SET or RESET).
+  * @brief  Get the specified TIMER FIFO flag status.
+  * @param  TIMERx: Select the TIMER peripheral. @ref TIMER_DECLARATION.
+  * @param  TIMER_FLAG: Specifies the flag to check.
+  *                     This parameter can be a value of @ref TIMER_FLAG.
+  * @return The new state of TIMER_FLAG (SET or RESET).
+  * @retval SET   The specified flag is set.
+  * @retval RESET The specified flag is not set.
   */
 FlagStatus TIMER_GetFIFOFlagStatus(TIMER_TypeDef *TIMERx, uint32_t TIMER_FLAG)
 {
@@ -536,9 +538,9 @@ FlagStatus TIMER_GetFIFOFlagStatus(TIMER_TypeDef *TIMERx, uint32_t TIMER_FLAG)
 #endif
 
 /**
-  * \brief  change TIMER period value.
-  * \param  TIMERx: Select the TIMER peripheral. \ref TIMER_Declaration
-  * \return The new state of success or not  (SET or RESET).
+  * @brief  Change TIMER period value.
+  * @param  TIMERx: Select the TIMER peripheral. @ref TIMER_DECLARATION.
+  * @param  period: Period value to be changed.
   */
 void TIMER_ChangePeriod(TIMER_TypeDef *TIMERx, uint32_t period)
 {
@@ -551,9 +553,9 @@ void TIMER_ChangePeriod(TIMER_TypeDef *TIMERx, uint32_t period)
 }
 
 /**
-  * \brief  Get TIMER period value.
-  * \param  TIMERx: Select the TIMER peripheral. \ref TIMER_Declaration
-  * \return TIMER period value.
+  * @brief  Get TIMERx period value.
+  * @param  TIMERx: Select the TIMER peripheral. @ref TIMER_DECLARATION.
+  * @return TIMER period value.
   */
 uint32_t TIMER_GetPeriod(TIMER_TypeDef *TIMERx)
 {
@@ -564,9 +566,9 @@ uint32_t TIMER_GetPeriod(TIMER_TypeDef *TIMERx)
 }
 
 /**
- * \brief   Get TIMERx current value when timer is running.
- * \param   TIMERx: Select the TIMER peripheral. \ref TIMER_Declaration
- * \return  The counter value.
+ * @brief   Get TIMERx current value when timer is running.
+ * @param   TIMERx: Select the TIMER peripheral. @ref TIMER_DECLARATION.
+ * @return  The counter value.
  */
 uint32_t TIMER_GetCurrentValue(TIMER_TypeDef *TIMERx)
 {
@@ -577,9 +579,9 @@ uint32_t TIMER_GetCurrentValue(TIMER_TypeDef *TIMERx)
 }
 
 /**
- * \brief  Get TIMERx elapsed value when timer is running.
- * \param  TIMERx: Select the TIMER peripheral. \ref TIMER_Declaration
- * \return The elapsed counter value.
+ * @brief  Get TIMERx elapsed value when timer is running.
+ * @param  TIMERx: Select the TIMER peripheral. @ref TIMER_DECLARATION.
+ * @return The elapsed counter value.
  */
 uint32_t TIMER_GetElapsedValue(TIMER_TypeDef *TIMERx)
 {
@@ -590,9 +592,11 @@ uint32_t TIMER_GetElapsedValue(TIMER_TypeDef *TIMERx)
 }
 
 /**
- * \brief   Check whether the TIMER is in operation or not.
- * \param   TIMERx: Select the TIMER peripheral. \ref TIMER_Declaration
- * \return  The new state of the timer operation status (SET or RESET).
+ * @brief   Get the specified TIMER operation status.
+ * @param   TIMERx: Select the TIMER peripheral. @ref TIMER_DECLARATION.
+ * @return  The new state of the timer operation status (SET or RESET).
+ * @retval SET   The timer is in operation.
+ * @retval RESET The timer is not in operation.
  */
 FlagStatus TIMER_GetOperationStatus(TIMER_TypeDef *TIMERx)
 {
@@ -624,10 +628,10 @@ FlagStatus TIMER_GetOperationStatus(TIMER_TypeDef *TIMERx)
 }
 
 /**
-  * \brief  Enable/disable to pause timer counter.
-  * \param  TIMERx: Select the TIMER peripheral. \ref TIMER_Declaration
-  * \param  NewState: New state of the TIMERx peripheral.
-  * \return None.
+  * @brief  Enable or disable to pause timer counter.
+  * @param  TIMERx: Select the TIMER peripheral. @ref TIMER_DECLARATION.
+  * @param  NewState: New state of the TIMERx peripheral.
+  *                   This parameter can be: ENABLE or DISABLE.
   */
 void TIMER_PauseCmd(TIMER_TypeDef *TIMERx, FunctionalState NewState)
 {
@@ -650,11 +654,9 @@ void TIMER_PauseCmd(TIMER_TypeDef *TIMERx, FunctionalState NewState)
 
 #if (TIMER_SUPPORT_CCR_FIFO == 1)
 /**
-  * \brief  Set TIMERx capture/compare value for user-define PWM auto mode.
-  * \param  TIMERx: Select the TIMER peripheral. \ref TIMER_Declaration
-  * \param  value:  User-defined TIMER capture/compare value for PWM auto mode,
-  *         ranging from 0 to 2^31.
-  * \return None
+  * @brief  Set the value to adjust the duty cycle in the compare FIFO.
+  * @param  TIMERx: Select the TIMER peripheral. @ref TIMER_DECLARATION.
+  * @param  value: Value to be written to compare FIFO.
   */
 void TIMER_SetCompareFIFO(TIMER_TypeDef *TIMERx, uint32_t value)
 {
@@ -667,10 +669,10 @@ void TIMER_SetCompareFIFO(TIMER_TypeDef *TIMERx, uint32_t value)
 
 #if (TIMER_SUPPORT_CCR_FIFO == 1 || TIMER_SUPPORT_LATCH_CNT_0 == 1)
 /**
-  * \brief  Clear capture/compare or latch count0 fifo.
-  * \param  TIMERx: Select the ENHTIMER peripheral. \ref TIMER_Declaration
-  * \param  FIFO_CLR: Specifies the FIFO type which to be clear.
-  * \return FIFO data length.
+  * @brief  Clear capture/compare or latch count FIFO.
+  * @param  TIMERx: Select the TIMER peripheral. @ref TIMER_DECLARATION.
+  * @param  FIFO_CLR: Specifies the FIFO type to be cleared.
+  *                   This parameter can be a value of @ref TIMER_CLEAR_FLAG.
   */
 void TIMER_ClearFIFO(TIMER_TypeDef *TIMERx, uint8_t FIFO_CLR)
 {
@@ -694,11 +696,10 @@ void TIMER_ClearFIFO(TIMER_TypeDef *TIMERx, uint8_t FIFO_CLR)
 
 #if (TIMER_SUPPORT_LATCH_CNT_0 == 1)
 /**
-  * \brief  Read TIMERx latch counter0 fifo data.
-  * \param  TIMERx: Select the TIMER peripheral. \ref TIMER_Declaration
-  * \param  length: Latch count0 fifo length, max 8.
-  * \pBuf   pBuf: FIFO data out buffer.
-  * \return None.
+  * @brief  Get the specified TIMER latch count value.
+  * @param  TIMERx: Select the TIMER peripheral. @ref TIMER_DECLARATION.
+  * @param  pBuf: FIFO data out buffer.
+  * @param  length: Latch count FIFO length, max 8.
   */
 void TIMER_GetLatchFIFO(TIMER_TypeDef *TIMERx, uint32_t *pBuf, uint8_t length)
 {
@@ -717,9 +718,9 @@ void TIMER_GetLatchFIFO(TIMER_TypeDef *TIMERx, uint32_t *pBuf, uint8_t length)
 }
 
 /**
-  * \brief  Get TIMER latch counter0 fifo length.
-  * \param  TIMERx: Select the TIMER peripheral. \ref TIMER_Declaration
-  * \return FIFO data length.
+  * @brief  Get the specified TIMER latch count FIFO length.
+  * @param  TIMERx: Select the TIMER peripheral. @ref TIMER_DECLARATION.
+  * @return FIFO data length.
   */
 uint8_t TIMER_GetLatchFIFOLength(TIMER_TypeDef *TIMERx)
 {
@@ -732,11 +733,10 @@ uint8_t TIMER_GetLatchFIFOLength(TIMER_TypeDef *TIMERx)
 
 #if (TIMER_SUPPORT_PWM_FUNCTION == 1)
 /**
-  * \brief  Change PWM freq and duty according high_cnt and low_cnt
-  * \param  TIMERx: Select the TIMER peripheral. \ref TIMER_Declaration
-  * \param  period: This parameter controls the frequency, ranging from 0x0000 to 0xFFFFFFFF.
-  * \param  high_count: This parameter controls the duty cycle, ranging from 0x0000 to 0xFFFFFFFF.
-  * \return None
+  * @brief  Change PWM frequency and duty cycle.
+  * @param  TIMERx: Select the TIMER peripheral. @ref TIMER_DECLARATION.
+  * @param  period: This parameter can be 0x00 to 0xFFFFFFFF.
+  * @param  high_count: This parameter can be 0x00 to 0xFFFFFFFF.
   */
 void TIMER_PWMChangeFreqAndDuty(TIMER_TypeDef *TIMERx, uint32_t period, uint32_t high_count)
 {
@@ -780,9 +780,11 @@ void TIMER_PWMChangeFreqAndDuty(TIMER_TypeDef *TIMERx, uint32_t period, uint32_t
 }
 
 /**
-  * \brief  Get TIMER toggle state
-  * \param  TIMERx: Select the TIMER peripheral. \ref TIMER_Declaration
-  * \return The new state of toggle state(SET or RESET).
+  * @brief  Get TIMER toggle state.
+  * @param  TIMERx: Select the TIMER peripheral. @ref TIMER_DECLARATION.
+  * @return The new state of toggle state.
+  * @retval true  The toggle state is set.
+  * @retval false The toggle state is reset.
   */
 bool TIMER_GetToggleState(TIMER_TypeDef *TIMERx)
 {
@@ -802,10 +804,9 @@ bool TIMER_GetToggleState(TIMER_TypeDef *TIMERx)
 }
 
 /**
-  * \brief  Change TIMER pwm_phase_shift count
-  * \param  TIMERx: Select the TIMER peripheral. \ref TIMER_Declaration
-  * \param  PhaseShiftCnt:This parameter can be 0 to ccr;
-  * \return None
+  * @brief  Change TIMER PWM phase shift count.
+  * @param  TIMERx: Select the TIMER peripheral. @ref TIMER_DECLARATION.
+  * @param  ShiftCount: This parameter can be 0 to CCR value.
   */
 #if (TIMER_SUPPORT_PWM_PHASE_SHIFT == 1)
 void TIMER_SetShiftCount(TIMER_TypeDef *TIMERx, uint32_t ShiftCount)
@@ -819,10 +820,10 @@ void TIMER_SetShiftCount(TIMER_TypeDef *TIMERx, uint32_t ShiftCount)
 
 #if (TIMER_SUPPORT_PWM_DEADZONE == 1)
 /**
- * \brief  TIMER PWMP/N Source Select.
- * \param  TIMERx: Select the TIMER peripheral. \ref TIMER_Declaration
- * \param  PWMSrcSel: State of the TIMERx PWMP/N.
- * \return None.
+ * @brief  TIMER PWMP/N source select.
+ * @param  TIMERx: Select the TIMER peripheral. @ref TIMER_DECLARATION.
+ * @param  PWMDZRef: State of the TIMERx PWMP/N.
+ *                   This parameter can be a value of @ref PWM_DEADZONE_REFERENCE.
  */
 void TIMER_SetPWMDZRef(TIMER_TypeDef *TIMERx, PWMDZRef_TypeDef PWMDZRef)
 {
@@ -836,15 +837,14 @@ void TIMER_SetPWMDZRef(TIMER_TypeDef *TIMERx, PWMDZRef_TypeDef PWMDZRef)
 #endif
 
 /**
- * \brief  PWM complementary output emergency stop.
+ * @brief  PWM complementary output emergency stop and resume.
  *         PWM_P emergency stop level state is configured by PWM_Stop_State_P,
  *         PWM_N emergency stop level state is configured by PWM_Stop_State_N.
- * \param  PWMx: Select the PWM peripheral. \ref PWM_Declaration
- * \param  NewState: New state of complementary output.
- *         \arg DISABLE: Resume PWM complementary output.
- *         \arg ENABLE: PWM complementary output emergency stop.
- * \return None.
- * \note   To use this function, need to configure the corresponding timer.
+ * @param  TIMERx: Select the TIMER peripheral. @ref TIMER_DECLARATION.
+ * @param  NewState: New state of complementary output.
+ *         @arg DISABLE: Resume PWM complementary output.
+ *         @arg ENABLE: PWM complementary output emergency stop.
+ * @note   To use this function, need to configure the corresponding timer.
  *         PWM2 ->> TIMER2, PWM3 ->> TIMER3.
  */
 void TIMER_PWMComplOutputEMCmd(TIMER_TypeDef *TIMERx, FunctionalState NewState)
@@ -860,6 +860,12 @@ void TIMER_PWMComplOutputEMCmd(TIMER_TypeDef *TIMERx, FunctionalState NewState)
 
 #if (TIMER_SUPPORT_RAP_FUNCTION == 1)
 
+/**
+ * @brief  Enable or disable the TIMERx RAP mode.
+ * @param  TIMERx: Select the TIMER peripheral. @ref TIMER_DECLARATION.
+ * @param  NewState: New state of the TIMERx RAP mode.
+ *                   This parameter can be: ENABLE or DISABLE.
+ */
 void TIMER_RAPModeCmd(TIMER_TypeDef *TIMERx, FunctionalState NewState)
 {
     /* Check the parameters */
@@ -881,6 +887,12 @@ void TIMER_RAPModeCmd(TIMER_TypeDef *TIMERx, FunctionalState NewState)
     return;
 }
 
+/**
+ * @brief  Trigger the specified TIMERx action.
+ * @param  TIMERx: Select the TIMER peripheral. @ref TIMER_DECLARATION.
+ * @param  Action: The action to trigger.
+ *                 This parameter can be a value of @ref TIMER_ACTION.
+ */
 void TIMER_ActionTrigger(TIMER_TypeDef *TIMERx, uint32_t Action)
 {
     /* Check the parameters */
@@ -905,6 +917,16 @@ void TIMER_ActionTrigger(TIMER_TypeDef *TIMERx, uint32_t Action)
     return;
 }
 
+/**
+ * @brief  Enable or disable the shortcut function for TIMERx.
+ * @param  TIMERx: Select the TIMER peripheral. @ref TIMER_DECLARATION.
+ * @param  Action: The shortcut action.
+ *                 This parameter can be a value of @ref TIMER_SHORTCUT_ACTION.
+ * @param  Event: The shortcut event.
+ *                This parameter can be a value of @ref TIMER_SHORTCUT_EVENT.
+ * @param  NewState: New state of the shortcut function.
+ *                   This parameter can be: ENABLE or DISABLE.
+ */
 void TIMER_ShortcutCmd(TIMER_TypeDef *TIMERx, uint32_t Action, uint32_t Event,
                        FunctionalState NewState)
 {
@@ -947,5 +969,3 @@ void TIMER_ShortcutCmd(TIMER_TypeDef *TIMERx, uint32_t Action, uint32_t Event,
     return;
 }
 #endif
-
-

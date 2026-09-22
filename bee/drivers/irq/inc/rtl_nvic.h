@@ -22,64 +22,64 @@ extern "C" {
 #include "irq/src/device/rtl87x2g/rtl_nvic_def.h"
 #elif defined (CONFIG_SOC_SERIES_RTL87X2J)
 #include "irq/src/device/rtl87x2j/rtl_nvic_def.h"
-#elif defined (CONFIG_SOC_SERIES_RTL87X3E)
-#include "irq/src/device/rtl87x3e/rtl_nvic_def.h"
 #elif defined (CONFIG_SOC_SERIES_RTL87X3D)
 #include "irq/src/device/rtl87x3d/rtl_nvic_def.h"
 #elif defined (CONFIG_SOC_SERIES_RTL87X3J)
 #include "irq/src/device/rtl87x3j/rtl_nvic_def.h"
+#elif defined (CONFIG_SOC_SERIES_RTL87X3K)
+#include "irq/src/device/rtl87x3k/rtl_nvic_def.h"
 #endif
 
-/** \defgroup NVIC        NVIC
-  * \brief
-  * \{
-  */
+/**
+ * @defgroup NVIC_DRIVER DRIVER
+ * @ingroup NVIC
+ * @brief Nested Vectored Interrupt Controller (NVIC) driver.
+ * @{
+ */
 /*============================================================================*
  *                         Types
  *============================================================================*/
-/** \defgroup NVIC_Exported_Types NVIC Exported Types
-  * \brief
-  * \{
-  */
+/**
+ * @defgroup NVIC_Exported_Types NVIC Exported Types
+ * @{
+ * @ingroup  NVIC
+ */
 
 /**
- * \brief       NVIC init structure definition
+ * @brief       NVIC init structure definition.
  *
- * \ingroup     NVIC_Exported_Types
+ * @ingroup     NVIC_Exported_Types
  */
 
 typedef struct
 {
-    int NVIC_IRQChannel;                    /*!< Specifies the IRQ channel.
-                                                 This parameter can be a value of \ref IRQn_Type and \ref GPIO_IRQn. */
-    uint32_t NVIC_IRQChannelPriority;       /*!< Specifies the priority for the IRQ channel.
+    int NVIC_IRQChannel;                    /*!< Specify the IRQ channel.
+                                                 This parameter can be a value of @ref IRQn_Type and @ref GPIO_IRQn. */
+    uint32_t NVIC_IRQChannelPriority;       /*!< Specify the priority for the IRQ channel.
                                                  This parameter can be a value between 0 and x as described in the table.*/
-    FunctionalState NVIC_IRQChannelCmd;     /*!< Specifies the IRQ channel to be enabled or disabled.*/
+    FunctionalState NVIC_IRQChannelCmd;     /*!< Specify the IRQ channel to be enabled or disabled.*/
 } NVIC_InitTypeDef;
 
-/** End of NVIC_Exported_Types
-  * \}
-  */
+/** @} */ /* End of group NVIC_Exported_Types */
 
 /*============================================================================*
  *                         Functions
  *============================================================================*/
-/** \defgroup NVIC_Exported_Functions NVIC Exported Functions
-  * \brief
-  * \{
-  */
+/**
+ * @defgroup NVIC_Exported_Functions NVIC Exported Functions
+ * @{
+ * @ingroup  NVIC
+ */
 
 /**
- * \brief   Initializes the NVIC peripheral according to the specified
+ * @brief   Initialize the NVIC peripheral according to the specified
  *          parameters in NVIC_InitStruct.
  *
- * \param[in]   NVIC_InitStruct: Pointer to a NVIC_InitTypeDef structure that contains
+ * @param[in]   NVIC_InitStruct Pointer to a NVIC_InitTypeDef structure that contains
  *              the configuration information for the specified NVIC peripheral.
  *
- * \return  None.
- *
  * <b>Example usage</b>
- * \code{.c}
+ * @code{.c}
  *
  * void nvic_config(void)
  * {
@@ -89,17 +89,13 @@ typedef struct
  *     NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
  *     NVIC_Init(&NVIC_InitStruct);
  * }
- * \endcode
+ * @endcode
  */
 void NVIC_Init(NVIC_InitTypeDef *NVIC_InitStruct);
 
-/** End of NVIC_Exported_Functions
-  * \}
-  */
+/** @} */ /* End of group NVIC_Exported_Functions */
 
-/** End of NVIC
-  * \}
-  */
+/** @} */ /* End of group NVIC_DRIVER */
 
 #ifdef __cplusplus
 }

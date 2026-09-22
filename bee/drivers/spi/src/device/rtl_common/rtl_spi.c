@@ -43,10 +43,10 @@ extern void SPI_SPI2AHBBridgeConfig(FunctionalState NewState);
  *                           Public Functions
  *============================================================================*/
 /**
-  * \brief  Deinitializes the SPIx peripheral registers to their default reset values.
-  * \param  SPIx: Select the SPI peripheral. \ref SPI_Declaration
-  * \return None
-  */
+ * @brief Deinitializes the SPIx peripheral registers to their default reset values.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ */
 void SPI_DeInit(SPI_TypeDef *SPIx)
 {
     /* Check the parameters */
@@ -90,13 +90,13 @@ void SPI_DeInit(SPI_TypeDef *SPIx)
 }
 
 /**
-  * \brief  Initializes the SPIx peripheral according to the specified
-  *         parameters in the SPI_InitStruct.
-  * \param  SPIx: Select the SPI peripheral. \ref SPI_Declaration
-  * \param  SPI_InitStruct: Pointer to a SPI_InitTypeDef structure that
-  *         contains the configuration information for the specified SPI peripheral.
-  * \return None
-  */
+ * @brief Initializes the SPIx peripheral according to the specified
+ *          parameters in the SPI_InitStruct.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param[in] SPI_InitStruct  Pointer to a SPI_InitTypeDef structure that
+ *            contains the configuration information for the specified SPI peripheral.
+ */
 void SPI_Init(SPI_TypeDef *SPIx, SPI_InitTypeDef *SPI_InitStruct)
 {
     /* Check the parameters */
@@ -317,10 +317,29 @@ void SPI_Init(SPI_TypeDef *SPIx, SPI_InitTypeDef *SPI_InitStruct)
 }
 
 /**
-  * \brief  Fills each SPI_InitStruct member with its default value.
-  * \param  SPI_InitStruct : Pointer to a SPI_InitTypeDef structure which will be initialized.
-  * \return None
-  */
+ * @brief Fills each SPI_InitStruct member with its default value.
+ *
+ * @note   The default settings for the SPI_InitStruct member are shown in the following table:
+ *         | SPI_InitStruct member      | Default value                  |
+ *         |:--------------------------:|:------------------------------:|
+ *         | SPI_Direction              | @ref SPI_DIRECTION_FULLDUPLEX  |
+ *         | SPI_RXNDF                  | 1                              |
+ *         | SPI_Mode                   | @ref SPI_MODE_MASTER           |
+ *         | SPI_DataSize               | @ref SPI_DATA_SIZE_8b           |
+ *         | SPI_CPOL                   | @ref SPI_CPOL_HIGH             |
+ *         | SPI_CPHA                   | @ref SPI_CPHA_2EDGE            |
+ *         | SPI_FrameFormat            | @ref SPI_FRAME_MOTOROLA        |
+ *         | SPI_BaudRatePrescaler      | 128                            |
+ *         | SPI_ToggleEn               | DISABLE                        |
+ *         | SPI_TxThresholdLevel       | 1                              |
+ *         | SPI_RxThresholdLevel       | 0                              |
+ *         | SPI_TxDMAEn                | DISABLE                        |
+ *         | SPI_RxDMAEn                | DISABLE                        |
+ *         | SPI_TxWaterlevel           | SPI_TX_FIFO_SIZE - 1           |
+ *         | SPI_RxWaterlevel           | 1                              |
+ *
+ * @param[in] SPI_InitStruct  Pointer to a SPI_InitTypeDef structure which will be initialized.
+ */
 void SPI_StructInit(SPI_InitTypeDef *SPI_InitStruct)
 {
     /* TX and RX Mode */
@@ -389,12 +408,12 @@ void SPI_StructInit(SPI_InitTypeDef *SPI_InitStruct)
 }
 
 /**
-  * \brief  Enables or disables the specified SPI peripheral.
-  * \param  SPIx: Select the SPI peripheral. \ref SPI_Declaration
-  * \param  NewState: New state of the SPIx peripheral.
-  *         This parameter can be: ENABLE or DISABLE.
-  * \return None
-  */
+ * @brief Enables or disables the selected SPI peripheral.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param[in] NewState  New state of the SPIx peripheral.
+ *            This parameter can be: ENABLE or DISABLE.
+ */
 void SPI_Cmd(SPI_TypeDef *SPIx, FunctionalState NewState)
 {
     /* Check the parameters */
@@ -407,12 +426,12 @@ void SPI_Cmd(SPI_TypeDef *SPIx, FunctionalState NewState)
 }
 
 /**
-  * \brief  Transmits a number of bytes through the SPIx peripheral.
-  * \param  SPIx: Select the SPI peripheral. \ref SPI_Declaration
-  * \param  pBuf : Bytes to be transmitted.
-  * \param  len : Byte length to be transmitted.
-  * \return None
-  */
+ * @brief Transmits the specified number of bytes through the SPIx peripheral.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param[in] pBuf  Bytes to be transmitted.
+ * @param[in] len  Byte length to be transmitted.
+ */
 void SPI_SendBuffer(SPI_TypeDef *SPIx, uint8_t *pBuf, uint16_t len)
 {
     uint16_t i = 0;
@@ -442,11 +461,12 @@ void SPI_SendBuffer(SPI_TypeDef *SPIx, uint8_t *pBuf, uint16_t len)
 }
 
 /**
-  * \brief  Transmits a number of bytes through the SPIx peripheral without polling.
-  * \param  SPIx: Select the SPI peripheral \ref SPI_Declaration.
-  * \param  pBuf : Bytes to be transmitted.
-  * \param  len : Byte length to be transmitted.
-  */
+ * @brief Transmits the specified number of bytes through the SPIx peripheral without polling.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param[in] pBuf  Bytes to be transmitted.
+ * @param[in] len  Byte length to be transmitted.
+ */
 void SPI_SendBufferDirect(SPI_TypeDef *SPIx, uint8_t *pBuf, uint16_t len)
 {
     uint16_t i = 0;
@@ -472,12 +492,12 @@ void SPI_SendBufferDirect(SPI_TypeDef *SPIx, uint8_t *pBuf, uint16_t len)
 }
 
 /**
-  * \brief  Transmits a number of halfWords through the SPIx peripheral.
-  * \param  SPIx: Select the SPI peripheral. \ref SPI_Declaration
-  * \param  pBuf : Halfwords to be transmitted.
-  * \param  len: Halfword length to be transmitted.
-  * \return None
-  */
+ * @brief Transmits the specified number of halfwords through the SPIx peripheral.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param[in] pBuf  Halfwords to be transmitted.
+ * @param[in] len  Halfwords length to be transmitted.
+ */
 void SPI_SendHalfWord(SPI_TypeDef *SPIx, uint16_t *pBuf, uint16_t len)
 {
     uint16_t i = 0;
@@ -507,11 +527,12 @@ void SPI_SendHalfWord(SPI_TypeDef *SPIx, uint16_t *pBuf, uint16_t len)
 }
 
 /**
-  * \brief  Transmits a number of halfWords through the SPIx peripheral without polling.
-  * \param  SPIx: Select the SPI peripheral \ref SPI_Declaration.
-  * \param  pBuf : Halfwords to be transmitted.
-  * \param  len: Halfword length to be transmitted.
-  */
+ * @brief Transmits the specified number of halfwords through the SPIx peripheral without polling.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param[in] pBuf  Halfwords to be transmitted.
+ * @param[in] len  Halfwords length to be transmitted.
+ */
 void SPI_SendHalfWordDirect(SPI_TypeDef *SPIx, uint16_t *pBuf, uint16_t len)
 {
     uint16_t i = 0;
@@ -536,13 +557,14 @@ void SPI_SendHalfWordDirect(SPI_TypeDef *SPIx, uint16_t *pBuf, uint16_t len)
     }
 }
 
+#if (SPI_SUPPORT_DFS_4BIT_TO_16BIT == 0)
 /**
-  * \brief  Transmits a number of words through the SPIx peripheral.
-  * \param  SPIx: Select the SPI peripheral. \ref SPI_Declaration
-  * \param  pBuf : Words to be transmitted.
-  * \param  len: Word length to be transmitted.
-  * \return None
-  */
+ * @brief Transmits the specified number of words through the SPIx peripheral.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param[in] pBuf  Words to be transmitted.
+ * @param[in] len  Word length to be transmitted.
+ */
 void SPI_SendWord(SPI_TypeDef *SPIx, uint32_t *pBuf, uint16_t len)
 {
     uint16_t i = 0;
@@ -572,11 +594,12 @@ void SPI_SendWord(SPI_TypeDef *SPIx, uint32_t *pBuf, uint16_t len)
 }
 
 /**
-  * \brief  Transmits a number of words through the SPIx peripheral without polling.
-  * \param  SPIx: Select the SPI peripheral \ref SPI_Declaration.
-  * \param  pBuf : Words to be transmitted.
-  * \param  len: Word length to be transmitted.
-  */
+ * @brief Transmits the specified number of words through the SPIx peripheral without polling.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param[in] pBuf  Words to be transmitted.
+ * @param[in] len  Word length to be transmitted.
+ */
 void SPI_SendWordDirect(SPI_TypeDef *SPIx, uint32_t *pBuf, uint16_t len)
 {
     uint16_t i = 0;
@@ -600,24 +623,22 @@ void SPI_SendWordDirect(SPI_TypeDef *SPIx, uint32_t *pBuf, uint16_t len)
         SPIx->SPI_DR[0] = (*pBuf++);
     }
 }
+#endif
 
 /**
-  * \brief  Clear the specified SPI interrupt.
-  * \param  SPIx: Select the SPI peripheral. \ref SPI_Declaration
-  * \param  SPI_IT: Specifies the SPI interrupt to clear.
-  *         This parameter can be one of the following values:
-  *         \arg SPI_INT_TXO: Transmit FIFO Overflow Interrupt .
-  *         \arg SPI_INT_RXO: Receive FIFO Overflow Interrupt.
-  *         \arg SPI_INT_RXU: Receive FIFO Underflow Interrupt.
-  *         \arg SPI_INT_MST: Multi-Master Contention Interrupt.
-  *         \arg SPI_INT_FAE: TX Frame Alignment Interrupt.
-  *         \arg SPI_INT_TUF: Transmit FIFO Underflow Interrupt.
-  *         \arg SPI_INT_RIG: Rising edge detect Interrupt.
-  *         \arg SPI_INT_WRAP_TXE: TX NDF mode FIFO Transmit FIFO Empty Interrupt.
-  *         \arg SPI_INT_WRAP_TXO: TX NDF mode FIFO Overflow Interrupt.
-  *         \arg SPI_INT_WRAP_TXD: TX NDF mode transmit done Interrupt.
-  * \return None.
-  */
+ * @brief Clear the specified SPI interrupt pending bit.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param[in] SPI_IT  Specifies the SPI interrupt to clear.
+ *            This parameter can be one of the following values, refer to @ref SPI_INTERRUPT.
+ *            - SPI_INT_TXO: Transmit FIFO overflow interrupt.
+ *            - SPI_INT_RXO: Receive FIFO overflow interrupt.
+ *            - SPI_INT_RXU: Receive FIFO underflow interrupt.
+ *            - SPI_INT_MST: Multi-master contention interrupt. (master only)
+ *            - SPI_INT_FAE: The data of slave RX does not match DFS. (slave only)
+ *            - SPI_INT_TUF: Transmit FIFO underflow interrupt. (slave only)
+ *            - SPI_INT_RIG: CS rising edge detect interrupt. (slave only)
+ */
 void SPI_ClearINTPendingBit(SPI_TypeDef *SPIx, uint16_t SPI_IT)
 {
     /* Check the parameters */
@@ -663,11 +684,11 @@ void SPI_ClearINTPendingBit(SPI_TypeDef *SPIx, uint16_t SPI_IT)
 }
 
 /**
-  * \brief  Transmits a data through the SPIx peripheral.
-  * \param  SPIx: Select the SPI peripheral. \ref SPI_Declaration
-  * \param  Data: Data to be transmitted.
-  * \return None.
-  */
+ * @brief Transmits a data through the SPIx peripheral.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param[in] Data  Data to be transmitted.
+ */
 void SPI_SendData(SPI_TypeDef *SPIx, uint32_t Data)
 {
     /* Check the parameters */
@@ -687,10 +708,12 @@ void SPI_SendData(SPI_TypeDef *SPIx, uint32_t Data)
 }
 
 /**
-  * \brief  Received data by the SPI peripheral.
-  * \param  SPIx: Select the SPI peripheral. \ref SPI_Declaration
-  * \return The most recent received data.
-  */
+ * @brief Received data by the SPI peripheral.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ *
+ * @return The most recent received data.
+ */
 uint32_t SPI_ReceiveData(SPI_TypeDef *SPIx)
 {
     /* Check the parameters */
@@ -700,10 +723,12 @@ uint32_t SPI_ReceiveData(SPI_TypeDef *SPIx)
 }
 
 /**
-  * \brief  Get data length in Tx FIFO through the SPIx peripheral.
-  * \param  SPIx: Select the SPI peripheral. \ref SPI_Declaration
-  * \return Data length in Tx FIFO.
-  */
+ * @brief Get data length in Tx FIFO through the SPIx peripheral.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ *
+ * @return Data length in Tx FIFO.
+ */
 uint8_t SPI_GetTxFIFOLen(SPI_TypeDef *SPIx)
 {
     /* Check the parameters */
@@ -714,10 +739,12 @@ uint8_t SPI_GetTxFIFOLen(SPI_TypeDef *SPIx)
 }
 
 /**
-  * \brief  Get data length in Rx FIFO through the SPIx peripheral.
-  * \param  SPIx: Select the SPI peripheral. \ref SPI_Declaration
-  * \return Data length in Rx FIFO.
-  */
+ * @brief Get data length in Rx FIFO through the SPIx peripheral.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ *
+ * @return Data length in Rx FIFO.
+ */
 uint8_t SPI_GetRxFIFOLen(SPI_TypeDef *SPIx)
 {
     /* Check the parameters */
@@ -728,11 +755,11 @@ uint8_t SPI_GetRxFIFOLen(SPI_TypeDef *SPIx)
 }
 
 /**
-  * \brief  Change SPI direction mode.
-  * \param  SPIx: Select the SPI peripheral. \ref SPI_Declaration
-  * \param  dir: Value of direction mode.
-  * \return None.
-  */
+ * @brief Change SPI direction mode.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param[in] dir  Value of direction mode, refer to @ref SPI_DIRECTION.
+ */
 void SPI_SetDirection(SPI_TypeDef *SPIx, uint16_t dir)
 {
     /* Check the parameters */
@@ -755,12 +782,12 @@ void SPI_SetDirection(SPI_TypeDef *SPIx, uint16_t dir)
 }
 
 /**
-  * \brief  Set read Data length only in EEPROM mode through the SPIx peripheral,which
-            enables you to receive up to 64 KB of data in a continuous transfer.
-  * \param  SPIx: Select the SPI peripheral. \ref SPI_Declaration
-  * \param  len: Length of read data which can be 1 to 65536.
-  * \return None.
-  */
+ * @brief Set read data length in EEPROM mode or RxOnly mode through the SPIx peripheral, which
+ *        enables you to receive up to 64 KB of data in a continuous transfer.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param[in] len  Length of read data which can be 1 to 65536.
+ */
 void SPI_SetReadLen(SPI_TypeDef *SPIx, uint16_t len)
 {
     /* Check the parameters */
@@ -782,10 +809,10 @@ void SPI_SetReadLen(SPI_TypeDef *SPIx, uint16_t len)
 }
 
 /**
-  * \brief  Set cs number through the SPIx peripheral.
-  * \param  SPIx: Select the SPI peripheral. \ref SPI_Declaration
-  * \param  number: Number can be 0 to 2.
-  * \return None.
+ * @brief Set cs number through the SPIx peripheral.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param[in] number  Number can be 0 to 2.
  */
 void SPI_SetCSNumber(SPI_TypeDef *SPIx, uint8_t number)
 {
@@ -797,20 +824,28 @@ void SPI_SetCSNumber(SPI_TypeDef *SPIx, uint8_t number)
 }
 
 /**
-  * \brief  Check whether the specified SPI interrupt is set.
-  * \param  SPIx: Select the SPI peripheral. \ref SPI_Declaration
-  * \param  SPI_IT: Specifies the SPI interrupt to check.
-  *         This parameter can be one of the following values:
-  *         \arg SPI_INT_MST: Multi-Master Contention Interrupt.
-  *         \arg SPI_INT_FAE: TX Frame Alignment Interrupt.
-  *         \arg SPI_INT_RXF: Receive FIFO Full Interrupt.
-  *         \arg SPI_INT_RXO: Receive FIFO Overflow Interrupt.
-  *         \arg SPI_INT_RXU: Receive FIFO Underflow Interrupt.
-  *         \arg SPI_INT_TXO: Transmit FIFO Overflow Interrupt .
-  *         \arg SPI_INT_TXE: Transmit FIFO Empty Interrupt.
-  *         \arg SPI_INT_WRAP_TXD: TX NDF mode transmit done Interrupt.
-  * \return The new state of SPI_IT (SET or RESET).
-  */
+ * @brief Check whether the specified SPI interrupt is set.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param[in] SPI_IT  Specifies the SPI interrupt to check.
+ *            This parameter can be one of the following values, refer to @ref SPI_INTERRUPT.
+ *            - SPI_INT_TXE: Transmit FIFO threshold interrupt. Triggered when the transmit FIFO level is less than or equal to the threshold.
+ *            - SPI_INT_TXO: Transmit FIFO overflow interrupt.
+ *            - SPI_INT_RXU: Receive FIFO underflow interrupt.
+ *            - SPI_INT_RXO: Receive FIFO overflow interrupt.
+ *            - SPI_INT_RXF: Receive FIFO threshold interrupt. Triggered when the receive FIFO level is greater than or equal to the threshold.
+ *            - SPI_INT_MST: Multi-master contention interrupt. (master only)
+ *            - SPI_INT_FAE: The data of slave RX does not match DFS. (slave only)
+ *            - SPI_INT_TUF: Transmit FIFO underflow interrupt. (slave only)
+ *            - SPI_INT_RIG: CS rising edge detect interrupt. (slave only)
+ *            - SPI_INT_WRAP_TXE: Wrap mode transmit FIFO empty interrupt.
+ *            - SPI_INT_WRAP_TXO: Wrap mode transmit FIFO overflow interrupt.
+ *            - SPI_INT_WRAP_TXD: Wrap mode transmit done interrupt.
+ *
+ * @return The new state of SPI_IT (SET or RESET).
+ * @retval SET    The specified SPI interrupt is set.
+ * @retval RESET  The specified SPI interrupt is reset.
+ */
 ITStatus SPI_GetINTStatus(SPI_TypeDef *SPIx, uint32_t SPI_IT)
 {
     /* Check the parameters */
@@ -844,24 +879,23 @@ ITStatus SPI_GetINTStatus(SPI_TypeDef *SPIx, uint32_t SPI_IT)
 }
 
 /**
-  * \brief  Enables or disables the specified SPI interrupt source.
-  * \param  SPIx: Select the SPI peripheral. \ref SPI_Declaration
-  * \param  SPI_IT: Specifies the SPI interrupt source to be enabled or disabled.
-  *         This parameter can be one of the following values:
-  *         \arg SPI_INT_TXE: Transmit FIFO empty interrupt.
-  *         \arg SPI_INT_TXO: Transmit FIFO overflow interrupt.
-  *         \arg SPI_INT_RXU: Receive FIFO underflow interrupt.
-  *         \arg SPI_INT_RXO: Receive FIFO overflow interrupt.
-  *         \arg SPI_INT_RXF: Receive FIFO full interrupt.
-  *         \arg SPI_INT_MST: Multi-Master Contention Interrupt.
-  *         \arg SPI_INT_FAE: TX Frame Alignment interrupt.
-  *         \arg SPI_INT_TUF: Transmit FIFO underflow interrupt.
-  *         \arg SPI_INT_RIG: Rising edge detect interrupt.
-  *         \arg SPI_INT_WRAP_TXD: TX NDF mode transmit done Interrupt.
-  * \param  NewState: New state of the specified SPI interrupt source.
-  *         This parameter can be: ENABLE or DISABLE.
-  * \return None
-  */
+ * @brief Enable or disable the specified SPI interrupt source.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param[in] SPI_IT  Specifies the SPI interrupt source to be enabled or disabled.
+ *            This parameter can be one of the following values, refer to @ref SPI_INTERRUPT.
+ *            - SPI_INT_TXE: Transmit FIFO threshold interrupt. Triggered when the transmit FIFO level is less than or equal to the threshold.
+ *            - SPI_INT_TXO: Transmit FIFO overflow interrupt.
+ *            - SPI_INT_RXU: Receive FIFO underflow interrupt.
+ *            - SPI_INT_RXO: Receive FIFO overflow interrupt.
+ *            - SPI_INT_RXF: Receive FIFO threshold interrupt. Triggered when the receive FIFO level is greater than or equal to the threshold.
+ *            - SPI_INT_MST: Multi-master contention interrupt. (master only)
+ *            - SPI_INT_FAE: The data of slave RX does not match DFS. (slave only)
+ *            - SPI_INT_TUF: Transmit FIFO underflow interrupt. (slave only)
+ *            - SPI_INT_RIG: CS rising edge detect interrupt. (slave only)
+ * @param[in] NewState  New state of the specified SPI interrupt source.
+ *            This parameter can be: ENABLE or DISABLE.
+ */
 void SPI_INTConfig(SPI_TypeDef *SPIx, uint16_t SPI_IT, FunctionalState NewState)
 {
     /* Check the parameters */
@@ -898,20 +932,25 @@ void SPI_INTConfig(SPI_TypeDef *SPIx, uint16_t SPI_IT, FunctionalState NewState)
 
 
 /**
- * \brief  Check whether the specified SPI flag is set.
+ * @brief Check whether the specified SPI flag is set.
  *
- * \param  SPIx: Select the SPI peripheral. \ref SPI_Declaration
- * \param  SPI_FLAG: Specifies the SPI flag to check.
- *         This parameter can be one of the following values:
- *         \arg SPI_FLAG_DCOL: Data Collision Error flag.Set if it is actively transmitting in master mode when another master selects this device as a slave.
- *         \arg SPI_FLAG_TXE: Transmission error flag.Set if the transmit FIFO is empty when a transfer is started in slave mode.
- *         \arg SPI_FLAG_RFF: Receive FIFO full flag. Set if the receive FIFO is completely full.
- *         \arg SPI_FLAG_RFNE: Receive FIFO Not Empty flag.Set if receive FIFO is not empty.
- *         \arg SPI_FLAG_TFE: Transmit FIFO Empty flag.Set if transmit FIFO is empty.
- *         \arg SPI_FLAG_TFNF: Transmit FIFO Not Full flag.Set if transmit FIFO is not full.
- *         \arg SPI_FLAG_BUSY: SPI Busy flag.Set if it is actively transferring data.reset if it is idle or disabled.
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param[in] SPI_FLAG  Specifies the SPI flag to check.
+ *            This parameter can be one of the following values, refer to @ref SPI_FLAGS.
+ *            - SPI_FLAG_DCOL: Data collision error flag. Set if it is actively transmitting in master mode when another master selects this device as a slave.
+ *            - SPI_FLAG_TXE: Transmission error flag. Set if the transmit FIFO is empty when a transfer is started in slave mode.
+ *            - SPI_FLAG_RFF: Receive FIFO full flag. Set if the receive FIFO is completely full.
+ *            - SPI_FLAG_RFNE: Receive FIFO not empty flag. Set if receive FIFO is not empty.
+ *            - SPI_FLAG_TFE: Transmit FIFO empty flag. Set if transmit FIFO is empty.
+ *            - SPI_FLAG_TFNF: Transmit FIFO not full flag. Set if transmit FIFO is not full.
+ *            - SPI_FLAG_BUSY: SPI busy flag. Set if it is actively transferring data. Reset if it is idle or disabled.
+ *            - SPI_FLAG_WRAP_CS_EN: Wrap mode CS enable flag.
+ *            - SPI_FLAG_WRAP_TFNF: Wrap mode transmit FIFO not full flag.
+ *            - SPI_FLAG_WRAP_TFE: Wrap mode transmit FIFO empty flag.
  *
- * \return The new state of SPI_FLAG (SET or RESET).
+ * @return The new state of SPI_FLAG (SET or RESET).
+ * @retval SET    The specified SPI flag is set.
+ * @retval RESET  The specified SPI flag is reset.
  */
 FlagStatus SPI_GetFlagState(SPI_TypeDef *SPIx, uint16_t SPI_FLAG)
 {
@@ -948,16 +987,16 @@ FlagStatus SPI_GetFlagState(SPI_TypeDef *SPIx, uint16_t SPI_FLAG)
 }
 
 /**
-  * \brief  Enables or disables the SPIx DMA interface.
-  * \param  SPIx: Select the SPI peripheral. \ref SPI_Declaration
-  * \param  SPI_DMAReq: Specifies the SPI DMA transfer request to be enabled or disabled.
-  *         This parameter can be one of the following values:
-  *         \arg SPI_DMAReq_Tx: Tx buffer DMA transfer request.
-  *         \arg SPI_DMAReq_Rx: Rx buffer DMA transfer request.
-  * \param  NewState: New state of the selected SPI DMA transfer request.
-  *         This parameter can be: ENABLE or DISABLE.
-  * \return None.
-  */
+ * @brief Enables or disables the SPIx DMA interface.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param[in] SPI_DMAReq  Specifies the SPI DMA transfer request to be enabled or disabled.
+ *            This parameter can be one of the following values, refer to @ref SPI_DMA_TRANSFER_REQUEST.
+ *            - SPI_DMA_REQ_TX: TX FIFO DMA transfer request.
+ *            - SPI_DMA_REQ_RX: RX FIFO DMA transfer request.
+ * @param[in] NewState  New state of the selected SPI DMA transfer request.
+ *            This parameter can be: ENABLE or DISABLE.
+ */
 void SPI_DMACmd(SPI_TypeDef *SPIx, SPIDMARequests_TypeDef SPI_DMAReq,
                 FunctionalState NewState)
 {
@@ -995,26 +1034,18 @@ void SPI_DMACmd(SPI_TypeDef *SPIx, SPIDMARequests_TypeDef SPI_DMAReq,
 }
 
 /**
-  * \brief  Change SPI speed daynamically.
-  * \param  SPIx: Select the SPI peripheral. \ref SPI_Declaration
-  * \param  precalser: Value of prescaler.
-  *         This parameter can be one of the following values:
-  *         \arg  SPI_BaudRatePrescaler_2
-  *         \arg  SPI_BaudRatePrescaler_4
-  *         \arg  SPI_BaudRatePrescaler_6
-  *         \arg  SPI_BaudRatePrescaler_8
-  *         \arg  SPI_BaudRatePrescaler_10
-  *         \arg  SPI_BaudRatePrescaler_12
-  *         \arg  SPI_BaudRatePrescaler_14
-  *         \arg  SPI_BaudRatePrescaler_16
-  *         \arg  SPI_BaudRatePrescaler_32
-  *         \arg  SPI_BaudRatePrescaler_64
-  *         \arg  SPI_BaudRatePrescaler_128
-  *         \arg  SPI_BaudRatePrescaler_256
-  * \return None.
-  */
+ * @brief Change SPI speed dynamically.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param[in] prescaler  Value of prescaler.
+ *            This parameter must be an even number and the minimum value is 2.
+ */
 void SPI_SetPrescaler(SPI_TypeDef *SPIx, uint32_t prescaler)
 {
+    /* Check the parameters */
+    assert_param(IS_SPI_ALL_PERIPH(SPIx));
+    assert_param(IS_SPI_BAUDRATE_PRESCALER(prescaler));
+
     /* Disable the selected SPI peripheral */
     SPI_SPIENR_TypeDef spi_0x08 = {.d32 = SPIx->SPI_SPIENR};
     spi_0x08.b.spi_en = 0;
@@ -1031,13 +1062,16 @@ void SPI_SetPrescaler(SPI_TypeDef *SPIx, uint32_t prescaler)
 }
 
 /**
-  * \brief  Set SPI Rx sample delay.
-  * \param  SPIx: Select the SPI peripheral. \ref SPI_Declaration
-  * \param  delay: This parameter can be 0 to 255.
-  * \return None.
-  */
+ * @brief Set SPI Rx sample delay.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param[in] delay  Specifies the Rx sample delay, in units of 40 MHz clock cycles. This parameter can be 0 to 255.
+ */
 void SPI_SetRxSampleDly(SPI_TypeDef *SPIx, uint32_t delay)
 {
+    /* Check the parameters */
+    assert_param(IS_SPI_ALL_PERIPH(SPIx));
+
     /* Disable the selected SPI peripheral */
     SPI_SPIENR_TypeDef spi_0x08 = {.d32 = SPIx->SPI_SPIENR};
     spi_0x08.b.spi_en = 0;
@@ -1056,12 +1090,14 @@ void SPI_SetRxSampleDly(SPI_TypeDef *SPIx, uint32_t delay)
 #if (SPI_SUPPORT_WRAP_MODE == 1)
 
 /**
-  * \brief  Enables or disables the specified SPI wrap mode start transfer.
-  * \param  SPIx: Select the SPI peripheral. \ref SPI_Declaration
-  * \param  NewState: new state of the SPIx peripheral.
-  *         This parameter can be: ENABLE or DISABLE.
-  * \return None
-  */
+ * @brief Enables or disables the specified SPI wrap mode start transfer.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param[in] NewState  New state of the SPI wrap mode TX transfer.
+ *            This parameter can be one of the following values:
+ *            - ENABLE: Active the TX FIFO to transfer data.
+ *            - DISABLE: Disable the TX FIFO.
+ */
 void SPI_WrapModeStartTx(SPI_TypeDef *SPIx, FunctionalState NewState)
 {
     /* Check the parameters */
@@ -1074,14 +1110,14 @@ void SPI_WrapModeStartTx(SPI_TypeDef *SPIx, FunctionalState NewState)
 }
 
 /**
-  * \brief  Whether inverse CS active polarity.
-  * \param  SPIx: Select the SPI peripheral. \ref SPI_Declaration
-  * \param  NewState: new state of the SPIx peripheral.
-  *         This parameter can be one of the following values:
-  *         \arg  ENABLE: Inverse CS active polarity, which means CS is low active.
-  *         \arg  DISABLE: Not inverse CS active polarity, which means CS is high active.
-  * \return None
-  */
+ * @brief Whether inverse CS active polarity.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param[in] NewState  New state of the SPIx peripheral.
+ *            This parameter can be one of the following values:
+ *            -  ENABLE: Inverse CS active polarity, which means CS is high active.
+ *            -  DISABLE: Not inverse CS active polarity, which means CS is low active.
+ */
 void SPI_InverseCSActivePolarity(SPI_TypeDef *SPIx, FunctionalState NewState)
 {
     /* Check the parameters */
@@ -1094,14 +1130,14 @@ void SPI_InverseCSActivePolarity(SPI_TypeDef *SPIx, FunctionalState NewState)
 }
 
 /**
-  * \brief  Whether drive MOSI low in idle state.
-  * \param  SPIx: Select the SPI peripheral. \ref SPI_Declaration
-  * \param  NewState: new state of the SPIx peripheral.
-  *         This parameter can be one of the following values:
-  *         \arg  ENABLE: Drive MOSI low in idle state.
-  *         \arg  DISABLE: Not drive MOSI low in idle state, which means MOSI is Hi-Z in idle state.
-  * \return None
-  */
+ * @brief Whether drive MOSI low in idle state.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param[in] NewState  New state of the SPIx peripheral.
+ *            This parameter can be one of the following values:
+ *            -  ENABLE: Drive MOSI low in idle state.
+ *            -  DISABLE: Not drive MOSI low in idle state, which means MOSI is Hi-Z in idle state.
+ */
 void SPI_DriveMOSILow(SPI_TypeDef *SPIx, FunctionalState NewState)
 {
     /* Check the parameters */
@@ -1114,14 +1150,14 @@ void SPI_DriveMOSILow(SPI_TypeDef *SPIx, FunctionalState NewState)
 }
 
 /**
-  * \brief  Whether enable MOSI pull in idle state.
-  * \param  SPIx: Select the SPI peripheral. \ref SPI_Declaration
-  * \param  NewState: new state of the SPIx peripheral.
-  *         This parameter can be one of the following values:
-  *         \arg  ENABLE: MOSI is pull down in idle state.
-  *         \arg  DISABLE: MOSI is pull none in idle state.
-  * \return  None
-  */
+ * @brief Whether enable MOSI pull in idle state.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param[in] NewState  New state of the SPIx peripheral.
+ *            This parameter can be one of the following values:
+ *            -  ENABLE: MOSI is pull down in idle state.
+ *            -  DISABLE: MOSI is pull none in idle state.
+ */
 #if (SPI_REMOVE_Pull_MOSI_En == 0)
 void SPI_PullMOSIEn(SPI_TypeDef *SPIx, FunctionalState NewState)
 {
@@ -1135,6 +1171,12 @@ void SPI_PullMOSIEn(SPI_TypeDef *SPIx, FunctionalState NewState)
 }
 #endif
 
+/**
+ * @brief Set the TX NDF value for wrap mode.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param[in] tx_ndf  Specifies the number of data frames to be continuously transmitted, from 1 to 65536.
+ */
 void SPI_WrapModeSetTxNdf(SPI_TypeDef *SPIx, uint16_t tx_ndf)
 {
     /* Check the parameters */
@@ -1145,6 +1187,11 @@ void SPI_WrapModeSetTxNdf(SPI_TypeDef *SPIx, uint16_t tx_ndf)
     SPIx->SPI_WRAP_CTRL = spi_0x200.d32;
 }
 
+/**
+ * @brief Clear the wrap mode TX FIFO.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ */
 void SPI_WrapModeResetTxFIFO(SPI_TypeDef *SPIx)
 {
     /* Check the parameters */
@@ -1158,6 +1205,13 @@ void SPI_WrapModeResetTxFIFO(SPI_TypeDef *SPIx)
 #endif
 
 #if (SPI_SUPPORT_RAP_FUNCTION == 1)
+/**
+ * @brief Enable or disable the SPI RAP mode.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param[in] NewState  New state of the SPIx peripheral.
+ *            This parameter can be: ENABLE or DISABLE.
+ */
 void SPI_RAPModeCmd(SPI_TypeDef *SPIx, FunctionalState NewState)
 {
     /* Check the parameters */
@@ -1169,48 +1223,74 @@ void SPI_RAPModeCmd(SPI_TypeDef *SPIx, FunctionalState NewState)
     SPIx->SPI_WRAP_CTRL = spi_0x200.d32;
 }
 
+/**
+ * @brief Set the number of command bytes for action.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param[in] num  The number of commands required to transmit.
+ */
 void SPI_SetActionCmdNum(SPI_TypeDef *SPIx, uint8_t num)
 {
     /* Check the parameters */
     assert_param(IS_SPI_ALL_PERIPH(SPIx));
-    assert_param(IS_FUNCTIONAL_STATE(NewState));
 
     SPI_WRAP_TCMD_NUM_TypeDef spi_0x230 = {.d32 = SPIx->SPI_WRAP_TCMD_NUM};
     spi_0x230.b.task_cmd_num = num;
     SPIx->SPI_WRAP_TCMD_NUM = spi_0x230.d32;
 }
 
+/**
+ * @brief Set the wait count for action.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param[in] num  The number of SSI clock cycles delayed as wait time between command and data. The unit is 40 MHz clock cycle.
+ */
 void SPI_SetActionWaitNum(SPI_TypeDef *SPIx, uint16_t num)
 {
     /* Check the parameters */
     assert_param(IS_SPI_ALL_PERIPH(SPIx));
-    assert_param(IS_FUNCTIONAL_STATE(NewState));
 
     SPI_WRAP_TWAIT_NUM_TypeDef spi_0x234 = {.d32 = SPIx->SPI_WRAP_TWAIT_NUM};
     spi_0x234.b.task_wait_num = num;
     SPIx->SPI_WRAP_TWAIT_NUM = spi_0x234.d32;
 }
 
+/**
+ * @brief Set the transfer count for action.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param[in] num  The number of RX data to transfer after the command.
+ */
 void SPI_SetActionTransferNum(SPI_TypeDef *SPIx, uint16_t num)
 {
     /* Check the parameters */
     assert_param(IS_SPI_ALL_PERIPH(SPIx));
-    assert_param(IS_FUNCTIONAL_STATE(NewState));
 
     SPI_WRAP_TTRAN_NUM_TypeDef spi_0x238 = {.d32 = SPIx->SPI_WRAP_TTRAN_NUM};
     spi_0x238.b.task_tran_num = num;
     SPIx->SPI_WRAP_TTRAN_NUM = spi_0x238.d32;
 }
 
-void SPI_SetActionTransfer(SPI_TypeDef *SPIx, uint8_t cmd_len, uint16_t wati_cnt,
+/**
+ * @brief Set the SPI action transfer parameters.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param[in] cmd_len  Command byte length.
+ * @param[in] wait_cnt  Wait cycle count.
+ * @param[in] dummy_len  Dummy cycle length.
+ */
+void SPI_SetActionTransfer(SPI_TypeDef *SPIx, uint8_t cmd_len, uint16_t wait_cnt,
                            uint16_t dummy_len)
 {
+    /* Check the parameters */
+    assert_param(IS_SPI_ALL_PERIPH(SPIx));
+
     SPI_WRAP_TCMD_NUM_TypeDef spi_0x230 = {.d32 = SPIx->SPI_WRAP_TCMD_NUM};
     spi_0x230.b.task_cmd_num = cmd_len;
     SPIx->SPI_WRAP_TCMD_NUM = spi_0x230.d32;
 
     SPI_WRAP_TWAIT_NUM_TypeDef spi_0x234 = {.d32 = SPIx->SPI_WRAP_TWAIT_NUM};
-    spi_0x234.b.task_wait_num = wati_cnt;
+    spi_0x234.b.task_wait_num = wait_cnt;
     SPIx->SPI_WRAP_TWAIT_NUM = spi_0x234.d32;
 
     SPI_WRAP_TTRAN_NUM_TypeDef spi_0x238 = {.d32 = SPIx->SPI_WRAP_TTRAN_NUM};
@@ -1218,33 +1298,64 @@ void SPI_SetActionTransfer(SPI_TypeDef *SPIx, uint8_t cmd_len, uint16_t wati_cnt
     SPIx->SPI_WRAP_TTRAN_NUM = spi_0x238.d32;
 }
 
-void SPI_ActionTrigger(SPI_TypeDef *SPIx, uint32_t task)
+/**
+ * @brief Trigger an SPI action.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param[in] action  Action to trigger, refer to @ref SPI_ACTION_EVENT.
+ */
+void SPI_ActionTrigger(SPI_TypeDef *SPIx, uint32_t action)
 {
     /* Check the parameters */
     assert_param(IS_SPI_ALL_PERIPH(SPIx));
+    assert_param(IS_SPI_ACTION_EVENT(action));
 
-    SPIx->SPI_WRAP_FW_ST |= BIT(task);
+    SPIx->SPI_WRAP_FW_ST |= BIT(action);
 }
 
-bool SPI_ActionEventStsCheck(SPI_TypeDef *SPIx, uint32_t te)
+/**
+ * @brief Check the SPI action/event status.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param[in] ae  Action/event to check, refer to @ref SPI_ACTION_EVENT.
+ *
+ * @return The status of the action/event.
+ * @retval true   The action/event status is set.
+ * @retval false  The action/event status is reset.
+ */
+bool SPI_ActionEventStsCheck(SPI_TypeDef *SPIx, uint32_t ae)
 {
     /* Check the parameters */
     assert_param(IS_SPI_ALL_PERIPH(SPIx));
+    assert_param(IS_SPI_ACTION_EVENT(ae));
 
-    return SPIx->SPI_WRAP_TASK_STS & BIT(te);
+    return SPIx->SPI_WRAP_TASK_STS & BIT(ae);
 }
 
-void SPI_ActionEventStsClear(SPI_TypeDef *SPIx, uint32_t te)
+/**
+ * @brief Clear the SPI action/event status.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param[in] ae  Action/event to clear, refer to @ref SPI_ACTION_EVENT.
+ */
+void SPI_ActionEventStsClear(SPI_TypeDef *SPIx, uint32_t ae)
 {
     /* Check the parameters */
     assert_param(IS_SPI_ALL_PERIPH(SPIx));
+    assert_param(IS_SPI_ACTION_EVENT(ae));
 
-    SPIx->SPI_WRAP_TASK_STS |= BIT(te);
+    SPIx->SPI_WRAP_TASK_STS |= BIT(ae);
 }
 #endif
 
 #if (SPI_SUPPORT_REPEAT_MODE == 1)
 
+/**
+ * @brief Set the SPI repeat mode.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param[in] mode  Repeat mode. Refer to @ref SPIRepeatMode_TypeDef.
+ */
 void SPI_SetRepeatMode(SPI_TypeDef *SPIx, SPIRepeatMode_TypeDef mode)
 {
     /* Check the parameters */
@@ -1255,6 +1366,12 @@ void SPI_SetRepeatMode(SPI_TypeDef *SPIx, SPIRepeatMode_TypeDef mode)
     SPIx->SPI_WRAP_CTRL = spi_0x200.d32;
 }
 
+/**
+ * @brief Set the SPI repeat transfer size.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param[in] size  Repeat transfer size. Refer to @ref SPIRepeatSize_TypeDef.
+ */
 void SPI_SetRepeatSize(SPI_TypeDef *SPIx, SPIRepeatSize_TypeDef size)
 {
     /* Check the parameters */
@@ -1265,6 +1382,13 @@ void SPI_SetRepeatSize(SPI_TypeDef *SPIx, SPIRepeatSize_TypeDef size)
     SPIx->SPI_WRAP_CTRL = spi_0x200.d32;
 }
 
+/**
+ * @brief Send repeat data through the SPIx peripheral.
+ *
+ * @param[in] SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param[in] data_l  Lower data to be repeated.
+ * @param[in] data_h  Higher data to be repeated.
+ */
 void SPI_SendRepeatData(SPI_TypeDef *SPIx, uint32_t data_l, uint32_t data_h)
 {
     /* Check the parameters */

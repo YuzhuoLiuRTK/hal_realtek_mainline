@@ -20,6 +20,8 @@ extern "C" {
 #include "utils/rtl_utils.h"
 #if defined (CONFIG_SOC_SERIES_RTL87X3J)
 #include "debug/src/device/rtl87x3j/pck600_snapshot_def.h"
+#elif defined (CONFIG_SOC_SERIES_RTL87X3K)
+#include "debug/src/device/rtl87x3k/pck600_snapshot_def.h"
 #elif defined (CONFIG_SOC_SERIES_RTL87X2J)
 #include "debug/src/device/rtl87x2j/pck600_snapshot_def.h"
 #endif

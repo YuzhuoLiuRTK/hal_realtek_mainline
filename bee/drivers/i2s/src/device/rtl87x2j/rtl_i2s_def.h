@@ -18,21 +18,6 @@ extern "C" {
 /*============================================================================*
  *                          I2S Defines
  *============================================================================*/
-/** \defgroup I2S         I2S
-  * \brief
-  * \{
-  */
-
-/** \defgroup I2S_Exported_Constants I2S Exported Constants
-  * \brief
-  * \{
-  */
-
-/**
- * \defgroup I2S_Defines I2S Defines
- * \{
- * \ingroup  I2S_Exported_Constants
- */
 #define CHIP_I2S_CHANNEL_NUM                (1)
 
 #define I2S_SUPPORT_TRX_INDEPENDENT_CONTROL (0)
@@ -42,17 +27,7 @@ extern "C" {
 #define I2S_SUPPORT_DATE_WIDTH_32BIT        (0)
 #define I2S_SUPPORT_MCLK_OUTPUT             (1)
 #define I2S_SUPPORT_AUTO_CLOCK              (1)
-/** End of I2S_Defines
-  * \}
-  */
 
-/** End of I2S_Exported_Constants
-  * \}
-  */
-
-/** End of I2S
-  * \}
-  */
 /*============================================================================*
  *                          APB_I2S Registers Memory Map
  *============================================================================*/
@@ -76,10 +51,20 @@ typedef struct
 /*============================================================================*
  *                          I2S Declaration
  *============================================================================*/
+/**
+ * @defgroup I2S_DECLARATION I2S Declaration
+ * @{
+ * @ingroup  I2S_Exported_Constants
+ */
+
 #define I2S0                ((I2S_TypeDef *) I2S0_BASE)
 #define SPORT_EXT_CODEC_REG    (*(volatile uint32_t *)0x40000240)
 
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_I2S_PERIPH(PERIPH)     (((PERIPH) == I2S0))
+
+/** @} */ /* End of group I2S_DECLARATION */
+
 /*============================================================================*
  *                         I2S Private Types
  *============================================================================*/
@@ -89,36 +74,34 @@ typedef struct
 #define I2S_CLOCK_AUTO_MODE_CONFIG_ALWAYSRUN       0x8000000FUL
 
 /**
- * \defgroup    I2S_Clock_Source I2S Clock Source
- * \{
- * \ingroup     I2S_Exported_Constants
+ * @defgroup I2S_CLOCK_SOURCE I2S Clock Source
+ * @{
+ * @ingroup  I2S_Exported_Constants
  */
 typedef enum
 {
-    I2S_CLOCK_SRC_40M,
-    I2S_CLOCK_SRC_128FS,
-    I2S_CLOCK_SRC_256FS,
+    I2S_CLOCK_SRC_40M,      /**< I2S clock source 40MHz. */
+    I2S_CLOCK_SRC_128FS,    /**< I2S clock source 128fs. */
+    I2S_CLOCK_SRC_256FS,    /**< I2S clock source 256fs. */
 } I2SClockSrc_TypeDef;
 
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_I2S_CLOCK_SRC(CLOCK) (((CLOCK) == I2S_CLOCK_SRC_40M) || \
                                  ((CLOCK) == I2S_CLOCK_SRC_128FS) || \
                                  ((CLOCK) == I2S_CLOCK_SRC_256FS))
 
-/** End of I2S_Clock_Source
-  * \}
-  */
+/** @} */ /* End of group I2S_CLOCK_SOURCE */
 
 
 /**
- * \defgroup    I2S_All_Periph   I2S All Periph
- * \{
- * \ingroup     I2S_Exported_Constants
+ * @defgroup I2S_ALL_PERIPH I2S All Periph
+ * @{
+ * @ingroup  I2S_Exported_Constants
  */
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_I2S_ALL_PERIPH(PERIPH) ((PERIPH) == I2S0)
 
-/** End of I2S_All_Periph
-  * \}
-  */
+/** @} */ /* End of group I2S_ALL_PERIPH */
 
 /*============================================================================*
  *                         I2S Registers and Field Descriptions

@@ -18,12 +18,11 @@
  *                           Public Functions
  *============================================================================*/
 /**
-  * \brief  SPI clock config.
-  * \param  SPIx: Select the SPI peripheral. \ref SPI_Declaration
-  * \param  ClockSrc: specifies the clock source to gates its clock.
-  * \param  ClockDiv: specifies the clock divide to gates its clock.
-  * \return None
-  */
+ * @brief Configure the SPI clock.
+ * @param SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param ClockSrc  Specifies the SPI clock source, refer to @ref SPI_CLOCK_SOURCE.
+ * @param ClockDiv  Specifies the SPI clock divider, refer to @ref SPI_CLOCK_DIVIDER.
+ */
 void SPI_SetClock(SPI_TypeDef *SPIx, SPIClockSrc_TypeDef ClockSrc, SPIClockDiv_TypeDef ClockDiv)
 {
     assert_param(IS_SPI_CLOCK_DIV(ClockDiv));
@@ -48,6 +47,14 @@ void SPI_SetClock(SPI_TypeDef *SPIx, SPIClockSrc_TypeDef ClockSrc, SPIClockDiv_T
     return;
 }
 
+/**
+ * @brief Enable or disable the SPI clock auto mode.
+ * @param SPIx  Select the SPI peripheral, refer to @ref SPI_DECLARATION.
+ * @param NewState  New state of the SPI clock auto mode.
+ *        This parameter can be one of the following values:
+ *        - ENABLE: The SPI clock is gated automatically.
+ *        - DISABLE: The SPI clock always runs.
+ */
 void SPI_ClockAutoModeCmd(SPI_TypeDef *SPIx, FunctionalState Newstate)
 {
     /* Check the parameters */

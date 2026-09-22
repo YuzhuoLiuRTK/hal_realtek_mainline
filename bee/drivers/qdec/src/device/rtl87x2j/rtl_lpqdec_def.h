@@ -39,10 +39,18 @@ typedef struct
 /*============================================================================*
  *                          LPQDEC Declaration
  *============================================================================*/
+/** @defgroup LPQDEC_DECLARATION LPQDEC Declaration
+  * @{
+  * @ingroup  LPQDEC_Exported_Constants
+  */
+
 #define LPQDEC_REG_BASE           (SYSON_BASE + AON_REG_LPQDEC_X_DIV)
 #define LPQDEC                    ((LPQDEC_TypeDef *) LPQDEC_REG_BASE)
 
+/** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_LPQDEC_PERIPH(PERIPH)  ((PERIPH) == LPQDEC)
+
+/** @} */ /* End of group LPQDEC_DECLARATION */
 
 /*============================================================================*
  *                          LPQDEC Private Types

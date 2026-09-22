@@ -50,11 +50,12 @@ uint8_t I2C_GetCompIndex(I2C_TypeDef *I2Cx)
 
 
 /**
-  * \brief  I2C clock divider config.
-  * \param  I2Cx: Select the I2C peripheral. \ref I2C_Declaration
-  * \param  ClockDiv: specifies the APB peripheral to gates its clock. \ref Clock_Divider
-  * \return None
-  */
+ * @brief I2C clock divider config.
+ * @param I2Cx      Select the I2C peripheral, refer to @ref I2C_DECLARATION.
+ * @param ClockSrc  Specifies the I2C clock source, refer to @ref I2C_CLOCK_SOURCE.
+ * @param ClockDiv  Specifies the I2C clock divider.
+ *                  This parameter can refer to @ref I2C_CLOCK_DIVIDER.
+ */
 void I2C_SetClock(I2C_TypeDef *I2Cx, uint16_t ClockSrc, uint16_t ClockDiv)
 {
     assert_param(IS_I2C_DIV(ClockDiv));
@@ -93,6 +94,12 @@ uint32_t I2C_GetClock(I2C_TypeDef *I2Cx)
     return I2CClkSrc;
 }
 
+/**
+ * @brief Enable or disable the I2C auto clock mode.
+ * @param I2Cx      Select the I2C peripheral, refer to @ref I2C_DECLARATION.
+ * @param NewState  New state of the auto clock mode.
+ *                  This parameter can be: ENABLE or DISABLE.
+ */
 void I2C_ClockAutoModeCmd(I2C_TypeDef *I2Cx, FunctionalState Newstate)
 {
     /* Check the parameters */
