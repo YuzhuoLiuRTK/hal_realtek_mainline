@@ -175,10 +175,41 @@ typedef struct
 /*============================================================================*
  *                         TIM Private Types
  *============================================================================*/
+/**
+ * DLPS store slot names are kept identical across ICs so that upper layers can
+ * address a slot without knowing which IC is built. Slot values stay IC-local
+ * and compact; only the names are shared.
+ */
+typedef enum
+{
+    TIM_DLPS_LOADCOUNT  = 0x00, //!< TIMx->TIMER_LOADCOUNT, period/auto-reload value.
+    TIM_DLPS_CONTROLREG = 0x01, //!< TIMx->TIMER_CONTROLREG, control register.
+    TIM_DLPS_LOADCOUNT2 = 0x02, //!< TIMERn_LOAD_COUNT2, PWM high count (per-instance).
+    TIM_DLPS_MAX = 0x03,        //!< Store buffer entry count.
+} TIMDLPSReg_TypeDef;
+
+/**
+ * Slots of the registers shared by every instance of the timer IP.
+ */
+typedef enum
+{
+    TIMSHARE_DLPS_CLK0        = 0x00, //!< PERIBLKCTRL u_328 REG_TIMER_0_CLOCK_CTRL.
+    TIMSHARE_DLPS_CLK1        = 0x01, //!< PERIBLKCTRL u_32C REG_TIMER_1_CLOCK_CTRL.
+    TIMSHARE_DLPS_CLK2        = 0x02, //!< PERIBLKCTRL u_330 REG_TIMER_2_CLOCK_CTRL.
+    TIMSHARE_DLPS_CLK3        = 0x03, //!< PERIBLKCTRL u_334 REG_TIMER_3_CLOCK_CTRL.
+    TIMSHARE_DLPS_PWM_WRAP_1  = 0x04, //!< PERIBLKCTRL u_33C REG_TIMER_PWM_WRAP_1_CFG.
+    TIMSHARE_DLPS_MAX = 0x05,        //!< Store buffer entry count.
+} TIMSHAREDLPSReg_TypeDef;
+
 typedef struct
 {
-    uint32_t tim_reg[9];
-} TIMStoreReg_Typedef;
+    uint32_t tim_reg[TIM_DLPS_MAX];
+} TIMStoreReg_TypeDef;
+
+typedef struct
+{
+    uint32_t timshare_reg[TIMSHARE_DLPS_MAX];
+} TIMShareStoreReg_TypeDef;
 
 /*============================================================================*
  *                         TIMER Registers and Field Descriptions

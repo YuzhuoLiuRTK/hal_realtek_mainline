@@ -32,10 +32,25 @@ extern "C" {
  *============================================================================*/
 #include "rtl876x.h"
 
+/**
+ * DLPS store slot names are kept identical across ICs so that upper layers can
+ * address a slot without knowing which IC is built. Slot values stay IC-local;
+ * only the names are shared.
+ */
+typedef enum
+{
+    QDEC_DLPS_DIV      = 0x00, //!< QDEC->REG_DIV, clock divider.
+    QDEC_DLPS_CR_X     = 0x01, //!< QDEC->REG_CR_X, X-axis control register.
+    QDEC_DLPS_CR_Y     = 0x02, //!< QDEC->REG_CR_Y, Y-axis control register.
+    QDEC_DLPS_CR_Z     = 0x03, //!< QDEC->REG_CR_Z, Z-axis control register.
+    QDEC_DLPS_INT_MASK = 0x04, //!< QDEC->INT_MASK, interrupt mask register.
+    QDEC_DLPS_MAX = 0x05,      //!< Store buffer entry count.
+} QDECDLPSReg_TypeDef;
+
 typedef struct
 {
-    uint32_t qdec_reg[5];
-} QDECStoreReg_Typedef;
+    uint32_t qdec_reg[QDEC_DLPS_MAX];
+} QDECStoreReg_TypeDef;
 
 /*=====================================
 =======================================*

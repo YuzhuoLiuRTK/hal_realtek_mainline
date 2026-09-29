@@ -128,7 +128,7 @@ typedef struct
 typedef struct
 {
     uint32_t gpio_reg[15];
-} GPIOStoreReg_Typedef;
+} GPIOStoreReg_TypeDef;
 
 /*============================================================================*
  *                         GPIO Registers and Field Descriptions

@@ -116,10 +116,27 @@ typedef struct
 /*============================================================================*
  *                         ADC Private Types
  *============================================================================*/
+/**
+ * DLPS store slot names are kept identical across ICs so that upper layers can
+ * address a slot without knowing which IC is built. Slot values stay IC-local
+ * and compact; only the names are shared.
+ */
+typedef enum
+{
+    ADC_DLPS_DIG_CTRL = 0x00,          //!< ADC_DIG_CTRL, 0x04, digital control. Restored without bits[1:0].
+    ADC_DLPS_SCHED_CTRL = 0x01,        //!< ADC_SCHED_CTRL, 0x08, schedule control.
+    ADC_DLPS_CTRL_INT = 0x02,          //!< ADC_CTRL_INT, 0x0C, interrupt control. Restored last.
+    ADC_DLPS_POW_DATA_DLY_CTRL = 0x03, //!< ADC_POW_DATA_DLY_CTRL, 0x50, power delay. Restored first.
+    ADC_DLPS_DATA_CLK_CTRL = 0x04,     //!< ADC_DATA_CLK_CTRL, 0x54, data clock control.
+    ADC_DLPS_TIME_PERIOD = 0x05,       //!< ADC_TIME_PERIOD, 0x5C, sample time period.
+    ADC_DLPS_MAX = 0x06,               //!< Store buffer entry count.
+} ADCDLPSReg_TypeDef;
+
+#define ADC_DLPS_SCHTAB_NUM        16
 typedef struct
 {
-    uint32_t adc_reg[6];
-    uint32_t adc_schtab_reg[16];
+    uint32_t adc_reg[ADC_DLPS_MAX];
+    uint32_t adc_schtab_reg[ADC_DLPS_SCHTAB_NUM];
 } ADCStoreReg_TypeDef;
 
 /*============================================================================*

@@ -22,7 +22,7 @@
 void GPIO_DLPSEnter(void *PeriReg, void *StoreBuf)
 {
     GPIO_TypeDef *GPIOx = (GPIO_TypeDef *)PeriReg;
-    GPIOStoreReg_Typedef *store_buf = (GPIOStoreReg_Typedef *)StoreBuf;
+    GPIOStoreReg_TypeDef *store_buf = (GPIOStoreReg_TypeDef *)StoreBuf;
 
     RCC_PeriphClockCmd(APBPeriph_GPIO, APBPeriph_GPIO_CLOCK, ENABLE);
 
@@ -49,7 +49,7 @@ void GPIO_DLPSEnter(void *PeriReg, void *StoreBuf)
 void GPIO_DLPSExit(void *PeriReg, void *StoreBuf)
 {
     GPIO_TypeDef *GPIOx = (GPIO_TypeDef *)PeriReg;
-    GPIOStoreReg_Typedef *store_buf = (GPIOStoreReg_Typedef *)StoreBuf;
+    GPIOStoreReg_TypeDef *store_buf = (GPIOStoreReg_TypeDef *)StoreBuf;
 
     RCC_PeriphClockCmd(APBPeriph_GPIO, APBPeriph_GPIO_CLOCK, ENABLE);
 

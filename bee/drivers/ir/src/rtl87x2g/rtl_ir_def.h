@@ -96,7 +96,7 @@ typedef struct
 typedef struct
 {
     uint32_t ir_reg[6];
-} IRStoreReg_Typedef;
+} IRStoreReg_TypeDef;
 
 /*============================================================================*
  *                         IR Registers and Field Descriptions

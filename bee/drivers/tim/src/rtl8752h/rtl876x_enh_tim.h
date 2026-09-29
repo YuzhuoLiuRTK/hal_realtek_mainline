@@ -34,8 +34,13 @@ extern "C" {
 
 typedef struct
 {
-    uint32_t enhtim_reg[17];
-} ENHTIMStoreReg_Typedef;
+    uint32_t enhtim_reg[4];
+} ENHTIMStoreReg_TypeDef;
+
+typedef struct
+{
+    uint32_t enhtimshare_reg[12];
+} ENHTIMShareStoreReg_TypeDef;
 
 /*============================================================================*
  *                         Constants

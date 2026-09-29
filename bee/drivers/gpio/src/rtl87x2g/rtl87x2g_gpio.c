@@ -239,7 +239,7 @@ void GPIO_DLPSEnter(void *PeriReg, void *StoreBuf)
 {
     GPIO_TypeDef *GPIOx = (GPIO_TypeDef *)PeriReg;
     GPIO_Debounce_TypeDef *GPIOx_DEB = GPIOx == GPIOA ? GPIOA_DEB : GPIOB_DEB;
-    GPIOStoreReg_Typedef *store_buf = (GPIOStoreReg_Typedef *)StoreBuf;
+    GPIOStoreReg_TypeDef *store_buf = (GPIOStoreReg_TypeDef *)StoreBuf;
 
     if (GPIOx == GPIOA)
     {
@@ -276,7 +276,7 @@ void GPIO_DLPSExit(void *PeriReg, void *StoreBuf)
 {
     GPIO_TypeDef *GPIOx = (GPIO_TypeDef *)PeriReg;
     GPIO_Debounce_TypeDef *GPIOx_DEB = GPIOx == GPIOA ? GPIOA_DEB : GPIOB_DEB;
-    GPIOStoreReg_Typedef *store_buf = (GPIOStoreReg_Typedef *)StoreBuf;
+    GPIOStoreReg_TypeDef *store_buf = (GPIOStoreReg_TypeDef *)StoreBuf;
 
     if (GPIOx == GPIOA)
     {

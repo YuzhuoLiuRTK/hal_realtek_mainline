@@ -172,10 +172,53 @@ typedef struct
 /*============================================================================*
  *                         ENHTIM Private Types
  *============================================================================*/
+/**
+ * DLPS store slot names are kept identical across ICs so that upper layers can
+ * address a slot without knowing which IC is built. Slot values stay IC-local
+ * and compact; only the names are shared.
+ */
+typedef enum
+{
+    ENHTIM_DLPS_CONFIGURE      = 0x00, //!< ENHTIMx->ENHTIM_CONFIGURE, control/config.
+    ENHTIM_DLPS_MAX_CNT        = 0x01, //!< ENHTIMx->ENHTIM_MAX_CNT, max count value.
+    ENHTIM_DLPS_CCR            = 0x02, //!< ENHTIMx->ENHTIM_CCR, capture/compare value.
+    ENHTIM_DLPS_CCR_FIFO_ENTRY = 0x03, //!< ENHTIMx->ENHTIM_CCR_FIFO_ENTRY, FIFO entry.
+    ENHTIM_DLPS_PWM_CFG        = 0x04, //!< ENH_TIMx_PWM->ENHTIMER_PWM_CFG (per-instance PWM).
+    ENHTIM_DLPS_MAX = 0x05,            //!< Store buffer entry count.
+} ENHTIMDLPSReg_TypeDef;
+
+/**
+ * Slots of the registers shared by every instance of the enhanced timer IP.
+ */
+typedef enum
+{
+    ENHTIMSHARE_DLPS_FIFO_CLR            = 0x00, //!< ENH_TIM_SHARE->ENHTIM_FIFO_CLR.
+    ENHTIMSHARE_DLPS_CONTROL             = 0x01, //!< ENH_TIM_SHARE->ENHTIM_CONTROL.
+    ENHTIMSHARE_DLPS_INT_CONTROL         = 0x02, //!< ENH_TIM_SHARE->ENHTIM_INT_CONTROL.
+    ENHTIMSHARE_DLPS_LATCH_INT_CONTROL_0 = 0x03, //!< ENH_TIM_SHARE->ENHTIM_LATCH_INT_CONTROL_0.
+    ENHTIMSHARE_DLPS_LATCH_INT_CONTROL_2 = 0x04, //!< ENH_TIM_SHARE->ENHTIM_LATCH_INT_CONTROL_2.
+    ENHTIMSHARE_DLPS_LATCH_TRIG_CFG_0    = 0x05, //!< REG_ENHTIMER_0_LATCH_TRIG_CFG.
+    ENHTIMSHARE_DLPS_LATCH_TRIG_CFG_1    = 0x06, //!< REG_ENHTIMER_1_LATCH_TRIG_CFG.
+    ENHTIMSHARE_DLPS_LATCH_TRIG_CFG_2    = 0x07, //!< REG_ENHTIMER_2_LATCH_TRIG_CFG.
+    ENHTIMSHARE_DLPS_LATCH_TRIG_CFG_3    = 0x08, //!< REG_ENHTIMER_3_LATCH_TRIG_CFG.
+    ENHTIMSHARE_DLPS_BT_GPIO_TRIG        = 0x09, //!< REG_BT_GPIO_TRIG_ENHTIMER_CTRL.
+    ENHTIMSHARE_DLPS_BT_TX_TRIG          = 0x0A, //!< REG_BT_TX_ON_TRIG_ENHTIMER_CTRL.
+    ENHTIMSHARE_DLPS_BT_ACC_TRIG         = 0x0B, //!< REG_BT_ACC_HIT_TRIG_ENHTIMER_CTRL.
+    ENHTIMSHARE_DLPS_ONESHOT             = 0x0C, //!< REG_ENHTIMER_ONESHOT.
+    ENHTIMSHARE_DLPS_CLK0                = 0x0D, //!< PERIBLKCTRL u_344 REG_ENHTIMER_1_0_CLOCK_CTRL.
+    ENHTIMSHARE_DLPS_CLK1                = 0x0E, //!< PERIBLKCTRL u_348 REG_ENHTIMER_3_2_CLOCK_CTRL.
+    ENHTIMSHARE_DLPS_MAX = 0x0F,               //!< Store buffer entry count.
+} ENHTIMSHAREDLPSReg_TypeDef;
+
 typedef struct
 {
-    uint32_t enhtim_reg[20];
-} ENHTIMStoreReg_Typedef;
+    uint32_t enhtim_reg[ENHTIM_DLPS_MAX];
+} ENHTIMStoreReg_TypeDef;
+
+typedef struct
+{
+    uint32_t enhtimshare_reg[ENHTIMSHARE_DLPS_MAX];
+} ENHTIMShareStoreReg_TypeDef;
 
 /*============================================================================*
  *                         ENHTIM Registers and Field Descriptions

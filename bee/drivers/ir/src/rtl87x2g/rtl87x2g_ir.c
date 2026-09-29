@@ -78,7 +78,7 @@ RAM_FUNCTION
 #endif
 void IR_DLPSEnter(void *PeriReg, void *StoreBuf)
 {
-    IRStoreReg_Typedef *store_buf = (IRStoreReg_Typedef *)StoreBuf;
+    IRStoreReg_TypeDef *store_buf = (IRStoreReg_TypeDef *)StoreBuf;
 
     RCC_PeriphClockCmd(APBPeriph_IR, APBPeriph_IR_CLOCK, ENABLE);
 
@@ -101,7 +101,7 @@ RAM_FUNCTION
 #endif
 void IR_DLPSExit(void *PeriReg, void *StoreBuf)
 {
-    IRStoreReg_Typedef *store_buf = (IRStoreReg_Typedef *)StoreBuf;
+    IRStoreReg_TypeDef *store_buf = (IRStoreReg_TypeDef *)StoreBuf;
 
     RCC_PeriphClockCmd(APBPeriph_IR, APBPeriph_IR_CLOCK, ENABLE);
 

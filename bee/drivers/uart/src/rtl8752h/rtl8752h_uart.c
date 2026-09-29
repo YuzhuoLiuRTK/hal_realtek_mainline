@@ -22,7 +22,7 @@
 void UART_DLPSEnter(void *PeriReg, void *StoreBuf)
 {
     UART_TypeDef *UARTx = (UART_TypeDef *)PeriReg;
-    UARTStoreReg_Typedef *store_buf = (UARTStoreReg_Typedef *)StoreBuf;
+    UARTStoreReg_TypeDef *store_buf = (UARTStoreReg_TypeDef *)StoreBuf;
 
     if (UARTx == UART0)
     {
@@ -66,7 +66,7 @@ void UART_DLPSEnter(void *PeriReg, void *StoreBuf)
 void UART_DLPSExit(void *PeriReg, void *StoreBuf)
 {
     UART_TypeDef *UARTx = (UART_TypeDef *)PeriReg;
-    UARTStoreReg_Typedef *store_buf = (UARTStoreReg_Typedef *)StoreBuf;
+    UARTStoreReg_TypeDef *store_buf = (UARTStoreReg_TypeDef *)StoreBuf;
 
     if (UARTx == UART0)
     {

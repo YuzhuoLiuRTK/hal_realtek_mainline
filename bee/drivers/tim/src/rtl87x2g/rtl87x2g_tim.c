@@ -288,24 +288,53 @@ void TIM_PWMChangeDZClockSrc(PWM_TypeDef *PWMx, PWMDZClockSrc_TypeDef PWM_Deazon
 #if defined(CONFIG_REALTEK_DRIVER_DLPS_CALLBACK_ON_RAM)
 RAM_FUNCTION
 #endif
-void TIM_DLPSEnter(void *PeriReg, void *StoreBuf)
+void TIMSHARE_DLPSEnter(void *StoreBuf)
 {
-    TIM_TypeDef *TIMx = (TIM_TypeDef *)PeriReg;
-    TIMStoreReg_Typedef *store_buf = (TIMStoreReg_Typedef *)StoreBuf;
+    TIMShareStoreReg_TypeDef *store_buf = (TIMShareStoreReg_TypeDef *)StoreBuf;
 
     /* Enable timer IP clock and function */
     RCC_PeriphClockCmd(APBPeriph_TIMER, APBPeriph_TIMER_CLOCK, ENABLE);
-    store_buf->tim_reg[0] = TIMx->TIMER_LOADCOUNT;
-    store_buf->tim_reg[1] = TIMx->TIMER_CONTROLREG;
-    store_buf->tim_reg[2] = *(volatile uint32_t *)((uint32_t)&TIMER0_LOAD_COUNT2 +
-                                                   4 * ((uint32_t)TIMx - (uint32_t)TIMER_0_REG_BASE) / sizeof(TIM_TypeDef));
 
-    store_buf->tim_reg[3] = PERIBLKCTRL_PERI_CLK->u_328.REG_TIMER_0_CLOCK_CTRL;
-    store_buf->tim_reg[4] = PERIBLKCTRL_PERI_CLK->u_32C.REG_TIMER_1_CLOCK_CTRL;
-    store_buf->tim_reg[5] = PERIBLKCTRL_PERI_CLK->u_330.REG_TIMER_2_CLOCK_CTRL;
-    store_buf->tim_reg[6] = PERIBLKCTRL_PERI_CLK->u_334.REG_TIMER_3_CLOCK_CTRL;
+    store_buf->timshare_reg[TIMSHARE_DLPS_CLK0] = PERIBLKCTRL_PERI_CLK->u_328.REG_TIMER_0_CLOCK_CTRL;
+    store_buf->timshare_reg[TIMSHARE_DLPS_CLK1] = PERIBLKCTRL_PERI_CLK->u_32C.REG_TIMER_1_CLOCK_CTRL;
+    store_buf->timshare_reg[TIMSHARE_DLPS_CLK2] = PERIBLKCTRL_PERI_CLK->u_330.REG_TIMER_2_CLOCK_CTRL;
+    store_buf->timshare_reg[TIMSHARE_DLPS_CLK3] = PERIBLKCTRL_PERI_CLK->u_334.REG_TIMER_3_CLOCK_CTRL;
+    store_buf->timshare_reg[TIMSHARE_DLPS_PWM_WRAP_1] =
+        PERIBLKCTRL_PERI_CLK->u_33C.REG_TIMER_PWM_WRAP_1_CFG;
+}
 
-    store_buf->tim_reg[7] = PERIBLKCTRL_PERI_CLK->u_33C.REG_TIMER_PWM_WRAP_1_CFG;
+#if defined(CONFIG_REALTEK_DRIVER_DLPS_CALLBACK_ON_RAM)
+RAM_FUNCTION
+#endif
+void TIM_DLPSEnter(void *PeriReg, void *StoreBuf)
+{
+    TIM_TypeDef *TIMx = (TIM_TypeDef *)PeriReg;
+    TIMStoreReg_TypeDef *store_buf = (TIMStoreReg_TypeDef *)StoreBuf;
+
+    /* Enable timer IP clock and function */
+    RCC_PeriphClockCmd(APBPeriph_TIMER, APBPeriph_TIMER_CLOCK, ENABLE);
+    store_buf->tim_reg[TIM_DLPS_LOADCOUNT] = TIMx->TIMER_LOADCOUNT;
+    store_buf->tim_reg[TIM_DLPS_CONTROLREG] = TIMx->TIMER_CONTROLREG;
+    store_buf->tim_reg[TIM_DLPS_LOADCOUNT2] = *(volatile uint32_t *)((uint32_t)&TIMER0_LOAD_COUNT2 +
+                                                                     4 * ((uint32_t)TIMx - (uint32_t)TIMER_0_REG_BASE) / sizeof(TIM_TypeDef));
+}
+
+#if defined(CONFIG_REALTEK_DRIVER_DLPS_CALLBACK_ON_RAM)
+RAM_FUNCTION
+#endif
+void TIMSHARE_DLPSExit(void *StoreBuf)
+{
+    TIMShareStoreReg_TypeDef *store_buf = (TIMShareStoreReg_TypeDef *)StoreBuf;
+
+    /* Enable timer IP clock and function */
+    RCC_PeriphClockCmd(APBPeriph_TIMER, APBPeriph_TIMER_CLOCK, ENABLE);
+
+    PERIBLKCTRL_PERI_CLK->u_328.REG_TIMER_0_CLOCK_CTRL = store_buf->timshare_reg[TIMSHARE_DLPS_CLK0];
+    PERIBLKCTRL_PERI_CLK->u_32C.REG_TIMER_1_CLOCK_CTRL = store_buf->timshare_reg[TIMSHARE_DLPS_CLK1];
+    PERIBLKCTRL_PERI_CLK->u_330.REG_TIMER_2_CLOCK_CTRL = store_buf->timshare_reg[TIMSHARE_DLPS_CLK2];
+    PERIBLKCTRL_PERI_CLK->u_334.REG_TIMER_3_CLOCK_CTRL = store_buf->timshare_reg[TIMSHARE_DLPS_CLK3];
+    PERIBLKCTRL_PERI_CLK->u_33C.REG_TIMER_PWM_WRAP_1_CFG =
+        store_buf->timshare_reg[TIMSHARE_DLPS_PWM_WRAP_1];
 }
 
 #if defined(CONFIG_REALTEK_DRIVER_DLPS_CALLBACK_ON_RAM)
@@ -314,22 +343,16 @@ RAM_FUNCTION
 void TIM_DLPSExit(void *PeriReg, void *StoreBuf)
 {
     TIM_TypeDef *TIMx = (TIM_TypeDef *)PeriReg;
-    TIMStoreReg_Typedef *store_buf = (TIMStoreReg_Typedef *)StoreBuf;
+    TIMStoreReg_TypeDef *store_buf = (TIMStoreReg_TypeDef *)StoreBuf;
 
     /* Enable timer IP clock and function */
     RCC_PeriphClockCmd(APBPeriph_TIMER, APBPeriph_TIMER_CLOCK, ENABLE);
-    PERIBLKCTRL_PERI_CLK->u_328.REG_TIMER_0_CLOCK_CTRL = store_buf->tim_reg[3];
-    PERIBLKCTRL_PERI_CLK->u_32C.REG_TIMER_1_CLOCK_CTRL = store_buf->tim_reg[4];
-    PERIBLKCTRL_PERI_CLK->u_330.REG_TIMER_2_CLOCK_CTRL = store_buf->tim_reg[5];
-    PERIBLKCTRL_PERI_CLK->u_334.REG_TIMER_3_CLOCK_CTRL = store_buf->tim_reg[6];
 
-    TIMx->TIMER_LOADCOUNT  = store_buf->tim_reg[0];
-    TIMx->TIMER_CONTROLREG = store_buf->tim_reg[1];
+    TIMx->TIMER_LOADCOUNT  = store_buf->tim_reg[TIM_DLPS_LOADCOUNT];
+    TIMx->TIMER_CONTROLREG = store_buf->tim_reg[TIM_DLPS_CONTROLREG];
     *(volatile uint32_t *)((uint32_t)&TIMER0_LOAD_COUNT2 +
                            4 * ((uint32_t)TIMx - (uint32_t)TIMER_0_REG_BASE) / sizeof(TIM_TypeDef))
-        = store_buf->tim_reg[2];
-
-    PERIBLKCTRL_PERI_CLK->u_33C.REG_TIMER_PWM_WRAP_1_CFG = store_buf->tim_reg[7];
+        = store_buf->tim_reg[TIM_DLPS_LOADCOUNT2];
 }
 
 /******************* (C) COPYRIGHT 2024 Realtek Semiconductor Corporation *****END OF FILE****/

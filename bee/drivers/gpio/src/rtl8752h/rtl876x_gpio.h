@@ -31,10 +31,24 @@ extern "C" {
  *============================================================================*/
 #include "rtl876x.h"
 
+typedef enum
+{
+    GPIO_DLPS_DR   = 0x00,
+    GPIO_DLPS_DDR   = 0x01,
+    GPIO_DLPS_DSR   = 0x02,
+    GPIO_DLPS_INTEN   = 0x03,
+    GPIO_DLPS_MASK   = 0x04,
+    GPIO_DLPS_LEVEL   = 0x05,
+    GPIO_DLPS_POLARITY   = 0x06,
+    GPIO_DLPS_DEBEN   = 0x07,
+    GPIO_DLPS_DEBCFG   = 0x08,
+    GPIO_DLPS_BOTHEDGE   = 0x09,
+} GPIODLPSREG_TypeDef;
+
 typedef struct
 {
     uint32_t gpio_reg[10];
-} GPIOStoreReg_Typedef;
+} GPIOStoreReg_TypeDef;
 
 /**
  * \cond        private
@@ -800,17 +814,17 @@ __STATIC_INLINE void GPIO_Debounce_Time(uint32_t DebounceTime)
     GPIO_DBCLK_DIV = GPIO_DBCLK_DIV + count;
 }
 
-__STATIC_INLINE void GPIO_SetPolarity(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin,
+__STATIC_INLINE void GPIO_SetPolarity(uint32_t GPIO_Pin,
                                       GPIOIT_PolarityType int_type)
 {
     if (int_type == GPIO_INT_POLARITY_ACTIVE_LOW)
     {
-        GPIOx->INTPOLARITY = GPIOx->INTPOLARITY & (~GPIO_Pin);
+        GPIO->INTPOLARITY = GPIO->INTPOLARITY & (~GPIO_Pin);
     }
     else
     {
-        GPIOx->INTPOLARITY = (GPIOx->INTPOLARITY & (~GPIO_Pin))
-                             | GPIO_Pin;
+        GPIO->INTPOLARITY = (GPIO->INTPOLARITY & (~GPIO_Pin))
+                            | GPIO_Pin;
     }
 }
 #define GPIO_GetPortIntStatus(GPIOx) (((GPIO_TypeDef *)(GPIOx))->INTSTATUS)

@@ -37,9 +37,28 @@ extern "C" {
 
 extern void (*platform_delay_ms)(uint32_t t);
 
+/**
+ * DLPS store slot names are kept identical across ICs so that upper layers can
+ * address a slot without knowing which IC is built. Slot values stay IC-local
+ * and compact; only the names are shared.
+ */
+typedef enum
+{
+    ADC_DLPS_DIG_CTRL = 0x00,          //!< CR on this IC, 0x04, digital control. Restored without bits[1:0].
+    ADC_DLPS_SCHED_CTRL = 0x01,        //!< SCHCR on this IC, 0x08, schedule control.
+    ADC_DLPS_CTRL_INT = 0x02,          //!< INTCR on this IC, 0x0C, interrupt control. Restored last.
+    ADC_DLPS_SCHTAB0 = 0x03,           //!< SCHTAB0, 0x10, first of eight schedule table words.
+    ADC_DLPS_POW_DATA_DLY_CTRL = 0x0B, //!< PWRDLY on this IC, 0x50, power delay. Restored first.
+    ADC_DLPS_DATA_CLK_CTRL = 0x0C,     //!< DATCLK on this IC, 0x54, data clock control.
+    ADC_DLPS_ANA_CTRL = 0x0D,          //!< ANACTL, 0x58, analog control.
+    ADC_DLPS_TIME_PERIOD = 0x0E,       //!< SAMTIM on this IC, 0x5C, sample time period.
+    ADC_DLPS_AON_0X110 = 0x0F,         //!< AON offset 0x110.
+    ADC_DLPS_MAX = 0x10,               //!< Store buffer entry count.
+} ADCDLPSReg_TypeDef;
+
 typedef struct
 {
-    uint32_t adc_reg[16];
+    uint32_t adc_reg[ADC_DLPS_MAX];
 } ADCStoreReg_TypeDef;
 
 /*============================================================================*
@@ -818,11 +837,11 @@ void ADC_SchTableConfig(ADC_TypeDef *ADCx, uint16_t Index, uint8_t adcMode);
  * void adc_demo(void)
  * {
  *   uint16_t bit_map = 0x03;
- *   ADC_BitMapConfig(ADC,bit_map,ENABLE);
+ *   ADC_BitMapConfig(ADC, bit_map);
  * }
  * \endcode
  */
-void ADC_BitMapConfig(ADC_TypeDef *ADCx, uint16_t bitMap, FunctionalState NewState);
+void ADC_BitMapConfig(ADC_TypeDef *ADCx, uint16_t bitMap);
 
 /**
  * rtl876x_adc.h

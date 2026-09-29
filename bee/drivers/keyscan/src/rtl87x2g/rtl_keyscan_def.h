@@ -82,10 +82,26 @@ typedef struct
 /*============================================================================*
  *                         KEYSCAN Private Types
  *============================================================================*/
+/**
+ * DLPS store slot names are kept identical across ICs so that upper layers can
+ * address a slot without knowing which IC is built. Slot values stay IC-local;
+ * only the names are shared.
+ */
+typedef enum
+{
+    KEYSCAN_DLPS_CLK_DIV = 0x00,       //!< KEYSCAN_CLK_DIV, 0x00, clock divider.
+    KEYSCAN_DLPS_CONFIG1 = 0x01,       //!< KEYSCAN_CONFIG1, 0x04, timer configuration.
+    KEYSCAN_DLPS_CONFIG2 = 0x02,       //!< KEYSCAN_CONFIG2, 0x08, control. BIT31 is the FSM enable, restored last.
+    KEYSCAN_DLPS_COLUMN_CONFIG = 0x03, //!< KEYSCAN_COLUMN_CONFIG, 0x0C, column configuration.
+    KEYSCAN_DLPS_ROW_CONFIG = 0x04,    //!< KEYSCAN_ROW_CONFIG, 0x10, row configuration.
+    KEYSCAN_DLPS_INT_MASK = 0x06,      //!< KEYSCAN_INT_MASK, 0x18, interrupt mask.
+    KEYSCAN_DLPS_MAX = 0x07,           //!< Store buffer entry count.
+} KEYSCANDLPSReg_TypeDef;
+
 typedef struct
 {
-    uint32_t keyscan_reg[7];
-} KEYSCANStoreReg_Typedef;
+    uint32_t keyscan_reg[KEYSCAN_DLPS_MAX];
+} KEYSCANStoreReg_TypeDef;
 
 /*============================================================================*
  *                         KEYSCAN Registers and Field Descriptions

@@ -214,35 +214,51 @@ RAM_FUNCTION
 void ENHTIM_DLPSEnter(void *PeriReg, void *StoreBuf)
 {
     ENHTIM_TypeDef *ENH_TIMx = (ENHTIM_TypeDef *)PeriReg;
-    ENHTIMStoreReg_Typedef *store_buf = (ENHTIMStoreReg_Typedef *)StoreBuf;
+    ENHTIMStoreReg_TypeDef *store_buf = (ENHTIMStoreReg_TypeDef *)StoreBuf;
 
     RCC_PeriphClockCmd(APBPeriph_ENHTIMER, APBPeriph_ENHTIMER_CLOCK, ENABLE);
 
-    store_buf->enhtim_reg[18] = PERIBLKCTRL_PERI_CLK->u_344.REG_ENHTIMER_1_0_CLOCK_CTRL;
-    store_buf->enhtim_reg[19] = PERIBLKCTRL_PERI_CLK->u_348.REG_ENHTIMER_3_2_CLOCK_CTRL;
+    store_buf->enhtim_reg[ENHTIM_DLPS_CONFIGURE] = ENH_TIMx->ENHTIM_CONFIGURE;
+    store_buf->enhtim_reg[ENHTIM_DLPS_MAX_CNT] = ENH_TIMx->ENHTIM_MAX_CNT;
+    store_buf->enhtim_reg[ENHTIM_DLPS_CCR] = ENH_TIMx->ENHTIM_CCR;
+    store_buf->enhtim_reg[ENHTIM_DLPS_CCR_FIFO_ENTRY] = ENH_TIMx->ENHTIM_CCR_FIFO_ENTRY;
 
-    store_buf->enhtim_reg[0] = ENH_TIMx->ENHTIM_CONFIGURE;
-    store_buf->enhtim_reg[1] = ENH_TIMx->ENHTIM_MAX_CNT;
-    store_buf->enhtim_reg[2] = ENH_TIMx->ENHTIM_CCR;
-    store_buf->enhtim_reg[3] = ENH_TIMx->ENHTIM_CCR_FIFO_ENTRY;
+    store_buf->enhtim_reg[ENHTIM_DLPS_PWM_CFG] = ((ENHPWM_TypeDef *)((
+                                                       uint32_t)ENHANCED_PWM0_REG_BASE +
+                                                   4 * (ENH_TIMx - ENH_TIM0) / sizeof(ENHTIM_TypeDef)))->ENHTIMER_PWM_CFG;
+}
 
-    store_buf->enhtim_reg[4] = ENH_TIM_SHARE->ENHTIM_FIFO_CLR;
-    store_buf->enhtim_reg[5] = ENH_TIM_SHARE->ENHTIM_CONTROL;
-    store_buf->enhtim_reg[6] = ENH_TIM_SHARE->ENHTIM_INT_CONTROL;
-    store_buf->enhtim_reg[7] = ENH_TIM_SHARE->ENHTIM_LATCH_INT_CONTROL_0;
-    store_buf->enhtim_reg[8] = ENH_TIM_SHARE->ENHTIM_LATCH_INT_CONTROL_2;
+#if defined(CONFIG_REALTEK_DRIVER_DLPS_CALLBACK_ON_RAM)
+RAM_FUNCTION
+#endif
+void ENHTIMSHARE_DLPSEnter(void *StoreBuf)
+{
+    ENHTIMShareStoreReg_TypeDef *store_buf = (ENHTIMShareStoreReg_TypeDef *)StoreBuf;
 
-    store_buf->enhtim_reg[9] = REG_ENHTIMER_0_LATCH_TRIG_CFG;
-    store_buf->enhtim_reg[10] = REG_ENHTIMER_1_LATCH_TRIG_CFG;
-    store_buf->enhtim_reg[11] = REG_ENHTIMER_2_LATCH_TRIG_CFG;
-    store_buf->enhtim_reg[12] = REG_ENHTIMER_3_LATCH_TRIG_CFG;
-    store_buf->enhtim_reg[13] = REG_BT_GPIO_TRIG_ENHTIMER_CTRL;
-    store_buf->enhtim_reg[14] = REG_BT_TX_ON_TRIG_ENHTIMER_CTRL;
-    store_buf->enhtim_reg[15] = REG_BT_ACC_HIT_TRIG_ENHTIMER_CTRL;
-    store_buf->enhtim_reg[16] = REG_ENHTIMER_ONESHOT;
+    /* Enable timer IP clock and function */
+    RCC_PeriphClockCmd(APBPeriph_ENHTIMER, APBPeriph_ENHTIMER_CLOCK, ENABLE);
 
-    store_buf->enhtim_reg[17] = ((ENHPWM_TypeDef *)((uint32_t)ENHANCED_PWM0_REG_BASE +
-                                                    4 * (ENH_TIMx - ENH_TIM0) / sizeof(ENHTIM_TypeDef)))->ENHTIMER_PWM_CFG;
+    store_buf->enhtimshare_reg[ENHTIMSHARE_DLPS_FIFO_CLR] = ENH_TIM_SHARE->ENHTIM_FIFO_CLR;
+    store_buf->enhtimshare_reg[ENHTIMSHARE_DLPS_CONTROL] = ENH_TIM_SHARE->ENHTIM_CONTROL;
+    store_buf->enhtimshare_reg[ENHTIMSHARE_DLPS_INT_CONTROL] = ENH_TIM_SHARE->ENHTIM_INT_CONTROL;
+    store_buf->enhtimshare_reg[ENHTIMSHARE_DLPS_LATCH_INT_CONTROL_0] =
+        ENH_TIM_SHARE->ENHTIM_LATCH_INT_CONTROL_0;
+    store_buf->enhtimshare_reg[ENHTIMSHARE_DLPS_LATCH_INT_CONTROL_2] =
+        ENH_TIM_SHARE->ENHTIM_LATCH_INT_CONTROL_2;
+
+    store_buf->enhtimshare_reg[ENHTIMSHARE_DLPS_LATCH_TRIG_CFG_0] = REG_ENHTIMER_0_LATCH_TRIG_CFG;
+    store_buf->enhtimshare_reg[ENHTIMSHARE_DLPS_LATCH_TRIG_CFG_1] = REG_ENHTIMER_1_LATCH_TRIG_CFG;
+    store_buf->enhtimshare_reg[ENHTIMSHARE_DLPS_LATCH_TRIG_CFG_2] = REG_ENHTIMER_2_LATCH_TRIG_CFG;
+    store_buf->enhtimshare_reg[ENHTIMSHARE_DLPS_LATCH_TRIG_CFG_3] = REG_ENHTIMER_3_LATCH_TRIG_CFG;
+    store_buf->enhtimshare_reg[ENHTIMSHARE_DLPS_BT_GPIO_TRIG] = REG_BT_GPIO_TRIG_ENHTIMER_CTRL;
+    store_buf->enhtimshare_reg[ENHTIMSHARE_DLPS_BT_TX_TRIG] = REG_BT_TX_ON_TRIG_ENHTIMER_CTRL;
+    store_buf->enhtimshare_reg[ENHTIMSHARE_DLPS_BT_ACC_TRIG] = REG_BT_ACC_HIT_TRIG_ENHTIMER_CTRL;
+    store_buf->enhtimshare_reg[ENHTIMSHARE_DLPS_ONESHOT] = REG_ENHTIMER_ONESHOT;
+
+    store_buf->enhtimshare_reg[ENHTIMSHARE_DLPS_CLK0] =
+        PERIBLKCTRL_PERI_CLK->u_344.REG_ENHTIMER_1_0_CLOCK_CTRL;
+    store_buf->enhtimshare_reg[ENHTIMSHARE_DLPS_CLK1] =
+        PERIBLKCTRL_PERI_CLK->u_348.REG_ENHTIMER_3_2_CLOCK_CTRL;
 }
 
 #if defined(CONFIG_REALTEK_DRIVER_DLPS_CALLBACK_ON_RAM)
@@ -251,35 +267,53 @@ RAM_FUNCTION
 void ENHTIM_DLPSExit(void *PeriReg, void *StoreBuf)
 {
     ENHTIM_TypeDef *ENH_TIMx = (ENHTIM_TypeDef *)PeriReg;
-    ENHTIMStoreReg_Typedef *store_buf = (ENHTIMStoreReg_Typedef *)StoreBuf;
+    ENHTIMStoreReg_TypeDef *store_buf = (ENHTIMStoreReg_TypeDef *)StoreBuf;
 
     /* Enable timer IP clock and function */
     RCC_PeriphClockCmd(APBPeriph_ENHTIMER, APBPeriph_ENHTIMER_CLOCK, ENABLE);
-    PERIBLKCTRL_PERI_CLK->u_344.REG_ENHTIMER_1_0_CLOCK_CTRL = store_buf->enhtim_reg[18];
-    PERIBLKCTRL_PERI_CLK->u_348.REG_ENHTIMER_3_2_CLOCK_CTRL = store_buf->enhtim_reg[19];
 
-    ENH_TIMx->ENHTIM_CONFIGURE      = store_buf->enhtim_reg[0];
-    ENH_TIMx->ENHTIM_MAX_CNT        = store_buf->enhtim_reg[1];
-    ENH_TIMx->ENHTIM_CCR            = store_buf->enhtim_reg[2];
-    ENH_TIMx->ENHTIM_CCR_FIFO_ENTRY = store_buf->enhtim_reg[3];
-
-    ENH_TIM_SHARE->ENHTIM_FIFO_CLR            = store_buf->enhtim_reg[4];
-    ENH_TIM_SHARE->ENHTIM_CONTROL             = store_buf->enhtim_reg[5] ;
-    ENH_TIM_SHARE->ENHTIM_INT_CONTROL         = store_buf->enhtim_reg[6];
-    ENH_TIM_SHARE->ENHTIM_LATCH_INT_CONTROL_0 = store_buf->enhtim_reg[7];
-    ENH_TIM_SHARE->ENHTIM_LATCH_INT_CONTROL_2 = store_buf->enhtim_reg[8];
-
-    REG_ENHTIMER_0_LATCH_TRIG_CFG     =  store_buf->enhtim_reg[9];
-    REG_ENHTIMER_1_LATCH_TRIG_CFG     =  store_buf->enhtim_reg[10];
-    REG_ENHTIMER_2_LATCH_TRIG_CFG     =  store_buf->enhtim_reg[11];
-    REG_ENHTIMER_3_LATCH_TRIG_CFG     =  store_buf->enhtim_reg[12];
-    REG_BT_GPIO_TRIG_ENHTIMER_CTRL    =  store_buf->enhtim_reg[13];
-    REG_BT_TX_ON_TRIG_ENHTIMER_CTRL   =  store_buf->enhtim_reg[14];
-    REG_BT_ACC_HIT_TRIG_ENHTIMER_CTRL =  store_buf->enhtim_reg[15];
-    REG_ENHTIMER_ONESHOT              =  store_buf->enhtim_reg[16];
+    ENH_TIMx->ENHTIM_CONFIGURE      = store_buf->enhtim_reg[ENHTIM_DLPS_CONFIGURE];
+    ENH_TIMx->ENHTIM_MAX_CNT        = store_buf->enhtim_reg[ENHTIM_DLPS_MAX_CNT];
+    ENH_TIMx->ENHTIM_CCR            = store_buf->enhtim_reg[ENHTIM_DLPS_CCR];
+    ENH_TIMx->ENHTIM_CCR_FIFO_ENTRY = store_buf->enhtim_reg[ENHTIM_DLPS_CCR_FIFO_ENTRY];
 
     ((ENHPWM_TypeDef *)((uint32_t)ENHANCED_PWM0_REG_BASE +
-                        4 * (ENH_TIMx - ENH_TIM0) / sizeof(ENHTIM_TypeDef)))->ENHTIMER_PWM_CFG = store_buf->enhtim_reg[17];
+                        4 * (ENH_TIMx - ENH_TIM0) / sizeof(ENHTIM_TypeDef)))->ENHTIMER_PWM_CFG =
+                            store_buf->enhtim_reg[ENHTIM_DLPS_PWM_CFG];
+}
+
+#if defined(CONFIG_REALTEK_DRIVER_DLPS_CALLBACK_ON_RAM)
+RAM_FUNCTION
+#endif
+void ENHTIMSHARE_DLPSExit(void *StoreBuf)
+{
+    ENHTIMShareStoreReg_TypeDef *store_buf = (ENHTIMShareStoreReg_TypeDef *)StoreBuf;
+
+    /* Enable timer IP clock and function */
+    RCC_PeriphClockCmd(APBPeriph_ENHTIMER, APBPeriph_ENHTIMER_CLOCK, ENABLE);
+
+    PERIBLKCTRL_PERI_CLK->u_344.REG_ENHTIMER_1_0_CLOCK_CTRL =
+        store_buf->enhtimshare_reg[ENHTIMSHARE_DLPS_CLK0];
+    PERIBLKCTRL_PERI_CLK->u_348.REG_ENHTIMER_3_2_CLOCK_CTRL =
+        store_buf->enhtimshare_reg[ENHTIMSHARE_DLPS_CLK1];
+
+    ENH_TIM_SHARE->ENHTIM_FIFO_CLR            = store_buf->enhtimshare_reg[ENHTIMSHARE_DLPS_FIFO_CLR];
+    ENH_TIM_SHARE->ENHTIM_CONTROL             = store_buf->enhtimshare_reg[ENHTIMSHARE_DLPS_CONTROL];
+    ENH_TIM_SHARE->ENHTIM_INT_CONTROL         =
+        store_buf->enhtimshare_reg[ENHTIMSHARE_DLPS_INT_CONTROL];
+    ENH_TIM_SHARE->ENHTIM_LATCH_INT_CONTROL_0 =
+        store_buf->enhtimshare_reg[ENHTIMSHARE_DLPS_LATCH_INT_CONTROL_0];
+    ENH_TIM_SHARE->ENHTIM_LATCH_INT_CONTROL_2 =
+        store_buf->enhtimshare_reg[ENHTIMSHARE_DLPS_LATCH_INT_CONTROL_2];
+
+    REG_ENHTIMER_0_LATCH_TRIG_CFG     = store_buf->enhtimshare_reg[ENHTIMSHARE_DLPS_LATCH_TRIG_CFG_0];
+    REG_ENHTIMER_1_LATCH_TRIG_CFG     = store_buf->enhtimshare_reg[ENHTIMSHARE_DLPS_LATCH_TRIG_CFG_1];
+    REG_ENHTIMER_2_LATCH_TRIG_CFG     = store_buf->enhtimshare_reg[ENHTIMSHARE_DLPS_LATCH_TRIG_CFG_2];
+    REG_ENHTIMER_3_LATCH_TRIG_CFG     = store_buf->enhtimshare_reg[ENHTIMSHARE_DLPS_LATCH_TRIG_CFG_3];
+    REG_BT_GPIO_TRIG_ENHTIMER_CTRL    = store_buf->enhtimshare_reg[ENHTIMSHARE_DLPS_BT_GPIO_TRIG];
+    REG_BT_TX_ON_TRIG_ENHTIMER_CTRL   = store_buf->enhtimshare_reg[ENHTIMSHARE_DLPS_BT_TX_TRIG];
+    REG_BT_ACC_HIT_TRIG_ENHTIMER_CTRL = store_buf->enhtimshare_reg[ENHTIMSHARE_DLPS_BT_ACC_TRIG];
+    REG_ENHTIMER_ONESHOT              = store_buf->enhtimshare_reg[ENHTIMSHARE_DLPS_ONESHOT];
 }
 
 /******************* (C) COPYRIGHT 2024 Realtek Semiconductor Corporation *****END OF FILE****/

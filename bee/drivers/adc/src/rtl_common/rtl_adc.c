@@ -418,14 +418,13 @@ void ADC_SchIndexConfig(ADC_TypeDef *ADCx, uint8_t AdcMode, uint16_t Index)
   *   This parameter can be: ENABLE or DISABLE.
   * \return none.
   */
-void ADC_BitMapConfig(ADC_TypeDef *ADCx, uint16_t BitMap, FunctionalState NewState)
+void ADC_BitMapConfig(ADC_TypeDef *ADCx, uint16_t BitMap)
 {
     /* Check the parameters */
     assert_param(IS_ADC_PERIPH(ADCx));
-    assert_param(IS_FUNCTIONAL_STATE(NewState));
 
     ADC_SCHED_CTRL_TypeDef adc_0x08 = {.d32 = ADCx->ADC_SCHED_CTRL};
-    adc_0x08.b.adc_schedule_idx_sel = ENABLE ? BitMap : (~BitMap);
+    adc_0x08.b.adc_schedule_idx_sel = BitMap;
     ADCx->ADC_SCHED_CTRL = adc_0x08.d32;
 
     return;

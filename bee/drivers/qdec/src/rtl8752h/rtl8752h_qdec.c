@@ -22,7 +22,7 @@
 void QDEC_DLPSEnter(void *PeriReg, void *StoreBuf)
 {
     QDEC_TypeDef *QDECx = (QDEC_TypeDef *)PeriReg;
-    QDECStoreReg_Typedef *store_buf = (QDECStoreReg_Typedef *)StoreBuf;
+    QDECStoreReg_TypeDef *store_buf = (QDECStoreReg_TypeDef *)StoreBuf;
 
     RCC_PeriphClockCmd(APBPeriph_QDEC, APBPeriph_QDEC_CLOCK, ENABLE);
 
@@ -44,7 +44,7 @@ void QDEC_DLPSEnter(void *PeriReg, void *StoreBuf)
 void QDEC_DLPSExit(void *PeriReg, void *StoreBuf)
 {
     QDEC_TypeDef *QDECx = (QDEC_TypeDef *)PeriReg;
-    QDECStoreReg_Typedef *store_buf = (QDECStoreReg_Typedef *)StoreBuf;
+    QDECStoreReg_TypeDef *store_buf = (QDECStoreReg_TypeDef *)StoreBuf;
 
     RCC_PeriphClockCmd(APBPeriph_QDEC, APBPeriph_QDEC_CLOCK, ENABLE);
 
