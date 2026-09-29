@@ -818,11 +818,11 @@ void ADC_SchTableConfig(ADC_TypeDef *ADCx, uint16_t Index, uint8_t adcMode);
  * void adc_demo(void)
  * {
  *   uint16_t bit_map = 0x03;
- *   ADC_BitMapConfig(ADC,bit_map,ENABLE);
+ *   ADC_BitMapConfig(ADC, bit_map);
  * }
  * \endcode
  */
-void ADC_BitMapConfig(ADC_TypeDef *ADCx, uint16_t bitMap, FunctionalState NewState);
+void ADC_BitMapConfig(ADC_TypeDef *ADCx, uint16_t bitMap);
 
 /**
  * rtl876x_adc.h

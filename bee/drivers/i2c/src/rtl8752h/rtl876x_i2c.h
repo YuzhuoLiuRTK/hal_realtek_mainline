@@ -34,8 +34,8 @@ extern "C" {
 
 typedef struct
 {
-    uint32_t i2c_reg[20];
-} I2CStoreReg_Typedef;
+    uint32_t i2c_reg[18];
+} I2CStoreReg_TypeDef;
 
 /*============================================================================*
  *                         Types

@@ -35,7 +35,7 @@ extern "C" {
 typedef struct
 {
     uint32_t qdec_reg[5];
-} QDECStoreReg_Typedef;
+} QDECStoreReg_TypeDef;
 
 /*=====================================
 =======================================*

@@ -56,7 +56,7 @@ void KEYSCAN_DLPSEnter(void *PeriReg, void *StoreBuf)
 #if defined(CONFIG_REALTEK_DRIVER_DLPS_CALLBACK_ON_RAM)
 RAM_FUNCTION
 #endif
-void KEYSCAN_DLPSExit(void *PeriReg, void *StoreBuf, uint32_t scanmode, uint32_t manual_sel)
+void KEYSCAN_DLPSExit(void *PeriReg, void *StoreBuf)
 {
     KEYSCAN_TypeDef *KSCANx = (KEYSCAN_TypeDef *)PeriReg;
     KEYSCANStoreReg_Typedef *store_buf = (KEYSCANStoreReg_Typedef *)StoreBuf;
@@ -66,20 +66,12 @@ void KEYSCAN_DLPSExit(void *PeriReg, void *StoreBuf, uint32_t scanmode, uint32_t
     /* Set FSM to idle state */
     KSCANx->KEYSCAN_CONFIG2 &= ~BIT31;
     KSCANx->KEYSCAN_CLK_DIV = store_buf->keyscan_reg[0];
-    KSCANx->KEYSCAN_CONFIG2 = (store_buf->keyscan_reg[2] & (~(BIT31 | BIT11 | BIT30))) |
-                              (!!scanmode << 30) | (!!manual_sel << 11);
+    KSCANx->KEYSCAN_CONFIG2 = (store_buf->keyscan_reg[2] & (~(BIT31)));
     KSCANx->KEYSCAN_CONFIG1 = store_buf->keyscan_reg[1];
     KSCANx->KEYSCAN_COLUMN_CONFIG = store_buf->keyscan_reg[3];
     KSCANx->KEYSCAN_ROW_CONFIG = store_buf->keyscan_reg[4];
     KSCANx->KEYSCAN_INT_MASK = store_buf->keyscan_reg[6];
-    KSCANx->KEYSCAN_CONFIG2 |= (store_buf->keyscan_reg[2] & (~(BIT11 | BIT30))) |
-                               (!!scanmode << 30) | (!!manual_sel << 11);
-
-    if (((KSCANx->KEYSCAN_CONFIG2 & BIT30) == 0) && ((KEYSCAN->KEYSCAN_CONFIG2 & BIT11) == 0))
-    {
-        KSCANx->KEYSCAN_CONFIG2 |= BIT22;
-        KSCANx->KEYSCAN_CONFIG2 |= BIT31;
-    }
+    KSCANx->KEYSCAN_CONFIG2 |= (store_buf->keyscan_reg[2] & ((BIT31)));
 
     return;
 }

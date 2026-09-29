@@ -38,7 +38,7 @@ extern "C" {
 typedef struct
 {
     uint32_t keyscan_reg[7];
-} KEYSCANStoreReg_Typedef;
+} KEYSCANStoreReg_TypeDef;
 
 /*============================================================================*
  *                         Types

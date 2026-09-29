@@ -34,8 +34,13 @@ extern "C" {
 
 typedef struct
 {
-    uint32_t tim_reg[9];
-} TIMStoreReg_Typedef;
+    uint32_t tim_reg[3];
+} TIMStoreReg_TypeDef;
+
+typedef struct
+{
+    uint32_t timshare_reg[5];
+} TIMSHAREStoreReg_TypeDef;
 
 /*============================================================================*
  *                         Types
