@@ -22,7 +22,7 @@
 void KEYSCAN_DLPSEnter(void *PeriReg, void *StoreBuf)
 {
     KEYSCAN_TypeDef *KSCANx = (KEYSCAN_TypeDef *)PeriReg;
-    KEYSCANStoreReg_Typedef *store_buf = (KEYSCANStoreReg_Typedef *)StoreBuf;
+    KEYSCANStoreReg_TypeDef *store_buf = (KEYSCANStoreReg_TypeDef *)StoreBuf;
 
     RCC_PeriphClockCmd(APBPeriph_KEYSCAN, APBPeriph_KEYSCAN_CLOCK, ENABLE);
 
@@ -42,32 +42,24 @@ void KEYSCAN_DLPSEnter(void *PeriReg, void *StoreBuf)
   * \param  StoreBuf: Restore buffer to restore KEYSCAN register data.
   * \return None
   */
-void KEYSCAN_DLPSExit(void *PeriReg, void *StoreBuf, uint32_t scanmode, uint32_t manual_sel)
+void KEYSCAN_DLPSExit(void *PeriReg, void *StoreBuf)
 {
     KEYSCAN_TypeDef *KSCANx = (KEYSCAN_TypeDef *)PeriReg;
-    KEYSCANStoreReg_Typedef *store_buf = (KEYSCANStoreReg_Typedef *)StoreBuf;
+    KEYSCANStoreReg_TypeDef *store_buf = (KEYSCANStoreReg_TypeDef *)StoreBuf;
 
     RCC_PeriphClockCmd(APBPeriph_KEYSCAN, APBPeriph_KEYSCAN_CLOCK, ENABLE);
 
     /* Set FSM to idle state */
     KSCANx->CR &= ~BIT31;
     KSCANx->CLKDIV = store_buf->keyscan_reg[0];
-    KSCANx->CR      = (store_buf->keyscan_reg[2] & (~(BIT31 | BIT11 | BIT30))) | scanmode | manual_sel;
+    KSCANx->CR      = (store_buf->keyscan_reg[2] & (~(BIT31)));
     KSCANx->TIMERCR = store_buf->keyscan_reg[1];
     KSCANx->COLCR = store_buf->keyscan_reg[3];
     KSCANx->ROWCR = store_buf->keyscan_reg[4];
     KSCANx->INTMASK = store_buf->keyscan_reg[6];
-    KSCANx->CR |= (store_buf->keyscan_reg[2] & (~(BIT11 | BIT30))) | scanmode | manual_sel;
-
-    if (((KSCANx->CR & BIT30) == 0) && ((KSCANx->CR & BIT11) == 0))
-    {
-        KSCANx->CR |= BIT22;
-        KSCANx->CR |= BIT31;
-    }
-
+    KSCANx->CR |= (store_buf->keyscan_reg[2] & ((BIT31)));
 
     return;
 }
 
 /******************* (C) COPYRIGHT 2023 Realtek Semiconductor Corporation *****END OF FILE****/
-

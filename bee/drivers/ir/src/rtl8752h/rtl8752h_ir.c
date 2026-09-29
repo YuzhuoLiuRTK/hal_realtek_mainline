@@ -22,7 +22,7 @@
 void IR_DLPSEnter(void *PeriReg, void *StoreBuf)
 {
     IR_TypeDef *IRx = (IR_TypeDef *)PeriReg;
-    IRStoreReg_Typedef *store_buf = (IRStoreReg_Typedef *)StoreBuf;
+    IRStoreReg_TypeDef *store_buf = (IRStoreReg_TypeDef *)StoreBuf;
 
     RCC_PeriphClockCmd(APBPeriph_IR, APBPeriph_IR_CLOCK, ENABLE);
 
@@ -44,7 +44,7 @@ void IR_DLPSEnter(void *PeriReg, void *StoreBuf)
 void IR_DLPSExit(void *PeriReg, void *StoreBuf)
 {
     IR_TypeDef *IRx = (IR_TypeDef *)PeriReg;
-    IRStoreReg_Typedef *store_buf = (IRStoreReg_Typedef *)StoreBuf;
+    IRStoreReg_TypeDef *store_buf = (IRStoreReg_TypeDef *)StoreBuf;
 
     RCC_PeriphClockCmd(APBPeriph_IR, APBPeriph_IR_CLOCK, ENABLE);
 

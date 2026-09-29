@@ -34,7 +34,7 @@ extern "C" {
 typedef struct
 {
     uint32_t gpio_reg[10];
-} GPIOStoreReg_Typedef;
+} GPIOStoreReg_TypeDef;
 
 /**
  * \cond        private
@@ -800,17 +800,17 @@ __STATIC_INLINE void GPIO_Debounce_Time(uint32_t DebounceTime)
     GPIO_DBCLK_DIV = GPIO_DBCLK_DIV + count;
 }
 
-__STATIC_INLINE void GPIO_SetPolarity(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin,
+__STATIC_INLINE void GPIO_SetPolarity(uint32_t GPIO_Pin,
                                       GPIOIT_PolarityType int_type)
 {
     if (int_type == GPIO_INT_POLARITY_ACTIVE_LOW)
     {
-        GPIOx->INTPOLARITY = GPIOx->INTPOLARITY & (~GPIO_Pin);
+        GPIO->INTPOLARITY = GPIO->INTPOLARITY & (~GPIO_Pin);
     }
     else
     {
-        GPIOx->INTPOLARITY = (GPIOx->INTPOLARITY & (~GPIO_Pin))
-                             | GPIO_Pin;
+        GPIO->INTPOLARITY = (GPIO->INTPOLARITY & (~GPIO_Pin))
+                            | GPIO_Pin;
     }
 }
 #define GPIO_GetPortIntStatus(GPIOx) (((GPIO_TypeDef *)(GPIOx))->INTSTATUS)
