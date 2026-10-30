@@ -6,7 +6,7 @@ zephyr_include_directories(.)
 set(STUB_DIR ${ZEPHYR_HAL_REALTEK_MODULE_DIR}/bee/drivers/stubs)
 set(DEBUG_STUB_FILE ${STUB_DIR}/rtl87x2j/debug_stubs.c)
 set(DEBUG_LIB_PATH
-  ${ZEPHYR_HAL_REALTEK_MODULE_DIR}/bee/drivers/lib/rtl87x2j/libdriver.a
+  ${ZEPHYR_HAL_REALTEK_MODULE_DIR}/bee/ld/rtl87x2j/libdriver.a
 )
 
 add_blob_or_stub(

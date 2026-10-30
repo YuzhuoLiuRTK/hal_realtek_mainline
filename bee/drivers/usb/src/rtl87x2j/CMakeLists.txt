@@ -4,11 +4,11 @@
 set(STUB_DIR ${ZEPHYR_HAL_REALTEK_MODULE_DIR}/bee/drivers/stubs)
 set(USB_STUB_FILE ${STUB_DIR}/rtl87x2j/usb_stubs.c)
 set(USB_LIB_PATH
-    ${ZEPHYR_HAL_REALTEK_MODULE_DIR}/bee/drivers/lib/rtl87x2j/librtl87x2j_usb.a
+    ${ZEPHYR_HAL_REALTEK_MODULE_DIR}/bee/ld/rtl87x2j/librtl87x2j_usb.a
 )
 
 set(USB_KERNEL_LIB_PATH
-    ${ZEPHYR_HAL_REALTEK_MODULE_DIR}/bee/drivers/lib/rtl87x2j/libkernel.a
+    ${ZEPHYR_HAL_REALTEK_MODULE_DIR}/bee/ld/rtl87x2j/libkernel.a
 )
 
 add_blob_or_stub(
