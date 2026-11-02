@@ -14,8 +14,6 @@ extern "C" {
 #include "utils/rtl_utils.h"
 #if defined (CONFIG_SOC_SERIES_RTL87X2G)
 #include "dma/src/device/rtl87x2g/rtl_dma_def.h"
-#elif defined (CONFIG_SOC_SERIES_RTL87X3D)
-#include "dma/src/device/rtl87x3d/rtl_dma_def.h"
 #elif defined (CONFIG_SOC_SERIES_RTL87X2J)
 #include "dma/src/device/rtl87x2j/rtl_dma_def.h"
 #elif defined (CONFIG_SOC_SERIES_RTL87X3J)
@@ -422,7 +420,7 @@ void DMA_DeInit(void);
 /**
  * @brief Initialize the DMA Channelx according to the specified parameters in the DMA_InitStruct.
  *
- * @param[in] DMA_Channelx    Specifies the DMA channel. Refer to @ref DMA_DECLARATION.
+ * @param[in] DMA_Channelx    Specifies the DMA channel.
  * @param[in] DMA_InitStruct  Pointer to a DMA_InitTypeDef structure which will be initialized.
  *
  * <b>Example usage</b>
@@ -765,7 +763,7 @@ FlagStatus DMA_GetChannelStatus(uint8_t DMA_ChannelNum);
 /**
  * @brief Get the FIFO status of the specified DMA channel.
  *
- * @param[in] DMA_Channelx  Specifies the DMA channel. Refer to @ref DMA_DECLARATION.
+ * @param[in] DMA_Channelx  Specifies the DMA channel.
  *
  * @return The FIFO status of the specified DMA channel.
  * @retval SET    The DMA FIFO is empty.
@@ -788,7 +786,7 @@ FlagStatus DMA_GetFIFOStatus(DMA_ChannelTypeDef *DMA_Channelx);
 /**
  * @brief Enable or disable to suspend transmission of the specified DMA channel.
  *
- * @param[in] DMA_Channelx  Specifies the DMA channel. Refer to @ref DMA_DECLARATION.
+ * @param[in] DMA_Channelx  Specifies the DMA channel.
  * @param[in] NewState      New state of the suspend operation.
  *                          This parameter can be one of the following values:
  *                          - ENABLE: Suspend transmission of the specified DMA channel.
@@ -811,7 +809,7 @@ void DMA_SuspendCmd(DMA_ChannelTypeDef *DMA_Channelx, FunctionalState NewState);
 /**
  * @brief Suspend transmission safely of the specified DMA channel.
  *
- * @param[in] DMA_Channelx  Specifies the DMA channel. Refer to @ref DMA_DECLARATION.
+ * @param[in] DMA_Channelx  Specifies the DMA channel.
  *
  * @return The result of the safe suspend operation.
  * @retval true   Suspend DMA transmission successfully.
@@ -839,7 +837,7 @@ bool DMA_SafeSuspend(DMA_ChannelTypeDef *DMA_Channelx);
 /**
  * @brief Set the source address of the specified DMA channel.
  *
- * @param[in] DMA_Channelx  Specifies the DMA channel. Refer to @ref DMA_DECLARATION.
+ * @param[in] DMA_Channelx  Specifies the DMA channel.
  * @param[in] Address       Source address.
  *
  * <b>Example usage</b>
@@ -857,7 +855,7 @@ void DMA_SetSourceAddress(DMA_ChannelTypeDef *DMA_Channelx, uint32_t Address);
 /**
  * @brief Set the destination address of the specified DMA channel.
  *
- * @param[in] DMA_Channelx  Specifies the DMA channel. Refer to @ref DMA_DECLARATION.
+ * @param[in] DMA_Channelx  Specifies the DMA channel.
  * @param[in] Address       Destination address.
  *
  * <b>Example usage</b>
@@ -876,7 +874,7 @@ void DMA_SetDestinationAddress(DMA_ChannelTypeDef *DMA_Channelx,
 /**
  * @brief Set the LLP structure address of the specified DMA channel.
  *
- * @param[in] DMA_Channelx  Specifies the DMA channel. Refer to @ref DMA_DECLARATION.
+ * @param[in] DMA_Channelx  Specifies the DMA channel.
  * @param[in] Address       LLP structure address.
  *
  * <b>Example usage</b>
@@ -894,7 +892,7 @@ void DMA_SetLLPAddress(DMA_ChannelTypeDef *DMA_Channelx, uint32_t Address);
 /**
  * @brief Set the transfer size of the specified DMA channel.
  *
- * @param[in] DMA_Channelx  Specifies the DMA channel. Refer to @ref DMA_DECLARATION.
+ * @param[in] DMA_Channelx  Specifies the DMA channel.
  * @param[in] BufferSize    Specifies the transfer size, which is the number of single transactions in one block.
  *
  * <b>Example usage</b>
@@ -912,7 +910,7 @@ void DMA_SetBufferSize(DMA_ChannelTypeDef *DMA_Channelx, uint32_t BufferSize);
 /**
  * @brief Get the source transfer address of the specified DMA channel.
  *
- * @param[in] DMA_Channelx  Specifies the DMA channel. Refer to @ref DMA_DECLARATION.
+ * @param[in] DMA_Channelx  Specifies the DMA channel.
  *
  * @return Source transfer address.
  *
@@ -930,7 +928,7 @@ uint32_t DMA_GetSrcTransferAddress(DMA_ChannelTypeDef *DMA_Channelx);
 /**
  * @brief Get the destination transfer address of the specified DMA channel.
  *
- * @param[in] DMA_Channelx  Specifies the DMA channel. Refer to @ref DMA_DECLARATION.
+ * @param[in] DMA_Channelx  Specifies the DMA channel.
  *
  * @return Destination transfer address.
  *
@@ -948,7 +946,7 @@ uint32_t DMA_GetDstTransferAddress(DMA_ChannelTypeDef *DMA_Channelx);
 /**
  * @brief Get current source address of the specified DMA channel.
  *
- * @param[in] DMA_Channelx  Select the DMA peripheral. Refer to @ref DMA_Declaration.
+ * @param[in] DMA_Channelx  Select the DMA peripheral.
  *
  * @return Current source address.
  *
@@ -966,7 +964,7 @@ uint32_t DMA_GetCurrSrcAddr(DMA_ChannelTypeDef *DMA_Channelx);
 /**
  * @brief Get current destination address of the specified DMA channel.
  *
- * @param[in] DMA_Channelx  Select the DMA peripheral. Refer to @ref DMA_Declaration.
+ * @param[in] DMA_Channelx  Select the DMA peripheral.
  *
  * @return Current destination address.
  *
@@ -984,7 +982,7 @@ uint32_t DMA_GetCurrDstAddr(DMA_ChannelTypeDef *DMA_Channelx);
 /**
  * @brief Get the transfer data length of the specified DMA channel.
  *
- * @param[in] DMA_Channelx  Specifies the DMA channel. Refer to @ref DMA_DECLARATION.
+ * @param[in] DMA_Channelx  Specifies the DMA channel.
  *
  * @return DMA transfer data length.
  *
@@ -1002,7 +1000,7 @@ uint16_t DMA_GetTransferLen(DMA_ChannelTypeDef *DMA_Channelx);
 /**
  * @brief Update the LLP mode of the specified DMA channel in multi-block transfer.
  *
- * @param[in] DMA_Channelx  Specifies the DMA channel. Refer to @ref DMA_DECLARATION.
+ * @param[in] DMA_Channelx  Specifies the DMA channel.
  * @param[in] Mode          Specifies the DMA LLP mode. Refer to @ref DMA_MULTI_BLOCK_MODE.
  *
  * <b>Example usage</b>
@@ -1077,7 +1075,7 @@ uint8_t DMA_GetDMANumByIRQx(IRQn_Type Irq);
 /**
  * @brief Enable or disable the secure function of the specified DMA channel.
  *
- * @param[in] DMA_Channelx  Specifies the DMA channel. Refer to @ref DMA_DECLARATION.
+ * @param[in] DMA_Channelx  Specifies the DMA channel.
  * @param[in] NewState      New state of the DMA channel secure function.
  *                          This parameter can be one of the following values:
  *                          - ENABLE: Enable the secure function of the specified DMA channel.
@@ -1171,7 +1169,7 @@ uint8_t DMA_GetOSRCount(uint8_t DMA_ChannelNum);
 /**
  * @brief Enable or disable the continuous source address function between single-block interrupts.
  *
- * @param[in] DMA_Channelx  Specifies the DMA channel. Refer to @ref DMA_DECLARATION.
+ * @param[in] DMA_Channelx  Specifies the DMA channel.
  * @param[in] NewState      New state of the continuous source address function.
  *                          This parameter can be one of the following values:
  *                          - ENABLE: Enable the continuous source address function.
@@ -1191,7 +1189,7 @@ void DMA_ContSarCmd(DMA_ChannelTypeDef *DMA_Channelx, FunctionalState NewState);
 /**
  * @brief Enable or disable the continuous destination address function between single-block interrupts.
  *
- * @param[in] DMA_Channelx  Specifies the DMA channel. Refer to @ref DMA_DECLARATION.
+ * @param[in] DMA_Channelx  Specifies the DMA channel.
  * @param[in] NewState      New state of the continuous destination address function.
  *                          This parameter can be one of the following values:
  *                          - ENABLE: Enable the continuous destination address function.
@@ -1214,7 +1212,7 @@ void DMA_ContDarCmd(DMA_ChannelTypeDef *DMA_Channelx, FunctionalState NewState);
 /**
  * @brief Set the block counter of the specified DMA channel.
  *
- * @param[in] DMA_Channelx   Specifies the DMA channel. Refer to @ref DMA_DECLARATION.
+ * @param[in] DMA_Channelx   Specifies the DMA channel.
  * @param[in] BlockCounter   Block counter value. The block counter is decremented by 1 after each block
  *                           transfer completes and saturates at 0.
  *
@@ -1235,7 +1233,7 @@ void DMA_SetBlockCounter(DMA_ChannelTypeDef *DMA_Channelx, uint32_t BlockCounter
 /**
  * @brief Enable or disable the RAP mode of the specified DMA channel.
  *
- * @param[in] DMA_Channelx  Specifies the DMA channel. Refer to @ref DMA_DECLARATION.
+ * @param[in] DMA_Channelx  Specifies the DMA channel.
  * @param[in] NewState      New state of the DMA RAP mode.
  *                          This parameter can be one of the following values:
  *                          - ENABLE: Enable the DMA RAP mode.
@@ -1262,7 +1260,7 @@ bool DMA_RAPModeCmd(DMA_ChannelTypeDef *DMA_Channelx, FunctionalState NewState);
 /**
  * @brief Enable or disable the clock auto mode of the specified DMA channel.
  *
- * @param[in] DMA_Channelx  Specifies the DMA channel. Refer to @ref DMA_DECLARATION.
+ * @param[in] DMA_Channelx  Specifies the DMA channel.
  * @param[in] NewState      New state of the DMA clock auto mode.
  *                          This parameter can be one of the following values:
  *                          - ENABLE: Enable the DMA clock auto mode.

@@ -152,10 +152,11 @@ typedef enum
 #define LPQDEC_X_INT_CLEAR_OVERFLOW         BIT2      /**< Clear the overflow flag. */
 #define LPQDEC_X_INT_CLEAR_NEW_DATA         BIT1      /**< Clear the new data flag. */
 /** @brief Check if the input parameter is valid. @hideinitializer */
-#define IS_LPQDEC_INT_CLEAR_CONFIG(CONFIG)  (((CONFIG) == LPQDEC_X_INT_CLEAR_ILLEGAL) || \
-                                             ((CONFIG) == LPQDEC_X_INT_CLEAR_UNDERFLOW) || \
-                                             ((CONFIG) == LPQDEC_X_INT_CLEAR_OVERFLOW) || \
-                                             ((CONFIG) == LPQDEC_X_INT_CLEAR_NEW_DATA))
+#define IS_LPQDEC_INT_CLEAR_CONFIG(CONFIG)  ((((CONFIG) & ~(LPQDEC_X_INT_CLEAR_ILLEGAL   | \
+                                                            LPQDEC_X_INT_CLEAR_UNDERFLOW | \
+                                                            LPQDEC_X_INT_CLEAR_OVERFLOW  | \
+                                                            LPQDEC_X_INT_CLEAR_NEW_DATA)) == 0) && \
+                                             ((CONFIG) != 0))
 
 /** @} */ /* End of group LPQDEC_INTERRUPTS_CLEAR */
 
@@ -438,18 +439,21 @@ FlagStatus LPQDEC_GetFlagState(LPQDEC_TypeDef *LPQDECx, uint32_t LPQDEC_FLAG);
  *
  * @param[in] LPQDECx Select the LPQDEC peripheral. @ref LPQDEC_Declaration.
  * @param[in] LPQDEC_CLR_INT Specifies the flag to clear.
- *            This parameter can be one of the following values:
+ *            This parameter can be any combination of the following values:
  *            - LPQDEC_X_INT_CLEAR_ILLEGAL: The illegal interrupt for X axis.
  *            - LPQDEC_X_INT_CLEAR_UNDERFLOW: The underflow flag for x-axis accumulation counter.
  *            - LPQDEC_X_INT_CLEAR_OVERFLOW: The overflow flag for x-axis accumulation counter.
  *            - LPQDEC_X_INT_CLEAR_NEW_DATA: The counter interrupt for X axis.
+ *
+ * @note The clear takes effect only after 2T@32K, so this API delays about 63 us per call.
+ *       Clear several flags in one call rather than one call per flag.
  *
  * <b>Example usage</b>
  * @code{.c}
  *
  * void lpqdec_demo(void)
  * {
- *     LPQDEC_ClearINTPendingBit(LPQDEC, LPQDEC_X_INT_CLEAR_NEW_DATA);
+ *     LPQDEC_ClearINTPendingBit(LPQDEC, LPQDEC_X_INT_CLEAR_NEW_DATA | LPQDEC_X_INT_CLEAR_OVERFLOW);
  * }
  * @endcode
  */
@@ -463,6 +467,9 @@ void LPQDEC_ClearINTPendingBit(LPQDEC_TypeDef *LPQDECx, uint32_t LPQDEC_CLR_INT)
  *            This parameter can be one of the following values:
  *            - LPQDEC_X_CLEAR_ILLEGAL_COUNTER: The illegal counter for X axis.
  *            - LPQDEC_X_CLEAR_ACC_COUNTER: The acc counter for X axis.
+ *
+ * @note The clear takes effect only after 2T@32K (about 63 us). Delay 2T after every clear,
+ *       also between back-to-back clears, otherwise the earlier clear is lost and DLPS is blocked.
  *
  * <b>Example usage</b>
  * @code{.c}

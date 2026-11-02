@@ -26,6 +26,8 @@ extern "C" {
 #define GPIO_SUPPORT_AUTO_CLOCK                        (1)
 #define GPIO_SUPPORT_OUTPUT_MODE_SELECT                (1)
 #define GPIO_SUPPORT_HW_RETENTION                      (1)
+#define GPIO_SUPPORT_PPU_WAKEUP                        (1)
+#define GPIO_SUPPORT_SHARED_WAKEUP_POLARITY            (0)
 
 /*============================================================================*
  *                          GPIO Registers Memory Map

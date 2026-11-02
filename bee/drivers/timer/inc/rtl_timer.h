@@ -12,8 +12,6 @@ extern "C" {
 #include "utils/rtl_utils.h"
 #if defined (CONFIG_SOC_SERIES_RTL87X2G)
 #include "timer/src/device/rtl87x2g/rtl_timer_def.h"
-#elif defined (CONFIG_SOC_SERIES_RTL87X3D)
-#include "timer/src/device/rtl87x3d/rtl_tim_def.h"
 #elif defined (CONFIG_SOC_SERIES_RTL87X2J)
 #include "timer/src/device/rtl87x2j/rtl_timer_def.h"
 #include "pinmux/inc/rtl87x2j/pin_def.h"

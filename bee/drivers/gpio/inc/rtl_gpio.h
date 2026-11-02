@@ -15,9 +15,6 @@ extern "C" {
 #if defined (CONFIG_SOC_SERIES_RTL87X2G)
 #include "gpio/src/device/rtl87x2g/rtl_gpio_def.h"
 #include "pinmux/inc/rtl87x2g/pin_def.h"
-#elif defined (CONFIG_SOC_SERIES_RTL87X3D)
-#include "gpio/src/device/rtl87x3d/rtl_gpio_def.h"
-#include "pinmux/inc/rtl87x3d/pin_def.h"
 #elif defined (CONFIG_SOC_SERIES_RTL87X2J)
 #include "gpio/src/device/rtl87x2j/rtl_gpio_def.h"
 #include "pinmux/inc/rtl87x2j/pin_def.h"

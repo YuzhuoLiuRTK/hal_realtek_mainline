@@ -22,8 +22,6 @@ extern "C" {
 #include "irq/src/device/rtl87x2g/rtl_nvic_def.h"
 #elif defined (CONFIG_SOC_SERIES_RTL87X2J)
 #include "irq/src/device/rtl87x2j/rtl_nvic_def.h"
-#elif defined (CONFIG_SOC_SERIES_RTL87X3D)
-#include "irq/src/device/rtl87x3d/rtl_nvic_def.h"
 #elif defined (CONFIG_SOC_SERIES_RTL87X3J)
 #include "irq/src/device/rtl87x3j/rtl_nvic_def.h"
 #elif defined (CONFIG_SOC_SERIES_RTL87X3K)

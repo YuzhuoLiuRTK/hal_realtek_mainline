@@ -259,6 +259,18 @@ void GPIO_ExtPolarity(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin, GPIOPolarity_TypeD
 }
 
 /**
+ * @brief Get the interrupt/debounce polarity of the specified GPIO pin.
+ * @param GPIOx     Specifies the GPIO port. Refer to @ref GPIO_DECLARATION.
+ * @param GPIO_Pin  Specifies the GPIO pin to be read. Refer to @ref GPIO_PINS_DEFINE.
+ * @return The GPIO polarity. Refer to @ref GPIO_POLARITY.
+ */
+GPIOPolarity_TypeDef GPIO_GetPolarity(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin)
+{
+    return (GPIOx->GPIO_EXT_DEB_POL_CTL & GPIO_Pin) ? GPIO_POLARITY_ACTIVE_HIGH :
+           GPIO_POLARITY_ACTIVE_LOW;
+}
+
+/**
  * @brief Enable or disable GPIO clock auto mode of the specified GPIO port.
  * @param GPIOx     Specifies the GPIO port. Refer to @ref GPIO_DECLARATION.
  * @param Newstate  Enable or disable the clock auto mode.
@@ -307,13 +319,18 @@ void GPIO_DebounceTimeUs(uint32_t time_us, uint8_t *GPIO_DebounceCntLimit,
 /*============================================================================*
  *                           EXTI Functions
  *============================================================================*/
+typedef void (*GPIO_ISR_CBACK)(uint32_t context);
+
 static struct
 {
-    IRQ_Fun gpio_callback[64];
+    GPIO_ISR_CBACK gpio_callback[64];
+    uint32_t       context[64];
 } gpio_isr;
 
 /**
  * @brief Register a per-pin interrupt callback into the GPIO ISR table.
+ * @note  The callback context defaults to the GPIO number, use
+ *        gpio_update_callback_context() to change it.
  * @param irqn         GPIO interrupt number; its low 8 bits select the
  *                     entry (0 to 63) in the callback table.
  * @param isr_handler  Callback to invoke when the corresponding pin
@@ -321,7 +338,48 @@ static struct
  */
 static void GPIO_ISRUpdate(uint32_t irqn, IRQ_Fun isr_handler)
 {
-    gpio_isr.gpio_callback[irqn & 0xFF] = isr_handler;
+    uint8_t gpio_num = irqn & 0xFF;
+
+    gpio_isr.gpio_callback[gpio_num] = (GPIO_ISR_CBACK)isr_handler;
+    gpio_isr.context[gpio_num] = gpio_num;
+}
+
+/**
+ * @brief Set the context passed to the interrupt callback of the specified GPIO.
+ * @param gpio_num  GPIO number (0 to 63).
+ * @param context   Context passed to the callback when the interrupt fires.
+ */
+void gpio_update_callback_context(uint8_t gpio_num, uint32_t context)
+{
+    if (gpio_num < 64)
+    {
+        gpio_isr.context[gpio_num] = context;
+    }
+}
+
+/**
+ * @brief Clear the pending bit of each pin in the interrupt status, then
+ *        dispatch it to its registered callback.
+ * @param GPIOx                  Specifies the GPIO port. Refer to @ref GPIO_DECLARATION.
+ * @param gpio_offset            Index of bit 0 of GPIOx in the callback table.
+ * @param real_interrupt_status  Interrupt status of the pins to service.
+ */
+static void GPIO_DispatchISR(GPIO_TypeDef *GPIOx, uint8_t gpio_offset,
+                             uint32_t real_interrupt_status)
+{
+    while (real_interrupt_status)
+    {
+        uint8_t idx = 31 - __builtin_clz(real_interrupt_status);
+        uint8_t gpio_num = idx + gpio_offset;
+
+        /* Clear before the callback, so an edge arriving during the callback is kept. */
+        GPIO_ClearINTPendingBit(GPIOx, BIT(idx));
+        if (gpio_isr.gpio_callback[gpio_num])
+        {
+            gpio_isr.gpio_callback[gpio_num](gpio_isr.context[gpio_num]);
+        }
+        real_interrupt_status &= ~BIT(idx);
+    }
 }
 
 /**
@@ -330,16 +388,7 @@ static void GPIO_ISRUpdate(uint32_t irqn, IRQ_Fun isr_handler)
  */
 void GPIOA_Handler(uint32_t mask)
 {
-    uint32_t real_interrupt_status = GPIOA->GPIO_INT_RAW_STS & mask ;
-    while (real_interrupt_status)
-    {
-        uint8_t idx = 31 - __builtin_clz(real_interrupt_status);
-        if (gpio_isr.gpio_callback[idx])
-        {
-            gpio_isr.gpio_callback[idx]();
-        }
-        real_interrupt_status &= ~BIT(idx);
-    }
+    GPIO_DispatchISR(GPIOA, 0, GPIOA->GPIO_INT_STS & mask);
 }
 
 /**
@@ -348,16 +397,7 @@ void GPIOA_Handler(uint32_t mask)
  */
 void GPIOB_Handler(uint32_t mask)
 {
-    uint32_t real_interrupt_status = GPIOB->GPIO_INT_RAW_STS & mask;
-    while (real_interrupt_status)
-    {
-        uint8_t idx = 31 - __builtin_clz(real_interrupt_status);
-        if (gpio_isr.gpio_callback[idx + 32])
-        {
-            gpio_isr.gpio_callback[idx + 32]();
-        }
-        real_interrupt_status &= ~BIT(idx);
-    }
+    GPIO_DispatchISR(GPIOB, 32, GPIOB->GPIO_INT_STS & mask);
 }
 
 /**

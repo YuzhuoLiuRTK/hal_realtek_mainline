@@ -69,7 +69,6 @@ typedef struct
 #define UART1                   ((UART_TypeDef *) UART1_BASE)
 #define UART2                   ((UART_TypeDef *) UART2_BASE)
 #define UART3                   ((UART_TypeDef *) UART3_BASE)
-#define CHIP_UART_NUMBER        4
 
 /** @brief Check if the input parameter is valid. @hideinitializer */
 #define IS_UART_PERIPH(PERIPH)  (((PERIPH) == UART0) || \

@@ -277,11 +277,13 @@ FlagStatus LPQDEC_GetFlagState(LPQDEC_TypeDef *LPQDECx, uint32_t LPQDEC_FLAG)
   * @brief  Clear LPQDEC interrupt pending bit.
   * @param  LPQDECx: Select the LPQDEC peripheral. @ref LPQDEC_Declaration.
   * @param  LPQDEC_FLAG: Specifies the flag to clear.
-  *         This parameter can be one of the following values:
+  *         This parameter can be any combination of the following values:
   *         @arg LPQDEC_X_INT_CLEAR_ILLEGAL: The illegal interrupt for X axis.
   *         @arg LPQDEC_X_INT_CLEAR_UNDERFLOW: The underflow flag for x-axis accumulation counter.
   *         @arg LPQDEC_X_INT_CLEAR_OVERFLOW: The overflow flag for x-axis accumulation counter.
   *         @arg LPQDEC_X_INT_CLEAR_NEW_DATA: The counter interrupt for X axis.
+  * @note   Blocks 2T@32K (about 63 us) per call. Clear several flags in one call
+  *         rather than one call per flag.
   */
 void LPQDEC_ClearINTPendingBit(LPQDEC_TypeDef *LPQDECx, uint32_t LPQDEC_CLEAR)
 {
@@ -291,6 +293,8 @@ void LPQDEC_ClearINTPendingBit(LPQDEC_TypeDef *LPQDECx, uint32_t LPQDEC_CLEAR)
 
     /* Every bit of INT_CLR is W1C */
     LPQDECx->LPQDEC_INT_CLR = LPQDEC_CLEAR;
+    /* The clear takes effect after 2T@32K; a following write would cancel it. */
+    platform_delay_us(63);
 
     return;
 }

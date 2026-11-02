@@ -15,8 +15,6 @@ extern "C" {
 #include "wdt/inc/rtl_wdt.h"
 #if defined (CONFIG_SOC_SERIES_RTL87X2J)
 #include "wdt/src/device/rtl87x2j/rtl_lpwdt_def.h"
-#elif defined (CONFIG_SOC_SERIES_RTL87X3D)
-#include "wdt/src/device/rtl87x3d/rtl_lpwdt_def.h"
 #elif defined (CONFIG_SOC_SERIES_RTL87X3J)
 #include "wdt/src/device/rtl87x3j/rtl_lpwdt_def.h"
 #elif defined (CONFIG_SOC_SERIES_RTL87X3K)

@@ -14,8 +14,6 @@ extern "C" {
 #include "utils/rtl_utils.h"
 #if defined (CONFIG_SOC_SERIES_RTL87X2G)
 #include "spi/src/device/rtl87x2g/rtl_spi_def.h"
-#elif defined (CONFIG_SOC_SERIES_RTL87X3D)
-#include "spi/src/device/rtl87x3d/rtl_spi_def.h"
 #elif defined (CONFIG_SOC_SERIES_RTL87X2J)
 #include "spi/src/device/rtl87x2j/rtl_spi_def.h"
 #elif defined (CONFIG_SOC_SERIES_RTL87X3J)
@@ -337,10 +335,10 @@ typedef enum
 #define SPI_INT_RXU                    BIT2 /**< Receive FIFO underflow interrupt. */
 #define SPI_INT_RXO                    BIT3 /**< Receive FIFO overflow interrupt. */
 #define SPI_INT_RXF                    BIT4 /**< Receive FIFO threshold interrupt. Triggered when the receive FIFO level is greater than or equal to the threshold. */
-#define SPI_INT_MST                    BIT5 /**< Multi-master contention interrupt. (master only) */
-#define SPI_INT_FAE                    BIT5 /**< The data of slave RX does not match DFS. (slave only) */
-#define SPI_INT_TUF                    BIT6 /**< Transmit FIFO underflow interrupt. (slave only) */
-#define SPI_INT_RIG                    BIT7 /**< CS rising edge detect interrupt. (slave only) */
+#define SPI_INT_MST                    BIT5 /**< Multi-master contention interrupt (master only). */
+#define SPI_INT_FAE                    BIT5 /**< The data of slave RX does not match DFS (slave only). */
+#define SPI_INT_TUF                    BIT6 /**< Transmit FIFO underflow interrupt (slave only). */
+#define SPI_INT_RIG                    BIT7 /**< CS rising edge detect interrupt (slave only). */
 #if (SPI_SUPPORT_WRAP_MODE == 1)
 #define SPI_INT_WRAP_TXE               BIT8 /**< Wrap mode transmit FIFO empty interrupt. */
 #define SPI_INT_WRAP_TXO               BIT9 /**< Wrap mode transmit FIFO overflow interrupt. */
@@ -844,10 +842,10 @@ void SPI_SendWordDirect(SPI_TypeDef *SPIx, uint32_t *pBuf, uint16_t len);
  *            - SPI_INT_RXU: Receive FIFO underflow interrupt.
  *            - SPI_INT_RXO: Receive FIFO overflow interrupt.
  *            - SPI_INT_RXF: Receive FIFO threshold interrupt. Triggered when the receive FIFO level is greater than or equal to the threshold.
- *            - SPI_INT_MST: Multi-master contention interrupt. (master only)
- *            - SPI_INT_FAE: The data of slave RX does not match DFS. (slave only)
- *            - SPI_INT_TUF: Transmit FIFO underflow interrupt. (slave only)
- *            - SPI_INT_RIG: CS rising edge detect interrupt. (slave only)
+ *            - SPI_INT_MST: Multi-master contention interrupt (master only).
+ *            - SPI_INT_FAE: The data of slave RX does not match DFS (slave only).
+ *            - SPI_INT_TUF: Transmit FIFO underflow interrupt (slave only).
+ *            - SPI_INT_RIG: CS rising edge detect interrupt (slave only).
  * @param[in] NewState  New state of the specified SPI interrupt source.
  *            This parameter can be: ENABLE or DISABLE.
  *
@@ -870,10 +868,10 @@ void SPI_INTConfig(SPI_TypeDef *SPIx, uint16_t SPI_IT, FunctionalState NewState)
  *            - SPI_INT_TXO: Transmit FIFO overflow interrupt.
  *            - SPI_INT_RXO: Receive FIFO overflow interrupt.
  *            - SPI_INT_RXU: Receive FIFO underflow interrupt.
- *            - SPI_INT_MST: Multi-master contention interrupt. (master only)
- *            - SPI_INT_FAE: The data of slave RX does not match DFS. (slave only)
- *            - SPI_INT_TUF: Transmit FIFO underflow interrupt. (slave only)
- *            - SPI_INT_RIG: CS rising edge detect interrupt. (slave only)
+ *            - SPI_INT_MST: Multi-master contention interrupt (master only).
+ *            - SPI_INT_FAE: The data of slave RX does not match DFS (slave only).
+ *            - SPI_INT_TUF: Transmit FIFO underflow interrupt (slave only).
+ *            - SPI_INT_RIG: CS rising edge detect interrupt (slave only).
  *
  * <b>Example usage</b>
  * @code{.c}
@@ -1013,10 +1011,10 @@ void SPI_SetCSNumber(SPI_TypeDef *SPIx, uint8_t number);
  *            - SPI_INT_RXU: Receive FIFO underflow interrupt.
  *            - SPI_INT_RXO: Receive FIFO overflow interrupt.
  *            - SPI_INT_RXF: Receive FIFO threshold interrupt. Triggered when the receive FIFO level is greater than or equal to the threshold.
- *            - SPI_INT_MST: Multi-master contention interrupt. (master only)
- *            - SPI_INT_FAE: The data of slave RX does not match DFS. (slave only)
- *            - SPI_INT_TUF: Transmit FIFO underflow interrupt. (slave only)
- *            - SPI_INT_RIG: CS rising edge detect interrupt. (slave only)
+ *            - SPI_INT_MST: Multi-master contention interrupt (master only).
+ *            - SPI_INT_FAE: The data of slave RX does not match DFS (slave only).
+ *            - SPI_INT_TUF: Transmit FIFO underflow interrupt (slave only).
+ *            - SPI_INT_RIG: CS rising edge detect interrupt (slave only).
  *            - SPI_INT_WRAP_TXE: Wrap mode transmit FIFO empty interrupt.
  *            - SPI_INT_WRAP_TXO: Wrap mode transmit FIFO overflow interrupt.
  *            - SPI_INT_WRAP_TXD: Wrap mode transmit done interrupt.

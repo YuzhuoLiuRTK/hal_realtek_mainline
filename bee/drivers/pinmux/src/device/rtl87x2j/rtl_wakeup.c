@@ -30,6 +30,7 @@ static uint32_t debounce_group_allocated_mask = DEBOUNCE_GROUP_USED_MASK;
 static void Pad_Handler(void);
 
 static volatile uint64_t pad_int_used_mask = 0x0;
+static volatile uint64_t pad_ppu_used_mask = 0x0;
 
 extern const PADAddrTable_TypeDef pad_addr_table;
 const PADAddrTable_TypeDef wakeup_status_table =
@@ -471,7 +472,21 @@ void System_WakeUpPPUCmd(uint8_t Pin_Num, uint8_t Polarity, FunctionalState NewS
 {
     Pad_TableConfig(WAKEUP_POL, Pin_Num, Polarity);
     Pad_TableConfig(WAKEUP_PPU, Pin_Num, NewState);
-    AON_REG_WRITE_BITFIELD(AON_REG_SYSTEM_REG29X, EN_PAD_SYSTEM_ON_WAKEUP, NewState);
+
+    /* Record pad PPU use status */
+    if (NewState == ENABLE)
+    {
+        pad_ppu_used_mask |= BIT64(Pin_Num);
+    }
+    else
+    {
+        pad_ppu_used_mask &= ~BIT64(Pin_Num);
+    }
+
+    /* EN_PAD_SYSTEM_ON_WAKEUP is shared by all pins, keep it enabled while any pin still uses
+     * PPU wake-up so that disabling one pin does not disarm the others. */
+    AON_REG_WRITE_BITFIELD(AON_REG_SYSTEM_REG29X, EN_PAD_SYSTEM_ON_WAKEUP,
+                           (pad_ppu_used_mask != 0) ? ENABLE : DISABLE);
 }
 
 /**

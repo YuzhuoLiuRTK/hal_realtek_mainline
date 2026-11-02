@@ -14,8 +14,6 @@ extern "C" {
 #include "utils/rtl_utils.h"
 #if defined (CONFIG_SOC_SERIES_RTL87X2G)
 #include "keyscan/src/device/rtl87x2g/rtl_keyscan_def.h"
-#elif defined (CONFIG_SOC_SERIES_RTL87X3D)
-#include "keyscan/src/device/rtl87x3d/rtl_keyscan_def.h"
 #elif defined (CONFIG_SOC_SERIES_RTL87X2J)
 #include "keyscan/src/device/rtl87x2j/rtl_keyscan_def.h"
 #elif defined (CONFIG_SOC_SERIES_RTL87X3J)

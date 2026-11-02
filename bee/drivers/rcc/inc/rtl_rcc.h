@@ -16,8 +16,6 @@ extern "C" {
 #include "rcc/src/device/rtl87x2g/rtl_rcc_def.h"
 #elif defined (CONFIG_SOC_SERIES_RTL87X2J)
 #include "rcc/src/device/rtl87x2j/rtl_rcc_def.h"
-#elif defined (CONFIG_SOC_SERIES_RTL87X3D)
-#include "rcc/src/device/rtl87x3d/rtl_rcc_def.h"
 #elif defined (CONFIG_SOC_SERIES_RTL87X3J)
 #include "rcc/src/device/rtl87x3j/rtl_rcc_def.h"
 #elif defined (CONFIG_SOC_SERIES_RTL87X3K)

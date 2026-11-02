@@ -14,8 +14,6 @@ extern "C" {
 #include "utils/rtl_utils.h"
 #if defined (CONFIG_SOC_SERIES_RTL87X2G)
 #include "i2c/src/device/rtl87x2g/rtl_i2c_def.h"
-#elif defined (CONFIG_SOC_SERIES_RTL87X3D)
-#include "i2c/src/device/rtl87x3d/rtl_i2c_def.h"
 #elif defined (CONFIG_SOC_SERIES_RTL87X2J)
 #include "i2c/src/device/rtl87x2j/rtl_i2c_def.h"
 #elif defined (CONFIG_SOC_SERIES_RTL87X3J)
